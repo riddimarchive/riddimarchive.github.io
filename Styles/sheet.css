@@ -1,0 +1,12 @@
+.header{
+	display: flex;
+	justify-content: center;
+  	height: 100%;
+}
+
+.fish{
+	display: flex;
+  	align-items: flex-start;
+  	flex-wrap: wrap;
+  	height: 100%;
+}

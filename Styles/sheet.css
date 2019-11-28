@@ -6,7 +6,18 @@
 
 .fish{
 	display: flex;
-  	align-items: flex-start;
-  	flex-wrap: wrap;
+	flex-direction: row;
+	align-items: center;
+	align-self: center;
   	height: 100%;
+  	justify-content: space-around;
+
 }
+
+.space{
+	margin-bottom: 17px
+}
+.fish div{
+	border: 1px #ccc solid;
+}
+

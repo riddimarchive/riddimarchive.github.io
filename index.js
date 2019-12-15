@@ -2,7 +2,9 @@
 const express = require('express');
 const fs = require('fs');
 
+fs.readFile('index.html');
 // create new express app and save it as "app"
+/*
 const app = express();
 
 // server configuration

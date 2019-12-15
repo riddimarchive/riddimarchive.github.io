@@ -1,5 +1,7 @@
 body {
-  font-family: arial, sans-serif;
+  font-family: urbane, sans-serif;
+  font-style: normal;
+floatont-weight: 100;
 }
 
 
@@ -7,21 +9,21 @@ body {
 .header{
 	display: flex;
 	justify-content: center;
-  	height: 100%;
+  height: 100%;
 }
 
 .fish{
 	display: flex;
 	flex-direction: row;
-  	justify-content: space-around;
-  	flex-wrap: wrap;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .fishchild img{
 	border: solid;
-  	border-width: 2px;
-  	border-color: #000;
-  	border-radius: 8px;
+  border-width: 2px;
+  border-color: #000;
+  border-radius: 8px;
 }
 
 .fishchild img:hover{

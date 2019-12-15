@@ -1,0 +1,8 @@
+Technical Notes:
+
+heroku login
+- login to heroku cli
+
+heroku logs --app riddim-archive
+- get logs after commit
+ 

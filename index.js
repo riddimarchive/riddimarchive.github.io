@@ -6,7 +6,7 @@ const fs = require('fs');
 const app = express();
 
 // server configuration
-const PORT = 8080;
+const port = process.env.PORT || 80
 
 // create a route for the app
 app.use(express.static('public'));

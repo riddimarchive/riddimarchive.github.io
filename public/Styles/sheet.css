@@ -2,6 +2,8 @@ body {
   font-family: halyard-display, sans-serif;
   font-style: normal;
   font-weight: 100;
+  color: white;
+  background-color: #778899;
 }
 
 .intro{

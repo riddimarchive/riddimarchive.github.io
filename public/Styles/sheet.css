@@ -4,7 +4,9 @@ body {
   font-weight: 100;
 }
 
-
+.intro{
+  font-weight: 600;
+}
 
 .header{
 	display: flex;

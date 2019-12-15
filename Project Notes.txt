@@ -1,0 +1,51 @@
+Notes on Riddim Archive:
+
+Project for preserving the music of the scene and allowing for easy access
+
+
+-Languages:
+	-HTML5
+	-CSS + Flexbox
+	-Javascript
+	-NodeJS (server)
+
+-Tools:
+	-Express
+	.Runs Server, in npm
+
+	-Github
+	.Update project, keep repository
+
+	-Heroku
+	.Hosting, needs node.js to connect to github
+
+
+-File Hosting choices
+	-Google Drive
+		Prices:
+			-15GB Free
+			-100GB (1.99/month)
+			-200GB (2.99/month)*
+			-2TB (9.99/month)
+
+		-possibly large file size
+		-will have to reupload shit constantly
+		-bad website perceptionif they can't get things
+
+	-Mega
+		Prices:
+			-50GB Free*
+			-200GB (5.55/month)
+			-1TB (11.11/month)
+			-4TB (22.23/month)
+		-a tad sketchy
+		-more expensive, but highest free storage
+		-but probably more reliable for excess downloads
+		-ui will be confusing for users, because of the desktop app bullshit
+
+
+
+
+
+
+

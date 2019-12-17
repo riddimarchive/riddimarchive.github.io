@@ -43,6 +43,15 @@ Project for preserving the music of the scene and allowing for easy access
 		-but probably more reliable for excess downloads
 		-ui will be confusing for users, because of the desktop app bullshit
 
+-Style / Aesthetic
+	-Retro Fonts
+	-1920-40's Aesthetic
+	-Think Retro
+	-fonts:
+		-andes
+		-anastasia
+		-broadway
+
 
 
 

@@ -6,3 +6,16 @@ heroku login
 heroku logs --app riddim-archive
 - get logs after commit
  
+ 
+ Google MP3 Embed:
+ 
+ Get Link URL:
+https://drive.google.com/file/d/1n9lnHF031ITw9vsiWv6bvRTXsN6bVzEF/view
+Now all you have to do is replace /view with /preview and wrap the modified URL in an IFRAME tag as shown below:
+
+<iframe 
+  frameborder="0" 
+  width="400"     
+  height="200"
+  src="https://drive.google.com/file/d/1n9lnHF031ITw9vsiWv6bvRTXsN6bVzEF/preview">    
+</iframe>

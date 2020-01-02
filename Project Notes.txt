@@ -8,9 +8,9 @@ Project for preserving the music of the scene and allowing for easy access
 	-CSS + Flexbox
 	-Javascript
 	-NodeJS (server)
-	-MySQL
+	-ClearDB MySQL
 
--Tools:
+-Hosting Tools:
 	-Express
 	.Runs Server, in npm
 
@@ -19,7 +19,6 @@ Project for preserving the music of the scene and allowing for easy access
 
 	-Heroku
 	.Hosting, needs node.js to connect to github
-
 
 -File Hosting choices
 	-Google Drive
@@ -47,12 +46,11 @@ MySQL
 	-Will be Easier to add, edit and remove data
 		-can set up a gui site to make things
 	
-User Features:
+Features I Might Want:
 	-Do I want User Logins and Favorites?
-	-Do I want them to be able to stream the songs?
-	-Is that possible with Google?
-	-Possible Alternatives if that is not the case:
-		-Soundcloud? Very harsh limitations on that.
+	-Do I want a search, Maybe we can have buttons for the individual crews
+	-Create a tag system, for Sounds/Style
+	-I don't want static page transfers, should be more fluid. 
 	
 
 

@@ -19,6 +19,9 @@ Project for preserving the music of the scene and allowing for easy access
 
 	-Heroku
 	.Hosting, needs node.js to connect to github
+	
+	-SequelPro (Mac OSX)
+	.Manage SQL queries Fast
 
 -File Hosting choices
 	-Google Drive

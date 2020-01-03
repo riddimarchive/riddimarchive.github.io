@@ -1,5 +1,8 @@
 Technical Notes:
 
+HEROKU STUFF
+--------------------------
+
 heroku login
 - login to heroku cli
 
@@ -7,7 +10,8 @@ heroku logs --app riddim-archive
 - get logs after commit
  
  
- Google MP3 Embed:
+GOOGLE MP3 EMBED
+--------------------------
  
  Get Link URL:
 https://drive.google.com/file/d/1n9lnHF031ITw9vsiWv6bvRTXsN6bVzEF/view
@@ -19,3 +23,14 @@ Now all you have to do is replace /view with /preview and wrap the modified URL 
   height="200"
   src="https://drive.google.com/file/d/1n9lnHF031ITw9vsiWv6bvRTXsN6bVzEF/preview">    
 </iframe>
+
+
+CLEARDB STUFF
+--------------------------
+
+CLEARDB_DATABASE_URL: mysql://b8dc84c4a9c06c:a68f391b@us-cdbr-iron-east-05.cleardb.net/heroku_39e0441affd422c?reconnect=true
+
+Username: b8dc84c4a9c06c
+Pass: a68f391b
+Host: us-cdbr-iron-east-05.cleardb.net
+Database Name: heroku_39e0441affd422c

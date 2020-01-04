@@ -45,10 +45,15 @@ connecty.connect((err) => {
   console.log('Connected');
 });
 
-connecty.end((err) =>{
-  console.log('cant end connecty');
-});
+//test query
 
+connecty.query('SELECT * FROM tracks', (error, tracks, fields) => {
+  if (error) {
+    console.error('An error occurred while executing the query');
+    throw error;
+  }
+  console.log(tracks);
+});
 
 //end copy
 

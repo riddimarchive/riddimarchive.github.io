@@ -21,6 +21,7 @@
   "homepage": "https://github.com/riddimarchive/riddimarchive.github.io#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "fs": "0.0.1-security"
+    "fs": "0.0.1-security",
+    "mysql": "^2.17.1"
   }
 }

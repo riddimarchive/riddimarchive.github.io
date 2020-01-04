@@ -2,7 +2,7 @@
 const express = require('express');
 const fs = require('fs');
 const mysql = require('mysql');
-const con = require(./dbconnect);
+const con = require('./dbconnect');
 
 // create new express app and save it as "app"
 const app = express();
@@ -27,10 +27,12 @@ app.get('/', (req, res) => {
   	});
 });
 
+con.connect();
+
 //connect to db
 //direct copy from dbconnect.js
 //After test, call the js file into here more cleanly
-
+/*
 const connecty = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USERNAME,
@@ -67,7 +69,7 @@ connecty.end((err) =>{
 
 
 //end copy
-
+*/
 
 // make the server listen to requests
 app.listen(port, () => {

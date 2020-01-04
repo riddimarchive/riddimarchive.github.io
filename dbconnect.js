@@ -1,6 +1,5 @@
 // test connection to database with nodejs
 
-
 const mysql = require('mysql');
 
 const connecty = mysql.createConnection({
@@ -25,3 +24,5 @@ connecty.end((err) =>{
   }
   console.log('Connection ended yo');
 });
+
+module.exports = connecty;

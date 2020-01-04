@@ -1,5 +1,11 @@
 Technical Notes:
 
+NODE STUFF
+--------------------------
+
+(in main directory) npm install
+	-grabs packages and edits json
+
 HEROKU STUFF
 --------------------------
 
@@ -23,3 +29,10 @@ Now all you have to do is replace /view with /preview and wrap the modified URL 
   height="200"
   src="https://drive.google.com/file/d/1n9lnHF031ITw9vsiWv6bvRTXsN6bVzEF/preview">    
 </iframe>
+
+
+Using mysql and Nodejs:
+	-need to prevent DB Credentials from being in my project
+	-store info as config vars
+	-run with process.env in code
+	

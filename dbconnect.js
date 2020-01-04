@@ -19,5 +19,9 @@ connecty.connect((err) => {
 });
 
 connecty.end((err) =>{
-	console.log('cant end connecty');
+  if(err){
+    console.log('cant end connecty');
+    return;
+  }
+  console.log('Connection ended yo');
 });

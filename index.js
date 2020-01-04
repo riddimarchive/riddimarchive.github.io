@@ -42,7 +42,7 @@ connecty.connect((err) => {
     console.log('ERROR COULD NOT CONNECT NERD');
     return;
   }
-  console.log('Connected');
+  console.log('Connected to the DB!!!');
 });
 
 //test query
@@ -54,6 +54,16 @@ connecty.query('SELECT * FROM tracks', (error, tracks, fields) => {
   }
   console.log(tracks);
 });
+
+connecty.end((err) =>{
+  if(err){
+    console.log('cant end connecty');
+    return;
+  }
+  console.log('Connection ended yo');
+});
+
+
 
 //end copy
 

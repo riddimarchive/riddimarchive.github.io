@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
   		res.end();
   	});
 });
-
+/*
 con.connect((err) => {
   if(err){
     console.log('ERROR COULD NOT CONNECT NERD');
@@ -34,7 +34,7 @@ con.connect((err) => {
   }
   console.log('Connected');
 });
-
+*/
 //connect to db
 //direct copy from dbconnect.js
 //After test, call the js file into here more cleanly

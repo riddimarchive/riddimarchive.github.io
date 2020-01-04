@@ -14,7 +14,7 @@ connecty.connect((err) => {
 		console.log('ERROR COULD NOT CONNECT NERD');
 		return;
 	}
-	console.log('Connected');
+	//console.log('Connected');
 });
 
 connecty.end((err) =>{
@@ -22,7 +22,7 @@ connecty.end((err) =>{
     console.log('cant end connecty');
     return;
   }
-  console.log('Connection ended yo');
+ // console.log('Connection ended yo');
 });
 
 module.exports = connecty;

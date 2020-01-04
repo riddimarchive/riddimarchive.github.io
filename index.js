@@ -27,7 +27,13 @@ app.get('/', (req, res) => {
   	});
 });
 
-con.connect();
+con.connect((err) => {
+  if(err){
+    console.log('ERROR COULD NOT CONNECT NERD');
+    return;
+  }
+  console.log('Connected');
+});
 
 //connect to db
 //direct copy from dbconnect.js

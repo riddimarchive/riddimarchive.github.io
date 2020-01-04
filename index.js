@@ -1,7 +1,6 @@
 // import express (after npm install express)
 const express = require('express');
 const fs = require('fs');
-const con = require('dbconnect.js');
 const mysql = require('mysql');
 
 // create new express app and save it as "app"
@@ -31,9 +30,24 @@ app.get('/', (req, res) => {
 //direct copy from dbconnect.js
 //After test, call the js file into here more cleanly
 
+const connecty = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
+});
 
+connecty.connect((err) => {
+  if(err){
+    console.log('ERROR COULD NOT CONNECT NERD');
+    return;
+  }
+  console.log('Connected');
+});
 
-
+connecty.end((err) =>{
+  console.log('cant end connecty');
+});
 
 
 //end copy

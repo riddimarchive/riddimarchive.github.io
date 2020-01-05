@@ -6,6 +6,13 @@
 	<title>Riddim Archive Homepage</title>
 </head>
 <body>
+
+	<script>
+		function btnclick(clicked_id){
+			console.log('artist clicked is ' + clicked_id);
+		}
+  	</script>
+
 	<div class="header">
 		<img src="Images/Logos/Logosmall.png" alt="Images/PageIMG/fail.png">
 	</div>
@@ -40,7 +47,10 @@
   			</div>
   		</div>
 
-		<div class="fishchild"><a href="Pages/ad.html"><img src="Images/Logos/AD.png" alt="Images/PageIMG/fail.png" height="250" width="250"></a>
+		<div class="fishchild">
+			<button id="AD" onclick="btnclick(this.id)">
+				<img src="Images/Logos/AD.png" alt="Images/PageIMG/fail.png" height="250" width="250">
+			</button>
 			<div class="middle">
     			<div class="imgtext">AD</div>
   			</div>

@@ -6,7 +6,9 @@ const db = require('./js/dbconnect');
 const request = require('request');
 
 // create new express app and save it as "app"
-var window.app = express();
+window.app = express();
+
+var app = window.app;
 
 // server configuration
 const port = process.env.PORT || 80

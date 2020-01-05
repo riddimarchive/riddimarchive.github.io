@@ -6,14 +6,11 @@
 	<title>Riddim Archive Homepage</title>
 
 	<script>
-		var express = require('express');
-		var app = express();
-
 		function btnclick(clicked_id){
 			console.log('artist clicked is ' + clicked_id);
 
 
-			app.get('/:clicked_id', function(req,res){
+			window.app.get('/:clicked_id', function(req,res){
 
 				res.writeHead(200, { 'Content-Type': 'text/html'});
 

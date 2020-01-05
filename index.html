@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="Styles/sheet.css">
+	<script src="./index.js"></script>
 	<title>Riddim Archive Homepage</title>
 
 	<script>
@@ -10,7 +11,7 @@
 			console.log('artist clicked is ' + clicked_id);
 
 
-			window.app.get('/:clicked_id', function(req,res){
+			app.get('/:clicked_id', function(req,res){
 
 				res.writeHead(200, { 'Content-Type': 'text/html'});
 

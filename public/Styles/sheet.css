@@ -16,6 +16,12 @@ body {
   height: 100%;
 }
 
+.footer{
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
 .fish{
 	display: flex;
 	flex-direction: row;

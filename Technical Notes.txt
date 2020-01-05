@@ -35,4 +35,32 @@ Using mysql and Nodejs:
 	-need to prevent DB Credentials from being in my project
 	-store info as config vars
 	-run with process.env in code
+
+
+
+SQL CONNECTION FUNCTIONS:
+
+connecty.connect((err) => {
+	if(err){
+		console.log('ERROR COULD NOT CONNECT NERD');
+		return;
+	}
+	console.log('Connected');
+});
+
+connecty.end((err) =>{
+  if(err){
+    console.log('cant end connecty');
+    return;
+  }
+ console.log('Connection ended yo');
+});
+
+connecty.query('SELECT * FROM tracks', (error, tracks, fields) => {
+  if (error) {
+    console.error('An error occurred while executing the query');
+    throw error;
+  }
+  console.log(tracks);
+});
 	

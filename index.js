@@ -2,7 +2,7 @@
 const express = require('express');
 const fs = require('fs');
 const mysql = require('mysql');
-const con = require('./dbconnect');
+const db = require('./dbconnect');
 
 // create new express app and save it as "app"
 const app = express();
@@ -26,27 +26,8 @@ app.get('/', (req, res) => {
   		res.end();
   	});
 });
-/*
-con.connect((err) => {
-  if(err){
-    console.log('ERROR COULD NOT CONNECT NERD');
-    return;
-  }
-  console.log('Connected');
-});
-*/
-//connect to db
-//direct copy from dbconnect.js
-//After test, call the js file into here more cleanly
-/*
-const connecty = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
-});
 
-connecty.connect((err) => {
+db.connect((err) => {
   if(err){
     console.log('ERROR COULD NOT CONNECT NERD');
     return;
@@ -56,7 +37,7 @@ connecty.connect((err) => {
 
 //test query
 
-connecty.query('SELECT * FROM tracks', (error, tracks, fields) => {
+db.query('SELECT * FROM tracks', (error, tracks, fields) => {
   if (error) {
     console.error('An error occurred while executing the query');
     throw error;
@@ -64,18 +45,13 @@ connecty.query('SELECT * FROM tracks', (error, tracks, fields) => {
   console.log(tracks);
 });
 
-connecty.end((err) =>{
+db.end((err) =>{
   if(err){
     console.log('cant end connecty');
     return;
   }
   console.log('Connection ended yo');
 });
-
-
-
-//end copy
-*/
 
 // make the server listen to requests
 app.listen(port, () => {

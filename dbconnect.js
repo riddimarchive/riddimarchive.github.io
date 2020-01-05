@@ -9,20 +9,5 @@ const connecty = mysql.createConnection({
 	database: process.env.DB_NAME
 });
 
-connecty.connect((err) => {
-	if(err){
-		console.log('ERROR COULD NOT CONNECT NERD');
-		return;
-	}
-	//console.log('Connected');
-});
-
-connecty.end((err) =>{
-  if(err){
-    console.log('cant end connecty');
-    return;
-  }
- // console.log('Connection ended yo');
-});
 
 module.exports = connecty;

@@ -28,10 +28,6 @@ app.get('/', (req, res) => {
   	});
 });
 
-//test - trying to get artist name from get request
-app.get('/artist/:artist_name', (req,res) => {
-  return res.send(`Artist name is ${artist_name}`);
-});
 
 
 //make databate connection

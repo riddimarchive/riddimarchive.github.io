@@ -2,7 +2,7 @@
 const express = require('express');
 const fs = require('fs');
 const mysql = require('mysql');
-const db = require('./dbconnect');
+const db = require('./js/dbconnect');
 
 // create new express app and save it as "app"
 const app = express();
@@ -27,6 +27,7 @@ app.get('/', (req, res) => {
   	});
 });
 
+//make databate connection
 db.connect((err) => {
   if(err){
     console.log('ERROR COULD NOT CONNECT NERD');
@@ -36,7 +37,6 @@ db.connect((err) => {
 });
 
 //test query
-
 db.query('SELECT * FROM tracks', (error, tracks, fields) => {
   if (error) {
     console.error('An error occurred while executing the query');
@@ -45,6 +45,7 @@ db.query('SELECT * FROM tracks', (error, tracks, fields) => {
   console.log(tracks);
 });
 
+//end database connection
 db.end((err) =>{
   if(err){
     console.log('cant end connecty');

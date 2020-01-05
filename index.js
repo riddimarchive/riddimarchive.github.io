@@ -28,6 +28,11 @@ app.get('/', (req, res) => {
   	});
 });
 
+app.get('/artist/:artist_name', (req,res) => {
+  return res.send(`Artist name is ${artist_name}`);
+});
+
+
 //make databate connection
 db.connect((err) => {
   if(err){

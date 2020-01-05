@@ -37,12 +37,12 @@ db.connect((err) => {
 });
 
 //test query
-db.query('SELECT * FROM tracks', (error, tracks, fields) => {
+db.query('SELECT artist_name FROM artists', (error, artists, fields) => {
   if (error) {
     console.error('An error occurred while executing the query');
     throw error;
   }
-  console.log(tracks);
+  console.log(artists);
 });
 
 //end database connection

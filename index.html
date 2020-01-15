@@ -5,30 +5,6 @@
 	<link rel="stylesheet" type="text/css" href="Styles/sheet.css">
 	<title>Riddim Archive Homepage</title>
 
-	<script>
-		function btnclick(clicked_id){
-			console.log('artist clicked is ' + clicked_id);
-
-
-			app.get('/:clicked_id', function(req,res){
-
-				res.writeHead(200, { 'Content-Type': 'text/html'});
-
-	  			fs.readFile(clicked_id + '.html', function(error, data){
-	  				if(error){
-	  					res.writeHead(404);
-	  					res.write('File No Found Yo');
-	  				}else{
-	        			console.log("WRITING DATA YO");
-	  					res.write(data);
-	  				}
-	  				res.end();
-					});
-			});
-		};
-
-  	</script>
-
 
 </head>
 <body>
@@ -68,9 +44,7 @@
   		</div>
 
 		<div class="fishchild">
-			<button id="AD" onclick="btnclick(this.id)">
 				<img src="Images/Logos/AD.png" alt="Images/PageIMG/fail.png" height="250" width="250">
-			</button>
 			<div class="middle">
     			<div class="imgtext">AD</div>
   			</div>

@@ -4,6 +4,7 @@ const fs = require('fs');
 const mysql = require('mysql');
 const db = require('./js/dbconnect');
 const request = require('request');
+const path = require('path');
 
 // create new express app and save it as "app"
 const app = express();
@@ -11,10 +12,21 @@ const app = express();
 // server configuration
 const port = process.env.PORT || 80
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine','pug');
+
+
+
 // create a route for the app
 app.use(express.static('public'));
 console.log("public acquired");
 app.get('/', (req, res) => {
+  res.render('index',{
+    title:'Riddim Archive Index'
+  });
+
+
+  /*
   	res.writeHead(200, { 'Content-Type': 'text/html'});
   	fs.readFile('index.html', function(error, data){
   		if(error){
@@ -25,7 +37,8 @@ app.get('/', (req, res) => {
   			res.write(data);
   		}
   		res.end();
-  	});
+    */
+  
 });
 
 

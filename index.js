@@ -21,10 +21,11 @@ app.set('view engine','pug');
 app.use(express.static('public'));
 console.log("public acquired");
 app.get('/', (req, res) => {
-  res.render('index',{
+  res.render('homepage',{
     title:'Riddim Archive Index'
   });
 
+  console.log("Homepage Pug Loaded!!!");
 
   /*
   	res.writeHead(200, { 'Content-Type': 'text/html'});
@@ -38,9 +39,13 @@ app.get('/', (req, res) => {
   		}
   		res.end();
     */
-  
 });
 
+app.get('/artists/a3', function(req,res){
+  res.render('a3',{
+    title:'a3'
+  });
+});
 
 
 //make databate connection

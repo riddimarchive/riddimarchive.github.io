@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
     */
 });
 
-app.get('/artists/a3', function(req,res){
+app.get('/a3', function(req,res){
   res.render('a3',{
     title:'a3'
   });

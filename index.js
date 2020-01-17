@@ -43,40 +43,71 @@ app.get('/', (req, res) => {
 
 app.get('/a3', function(req,res){
 
-  var test;
+  //declare array - query will be stored here
+  var artist = [];
+  var tracks = [];
 
+  //connect to db
   db.connect((err) => {
   if(err){
     console.log('ERROR COULD NOT CONNECT NERD');
     return;
   }
   console.log('Connected to the DB!!!');
-});
+  });
 
+  //first query - get artist info
   db.query('SELECT * FROM artists WHERE artist_name = "A3"', (error, result, fields) => {
-  if (error) {
-    console.error('An error occurred while executing the query');
-    throw error;
-  }
-  console.log(result);
-  test = result[0].id;
-  console.log("Test in" + test);
-  console.log(result[0].artist_name);
-});
+    if (error) {
+      console.error('An error occurred while executing the query');
+      throw error;
+    }
+    console.log(result);
+    var info = {
+        'id':result[0].id,
+        'artist_name':result[0].artist_name,
+        'crew':result[0].crew,
+        'country':result[0].country
+      }
+      //Add object into array
+      artist.push(info);
 
+  });
+
+  //second query - get tracks from that artist
+  db.query('SELECT * FROM tracks WHERE artist_name = "AD"', (error, result, fields) => {
+    if (error) {
+      console.error('An error occurred while executing the query');
+      throw error;
+    }
+    console.log(result);
+    for (var i = 0; i < rows.length; i++) {
+      var row = {
+        'track_name':rows[i].id,
+        'artist_name':rows[i].artist_name,
+        'drive_url':rows[i].drive_url
+      }
+      //Add object into array
+      tracks.push(row);
+
+    }
+  });
+
+  //end connection
   db.end((err) =>{
   if(err){
     console.log('cant end connecty');
     return;
   }
   console.log('Connection ended yo');
-});
+  });
 
-  console.log("Test out" + test);
   res.render('a3',{
     artist_name:'A3',
-    id: test
+    artist: artist,
+    tracks: tracks
   });
+
 });
 
 /*

@@ -57,7 +57,7 @@ app.get('/a3', function(req,res){
     console.error('An error occurred while executing the query');
     throw error;
   }
-  console.log(result);
+  let id = result.id;
 });
 
   db.end((err) =>{
@@ -70,7 +70,8 @@ app.get('/a3', function(req,res){
 
 
   res.render('a3',{
-    artist_name:'A3'
+    artist_name:'A3',
+    id: id
   });
 });
 

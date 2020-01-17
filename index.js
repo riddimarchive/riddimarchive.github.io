@@ -74,7 +74,7 @@ app.get('/a3', function(req,res){
   });
 });
 
-
+/*
 //make databate connection
 db.connect((err) => {
   if(err){
@@ -101,7 +101,7 @@ db.end((err) =>{
   }
   console.log('Connection ended yo');
 });
-
+*/
 // make the server listen to requests
 app.listen(port, () => {
   console.log(`Server running at: http://localhost:${port}/`);

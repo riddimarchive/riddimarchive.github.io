@@ -1,15 +1,14 @@
 extends index
 
 block content
-	h1 Artist name is #{artist_name}
-	h2 #{tracks}
-	h2 #{artist}
+	h1 Artist name is #{artist_name}	
 	br
+	h1= track[1].drive_url
 	ul
 		each track, i in tracks
-			li= track.id
-			li= track.artist_name
-			li= track.drive_url
+			li= #{track.id}
+			li= #{track.artist_name}
+			li= #{track.drive_url}
 
 	button(onclick='goBack()') Go Back
 	script.

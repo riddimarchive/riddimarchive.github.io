@@ -96,6 +96,7 @@ app.get('/a3', function(req,res){
     }
   });
 
+
   //end connection
   db.end((err) =>{
   if(err){

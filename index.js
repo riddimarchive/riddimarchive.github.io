@@ -43,12 +43,29 @@ app.get('/', (req, res) => {
 
 app.get('/a3', function(req,res){
 
+
+  db.connect((err) => {
+  if(err){
+    console.log('ERROR COULD NOT CONNECT NERD');
+    return;
+  }
+  console.log('Connected to the DB!!!');
+});
+
   db.query('SELECT * FROM artists WHERE artist_name = "A3"', (error, artist, fields) => {
   if (error) {
     console.error('An error occurred while executing the query');
     throw error;
   }
   console.log('the artist info is ' + artist);
+});
+
+  db.end((err) =>{
+  if(err){
+    console.log('cant end connecty');
+    return;
+  }
+  console.log('Connection ended yo');
 });
 
 

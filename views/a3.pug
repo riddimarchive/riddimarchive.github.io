@@ -1,7 +1,7 @@
 extends index
 
 block content
-	h1= artist.country
+	h1 Artist name is #{artist_name}
 
 	button(onclick='goBack()') Go Back
 	script.
@@ -11,12 +11,5 @@ block content
 	br
 	br
 	br
-
-	ul
-		each info, i in artist
-			li= info.id
-			li= info.artist_name
-			li= info.crew
-			li= info.country
 
 	iframe(frameborder='0' src='https://drive.google.com/file/d/1n9lnHF031ITw9vsiWv6bvRTXsN6bVzEF/preview')

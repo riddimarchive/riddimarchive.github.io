@@ -59,10 +59,8 @@ app.get('/a3', function(req,res){
     throw error;
   }
   console.log(result);
-  Object.keys(result).forEach(function(key) {
-      var row = result[key];
-      console.log(row.id);
-    });
+  var row = result[key];
+  console.log(row.id);
 });
 
   db.end((err) =>{

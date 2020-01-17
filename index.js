@@ -59,8 +59,8 @@ app.get('/a3', function(req,res){
     throw error;
   }
   console.log(result);
-  var row = result[key];
-  console.log(row.id);
+  console.log(result.id);
+  console.log(result.artist_name);
 });
 
   db.end((err) =>{

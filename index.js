@@ -52,12 +52,12 @@ app.get('/a3', function(req,res){
   console.log('Connected to the DB!!!');
 });
 
-  db.query('SELECT * FROM artists WHERE artist_name = "A3"', (error, artist, fields) => {
+  var result = db.query('SELECT * FROM artists WHERE artist_name = "A3"', (error, artists, fields) => {
   if (error) {
     console.error('An error occurred while executing the query');
     throw error;
   }
-  console.log('the artist info is ' + artist);
+  console.log('the artist info is ' + result);
 });
 
   db.end((err) =>{

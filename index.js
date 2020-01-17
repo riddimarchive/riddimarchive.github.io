@@ -59,6 +59,7 @@ app.get('/a3', function(req,res){
     throw error;
   }
   id = result.id;
+  console.log(id);
 });
 
   db.end((err) =>{

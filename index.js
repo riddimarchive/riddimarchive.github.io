@@ -58,8 +58,9 @@ app.get('/a3', function(req,res){
     console.error('An error occurred while executing the query');
     throw error;
   }
-  id = result.id;
-  console.log(id);
+  console.log(result);
+  console.log(result.id);
+  console.log("the id is " + result.id);
 });
 
   db.end((err) =>{

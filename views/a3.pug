@@ -2,6 +2,8 @@ extends index
 
 block content
 	h1 Artist name is #{artist_name}
+	h2 #{tracks}
+	h2 #{artist}
 	br
 	ul
 		each track, i in tracks
@@ -17,7 +19,7 @@ block content
 	br
 	br
 	br
-	
+
 	ul
 		each info, i in artist
 			li= info.id

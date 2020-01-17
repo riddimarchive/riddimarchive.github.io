@@ -43,6 +43,7 @@ app.get('/', (req, res) => {
 
 app.get('/a3', function(req,res){
 
+  var id;
 
   db.connect((err) => {
   if(err){
@@ -57,7 +58,7 @@ app.get('/a3', function(req,res){
     console.error('An error occurred while executing the query');
     throw error;
   }
-  let id = result.id;
+  id = result.id;
 });
 
   db.end((err) =>{

@@ -1,10 +1,10 @@
 extends index
 
 block content
-	h1 A3
+	h1 Artist name is #{artist_name}
 	button(onclick='goBack()') Go Back
 	script.
 		function goBack() {
 		window.history.back();
 		}
-	iframe(frameborder='0' width='400' height='200' src='https://drive.google.com/file/d/1n9lnHF031ITw9vsiWv6bvRTXsN6bVzEF/preview')
+	iframe(frameborder='0' src='https://drive.google.com/file/d/1n9lnHF031ITw9vsiWv6bvRTXsN6bVzEF/preview')

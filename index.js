@@ -71,6 +71,7 @@ app.get('/a3', function(req,res){
       }
       //Add object into array
       artist.push(info);
+      console.log("artist is" + artist);
 
   });
 
@@ -89,7 +90,7 @@ app.get('/a3', function(req,res){
       }
       //Add object into array
       tracks.push(row);
-
+      console.log("tracks is" + tracks);
     }
   });
 

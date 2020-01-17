@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 
 app.get('/a3', function(req,res){
 
-  var id;
+  var test;
 
   db.connect((err) => {
   if(err){
@@ -59,7 +59,7 @@ app.get('/a3', function(req,res){
     throw error;
   }
   console.log(result);
-  console.log(result[0].id);
+  test = result[0].id;
   console.log(result[0].artist_name);
 });
 
@@ -74,7 +74,7 @@ app.get('/a3', function(req,res){
 
   res.render('a3',{
     artist_name:'A3',
-    id: id
+    id: test
   });
 });
 

@@ -42,8 +42,18 @@ app.get('/', (req, res) => {
 });
 
 app.get('/a3', function(req,res){
+
+  db.query('SELECT * FROM artists WHERE artist_name = "A3"', (error, artist, fields) => {
+  if (error) {
+    console.error('An error occurred while executing the query');
+    throw error;
+  }
+  console.log('the artist info is ' + artist);
+});
+
+
   res.render('a3',{
-    artist_name:'a3'
+    artist_name:'A3'
   });
 });
 

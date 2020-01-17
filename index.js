@@ -57,7 +57,7 @@ app.get('/a3', function(req,res){
     console.error('An error occurred while executing the query');
     throw error;
   }
-  console.log('the artist info is ' + result);
+  console.log('the artist info is ' + result.artist_name);
 });
 
   db.end((err) =>{

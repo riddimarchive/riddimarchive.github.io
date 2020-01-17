@@ -81,11 +81,11 @@ app.get('/a3', function(req,res){
       throw error;
     }
     console.log(result);
-    for (var i = 0; i < rows.length; i++) {
+    for (var i = 0; i < result.length; i++) {
       var row = {
-        'track_name':rows[i].id,
-        'artist_name':rows[i].artist_name,
-        'drive_url':rows[i].drive_url
+        'track_name':result[i].id,
+        'artist_name':result[i].artist_name,
+        'drive_url':result[i].drive_url
       }
       //Add object into array
       tracks.push(row);

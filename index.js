@@ -43,6 +43,7 @@ app.get('/', (req, res) => {
 
 app.get('/a3', function(req,res){
 
+  var test;
 
   db.connect((err) => {
   if(err){
@@ -58,7 +59,7 @@ app.get('/a3', function(req,res){
     throw error;
   }
   console.log(result);
-  var test = result[0].id;
+  test = result[0].id;
   console.log("Test in" + test);
   console.log(result[0].artist_name);
 });

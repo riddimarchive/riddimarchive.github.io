@@ -43,7 +43,6 @@ app.get('/', (req, res) => {
 
 app.get('/a3', function(req,res){
 
-  var test;
 
   db.connect((err) => {
   if(err){
@@ -59,7 +58,8 @@ app.get('/a3', function(req,res){
     throw error;
   }
   console.log(result);
-  test = result[0].id;
+  var test = result[0].id;
+  console.log("Test in" + test);
   console.log(result[0].artist_name);
 });
 
@@ -71,7 +71,7 @@ app.get('/a3', function(req,res){
   console.log('Connection ended yo');
 });
 
-
+  console.log("Test out" + test);
   res.render('a3',{
     artist_name:'A3',
     id: test

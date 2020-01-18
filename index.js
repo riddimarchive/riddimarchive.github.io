@@ -81,11 +81,10 @@ app.get('/a3', function(req,res){
         'crew':result[0].crew,
         'country':result[0].country
       }
-      console.log(info);
       //Add object into array
       artist.push(info);
-      //console.log("vvv artist");
-      //console.log(artist);
+      console.log("vvv artist");
+      console.log(artist);
 
   });
 
@@ -102,10 +101,9 @@ app.get('/a3', function(req,res){
         'drive_url':result[i].drive_url
       }
       //Add object into array
-      console.log(row);
       tracks.push(row);
-      //console.log("vvv tracks");
-      //console.log(tracks);
+      console.log("vvv tracks");
+      console.log(tracks);
     }
   });
 

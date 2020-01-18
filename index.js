@@ -3,7 +3,6 @@ const express = require('express');
 const fs = require('fs');
 const mysql = require('mysql');
 const db = require('./js/dbconnect');
-const db2 = require('./js/dbconnect');
 const request = require('request');
 const path = require('path');
 const createError = require('http-errors');
@@ -89,17 +88,8 @@ app.get('/a3', function(req,res){
 
   });
 
-  //connect to db2
-  db2.connect((err) => {
-  if(err){
-    console.log('ERROR COULD NOT CONNECT NERD');
-    return;
-  }
-  console.log('Connected to the DB!!!');
-  });
-
   //second query - get tracks from that artist
-  db2.query('SELECT * FROM tracks WHERE artist_name = "AD"', (error, result, fields) => {
+  db.query('SELECT * FROM tracks WHERE artist_name = "AD"', (error, result, fields) => {
     if (error) {
       console.error('An error occurred while executing the query');
       throw error;
@@ -119,15 +109,6 @@ app.get('/a3', function(req,res){
 
   //end connection
   db.end((err) =>{
-  if(err){
-    console.log('cant end connecty');
-    return;
-  }
-  console.log('Connection ended yo');
-  });
-  
-  //end connection
-  db2.end((err) =>{
   if(err){
     console.log('cant end connecty');
     return;

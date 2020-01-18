@@ -84,7 +84,7 @@ app.get('/a3', function(req,res){
       //Add object into array
       artist.push(info);
       console.log("vvv artist");
-      console.log(artist);
+      //console.log(artist);
 
   });
 
@@ -103,7 +103,7 @@ app.get('/a3', function(req,res){
       //Add object into array
       tracks.push(row);
       console.log("vvv tracks");
-      console.log(tracks);
+      //console.log(tracks);
     }
   });
 
@@ -116,6 +116,8 @@ app.get('/a3', function(req,res){
   console.log('Connection ended yo');
   });
 
+  console.log(artist);
+  console.log(tracks);
   res.render('a3',{
     artist_name:'A3',
     artist: artist,

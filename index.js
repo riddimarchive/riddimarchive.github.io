@@ -13,13 +13,14 @@ const app = express();
 // server configuration
 const port = process.env.PORT || 80
 
+//set pug as view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine','pug');
 
-
-// create a route for the app
+// create public folders in express
 app.use(express.static('public'));
-console.log("public acquired");
+
+//init get - load home page
 app.get('/', (req, res) => {
   res.render('homepage',{
     title:'Riddim Archive Index'
@@ -27,35 +28,32 @@ app.get('/', (req, res) => {
 
   console.log("Homepage Pug Loaded!!!");
 
-// error page route
-app.use((req, res, next) => {
-  return next(createError(404, 'File Not Found'));
+  // error page route
+  app.use((req, res, next) => {
+    return next(createError(404, 'File Not Found'));
+  });
+
+  app.use((err, req, res, next) => {
+    res.locals.message = err.message;
+    const status = err.status || 500;
+    res.locals.status = status;
+    res.status(status);
+    res.render('error');
+  });
+
 });
 
-app.use((err, req, res, next) => {
-  res.locals.message = err.message;
-  const status = err.status || 500;
-  res.locals.status = status;
-  res.status(status);
-  res.render('error');
+app.get('/home', (req, res) => {
+  res.render('homepage',{
+    title:'Riddim Archive Index'
+  });
+
+  console.log("Returned Home!!!");
+
 });
 
 
-
-  /*
-  	res.writeHead(200, { 'Content-Type': 'text/html'});
-  	fs.readFile('index.html', function(error, data){
-  		if(error){
-  			res.writeHead(404);
-  			res.write('File No Found Yo');
-  		}else{
-        console.log("WRITING DATA YO");
-  			res.write(data);
-  		}
-  		res.end();
-    */
-});
-
+//test get - first artist page
 app.get('/a3', function(req,res){
 
   //declare array - query will be stored here
@@ -77,7 +75,6 @@ app.get('/a3', function(req,res){
       console.error('An error occurred while executing the query');
       throw error;
     }
-    console.log(result);
     var info = {
         'id':result[0].id,
         'artist_name':result[0].artist_name,
@@ -97,7 +94,6 @@ app.get('/a3', function(req,res){
       console.error('An error occurred while executing the query');
       throw error;
     }
-    console.log(result);
     for (var i = 0; i < result.length; i++) {
       var row = {
         'track_name':result[i].id,
@@ -128,34 +124,6 @@ app.get('/a3', function(req,res){
 
 });
 
-/*
-//make databate connection
-db.connect((err) => {
-  if(err){
-    console.log('ERROR COULD NOT CONNECT NERD');
-    return;
-  }
-  console.log('Connected to the DB!!!');
-});
-
-//test query
-db.query('SELECT artist_name FROM artists', (error, artists, fields) => {
-  if (error) {
-    console.error('An error occurred while executing the query');
-    throw error;
-  }
-  console.log(artists);
-});
-
-//end database connection
-db.end((err) =>{
-  if(err){
-    console.log('cant end connecty');
-    return;
-  }
-  console.log('Connection ended yo');
-});
-*/
 // make the server listen to requests
 app.listen(port, () => {
   console.log(`Server running at: http://localhost:${port}/`);

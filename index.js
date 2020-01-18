@@ -83,7 +83,7 @@ app.get('/a3', function(req,res){
       }
       //Add object into array
       artist.push(info);
-      console.log("vvv artist");
+      //console.log("vvv artist");
       //console.log(artist);
 
   });
@@ -102,7 +102,7 @@ app.get('/a3', function(req,res){
       }
       //Add object into array
       tracks.push(row);
-      console.log("vvv tracks");
+      //console.log("vvv tracks");
       //console.log(tracks);
     }
   });

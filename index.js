@@ -5,6 +5,7 @@ const mysql = require('mysql');
 const db = require('./js/dbconnect');
 const request = require('request');
 const path = require('path');
+const createError = require('http-errors');
 
 // create new express app and save it as "app"
 const app = express();
@@ -16,7 +17,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine','pug');
 
 
-
 // create a route for the app
 app.use(express.static('public'));
 console.log("public acquired");
@@ -26,6 +26,21 @@ app.get('/', (req, res) => {
   });
 
   console.log("Homepage Pug Loaded!!!");
+
+// error page route
+app.use((req, res, next) => {
+  return next(createError(404, 'File Not Found'));
+});
+
+app.use((err, req, res, next) => {
+  res.locals.message = err.message;
+  const status = err.status || 500;
+  res.locals.status = status;
+  res.status(status);
+  res.render('error');
+});
+
+
 
   /*
   	res.writeHead(200, { 'Content-Type': 'text/html'});

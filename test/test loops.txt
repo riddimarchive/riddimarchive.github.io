@@ -1,0 +1,15 @@
+table
+		for track in tracks
+			tr
+				td= track.id
+				td= track.artist_name
+				td= track.drive_url
+
+
+table
+		for info in artist
+			tr
+				td= info.id
+				td= info.artist_name
+				td= info.crew
+				td= info.country

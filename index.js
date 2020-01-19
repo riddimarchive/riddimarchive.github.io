@@ -115,6 +115,7 @@ app.get('/a3', function(req,res){
     return;
   }
   console.log('Connection ended yo');
+  });
 
   //not in scope - this returns nothing - FIX!!!
   console.log(artist);
@@ -124,9 +125,6 @@ app.get('/a3', function(req,res){
     artist: artist,
     tracks: tracks
   });
-  });
-
-  
 
 });
 

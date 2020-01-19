@@ -70,7 +70,7 @@ app.get('/a3', function(req,res){
   });
 
   //first query - get artist info
-  db.query('SELECT * FROM artists WHERE artist_name = "A3"', (error, result, fields) => {
+  artist = db.query('SELECT * FROM artists WHERE artist_name = "A3"', (error, result, fields) => {
     if (error) {
       console.error('An error occurred while executing the query');
       throw error;
@@ -83,13 +83,14 @@ app.get('/a3', function(req,res){
       }
       //Add object into array
       artist.push(info);
-      console.log("vvv artist");
-      console.log(artist);
+      //console.log("vvv artist");
+      //console.log(artist);
 
+      return artist;
   });
 
   //second query - get tracks from that artist
-  db.query('SELECT * FROM tracks WHERE artist_name = "AD"', (error, result, fields) => {
+  tracks = db.query('SELECT * FROM tracks WHERE artist_name = "AD"', (error, result, fields) => {
     if (error) {
       console.error('An error occurred while executing the query');
       throw error;
@@ -102,8 +103,10 @@ app.get('/a3', function(req,res){
       }
       //Add object into array
       tracks.push(row);
-      console.log("vvv tracks");
-      console.log(tracks);
+      //console.log("vvv tracks");
+      //console.log(tracks);
+
+      return tracks;
     }
   });
 

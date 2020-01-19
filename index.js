@@ -75,7 +75,7 @@ app.get('/a3', function(req,res){
       console.error('An error occurred while executing the query');
       throw error;
     }
-    var artist = new Object;
+    var artist = new Object();
     var info = {
         'id':result[0].id,
         'artist_name':result[0].artist_name,

@@ -57,7 +57,7 @@ app.get('/home', (req, res) => {
 app.get('/a3', function(req,res){
 
   //declare array - query will be stored here
-  var artist = new Array();
+  var artist = new Object();
   var tracks = new Array();
 
   //connect to db
@@ -75,19 +75,15 @@ app.get('/a3', function(req,res){
       console.error('An error occurred while executing the query');
       throw error;
     }
-    var artist = new Array();
-    var info = {
-        'id':result[0].id,
-        'artist_name':result[0].artist_name,
-        'crew':result[0].crew,
-        'country':result[0].country
-      }
-      //Add object into array
-      artist.push(info);
-      //console.log("vvv artist");
-      //console.log(artist);
 
-      return artist;
+    var artist = new Object();
+      artist['id'] = result[0].id;
+      artist['artist_name'] = result[0].artist_name;
+      artist['crew'] = result[0].crew;
+      artist['country'] = result[0].country;
+    
+    return artist;
+    
   });
 
   //second query - get tracks from that artist

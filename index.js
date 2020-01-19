@@ -70,7 +70,7 @@ app.get('/a3', function(req,res){
   });
 
   //first query - get artist info
-  db.query('SELECT * FROM artists WHERE artist_name = "A3"', (error, result, fields) => {
+  artist = db.query('SELECT * FROM artists WHERE artist_name = "A3"', (error, result, fields) => {
     if (error) {
       console.error('An error occurred while executing the query');
       throw error;
@@ -83,7 +83,7 @@ app.get('/a3', function(req,res){
       artist['country'] = result[0].country;
     
     return artist;
-    
+
   });
 
   //second query - get tracks from that artist

@@ -17,8 +17,7 @@ block content
 	p Track 1: #{tracks[0].artist_name} - #{tracks[0].track_name}
 	p #{tracks[0].drive_url}
 	test= 'https://drive.google.com/file/d/#{tracks[0].drive_url}/preview'
-	p test
-	iframe(frameborder='0' src=test)
+	iframe(frameborder='0' src='test')
 
 	p Track 2: #{tracks[1].artist_name} - #{tracks[1].track_name}
 	iframe(frameborder='0' src='https://drive.google.com/file/d/#{tracks[1].drive_url}/preview')

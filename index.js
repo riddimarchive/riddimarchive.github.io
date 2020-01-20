@@ -67,14 +67,14 @@ app.get('/a3', function(req,res){
           var db = createConnection();
 
           await querie.connect(db);
-          let result = await querie.getArtistInfo(db, 'AD');
+          let result = await querie.getArtistInfo(db, 'A3');
 
           artist.id = result[0].id;
           artist.artist_name = result[0].artist_name;
           artist.crew = result[0].crew;
           artist.country = result[0].country;
 
-          let tresult = await querie.getAllTracksFromArtist(db, 'AD');
+          let tresult = await querie.getAllTracksFromArtist(db, 'A3');
 
           for (var i = 0; i < tresult.length; i++) {
             var row = {

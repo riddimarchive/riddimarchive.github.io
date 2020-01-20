@@ -14,14 +14,17 @@ block content
 	br
 	p ID is #{artist.id}. Artist Name is #{artist.artist_name}.
 	
+	p Track 1: #{tracks[0].artist_name} - #{tracks[0].track_name}
+	iframe(frameborder='0' src='https://drive.google.com/file/d/#{tracks[0].drive_url}/preview')
 
-	p Track 1: #{tracks[0].track_name}.
-	iframe(frameborder='0' src='https://drive.google.com/file/d/1n9lnHF031ITw9vsiWv6bvRTXsN6bVzEF/preview')
+	p Track 2: #{tracks[1].artist_name} - #{tracks[1].track_name}
+	iframe(frameborder='0' src='https://drive.google.com/file/d/#{tracks[1].drive_url}/preview')
 
-	ul
-		for i in tracks
-			li= tracks[i].track_name
-			li= tracks[i].artist_name
-			li= tracks[i].drive_url
-			li= 'Hello World'
+	p Track 3: #{tracks[2].artist_name} - #{tracks[2].track_name}
+	iframe(frameborder='0' src='https://drive.google.com/file/d/#{tracks[2].drive_url}/preview')
+
+	
+
+	
+
 			

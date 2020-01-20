@@ -3,6 +3,13 @@ extends index
 block content
 	h1 #{artist_name}
 	br
+	button(onclick='goBack()') Go Back
+	script.
+		function goBack() {
+		window.history.back();
+		}
+	br
+	br
 
 	p Track 1: #{tracks[0].artist_name} - #{tracks[0].track_name}
 	iframe(frameborder='0' src=`${tracks[0].drive_url}`)
@@ -12,13 +19,6 @@ block content
 	br
 	p Track 3: #{tracks[2].artist_name} - #{tracks[2].track_name}
 	iframe(frameborder='0' src=`${tracks[2].drive_url}`)
-
-	button(onclick='goBack()') Go Back
-	script.
-		function goBack() {
-		window.history.back();
-		}
-	
 
 	
 

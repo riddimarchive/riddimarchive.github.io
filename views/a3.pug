@@ -14,7 +14,7 @@ block content
 	br
 	p ID is #{artist.id}. Artist Name is #{artist.artist_name}.
 	
-	for i in #{tracks}
+	each i in #{tracks}
 		p= #{tracks[i].artist_name}
 		p= #{tracks[i].track_name}
 

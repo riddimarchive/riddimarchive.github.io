@@ -14,11 +14,10 @@ block content
 	br
 	p ID is #{artist.id}. Artist Name is #{artist.artist_name}.
 	
-	ul
-		each i in tracks
-			li= #{tracks[i].artist_name}
-			li= #{tracks[i].track_name}
-			li= iframe(frameborder='0' src=`${tracks[i].drive_url}`)
+	each i in tracks
+		p= #{tracks[i].artist_name}
+		p= #{tracks[i].track_name}
+		p= iframe(frameborder='0' src=`${tracks[i].drive_url}`)
 
 	p Track 2: #{tracks[1].artist_name} - #{tracks[1].track_name}
 	iframe(frameborder='0' src=`${tracks[1].drive_url}`)

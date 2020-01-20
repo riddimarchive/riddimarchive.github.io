@@ -61,27 +61,40 @@ app.get('/a3', function(req,res){
   var artist = {};
   var tracks = [];
 
-  querie.connect(db).then(function(){
-        querie.getArtistInfo(db, 'AD').then(function(result){
+  async function serverResponse(){
 
-            artist.id = result[0].id;
-            artist.artist_name = result[0].artist_name;
-            artist.crew = result[0].crew;
-            artist.country = result[0].country;
+      await querie.connect(db);
+      let result = await querie.getArtistInfo(db, 'AD');
 
-            querie.end(db).then(function(){
-                  console.log(artist);
-                  console.log(tracks);
-                  res.render('a3',{
-                    artist_name:'A3',
-                    artist: artist,
-                    tracks: tracks
-                  });
-            });
+      artist.id = result[0].id;
+      artist.artist_name = result[0].artist_name;
+      artist.crew = result[0].crew;
+      artist.country = result[0].country;
 
-        });
+      let tresult = await querie.getAllTracksFromArtist(db, 'AD');
 
-  });
+      for (var i = 0; i < tresult.length; i++) {
+        var row = {
+          'track_name':result[i].id,
+          'artist_name':result[i].artist_name,
+          'drive_url':result[i].drive_url
+        }
+        tracks.push(row);
+      }
+
+      await querie.end(db);
+
+      console.log(artist);
+      console.log(tracks);
+
+      res.render('a3',{
+        artist_name:'A3',
+        artist: artist,
+        tracks: tracks
+      });
+  }
+
+  serverResponse();
 
 });
 

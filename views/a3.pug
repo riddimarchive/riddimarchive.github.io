@@ -1,33 +1,23 @@
 extends index
 
 block content
-	h1 Artist name is #{artist_name}
-	h2 #{artist}
+	h1 #{artist_name}
+	br
+
+	p Track 1: #{tracks[0].artist_name} - #{tracks[0].track_name}
+	iframe(frameborder='0' src=`${tracks[0].drive_url}`)
+	br
+	p Track 2: #{tracks[1].artist_name} - #{tracks[1].track_name}
+	iframe(frameborder='0' src=`${tracks[1].drive_url}`)
+	br
+	p Track 3: #{tracks[2].artist_name} - #{tracks[2].track_name}
+	iframe(frameborder='0' src=`${tracks[2].drive_url}`)
 
 	button(onclick='goBack()') Go Back
 	script.
 		function goBack() {
 		window.history.back();
 		}
-	br
-	br
-	br
-	p ID is #{artist.id}. Artist Name is #{artist.artist_name}.
-
-	each track in #{tracks}
-		p Hello!
-	
-
-
-	
-	p Track 1: #{tracks[0].artist_name} - #{tracks[0].track_name}
-	iframe(frameborder='0' src=`${tracks[0].drive_url}`)
-
-	p Track 2: #{tracks[1].artist_name} - #{tracks[1].track_name}
-	iframe(frameborder='0' src=`${tracks[1].drive_url}`)
-
-	p Track 3: #{tracks[2].artist_name} - #{tracks[2].track_name}
-	iframe(frameborder='0' src=`${tracks[2].drive_url}`)
 	
 
 	

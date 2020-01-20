@@ -75,7 +75,7 @@ app.get('/a3', function(req,res){
 
       for (var i = 0; i < tresult.length; i++) {
         var row = {
-          'track_name':tresult[i].id,
+          'track_name':tresult[i].track_name,
           'artist_name':tresult[i].artist_name,
           'drive_url':tresult[i].drive_url
         }

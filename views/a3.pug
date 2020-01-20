@@ -14,7 +14,7 @@ block content
 	br
 	p ID is #{artist.id}. Artist Name is #{artist.artist_name}.
 	
-	each i in tracks
+	for i in #{tracks}
 		p= #{tracks[i].artist_name}
 		p= #{tracks[i].track_name}
 		p= iframe(frameborder='0' src=`${tracks[i].drive_url}`)

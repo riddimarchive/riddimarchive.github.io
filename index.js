@@ -1,8 +1,7 @@
 // import express (after npm install express)
 const express = require('express');
 const fs = require('fs');
-const mysql = require('mysql');
-const db = require('./js/dbconnect');
+const createConnection = require('./js/dbconnect');
 const request = require('request');
 const path = require('path');
 const createError = require('http-errors');
@@ -61,8 +60,12 @@ app.get('/a3', function(req,res){
   var artist = {};
   var tracks = [];
 
+
   async function serverResponse(){
       try{
+
+          var db = createConnection();
+
           await querie.connect(db);
           let result = await querie.getArtistInfo(db, 'AD');
 

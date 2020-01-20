@@ -57,8 +57,8 @@ app.get('/home', (req, res) => {
 app.get('/a3', function(req,res){
 
   //declare array - query will be stored here
-  var artist = new Object();
-  var tracks = new Array();
+  var artist = {};
+  var tracks = [];
 
   //connect to db
   db.connect((err) => {
@@ -67,6 +67,8 @@ app.get('/a3', function(req,res){
     return;
   }
   console.log('Connected to the DB!!!');
+  }).then(function(){
+    console.log('THEN CONNECTY');
   });
 
   //first query - get artist info
@@ -81,7 +83,9 @@ app.get('/a3', function(req,res){
       artist['artist_name'] = result[0].artist_name;
       artist['crew'] = result[0].crew;
       artist['country'] = result[0].country;
-    
+
+    console.log("vvv artist")
+    console.log(artist);
     return artist;
 
   });
@@ -101,8 +105,8 @@ app.get('/a3', function(req,res){
       }
       //Add object into array
       tracks.push(row);
-      //console.log("vvv tracks");
-      //console.log(tracks);
+      console.log("vvv tracks");
+      console.log(tracks);
 
       return tracks;
     }

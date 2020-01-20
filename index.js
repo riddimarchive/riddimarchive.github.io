@@ -6,6 +6,7 @@ const db = require('./js/dbconnect');
 const request = require('request');
 const path = require('path');
 const createError = require('http-errors');
+const querie = require('./js/makequery');
 
 // create new express app and save it as "app"
 const app = express();
@@ -60,72 +61,26 @@ app.get('/a3', function(req,res){
   var artist = {};
   var tracks = [];
 
-  //connect to db
-  db.connect((err) => {
-  if(err){
-    console.log('ERROR COULD NOT CONNECT NERD');
-    return;
-  }
-  console.log('Connected to the DB!!!');
-  });
+  querie.connect(db).then(function(){
+        querie.getArtistInfo(db, 'AD').then(function(result){
 
-  //first query - get artist info
-  db.query('SELECT * FROM artists WHERE artist_name = "A3"', (error, result, fields) => {
-    if (error) {
-      console.error('An error occurred while executing the query');
-      throw error;
-    }
+            artist.id = result[0].id;
+            artist.artist_name = result[0].artist_name;
+            artist.crew = result[0].crew;
+            artist.country = result[0].country;
 
-    var artist = new Object();
-      artist['id'] = result[0].id;
-      artist['artist_name'] = result[0].artist_name;
-      artist['crew'] = result[0].crew;
-      artist['country'] = result[0].country;
+            querie.end(db).then(function(){
+                  console.log(artist);
+                  console.log(tracks);
+                  res.render('a3',{
+                    artist_name:'A3',
+                    artist: artist,
+                    tracks: tracks
+                  });
+            });
 
-    console.log("vvv artist")
-    console.log(artist);
-    return artist;
+        });
 
-  });
-
-  //second query - get tracks from that artist
-  db.query('SELECT * FROM tracks WHERE artist_name = "AD"', (error, result, fields) => {
-    if (error) {
-      console.error('An error occurred while executing the query');
-      throw error;
-    }
-    var tracks = new Array();
-    for (var i = 0; i < result.length; i++) {
-      var row = {
-        'track_name':result[i].id,
-        'artist_name':result[i].artist_name,
-        'drive_url':result[i].drive_url
-      }
-      //Add object into array
-      tracks.push(row);
-      console.log("vvv tracks");
-      console.log(tracks);
-
-      return tracks;
-    }
-  });
-
-  //end connection
-  db.end((err) =>{
-  if(err){
-    console.log('cant end connecty');
-    return;
-  }
-  console.log('Connection ended yo');
-  });
-
-  //not in scope - this returns nothing - FIX!!!
-  console.log(artist);
-  console.log(tracks);
-  res.render('a3',{
-    artist_name:'A3',
-    artist: artist,
-    tracks: tracks
   });
 
 });

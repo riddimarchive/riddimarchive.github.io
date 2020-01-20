@@ -2,6 +2,7 @@ extends index
 
 block content
 	h1 Artist name is #{artist_name}
+	h2 #{artist}
 
 	button(onclick='goBack()') Go Back
 	script.
@@ -12,7 +13,5 @@ block content
 	br
 	br
 	ul
-		each track in tracks
-			li= track.drive_url
 
 	iframe(frameborder='0' src='https://drive.google.com/file/d/1n9lnHF031ITw9vsiWv6bvRTXsN6bVzEF/preview')

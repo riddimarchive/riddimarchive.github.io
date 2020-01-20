@@ -67,8 +67,6 @@ app.get('/a3', function(req,res){
     return;
   }
   console.log('Connected to the DB!!!');
-  }).then(function(){
-    console.log('THEN CONNECTY');
   });
 
   //first query - get artist info

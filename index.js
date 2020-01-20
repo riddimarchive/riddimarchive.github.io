@@ -7,7 +7,7 @@ const request = require('request');
 const path = require('path');
 const createError = require('http-errors');
 const querie = require('./js/makequery');
-
+ 
 // create new express app and save it as "app"
 const app = express();
 
@@ -92,7 +92,7 @@ app.get('/a3', function(req,res){
             artist: artist,
             tracks: tracks
           });
-          
+
       }catch(err){
         res.render('error');
       }

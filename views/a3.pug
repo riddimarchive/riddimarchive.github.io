@@ -13,7 +13,9 @@ block content
 
 	- var x = tracks;
 
-	p #{x[0].artist_name}
+	ul
+		each number, key in x
+			li= ${x[key].track_name}
 
 	p Track 1: #{tracks[0].artist_name} - #{tracks[0].track_name}
 	iframe(frameborder='0' src=tracks[0].drive_url)

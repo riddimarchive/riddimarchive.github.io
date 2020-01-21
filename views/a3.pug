@@ -16,7 +16,7 @@ block content
 	p #{x[0].artist_name}
 
 	p Track 1: #{tracks[0].artist_name} - #{tracks[0].track_name}
-	iframe(frameborder='0' src=`${tracks[0].drive_url}`)
+	iframe(frameborder='0' src=tracks[0].drive_url)
 	br
 	p Track 2: #{tracks[1].artist_name} - #{tracks[1].track_name}
 	iframe(frameborder='0' src=`${tracks[1].drive_url}`)

@@ -11,6 +11,12 @@ block content
 	br
 	br
 
+	- var tArray = ${tracks}
+	
+	ul
+		each track, key in tArray
+			li= ${tArray[key].track_name}
+
 	p Track 1: #{tracks[0].artist_name} - #{tracks[0].track_name}
 	iframe(frameborder='0' src=`${tracks[0].drive_url}`)
 	br

@@ -38,7 +38,9 @@ app.get('/', (req, res) => {
     const status = err.status || 500;
     res.locals.status = status;
     res.status(status);
-    res.render('error');
+    res.render('error',{
+        error: err           
+       });
   });
 
 });
@@ -98,7 +100,7 @@ app.get('/a3', function(req,res){
 
       }catch(err){
         console.log(err);
-        res.render('error'{
+        res.render('error',{
         error: err           
        });
       }

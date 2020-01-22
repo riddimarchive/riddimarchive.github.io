@@ -60,24 +60,24 @@ app.get('/a3', function(req,res){
   
 
 
-  async function serverResponse(){
+  async function serverResponse(aname){
       try{
 
-
+          var name = aname;
           var artist = {};
           var tracks = [];
 
           var db = createConnection();
 
           await querie.connect(db);
-          let result = await querie.getArtistInfo(db, 'A3');
+          let result = await querie.getArtistInfo(db, name);
 
           artist.id = result[0].id;
           artist.artist_name = result[0].artist_name;
           artist.crew = result[0].crew;
           artist.country = result[0].country;
 
-          let tresult = await querie.getAllTracksFromArtist(db, 'A3');
+          let tresult = await querie.getAllTracksFromArtist(db, name);
 
           for (var i = 0; i < tresult.length; i++) {
             var row = {
@@ -93,8 +93,8 @@ app.get('/a3', function(req,res){
           console.log(artist);
           console.log(tracks);
 
-          res.render('a3',{
-            artist_name:'A3',
+          res.render(name,{
+            artist_name:name,
             artist: artist,
             tracks: tracks
           });
@@ -106,7 +106,7 @@ app.get('/a3', function(req,res){
 
   }
 
-  serverResponse();
+  serverResponse(a3);
 
 });
 

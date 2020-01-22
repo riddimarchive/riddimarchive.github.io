@@ -83,7 +83,7 @@ app.get('/artist/:name', function(req,res){
             var row = {
               'track_name':tresult[i].track_name,
               'artist_name':tresult[i].artist_name,
-              'drive_url': 'https://drive.google.com/file/d/' + tresult[i].drive_url + '/preview'
+              'drive_url': 'https://drive.google.com/uc?export=download&id=' + tresult[i].drive_url
             }
             tracks.push(row);
           }

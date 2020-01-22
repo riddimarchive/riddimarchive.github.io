@@ -93,7 +93,7 @@ app.get('/a3', function(req,res){
           console.log(artist);
           console.log(tracks);
 
-          res.render(name,{
+          res.render('a3',{
             artist_name:name,
             artist: artist,
             tracks: tracks

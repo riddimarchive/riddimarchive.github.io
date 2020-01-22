@@ -14,3 +14,13 @@ ul
 			li= `${track.artist_name} - ${track.track_name}`
 			li= track.drive_url
 			iframe(frameborder='0' width='350' src=track.drive_url)
+			
+			
+original iframe url
+'drive_url': 'https://drive.google.com/file/d/' + tresult[i].drive_url + '/preview'
+
+direct download link
+https://drive.google.com/uc?export=download&id=10PxEKqOBAWtVa8V5_Zd0Xi7bmwbB9-v-
+
+embed
+iframe(frameborder='0' width='350' height='150' src=track.drive_url)

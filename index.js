@@ -57,12 +57,15 @@ app.get('/home', (req, res) => {
 app.get('/a3', function(req,res){
 
   //declare array - query will be stored here
-  var artist = {};
-  var tracks = [];
+  
 
 
   async function serverResponse(){
       try{
+
+
+          var artist = {};
+          var tracks = [];
 
           var db = createConnection();
 

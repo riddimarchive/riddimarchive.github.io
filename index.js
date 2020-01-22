@@ -110,6 +110,69 @@ app.get('/a3', function(req,res){
 
 });
 
+//test get 2 - standard artist page
+
+//test get - first artist page
+app.get('/artist?name', function(req,res){
+
+  var art_name = req:params:name;
+  console.log("art_name is " + art_name);
+  
+
+  async function serverResponse2(aname){
+      try{
+
+          var name = aname;
+          var artist = {};
+          var tracks = [];
+
+          var db = createConnection();
+
+          await querie.connect(db);
+          let result = await querie.getArtistInfo(db, name);
+
+          artist.id = result[0].id;
+          artist.artist_name = result[0].artist_name;
+          artist.crew = result[0].crew;
+          artist.country = result[0].country;
+
+          let tresult = await querie.getAllTracksFromArtist(db, name);
+
+          for (var i = 0; i < tresult.length; i++) {
+            var row = {
+              'track_name':tresult[i].track_name,
+              'artist_name':tresult[i].artist_name,
+              'drive_url': 'https://drive.google.com/file/d/' + tresult[i].drive_url + '/preview'
+            }
+            tracks.push(row);
+          }
+
+          await querie.end(db);
+
+          console.log(artist);
+          console.log(tracks);
+
+          res.render('artist',{
+            artist_name:name,
+            artist: artist,
+            tracks: tracks
+          });
+
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+
+  }
+
+  serverResponse2(art_name);
+
+});
+
+
+
+
+
 // make the server listen to requests
 app.listen(port, () => {
   console.log(`Server running at: http://localhost:${port}/`);

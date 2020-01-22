@@ -1,0 +1,58 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 100;
+  color: white;
+  background-color: #778899;
+}
+
+.intro{
+  
+}
+
+.header{
+	display: flex;
+	justify-content: center;
+  height: 100%;
+}
+
+.footer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.fish{
+	display: flex;
+	flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.fishchild img{
+	border: solid;
+  border-width: 2px;
+  border-color: #000;
+  border-radius: 8px;
+}
+
+.fishchild img:hover{
+	opacity: 0.3;
+}
+
+.imgtext {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  opacity: 1;
+  position: relative;
+}
+
+.space{
+	margin-bottom: 17px
+}
+.fish div{
+	border: 1px #ccc solid;
+}
+

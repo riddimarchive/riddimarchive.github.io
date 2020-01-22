@@ -7,3 +7,10 @@
 	br
 	p Track 3: #{tracks[2].artist_name} - #{tracks[2].track_name}
 	iframe(frameborder='0' src=`${tracks[2].drive_url}`)
+
+
+ul
+		each track in x
+			li= `${track.artist_name} - ${track.track_name}`
+			li= track.drive_url
+			iframe(frameborder='0' width='350' src=track.drive_url)

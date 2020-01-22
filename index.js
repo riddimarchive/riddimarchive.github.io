@@ -112,7 +112,6 @@ app.get('/a3', function(req,res){
 
 //test get 2 - standard artist page
 
-//test get - first artist page
 app.get('/artist/:name', function(req,res){
 
   var art_name = req.params.name;

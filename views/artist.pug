@@ -17,3 +17,7 @@ block content
 		each track in x
 			li= `${track.artist_name} - ${track.track_name}`
 			iframe(frameborder='0' width='350' height='150' src=track.drive_url)
+			audio(src=track.drive_url , type='audio/mpeg', controls='')
+  | I'm sorry. You're browser doesn't support HTML5 
+  code audio
+  | .

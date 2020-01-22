@@ -40,6 +40,10 @@ body {
 	opacity: 0.3;
 }
 
+ul{
+  list-style-type: none;
+}
+
 .imgtext {
   display: flex;
   flex-direction: column;

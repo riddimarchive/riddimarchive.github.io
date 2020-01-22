@@ -110,15 +110,8 @@ app.get('/a3', function(req,res){
 
 });
 
-//test get 2 - standard artist page
-app.get('/artist/:name', function(req,res){
 
-  console.log("req name is" + req.params.name);
-  var art_name = req.params.name;
-  console.log("art_name is " + art_name);
-  
-
-  async function serverResponse2(aname){
+async function serverResponse2(aname){
       try{
 
           var name = aname;
@@ -163,6 +156,14 @@ app.get('/artist/:name', function(req,res){
       }
 
   }
+
+
+//test get 2 - standard artist page
+app.get('/artist/:name', function(req,res){
+
+  console.log("req name is" + req.params.name);
+  var art_name = req.params.name;
+  console.log("art_name is " + art_name);
 
   serverResponse2(art_name);
 

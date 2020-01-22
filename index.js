@@ -56,7 +56,7 @@ app.get('/home', (req, res) => {
 //test get - first artist page
 app.get('/a3', function(req,res){
 
-  //declare array - query will be stored here
+  var art_name = 'a3'
   
 
 
@@ -106,7 +106,7 @@ app.get('/a3', function(req,res){
 
   }
 
-  serverResponse(a3);
+  serverResponse(art_name);
 
 });
 

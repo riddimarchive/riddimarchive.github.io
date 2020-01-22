@@ -115,7 +115,7 @@ app.get('/a3', function(req,res){
 //test get - first artist page
 app.get('/artist?name', function(req,res){
 
-  var art_name = req:params:name;
+  var art_name = req.params.name;
   console.log("art_name is " + art_name);
   
 

@@ -52,6 +52,12 @@ app.get('/home', (req, res) => {
 
 });
 
+app.get('/faq', (req, res) => {
+  res.render('faq',{
+    title:'Riddim Archive FAQ'
+  });
+});
+
 //test get 2 - standard artist page
 app.get('/artist/:name', function(req,res){
 

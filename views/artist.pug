@@ -16,9 +16,12 @@ block content
 	ul
 		each track in x
 			li.tunetext= `${track.artist_name} - ${track.track_name}`
-			li= " "
+			li
+				p 
 			audio(src=track.drive_url, type='audio/mpeg', controls='')
 				code audio
-			li= " "
+			li
+				p 
 			a(href=track.drive_url) Download Tune
-			li= " "
+			li
+				p 

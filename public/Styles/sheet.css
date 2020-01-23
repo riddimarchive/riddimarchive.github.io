@@ -48,6 +48,11 @@ ul{
   flex-wrap: wrap;
 }
 
+.tunetext{
+  font-weight: bold;
+  font-size: 32px
+}
+
 .imgtext {
   display: flex;
   flex-direction: column;

@@ -13,12 +13,11 @@ block content
 	p Form Goes Here!
 
 	form(action='/admin', method='post')
-	div
-		label Username:
-		input(type='text', id='username', name='username', placeholder='Enter Username')
-	div
-		label Password:
-		input(type='password', id='password', name='password', placeholder='Enter Password')
-	div
-		button.btn.btn-primary.btn-block(type='submit') Login
+		div.form-group
+        	label(for='username') Email:
+        	input#email.form-control(type='email', placeholder='Enter Username', name='email')
+        div.form-group
+        	label(for='password') Password:
+        	input#pw.form-control(type='password' placeholder='Enter Password', name='password')
+        button.btn.btn-primary(type='submit') Login
 

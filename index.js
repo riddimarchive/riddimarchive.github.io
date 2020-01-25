@@ -58,6 +58,12 @@ app.get('/faq', (req, res) => {
   });
 });
 
+app.get('/admin', (req, res) => {
+  res.render('admin',{
+    title:'Riddim Archive Admin Login'
+  });
+});
+
 //test get 2 - standard artist page
 app.get('/artist/:name', function(req,res){
 

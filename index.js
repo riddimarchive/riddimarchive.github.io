@@ -71,6 +71,7 @@ app.post('/admin', (req, res) => {
   const { username, password } = req.body;
   console.log(username + " userserser");
   console.log(password + " apaspaspas");
+  res.send('Items submitted - Check COnsolee');
 });
 
 //test get 2 - standard artist page

@@ -12,17 +12,13 @@ block content
 	br
 	p Form Goes Here!
 
-	<form action="/login" method="post">
-    <div>
-        <label>Username:</label>
-        <input type="text" name="username"/>
-    </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
-    </div>
-    <div>
-        <input type="submit" value="Log In"/>
-    </div>
-</form>
+	form(action='/login', method='post')
+	div
+		label Username:
+		input(type='text', name='username')
+	div
+		label Password:
+		input(type='password', name='password')
+	div
+		input(type='submit', value='Log In')
 

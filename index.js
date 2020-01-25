@@ -64,7 +64,7 @@ app.get('/admin', (req, res) => {
   });
 });
 
-app.post('/adminsubmit', (req, res) => {
+app.post('/admin', (req, res) => {
   console.log(req.body);
   res.send('Items submitted - Check COnsolee');
 });

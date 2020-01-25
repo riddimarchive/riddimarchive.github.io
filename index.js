@@ -68,7 +68,7 @@ app.post('/admin', (req, res) => {
   console.log("POST RECIEVED");
   console.log(req.password);
   console.log(req.username);
-  res.send('Items submitted - Check COnsolee');
+  res.send('Items submitted - Check COnsolee' + req.password + "   " +req.username);
 });
 
 //test get 2 - standard artist page

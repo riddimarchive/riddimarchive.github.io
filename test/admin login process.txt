@@ -1,0 +1,6 @@
+//check if user is in database
+//check access level
+//if 1 - redirect to user login
+//if 2 - compare password field to DB
+//if 3 - compare password to process.env.ADMIN_PASS
+/be sure to use post request

@@ -17,6 +17,9 @@ const port = process.env.PORT || 80
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine','pug');
 
+//bodyparser - obtain info from post requests in req.body
+app.use(express.urlencoded({ extended: false }));
+
 // create public folders in express
 app.use(express.static('public'));
 
@@ -66,9 +69,10 @@ app.get('/admin', (req, res) => {
 
 app.post('/admin', (req, res) => {
   console.log("POST RECIEVED");
-  console.log(req.password);
-  console.log(req.username);
-  res.send('Items submitted - Check COnsolee' + req.password + '  ' + req.username);
+  console.log(req.body);
+  console.log(req.body.password);
+  console.log(req.body.username);
+  res.send('Items submitted - Check COnsolee' + req.body.password + '  ' + req.body.username);
 });
 
 //test get 2 - standard artist page

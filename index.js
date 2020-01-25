@@ -64,6 +64,11 @@ app.get('/admin', (req, res) => {
   });
 });
 
+app.post('/adminsubmit', (req, res) => {
+  console.log(req.body);
+  res.send('Items submitted - Check COnsolee');
+});
+
 //test get 2 - standard artist page
 app.get('/artist/:name', function(req,res){
 

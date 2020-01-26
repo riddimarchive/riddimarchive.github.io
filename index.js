@@ -72,6 +72,13 @@ app.post('/admin', (req, res) => {
   console.log(username + " userserser");
   console.log(password + " apaspaspas");
   res.send('Items submitted - Check COnsolee');
+
+  //decrypt pass with bcrypt
+  //make query of users table - select * from users
+  //use function similar
+  //authenticate via passport
+
+
 });
 
 //test get 2 - standard artist page
@@ -82,7 +89,7 @@ app.get('/artist/:name', function(req,res){
   console.log("art_name is " + art_name);
   
 
-  async function serverResponse(aname){
+  async function artistPageResponse(aname){
       try{
 
           var name = aname;
@@ -128,7 +135,7 @@ app.get('/artist/:name', function(req,res){
 
   }
 
-  serverResponse(art_name);
+  artistPageResponse(art_name);
 
 });
 

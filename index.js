@@ -72,11 +72,15 @@ app.get('/admin', (req, res) => {
 });
 
 app.post('/admin', (req, res) => {
-  let errorArray = [];
 
   var { username, password } = req.body;
 
   //defining full timeline function
+    //hash pass
+    //make query
+    //run the following checks:
+    //user is in db
+    //name matches = user password matches hashed password
   async function hashAndCheckResults(pass){
       try{
           var thepass = pass;
@@ -96,7 +100,6 @@ app.post('/admin', (req, res) => {
 
           if (result.length < 1){
             var er = "USER NOT FOUND";
-            errorArray.push({msg: 'USER NOT FOUND!!'});
 
             res.render('admin', {
               username: username,
@@ -109,27 +112,33 @@ app.post('/admin', (req, res) => {
             user.access_level = result[0].access_level;
             user.password = result[0].password;
 
-          }
+            console.log("am i still getting user.password defined" + user.password);
 
-          res.send(user.access_level + " is the access_level");
+            if(user.password == password){
+              console.log("all passes checked");
+              res.render('admlogin', {
+                username: username,
+                user: user
+              });
+            }else{
+              var er = "Wrong Password";
 
-          //confirm access level
-          //confirm password matches
+              res.render('admin', {
+                username: username,
+                er: er
+              });
+            }//password check else
+
+          }//result length else
 
       }catch(err){
           console.log(err);
       }
   }
 
-
   //if username and password are blank
   //render with error "Fill in all fields!"
-  //else
-    //-hash pass
-    //make query
-    //run the following checks:
-    //user is in db
-    //error length = 0 && user password matches hashed password
+  //else: do query function
 
   if(!username || !password){
             var er = "Fill in all Fields!";

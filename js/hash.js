@@ -18,3 +18,8 @@ function hashPass(pass){
 
 	return hashpromise;
 }
+
+
+module.exports = {
+	hashPass
+};

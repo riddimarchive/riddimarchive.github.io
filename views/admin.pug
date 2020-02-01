@@ -10,7 +10,6 @@ block content
 		}
 	br
 	br
-	p `${er}`
 
 	form(method='POST' action='/admin')
 		div.form-group
@@ -21,4 +20,7 @@ block content
 			input#password.form-control(type='password', name='password')
 		div
 			button.btn.btn-primary.btn-block(type='submit') Login
+	br
+	ul
+		li.errortext= `Error is ${er}!!!!`
 

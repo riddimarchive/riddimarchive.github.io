@@ -77,60 +77,61 @@ app.post('/admin', (req, res) => {
       var er = "Fill in all fields!!";
 
       res.render('admin', {
-        username: username,
+        username: "",
         er: er
       });
-  }
-  var { username, password } = req.body;
-  console.log(username + " <username");
-  console.log(password + " <password");
+  }else{
+      var { username, password } = req.body;
+      console.log(username + " <username");
+      console.log(password + " <password");
 
-  async function hashy(pass){
-      try{
-          var thepass = pass;
-          var user = {};
-          var hashedpassword;
+      async function hashy(pass){
+          try{
+              var thepass = pass;
+              var user = {};
+              var hashedpassword;
 
-          //get hash password
+              //get hash password
 
-          hashedpassword = await has.hashPass(thepass);
+              hashedpassword = await has.hashPass(thepass);
 
-          //start connection and make queries
+              //start connection and make queries
 
-          var db = createConnection();
+              var db = createConnection();
 
-          await querie.connect(db);
-          let result = await querie.getUserInfo(db, username);
+              await querie.connect(db);
+              let result = await querie.getUserInfo(db, username);
 
-          if (result.length < 1){
-            var er = "USER NOT FOUND!!";
+              if (result.length < 1){
+                var er = "USER NOT FOUND!!";
 
-            res.render('admin', {
-              username: username,
-              er: er
-            });
+                res.render('admin', {
+                  username: username,
+                  er: er
+                });
 
-          }else{
+              }else{
 
-            user.username = result[0].username;
-            user.access_level = result[0].access_level;
-            user.password = result[0].password;
+                user.username = result[0].username;
+                user.access_level = result[0].access_level;
+                user.password = result[0].password;
 
+              }
+
+              //end connection
+              await querie.end(db);
+              //res.send(user.access_level + "access_level");
+
+              //confirm access level
+
+
+          }catch(err){
+              console.log(err);
           }
-
-          //end connection
-          await querie.end(db);
-          //res.send(user.access_level + "access_level");
-
-          //confirm access level
-
-
-      }catch(err){
-          console.log(err);
       }
-  }
 
-  hashy(password);
+      hashy(password);
+    }
 
 });
 

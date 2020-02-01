@@ -92,6 +92,10 @@ app.post('/admin', (req, res) => {
           await querie.connect(db);
           let result = await querie.getUserInfo(db, username);
 
+          if (result.length < 1){
+            res.send("USER NOT FOUND");
+          }
+
           //store results in user
 
           user.username = result[0].username;
@@ -101,7 +105,7 @@ app.post('/admin', (req, res) => {
           //end connection
           await querie.end(db);
 
-          console.log(user);
+          //
 
           res.send(user.access_level + "access_level");
 

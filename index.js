@@ -93,6 +93,7 @@ app.post('/admin', (req, res) => {
 
           if (result.length < 1){
             var er = "USER NOT FOUND";
+            errorArray.push({msg: 'USER NOT FOUND!!'});
 
             res.render('admin', {
               username: username,

@@ -72,7 +72,7 @@ app.get('/admin', (req, res) => {
 });
 
 app.post('/admin', (req, res) => {
-
+  /*
   if(!username || !password){
       var er = "Fill in all fields!!";
 
@@ -81,6 +81,7 @@ app.post('/admin', (req, res) => {
         er: er
       });
   }
+  */
   var { username, password } = req.body;
   console.log(username + " <username");
   console.log(password + " <password");
@@ -120,7 +121,7 @@ app.post('/admin', (req, res) => {
 
           //end connection
           await querie.end(db);
-          //res.send(user.access_level + "access_level");
+          res.send(user.access_level + " is the access_level");
 
           //confirm access level
 

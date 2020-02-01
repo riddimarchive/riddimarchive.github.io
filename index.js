@@ -75,8 +75,6 @@ app.post('/admin', (req, res) => {
   let errorArray = [];
 
   var { username, password } = req.body;
-  console.log(username + " <username");
-  console.log(password + " <password");
 
   async function hashy(pass){
       try{

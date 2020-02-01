@@ -65,7 +65,7 @@ app.get('/faq', (req, res) => {
 
 app.get('/login', (req, res) => {
   res.render('login',{
-    title:'Riddim Archive Admin Login',
+    title:'Riddim Archive Login',
     username: '',
     er: ''
   });

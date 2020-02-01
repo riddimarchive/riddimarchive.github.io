@@ -3,17 +3,19 @@ Notes on Riddim Archive:
 Project for preserving the music of the scene and allowing for easy access
 
 
--Languages:
+-Tools:
 	-HTML5
 	-CSS + Flexbox
 	-Javascript
 	-NodeJS (server)
 	-ClearDB MySQL
+	-Express
+	-Pug
+	-Bcrypt
+	-Passport
+
 
 -Hosting Tools:
-	-Express
-	.Runs Server, in npm
-
 	-Github
 	.Update project, keep repository
 

@@ -6,6 +6,7 @@ const request = require('request');
 const path = require('path');
 const createError = require('http-errors');
 const querie = require('./js/makequery');
+const bcrypt = require('bcryptjs');
  
 // create new express app and save it as "app"
 const app = express();
@@ -69,8 +70,23 @@ app.get('/admin', (req, res) => {
 
 app.post('/admin', (req, res) => {
   const { username, password } = req.body;
-  console.log(username + " userserser");
-  console.log(password + " apaspaspas");
+  let errors = [];
+  console.log(username + " <username");
+  console.log(password + " <password");
+
+  bcrypt.genSalt(10, (err, salt) => bcrypt.hash(password, salt, (err, hash) => {
+    if(err) throw err;
+    password = hash;
+  }));
+  console.log(password + " < hashed password");
+
+
+  if(!username || !password){
+    errors.push({ msg : 'Please Enter in ALL fields'});
+  }
+
+  //make query, check if password matches
+
   res.send('Items submitted - Check COnsolee');
 
   //decrypt pass with bcrypt

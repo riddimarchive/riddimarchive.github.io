@@ -76,7 +76,8 @@ app.post('/admin', (req, res) => {
 
   var { username, password } = req.body;
 
-  async function hashy(pass){
+  //defining full timeline function
+  async function hashAndCheckResults(pass){
       try{
           var thepass = pass;
           var user = {};
@@ -90,6 +91,8 @@ app.post('/admin', (req, res) => {
 
           await querie.connect(db);
           let result = await querie.getUserInfo(db, username);
+          //end connection
+          await querie.end(db);
 
           if (result.length < 1){
             var er = "USER NOT FOUND";
@@ -107,8 +110,7 @@ app.post('/admin', (req, res) => {
             user.password = result[0].password;
 
           }
-          //end connection
-          await querie.end(db);
+
           res.send(user.access_level + " is the access_level");
 
           //confirm access level
@@ -119,14 +121,28 @@ app.post('/admin', (req, res) => {
       }
   }
 
-  hashy(password);
 
-  /*
-  res.render('admin', {
-    username: username,
-    er: er
-  });
-  */
+  //if username and password are blank
+  //render with error "Fill in all fields!"
+  //else
+    //-hash pass
+    //make query
+    //run the following checks:
+    //user is in db
+    //error length = 0 && user password matches hashed password
+
+  if(!username || !password){
+            var er = "Fill in all Fields!";
+
+            res.render('admin', {
+              username: username,
+              er: er
+            });
+    }else{
+
+      hashAndCheckResults(password);
+
+    }
 
 });
 

@@ -94,16 +94,20 @@ app.post('/admin', (req, res) => {
           let result = await querie.getUserInfo(db, username);
 
           if (result.length < 1){
+            var er = "USER NOT FOUND";
+
             res.render('admin', {
-              username: username
+              username: username,
+              er: er
             });
+
+          }else{
+
+            user.username = result[0].username;
+            user.access_level = result[0].access_level;
+            user.password = result[0].password;
+
           }
-
-          //store results in user
-
-          user.username = result[0].username;
-          user.access_level = result[0].access_level;
-          user.password = result[0].password;
 
           //end connection
           await querie.end(db);

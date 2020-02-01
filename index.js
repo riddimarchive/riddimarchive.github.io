@@ -72,8 +72,16 @@ app.get('/admin', (req, res) => {
 });
 
 app.post('/admin', (req, res) => {
+
+  if(!username || !password){
+      var er = "Fill in all fields!!";
+
+      res.render('admin', {
+        username: username,
+        er: er
+      });
+  }
   var { username, password } = req.body;
-  let errors = [];
   console.log(username + " <username");
   console.log(password + " <password");
 
@@ -95,7 +103,7 @@ app.post('/admin', (req, res) => {
           let result = await querie.getUserInfo(db, username);
 
           if (result.length < 1){
-            var er = "USER NOT FOUND";
+            var er = "USER NOT FOUND!!";
 
             res.render('admin', {
               username: username,
@@ -112,10 +120,9 @@ app.post('/admin', (req, res) => {
 
           //end connection
           await querie.end(db);
-
-          
-
           //res.send(user.access_level + "access_level");
+
+          //confirm access level
 
 
       }catch(err){

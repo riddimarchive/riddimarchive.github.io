@@ -69,7 +69,7 @@ app.get('/admin', (req, res) => {
 });
 
 app.post('/admin', (req, res) => {
-  const { username, password } = req.body;
+  var { username, password } = req.body;
   let errors = [];
   console.log(username + " <username");
   console.log(password + " <password");

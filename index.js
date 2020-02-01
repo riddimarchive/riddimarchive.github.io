@@ -81,18 +81,29 @@ app.post('/admin', (req, res) => {
           var user = {};
           var hashedpassword;
 
-          //var db = createConnection();
-
-          //await querie.connect(db);
-          //let result = await querie.getUserInfo(db, username);
-
-
+          //get hash password
 
           hashedpassword = await has.hashPass(thepass);
 
-          res.send(hashedpassword);
+          //start connection and make queries
 
-          //await: make query, check that user exists and has correct access level
+          var db = createConnection();
+
+          await querie.connect(db);
+          let result = await querie.getUserInfo(db, username);
+
+          //store results in user
+
+          user.username = result[0].username;
+          user.access_level = result[0].access_level;
+          user.password = result[0].password;
+
+          //end connection
+          await querie.end(db);
+
+          console.log(user);
+
+          res.send(user.access_level + "access_level");
 
 
       }catch(err){

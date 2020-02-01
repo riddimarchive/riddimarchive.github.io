@@ -22,6 +22,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
+    "express-session": "^1.17.0",
     "fs": "0.0.1-security",
     "http-errors": "^1.7.3",
     "mysql": "^2.17.1",

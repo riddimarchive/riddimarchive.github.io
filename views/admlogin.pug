@@ -1,7 +1,29 @@
 extends index
 
 block content
-	h1 Hooray I am a Log
+	h1 ADMIN DASHBOARD
+	br
+	
+	- var admname = username;
+	
+	.welcometxt
+		p Welcome #{admname}
+
+	.fishcontain
+		.fish
+			.fishchild
+				a(href='usercrud')
+					img(src='Images/PageIMG/users.png' alt='Images/PageIMG/fail.png' height='250' width='250')
+				.middle
+			.fishchild
+				a(href='artistcrud')
+					img(src='Images/PageIMG/artists.png' alt='Images/PageIMG/fail.png' height='250' width='250')
+				.middle
+			.fishchild
+				a(href='trackcrud')
+					img(src='Images/PageIMG/tracks.png' alt='Images/PageIMG/fail.png' height='250' width='250')
+				.middle
+
 	ul
 		.uldiv
-			li.text= `${user.username}`
+			li.text= `Welcome ${user.username}`

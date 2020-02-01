@@ -44,6 +44,10 @@ body {
   list-style-type: none;
 }
 
+.welcometxt{
+  display: flex;
+  justify-content: center;
+}
 
 .imgtext {
   display: flex;

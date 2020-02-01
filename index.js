@@ -78,11 +78,21 @@ app.post('/admin', (req, res) => {
   async function hashy(pass){
       try{
           var thepass = pass;
-          let result = await has.hashPass(thepass);
+          var user = {};
+          var hashedpassword;
 
-          res.send(result);
+          //var db = createConnection();
 
-          //make query, check that user exists and has correct access level
+          //await querie.connect(db);
+          //let result = await querie.getUserInfo(db, username);
+
+
+
+          hashedpassword = await has.hashPass(thepass);
+
+          res.send(hashedpassword);
+
+          //await: make query, check that user exists and has correct access level
 
 
       }catch(err){

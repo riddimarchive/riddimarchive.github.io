@@ -9,7 +9,6 @@ function hashPass(pass){
 	      		console.error('An error occurred while hashing');
 	      		reject(err);
 	    	}
-    		console.log("the hash is = " + hash);
     		resolve(hash);
 
   		}));

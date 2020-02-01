@@ -80,11 +80,11 @@ app.post('/login', (req, res) => {
           var thepass = pass;
           var user = {};
 
-          var hashedpassword;
-
           //get hash password
-          hashedpassword = await has.hashPass(thepass);
-          console.log("Hashed is>>>: " + hashedpassword);
+
+          //var hashedpassword;
+          //hashedpassword = await has.hashPass(thepass);
+          //console.log("Hashed is>>>: " + hashedpassword);
 
           //start connection and make queries
           var db = createConnection();

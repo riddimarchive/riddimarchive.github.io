@@ -7,7 +7,6 @@ const path = require('path');
 const createError = require('http-errors');
 const querie = require('./js/makequery');
 const has = require('./js/hash');
-const bcrypt = require('bcryptjs');
 
  
 // create new express app and save it as "app"
@@ -105,32 +104,29 @@ app.post('/admin', (req, res) => {
 
           }else{
 
-            user.username = result[0].username;
-            user.access_level = result[0].access_level;
-            user.password = result[0].password;
+                user.username = result[0].username;
+                user.access_level = result[0].access_level;
+                user.password = result[0].password;
 
-            console.log("am i still getting user.password defined? " + user.password);
+                console.log("am i still getting user.password defined? " + user.password);
 
-            bcrypt.compare(password, user.password, (err, isMatch) => {
-                  if(err) throw err;
+                let isMatch = await has.passCheck(password, user.password);
 
-                  if(isMatch){
+                if(isMatch){
                     console.log("all passes checked");
                     res.render('admlogin', {
                       username: username,
                       user: user
                     });
-                  }else{
-                      var er = "Wrong Password";
+                }else{
+                    var er = "Wrong Password";
 
-                      res.render('admin', {
-                        username: username,
-                        er: er
-                      });
-                  }//password check else
-            });
-
-          }//result length else
+                    res.render('admin', {
+                      username: username,
+                      er: er
+                    });
+                }
+          }//password check else
 
       }catch(err){
           console.log(err);

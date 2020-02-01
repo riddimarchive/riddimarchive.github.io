@@ -19,7 +19,26 @@ function hashPass(pass){
 	return hashpromise;
 }
 
+function passCheck(pass, hashpass){
+
+	let comparepromise = new Promise(function(resolve, reject){
+		
+		bcrypt.compare(pass, hashpass, (err, isMatch) => {
+
+			if(err){
+				console.error('An error occurred while hashing');
+				reject(err);
+			}
+
+			resolve(isMatch);
+		});
+
+	});
+
+	return comparepromise;
+}
 
 module.exports = {
-	hashPass
+	hashPass,
+	passCheck
 };

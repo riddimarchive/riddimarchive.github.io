@@ -75,16 +75,16 @@ app.post('/admin', (req, res) => {
 
   var { username, password } = req.body;
 
-  //defining full timeline function
-    //hash pass
-    //make query
-    //run the following checks:
-    //user is in db
-    //name matches = user password matches hashed password
   async function hashAndCheckResults(pass){
       try{
           var thepass = pass;
           var user = {};
+
+          var hashedpassword;
+
+          //get hash password
+          hashedpassword = await has.hashPass(thepass);
+          console.log("Hashed is>>>: " + hashedpassword);
 
           //start connection and make queries
           var db = createConnection();
@@ -94,6 +94,7 @@ app.post('/admin', (req, res) => {
           //end connection
           await querie.end(db);
 
+          //check - user in database?
           if (result.length < 1){
             var er = "USER NOT FOUND";
 
@@ -104,16 +105,17 @@ app.post('/admin', (req, res) => {
 
           }else{
 
+                //store info
                 user.username = result[0].username;
                 user.access_level = result[0].access_level;
                 user.password = result[0].password;
 
-                console.log("am i still getting user.password defined? " + user.password);
-
+                //run hash compare - get boolean isMatch
                 let isMatch = await has.passCheck(password, user.password);
 
+                //check - password is correct?
                 if(isMatch){
-                    console.log("all passes checked");
+                    console.log("all passes checked, logging in");
                     res.render('admlogin', {
                       username: username,
                       user: user
@@ -126,7 +128,8 @@ app.post('/admin', (req, res) => {
                       er: er
                     });
                 }
-          }//password check else
+
+          }//result length else
 
       }catch(err){
           console.log(err);

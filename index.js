@@ -74,10 +74,6 @@ app.get('/admin', (req, res) => {
 app.post('/admin', (req, res) => {
   let errorArray = [];
 
-  if(username== "" || password== ""){
-      //errorArray.push({msg: 'FILL IN ALL FIELDS!!'});
-  }
-
   var { username, password } = req.body;
   console.log(username + " <username");
   console.log(password + " <password");
@@ -98,12 +94,20 @@ app.post('/admin', (req, res) => {
           let result = await querie.getUserInfo(db, username);
 
           if (result.length < 1){
-            //errorArray.push({msg: 'USER NOT FOUND!!'});
-          }
+            var er = "USER NOT FOUND";
+
+            res.render('admin', {
+              username: username,
+              er: er
+            });
+
+          }else{
+
             user.username = result[0].username;
             user.access_level = result[0].access_level;
             user.password = result[0].password;
 
+          }
           //end connection
           await querie.end(db);
           res.send(user.access_level + " is the access_level");

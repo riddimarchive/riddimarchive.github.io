@@ -63,15 +63,15 @@ app.get('/faq', (req, res) => {
   });
 });
 
-app.get('/admin', (req, res) => {
-  res.render('admin',{
+app.get('/login', (req, res) => {
+  res.render('login',{
     title:'Riddim Archive Admin Login',
     username: '',
     er: ''
   });
 });
 
-app.post('/admin', (req, res) => {
+app.post('/login', (req, res) => {
 
   var { username, password } = req.body;
 
@@ -98,7 +98,7 @@ app.post('/admin', (req, res) => {
           if (result.length < 1){
             var er = "USER NOT FOUND";
 
-            res.render('admin', {
+            res.render('login', {
               username: username,
               er: er
             });
@@ -116,6 +116,9 @@ app.post('/admin', (req, res) => {
                 //check - password is correct?
                 if(isMatch){
                     console.log("all passes checked, logging in");
+                    //checkaccesslevel
+                    //renderpageaccordingly
+                    //for now - lets just do admin
                     res.render('admlogin', {
                       username: username,
                       user: user
@@ -123,7 +126,7 @@ app.post('/admin', (req, res) => {
                 }else{
                     var er = "Wrong Password";
 
-                    res.render('admin', {
+                    res.render('login', {
                       username: username,
                       er: er
                     });
@@ -143,7 +146,7 @@ app.post('/admin', (req, res) => {
   if(!username || !password){
             var er = "Fill in all Fields!";
 
-            res.render('admin', {
+            res.render('login', {
               username: username,
               er: er
             });
@@ -154,18 +157,6 @@ app.post('/admin', (req, res) => {
     }
 
 });
-
-
-
-  //res.send('Items submitted - Check COnsolee');
-
-  //decrypt pass with bcrypt
-  //make query of users table - select * from users
-  //use function similar
-  //authenticate via passport
-
-
-
 
 //test get 2 - standard artist page
 app.get('/artist/:name', function(req,res){

@@ -6,7 +6,8 @@ const request = require('request');
 const path = require('path');
 const createError = require('http-errors');
 const querie = require('./js/makequery');
-const bcrypt = require('bcryptjs');
+const has = require('./js/hash');
+
  
 // create new express app and save it as "app"
 const app = express();
@@ -74,21 +75,37 @@ app.post('/admin', (req, res) => {
   console.log(username + " <username");
   console.log(password + " <password");
 
-  var hashy = bcrypt.genSalt(10, (err, salt) => bcrypt.hash(password, salt, (err, hash) => {
-    if(err) throw err;
-    console.log("hash = " + hash);
-    return hash;
-  }));
-  console.log(password + " < hashed password");
+  async function hashy(pass){
+      try{
+          var thepass = pass;
+          let result = await has.hashPass(thepass);
+
+          res.send(result);
+
+          //make query, check that user exists and has correct access level
 
 
+      }catch(err){
+          console.log(err);
+      }
+  }
+
+  hashy(password);
+
+});
+
+
+
+
+
+  /*
   if(!username || !password){
     errors.push({ msg : 'Please Enter in ALL fields'});
   }
-
+  */
   //make query, check if password matches
 
-  res.send('Items submitted - Check COnsolee');
+  //res.send('Items submitted - Check COnsolee');
 
   //decrypt pass with bcrypt
   //make query of users table - select * from users
@@ -96,7 +113,7 @@ app.post('/admin', (req, res) => {
   //authenticate via passport
 
 
-});
+
 
 //test get 2 - standard artist page
 app.get('/artist/:name', function(req,res){

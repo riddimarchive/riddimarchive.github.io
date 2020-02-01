@@ -85,10 +85,6 @@ app.post('/admin', (req, res) => {
       try{
           var thepass = pass;
           var user = {};
-          var hashedpassword;
-
-          //get hash password
-          hashedpassword = await has.hashPass(thepass);
 
           //start connection and make queries
           var db = createConnection();
@@ -112,24 +108,26 @@ app.post('/admin', (req, res) => {
             user.access_level = result[0].access_level;
             user.password = result[0].password;
 
-            console.log("am i still getting user.password defined" + user.password);
+            console.log("am i still getting user.password defined? " + user.password);
 
-            //BELOW CHECK IS FLAWED
-            //bcrypt hash is different everytime!!
-            if(user.password == password){
-              console.log("all passes checked");
-              res.render('admlogin', {
-                username: username,
-                user: user
-              });
-            }else{
-              var er = "Wrong Password";
+            bcrypt.compare(password, user.password, (err, isMatch) => {
+                  if(err) throw err;
 
-              res.render('admin', {
-                username: username,
-                er: er
-              });
-            }//password check else
+                  if(isMatch){
+                    console.log("all passes checked");
+                    res.render('admlogin', {
+                      username: username,
+                      user: user
+                    });
+                  }else{
+                      var er = "Wrong Password";
+
+                      res.render('admin', {
+                        username: username,
+                        er: er
+                      });
+                  }//password check else
+            });
 
           }//result length else
 

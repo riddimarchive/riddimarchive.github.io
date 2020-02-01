@@ -7,6 +7,7 @@ const path = require('path');
 const createError = require('http-errors');
 const querie = require('./js/makequery');
 const has = require('./js/hash');
+const bcrypt = require('bcryptjs');
 
  
 // create new express app and save it as "app"

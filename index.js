@@ -76,6 +76,7 @@ app.post('/admin', (req, res) => {
 
   bcrypt.genSalt(10, (err, salt) => bcrypt.hash(password, salt, (err, hash) => {
     if(err) throw err;
+    console.log("hash = " + hash);
     password = hash;
   }));
   console.log(password + " < hashed password");

@@ -65,7 +65,8 @@ app.get('/faq', (req, res) => {
 
 app.get('/admin', (req, res) => {
   res.render('admin',{
-    title:'Riddim Archive Admin Login'
+    title:'Riddim Archive Admin Login',
+    username: ''
   });
 });
 
@@ -93,7 +94,9 @@ app.post('/admin', (req, res) => {
           let result = await querie.getUserInfo(db, username);
 
           if (result.length < 1){
-            res.send("USER NOT FOUND");
+            res.render('admin', {
+              username: username;
+            });
           }
 
           //store results in user

@@ -113,9 +113,9 @@ app.post('/admin', (req, res) => {
           //end connection
           await querie.end(db);
 
-          //
+          
 
-          res.send(user.access_level + "access_level");
+          //res.send(user.access_level + "access_level");
 
 
       }catch(err){

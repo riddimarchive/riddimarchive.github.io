@@ -74,7 +74,7 @@ app.get('/admin', (req, res) => {
 app.post('/admin', (req, res) => {
   let errorArray = [];
 
-  if(username= "" || password= ""){
+  if(username== "" || password== ""){
       //errorArray.push({msg: 'FILL IN ALL FIELDS!!'});
   }
 

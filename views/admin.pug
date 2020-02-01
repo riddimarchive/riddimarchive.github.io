@@ -3,14 +3,11 @@ extends index
 block content
 	h1 Admin Login
 	br
-	button(onclick='goBack()') Go Back
-	script.
-		function goBack() {
-		window.history.back();
-		}
+	form
+		input(type='button', value='insert button text here', onclick="self.location='https://riddim-archive.herokuapp.com'")
 	br
 	br
-
+	
 	form(method='POST' action='/admin')
 		div.form-group
 			label(for='username')  Username:

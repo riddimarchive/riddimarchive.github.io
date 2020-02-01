@@ -114,6 +114,8 @@ app.post('/admin', (req, res) => {
 
             console.log("am i still getting user.password defined" + user.password);
 
+            //BELOW CHECK IS FLAWED
+            //bcrypt hash is different everytime!!
             if(user.password == password){
               console.log("all passes checked");
               res.render('admlogin', {

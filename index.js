@@ -72,16 +72,12 @@ app.get('/admin', (req, res) => {
 });
 
 app.post('/admin', (req, res) => {
-  /*
-  if(!username || !password){
-      var er = "Fill in all fields!!";
+  let errorArray = [];
 
-      res.render('admin', {
-        username: username,
-        er: er
-      });
+  if(username= "" || password= ""){
+      //errorArray.push({msg: 'FILL IN ALL FIELDS!!'});
   }
-  */
+
   var { username, password } = req.body;
   console.log(username + " <username");
   console.log(password + " <password");
@@ -93,38 +89,27 @@ app.post('/admin', (req, res) => {
           var hashedpassword;
 
           //get hash password
-
           hashedpassword = await has.hashPass(thepass);
 
           //start connection and make queries
-
           var db = createConnection();
 
           await querie.connect(db);
           let result = await querie.getUserInfo(db, username);
 
           if (result.length < 1){
-            var er = "USER NOT FOUND!!";
-
-            res.render('admin', {
-              username: username,
-              er: er
-            });
-
-          }else{
-
+            //errorArray.push({msg: 'USER NOT FOUND!!'});
+          }
             user.username = result[0].username;
             user.access_level = result[0].access_level;
             user.password = result[0].password;
-
-          }
 
           //end connection
           await querie.end(db);
           res.send(user.access_level + " is the access_level");
 
           //confirm access level
-
+          //confirm password matches
 
       }catch(err){
           console.log(err);
@@ -133,18 +118,16 @@ app.post('/admin', (req, res) => {
 
   hashy(password);
 
+  /*
+  res.render('admin', {
+    username: username,
+    er: er
+  });
+  */
+
 });
 
 
-
-
-
-  /*
-  if(!username || !password){
-    errors.push({ msg : 'Please Enter in ALL fields'});
-  }
-  */
-  //make query, check if password matches
 
   //res.send('Items submitted - Check COnsolee');
 

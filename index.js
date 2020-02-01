@@ -95,7 +95,7 @@ app.post('/admin', (req, res) => {
 
           if (result.length < 1){
             res.render('admin', {
-              username: username;
+              username: username
             });
           }
 

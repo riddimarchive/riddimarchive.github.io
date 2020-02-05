@@ -7,15 +7,10 @@ const path = require('path');
 const createError = require('http-errors');
 const querie = require('./js/makequery');
 const has = require('./js/hash');
-const session = require('express-session');
-const passport = require('passport');
 
  
 // create new express app and save it as "app"
 const app = express();
-
-//passport config
-require('./config/passport')(passport);
 
 // server configuration
 const port = process.env.PORT || 80
@@ -27,19 +22,8 @@ app.set('view engine','pug');
 //bodyparser - obtain info from post requests in req.body
 app.use(express.urlencoded({ extended: false }));
 
-//express-session
-app.use(session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: true
-}));
-
 // create public folders in express
 app.use(express.static('public'));
-
-//Passport
-app.use(passport.initialize());
-app.use(passport.session());
 
 //init get - load home page
 app.get('/', (req, res) => {
@@ -91,6 +75,70 @@ app.post('/login', (req, res) => {
 
   var { username, password } = req.body;
 
+  async function hashAndCheckResults(pass){
+      try{
+          var thepass = pass;
+          var user = {};
+
+          //get hash password
+
+          //var hashedpassword;
+          //hashedpassword = await has.hashPass(thepass);
+          //console.log("Hashed is>>>: " + hashedpassword);
+
+          //start connection and make queries
+          var db = createConnection();
+
+          await querie.connect(db);
+          let result = await querie.getUserInfo(db, username);
+          //end connection
+          await querie.end(db);
+
+          //check - user in database?
+          if (result.length < 1){
+            var er = "USER NOT FOUND";
+
+            res.render('login', {
+              username: username,
+              er: er
+            });
+
+          }else{
+
+                //store info
+                user.username = result[0].username;
+                user.access_level = result[0].access_level;
+                user.password = result[0].password;
+
+                //run hash compare - get boolean isMatch
+                let isMatch = await has.passCheck(password, user.password);
+
+                //check - password is correct?
+                if(isMatch){
+                    console.log("all passes checked, logging in");
+                    //checkaccesslevel
+                    //renderpageaccordingly
+                    //for now - lets just do admin
+                    res.render('admlogin', {
+                      username: username,
+                      user: user
+                    });
+                }else{
+                    var er = "Wrong Password";
+
+                    res.render('login', {
+                      username: username,
+                      er: er
+                    });
+                }
+
+          }//result length else
+
+      }catch(err){
+          console.log(err);
+      }
+  }
+
   //if username and password are blank
   //render with error "Fill in all fields!"
   //else: do query function
@@ -104,10 +152,7 @@ app.post('/login', (req, res) => {
             });
     }else{
 
-      passport.authenticate('local', {
-        successRedirect: '/admlogin',
-        failureRedirect: '/login'
-      })(res, res, next);
+      hashAndCheckResults(password);
 
     }
 

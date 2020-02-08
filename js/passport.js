@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
 const createConnection = require('./dbconnect');
 const has = require('./hash');
-const querie = require('./js/makequery');
+const querie = require('./makequery');
 
 module.exports = function(passport){
 	passport.use(

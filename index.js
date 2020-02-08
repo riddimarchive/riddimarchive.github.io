@@ -58,7 +58,8 @@ app.get('/', (req, res) => {
     res.locals.message = err.message;
     const status = err.status || 500;
     res.locals.status = status;
-    console.log(status);
+    console.log("Status: " + status);
+    console.log("Message: " + res.locals.message);
     res.status(status);
     res.render('error');
   });

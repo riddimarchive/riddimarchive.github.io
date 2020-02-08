@@ -87,10 +87,6 @@ app.get('/login', (req, res) => {
   });
 });
 
-app.get('/admlogin', (req, res) => {
-  res.render('admlogin',{
-  });
-});
 
 app.post('/login', (req, res, next) => {
 
@@ -110,7 +106,8 @@ app.post('/login', (req, res, next) => {
     }else{
 
       passport.authenticate('local', {
-        successRedirect: '/admlogin',
+        successRedirect: res.render('admlogin',{
+  });,
         failureRedirect: '/login'
       })(req, res, next);
 

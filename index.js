@@ -106,8 +106,7 @@ app.post('/login', (req, res, next) => {
     }else{
 
       passport.authenticate('local', {
-        successRedirect: res.render('admlogin',{
-  });,
+        successRedirect: '/admlogin',
         failureRedirect: '/login'
       })(req, res, next);
 

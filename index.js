@@ -87,7 +87,7 @@ app.get('/login', (req, res) => {
   });
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', (req, res, next) => {
 
   var { username, password } = req.body;
 
@@ -107,7 +107,7 @@ app.post('/login', (req, res) => {
       passport.authenticate('local', {
         successRedirect: '/admlogin',
         failureRedirect: '/login'
-      })(req, res);
+      })(req, res, next);
 
     }
 

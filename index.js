@@ -117,9 +117,7 @@ app.post('/login', (req, res, next) => {
 //test get 2 - standard artist page
 app.get('/artist/:name', function(req,res){
 
-  console.log("req name is" + req.params.name);
   var art_name = req.params.name;
-  console.log("art_name is " + art_name);
   
 
   async function artistPageResponse(aname){
@@ -151,9 +149,6 @@ app.get('/artist/:name', function(req,res){
           }
 
           await querie.end(db);
-
-          console.log(artist);
-          console.log(tracks);
 
           res.render('artist',{
             artist_name: name,

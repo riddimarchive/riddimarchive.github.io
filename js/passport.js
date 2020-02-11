@@ -35,6 +35,7 @@ module.exports = function(passport){
 	
 						//check - password is correct?
 						if(isMatch){
+						    console.log("Pass is correct!!! User is: " + user);
 						    return done(null, user);
 						}else{
 						    return done(null, false, {message: 'Password incorrect'});
@@ -46,7 +47,7 @@ module.exports = function(passport){
           			console.log(err);
       			}
   			}//end async has function
-
+			console.log("In Local Strategy! Running Hash and Query Fcns");
   			hashAndCheckResults(password);
 
 		})
@@ -54,11 +55,13 @@ module.exports = function(passport){
 
 
 	passport.serializeUser((user, done) => {
+		console.log("Serializing...");
   		done(null, user._id);
 	});
 
 	passport.deserializeUser((id, done) => {
   		User.findById(id, (err, user) => {
+		console.log("DeSerializing...");
     		done(err, user);
   	 	});
 	});

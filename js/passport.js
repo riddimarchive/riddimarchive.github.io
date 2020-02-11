@@ -27,8 +27,9 @@ module.exports = function(passport){
 	
                 		//store info
                 		user.username = result[0].username;
-						user.access_level = result[0].access_level;
-						user.password = result[0].password;
+				user.access_level = result[0].access_level;
+				user.password = result[0].password;
+				user.id = result[0].id;
 	
 						//run hash compare - get boolean isMatch
 						let isMatch = await has.passCheck(password, user.password);
@@ -56,7 +57,7 @@ module.exports = function(passport){
 
 	passport.serializeUser((user, done) => {
 		console.log("Serializing...");
-  		done(null, user._id);
+  		done(null, user.id);
 	});
 
 	passport.deserializeUser((id, done) => {

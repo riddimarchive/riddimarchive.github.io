@@ -107,7 +107,6 @@ app.post('/login', (req, res, next) => {
             });
     }else{
       passport.authenticate('local', {
-        console.log("in pass auth fcn");
         successRedirect: '/admlogin',
         failureRedirect: '/login'
       })(req, res, next);

@@ -24,10 +24,10 @@ module.exports = function(passport){
           			}else{
 	
                 		//store info
-                		user.username = result[0].username;
-						user.access_level = result[0].access_level;
-						user.password = result[0].password;
-						user.id = result[0].id;
+                		theuser.username = result[0].username;
+						theuser.access_level = result[0].access_level;
+						theuser.password = result[0].password;
+						theuser.id = result[0].id;
 	
 						//run hash compare - get boolean isMatch
 						let isMatch = await has.passCheck(password, user.password);

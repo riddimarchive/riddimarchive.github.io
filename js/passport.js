@@ -7,7 +7,7 @@ module.exports = function(passport){
 	passport.use(
 		new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
 			//check user name
-			var user = {};
+			var theuser = {};
 
 			async function hashAndCheckResults(pass){
       			try{
@@ -34,8 +34,8 @@ module.exports = function(passport){
 	
 						//check - password is correct?
 						if(isMatch){
-						    console.log("Pass is correct!!! User id is: " + user.id);
-						    return done(null, user);
+						    console.log("Pass is correct!!! User id is: " + theuser.id);
+						    return done(null, theuser);
 						}else{
 						    return done(null, false, {message: 'Password incorrect'});
 						}
@@ -55,6 +55,7 @@ module.exports = function(passport){
 
 	passport.serializeUser((user, done) => {
 		console.log("Serializing...");
+		console.log("in serial the user id is: " + user.id);
   		done(null, user.id);
 	});
 

@@ -3,7 +3,8 @@ const createConnection = require('./dbconnect');
 const has = require('./hash');
 const querie = require('./makequery');
 
-module.exports = function(passport){
+
+function passporty(passport){
 	passport.use(
 		new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
 			//check user name
@@ -69,3 +70,11 @@ module.exports = function(passport){
 
 
 }
+
+
+
+
+
+module.exports = {
+	passporty
+};

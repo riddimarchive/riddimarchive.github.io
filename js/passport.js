@@ -35,7 +35,7 @@ module.exports = function(passport){
 						//check - password is correct?
 						if(isMatch){
 						    console.log("Pass is correct!!! User id is: " + user.id);
-						    return done(null, user);
+						    return done(null, result[0]);
 						}else{
 						    return done(null, false, {message: 'Password incorrect'});
 						}

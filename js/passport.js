@@ -30,7 +30,7 @@ module.exports = function(passport){
 						theuser.id = result[0].id;
 	
 						//run hash compare - get boolean isMatch
-						let isMatch = await has.passCheck(password, user.password);
+						let isMatch = await has.passCheck(password, theuser.password);
 	
 						//check - password is correct?
 						if(isMatch){

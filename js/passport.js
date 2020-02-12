@@ -7,12 +7,10 @@ module.exports = function(passport){
 	passport.use(
 		new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
 			//check user name
+			var user = {};
 
 			async function hashAndCheckResults(pass){
       			try{
-          			var thepass = pass;
-					var user = {};
-
 					var db = createConnection();
 
 					await querie.connect(db);
@@ -27,9 +25,9 @@ module.exports = function(passport){
 	
                 		//store info
                 		user.username = result[0].username;
-				user.access_level = result[0].access_level;
-				user.password = result[0].password;
-				user.id = result[0].id;
+						user.access_level = result[0].access_level;
+						user.password = result[0].password;
+						user.id = result[0].id;
 	
 						//run hash compare - get boolean isMatch
 						let isMatch = await has.passCheck(password, user.password);

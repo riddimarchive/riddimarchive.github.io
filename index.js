@@ -89,6 +89,11 @@ app.get('/login', (req, res) => {
   });
 });
 
+app.get('/admlogin', (req, res) => {
+  res.render('admlogin',{
+    username: req.user.username
+  });
+});
 
 app.post('/login', (req, res, next) => {
 

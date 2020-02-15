@@ -7,9 +7,7 @@ module.exports = function(passport){
 	passport.use(
 		new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
 
-			function User() {
-  				
-			}
+			
 
 			var user = new User();
 
@@ -64,10 +62,15 @@ module.exports = function(passport){
 	});
 
 	passport.deserializeUser((id, done) => {
-  		User.findById(id, (err, user) => {
+  		var db = createConnection();
+  		
+  		await querie.connect(db);
+		let result = await querie.getUserByID(db, id);
+		await querie.end(db);
+
 		console.log("DeSerializing...");
-    		done(err, user);
-  	 	});
+    	done(err, result[0]);
+  	 	
 	});
 
 

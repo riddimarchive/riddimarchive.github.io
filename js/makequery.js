@@ -125,10 +125,10 @@ function addArtist(db, artist){
 	return querypromise;
 }
 
-function getUserInfo(db, username){
+function getUserByid(db, id){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT * FROM users WHERE username = "${username}"`, (error, result, fields) => {
+		db.query(`SELECT * FROM users WHERE id = "${id}"`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -143,10 +143,10 @@ function getUserInfo(db, username){
 	return querypromise;
 }
 
-function getUserbyID(db, id){
+function getUserInfo(db, username){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT * FROM users WHERE id = "${id}"`, (error, result, fields) => {
+		db.query(`SELECT * FROM users WHERE username = "${username}"`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -170,6 +170,6 @@ module.exports = {
 	addUser,
 	addTrack,
 	addArtist,
-	getUserInfo,
-	getUserbyID
+	getUserByid,
+	getUserInfo
 };

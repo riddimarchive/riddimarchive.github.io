@@ -52,26 +52,17 @@ module.exports = function(passport){
 	});
 
 	passport.deserializeUser((id, done) => {
+		console.log("****In Deserial Fcn! Running Query Fcns");
   		var db = createConnection();
-  		var resulty;
-
-  		async function doThings(id){
-      			try{
-
-  						await querie.connect(db);
-  						console.log("CON CON CON CON CO NC ONCONC");
-						//let result = await querie.getUserByID(db, id);
-						await querie.end(db);
-
-						var res = "fish";
-						return res;
-    				}catch(error){
-          				console.log(error);
-      				}
-  			}//end async function
-			console.log("In Deserial Fcn! Running Query Fcns");
-  			resulty = doThings(id);
-  			console.log("Resulty is: " + resulty);
+  		console.log("****Made Connection");
+		querie.connect(db);
+		console.log("****Connection");
+		let result = querie.getUserByID(db, id);
+		console.log("****Result Grabbed");
+		querie.end(db);
+		console.log("****Connection Ended");
+		console.log("****POSTING RESULT");
+		done(err, result[0]);
   	 	
 	});
 

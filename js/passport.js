@@ -58,6 +58,7 @@ module.exports = function(passport){
       			try{
 
   						await querie.connect(db);
+  						console.log("CON CON CON CON CO NC ONCONC");
 						let result = await querie.getUserByID(db, id);
 						await querie.end(db);
 

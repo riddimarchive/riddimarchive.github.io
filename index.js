@@ -122,6 +122,11 @@ app.post('/login', (req, res, next) => {
 
 });
 
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/home');
+});
+
 //test get 2 - standard artist page
 app.get('/artist/:name', function(req,res){
 

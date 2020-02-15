@@ -8,10 +8,7 @@ module.exports = function(passport){
 		new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
 
 			function User() {
-  				this.username = username;
-  				this.access_level = access_level;
-  				this.password = password;
-  				this.id = id;
+  				
 			}
 
 			var user = new User();

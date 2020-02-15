@@ -55,8 +55,6 @@ module.exports = function(passport){
   		var db = createConnection();
 
   		async function doThings(id){
-      			try{
-
   						await querie.connect(db);
   						console.log("CON CON CON CON CO NC ONCONC");
 						//let result = await querie.getUserByID(db, id);
@@ -66,9 +64,6 @@ module.exports = function(passport){
 
 						console.log("DeSerializing...");
     					done(err, result[0]);
-    				}catch(err){
-          				console.log(err);
-      				}
   			}//end async function
 			console.log("In Deserial Fcn! Running Query Fcns");
   			doThings(id);

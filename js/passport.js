@@ -6,8 +6,15 @@ const querie = require('./makequery');
 module.exports = function(passport){
 	passport.use(
 		new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
-			//check user name
-			var user = {};
+
+			function User() {
+  				this.username = username;
+  				this.access_level = access_level;
+  				this.password = password;
+  				this.id = id;
+			}
+
+			var user = new User();
 
 			async function hashAndCheckResults(pass){
       			try{

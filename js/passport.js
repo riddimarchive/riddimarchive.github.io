@@ -7,10 +7,6 @@ module.exports = function(passport){
 	passport.use(
 		new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
 
-			
-
-			var user = new User();
-
 			async function hashAndCheckResults(pass){
       			try{
 					var db = createConnection();
@@ -24,19 +20,13 @@ module.exports = function(passport){
 					if (result.length < 1){
             			return done(null, false, { message: 'User NOT FOUND!'});
           			}else{
-	
-                		//store info
-                		user.username = result[0].username;
-						user.access_level = result[0].access_level;
-						user.password = result[0].password;
-						user.id = result[0].id;
-	
+
 						//run hash compare - get boolean isMatch
-						let isMatch = await has.passCheck(password, user.password);
+						let isMatch = await has.passCheck(password, result[0].password);
 	
 						//check - password is correct?
 						if(isMatch){
-						    console.log("Pass is correct!!! User id is: " + user.id);
+						    console.log("Pass is correct!!! User id is: " + result[0].id);
 						    return done(null, result[0]);
 						}else{
 						    return done(null, false, {message: 'Password incorrect'});

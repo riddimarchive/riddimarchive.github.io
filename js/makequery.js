@@ -170,5 +170,6 @@ module.exports = {
 	addUser,
 	addTrack,
 	addArtist,
-	getUserInfo
+	getUserInfo,
+	getUserbyID
 };

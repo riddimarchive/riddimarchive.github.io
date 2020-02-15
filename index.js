@@ -91,7 +91,9 @@ app.get('/login', (req, res) => {
 
 app.get('/admlogin', (req, res) => {
   res.render('admlogin',{
-    username: req.user.username
+    username: req.user.username,
+    access_level: req.user.access_level,
+    id: req.user.id
   });
 });
 

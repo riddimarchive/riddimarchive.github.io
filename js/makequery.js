@@ -143,24 +143,6 @@ function getUserByid(db, id){
 	return querypromise;
 }
 
-function getUserInfo(db, username){
-
-	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT * FROM users WHERE username = "${username}"`, (error, result, fields) => {
-	    	if (error) {
-	      		console.error('An error occurred while executing the query');
-	      		reject(error);
-	    	}
-
-	    	resolve(result);
-
-		});
-
-	});
-
-	return querypromise;
-}
-
 
 module.exports = {
 	connect,
@@ -170,6 +152,5 @@ module.exports = {
 	addUser,
 	addTrack,
 	addArtist,
-	getUserByid,
-	getUserInfo
+	getUserByid
 };

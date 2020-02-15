@@ -60,16 +60,18 @@ module.exports = function(passport){
 
   						await querie.connect(db);
   						console.log("CON CON CON CON CO NC ONCONC");
-						let result = await querie.getUserByID(db, id);
+						//let result = await querie.getUserByID(db, id);
 						await querie.end(db);
 
-						return result;
+						var res = "fish";
+						return res;
     				}catch(error){
           				console.log(error);
       				}
   			}//end async function
 			console.log("In Deserial Fcn! Running Query Fcns");
   			resulty = doThings(id);
+  			console.log("Resulty is: " + resulty);
   	 	
 	});
 

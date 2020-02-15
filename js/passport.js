@@ -61,15 +61,18 @@ module.exports = function(passport){
   						console.log("CON CON CON CON CO NC ONCONC");
 						let result = await querie.getUserByid(db, id);
 						await querie.end(db);
+						return result;
 
     				}catch(error){
           				console.log(error);
       				}
   			}//end async function
 			console.log("In Deserial Fcn! Running Query Fcns");
-  			doThings(id);
+  			var fuck = doThings(id);
+
   			console.log("DeSerializing...");
-    		done(err, result[0]);
+  			console.log(fuck[0]);
+    		done(err, fuck[0]);
   	 	
 	});
 

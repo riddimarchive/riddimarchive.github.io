@@ -89,7 +89,7 @@ app.get('/login', (req, res) => {
   });
 });
 
-app.get('/admlogin', (req, res) => {
+app.get('/dashboard', (req, res) => {
   
   if(req.user === undefined){
     res.render('login',{
@@ -106,13 +106,25 @@ app.get('/admlogin', (req, res) => {
 
     switch(thelevel) {
       case 3:
-        res.send("User is Admin");
+        res.render('admdash',{
+          username: theusername,
+          access_level: thelevel,
+          id: theid
+        });
         break;
       case 2:
-        res.send("User is Moderator");
+        res.render('moddash',{
+          username: theusername,
+          access_level: thelevel,
+          id: theid
+        });
         break;
       case 1:
-        res.send("User is Standard");
+        res.render('userdash',{
+          username: theusername,
+          access_level: thelevel,
+          id: theid
+        });
         break;
       default:
         res.render('login',{
@@ -142,7 +154,7 @@ app.post('/login', (req, res, next) => {
             });
     }else{
       passport.authenticate('local', {
-        successRedirect: '/admlogin',
+        successRedirect: '/dashboard',
         failureRedirect: '/login'
       })(req, res, next);
 

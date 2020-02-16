@@ -26,7 +26,6 @@ module.exports = function(passport){
 	
 						//check - password is correct?
 						if(isMatch){
-						    console.log("Pass is correct!!! User id is: " + result[0].id);
 						    return done(null, result[0]);
 						}else{
 						    return done(null, false, {message: 'Password incorrect'});
@@ -38,7 +37,6 @@ module.exports = function(passport){
           			console.log(err);
       			}
   			}//end async has function
-			console.log("In Local Strategy! Running Hash and Query Fcns");
   			hashAndCheckResults(password);
 
 		})
@@ -47,7 +45,6 @@ module.exports = function(passport){
 
 	passport.serializeUser((user, done) => {
 		console.log("Serializing...");
-		console.log("in serial the user id is: " + user.id);
   		done(null, user.id);
 	});
 
@@ -58,11 +55,8 @@ module.exports = function(passport){
       			try{
 
   						await querie.connect(db);
-  						console.log("CON CON CON CON CO NC ONCONC");
 						let result = await querie.getUserByid(db, id);
 						await querie.end(db);
-
-
 
 						console.log("DeSerializing...");
     					done(null, result[0]);
@@ -70,7 +64,6 @@ module.exports = function(passport){
           				console.log(error);
       				}
   			}//end async function
-			console.log("In Deserial Fcn! Running Query Fcns");
   			doThings(id);
   	 	
 	});

@@ -1,0 +1,28 @@
+extends index3
+
+block content
+	h1 MOD DASHBOARD
+	br
+	
+	- var theusername = username;
+	- var theid = id;
+	- var theaccess_level = access_level;
+
+	
+	.welcometxt
+		p Welcome #{theusername}
+		p ID is #{theid}
+		p Access_Level #{theaccess_level}
+		
+
+	.fishcontain
+		.fish
+			.fishchild
+				a(href='artistcrud')
+					img(src='Images/PageIMG/artists.png' alt='Images/PageIMG/fail.png' height='250' width='250')
+			.fishchild
+				a(href='trackcrud')
+					img(src='Images/PageIMG/tracks.png' alt='Images/PageIMG/fail.png' height='250' width='250')
+			.fishchild
+				a(href='logout')
+					img(src='Images/PageIMG/logout.png' alt='Images/PageIMG/fail.png' height='250' width='250')

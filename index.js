@@ -1,14 +1,18 @@
-// import express (after npm install express)
+//Index/Main JS
+//module reqs: express and express session, fs, http request, path and errors, and passport
 const express = require('express');
+const session = require('express-session');
 const fs = require('fs');
-const createConnection = require('./js/dbconnect');
 const request = require('request');
 const path = require('path');
 const createError = require('http-errors');
+const passport = require('passport');
+
+//file reqs: database connect, query functions, hash functions
+const createConnection = require('./js/dbconnect');
 const querie = require('./js/makequery');
 const has = require('./js/hash');
-const session = require('express-session');
-const passport = require('passport');
+
 
  
 // create new express app and save it as "app"
@@ -41,13 +45,12 @@ app.use(express.static('public'));
 app.use(passport.initialize());
 app.use(passport.session());
 
-//init get - load home page
+//GET REQUEST - INIT
+//render homepage, handle page errors
 app.get('/', (req, res) => {
   res.render('homepage',{
     title:'Riddim Archive Index'
   });
-
-  console.log("Homepage Pug Loaded!!!");
 
   // error page route
   app.use((req, res, next) => {
@@ -66,44 +69,60 @@ app.get('/', (req, res) => {
 
 });
 
+
+//GET REQUEST - HOMEPAGE
 app.get('/home', (req, res) => {
+
   res.render('homepage',{
     title:'Riddim Archive Index'
   });
 
-  console.log("Returned Home!!!");
-
 });
 
+
+//GET REQUEST - FAQ PAGE
 app.get('/faq', (req, res) => {
+
   res.render('faq',{
     title:'Riddim Archive FAQ'
   });
+
 });
 
+
+//GET REQUEST - LOGIN PAGE
 app.get('/login', (req, res) => {
+
   res.render('login',{
     title:'Riddim Archive Login',
     username: '',
     er: ''
   });
+
 });
 
+
+//GET REQUEST - USER DASHBOARD
 app.get('/dashboard', (req, res) => {
   
+  //handle non-login requests, go back to home
   if(req.user === undefined){
+
     res.render('login',{
       title:'Riddim Archive Login',
       username: '',
       er: ''
     });
+
   }else{
 
+    //store user returned by passport (req.user)
     var thelevel = req.user.access_level;
     var theid = req.user.id;
     var theusername = req.user.username;
     console.log("LEVEL : " + thelevel + ", ID: " + theid + ", USERNAME: " + theusername);
 
+    //redirect by permission level
     switch(thelevel) {
       case 3:
         res.render('admdash',{
@@ -135,44 +154,23 @@ app.get('/dashboard', (req, res) => {
     }//end switch
   }//end else
 
-});
+});//end dashboard get request
 
-app.post('/login', (req, res, next) => {
 
-  var { username, password } = req.body;
-
-  //if username and password are blank
-  //render with error "Fill in all fields!"
-  //else: do query function
-
-  if(!username || !password){
-            var er = "Fill in all Fields!";
-
-            res.render('login', {
-              username: username,
-              er: er
-            });
-    }else{
-      passport.authenticate('local', {
-        successRedirect: '/dashboard',
-        failureRedirect: '/login'
-      })(req, res, next);
-
-    }
-
-});
-
+//GET REQUEST - LOGOUT
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/home');
 });
 
-//test get 2 - standard artist page
+
+//GET REQUEST - ARTIST PAGE
 app.get('/artist/:name', function(req,res){
 
+  //store name from url
   var art_name = req.params.name;
   
-
+  //make queries, get all artist/track info and render artist page
   async function artistPageResponse(aname){
       try{
 
@@ -185,6 +183,7 @@ app.get('/artist/:name', function(req,res){
           await querie.connect(db);
           let result = await querie.getArtistInfo(db, name);
 
+          //store artist query result
           artist.id = result[0].id;
           artist.artist_name = result[0].artist_name;
           artist.crew = result[0].crew;
@@ -192,6 +191,7 @@ app.get('/artist/:name', function(req,res){
 
           let tresult = await querie.getAllTracksFromArtist(db, name);
 
+          //store track query results
           for (var i = 0; i < tresult.length; i++) {
             var row = {
               'track_name':tresult[i].track_name,
@@ -221,9 +221,34 @@ app.get('/artist/:name', function(req,res){
 });
 
 
-// make the server listen to requests
+//POST REQUEST - LOGIN FORM
+//check for field entry, authenticate and redirect with passport
+app.post('/login', (req, res, next) => {
+
+  var { username, password } = req.body;
+
+  if(!username || !password){
+            var er = "Fill in all Fields!";
+
+            res.render('login', {
+              username: username,
+              er: er
+            });
+    }else{
+      passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/login'
+      })(req, res, next);
+
+    }
+
+});
+
+
+//Server Request Handler
 app.listen(port, () => {
   console.log(`Server running at: http://localhost:${port}/`);
 });
 
+//export app
 module.export = app;

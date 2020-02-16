@@ -1,3 +1,4 @@
+//module and file requests: passport local, database connect, query and hash functions
 const LocalStrategy = require('passport-local').Strategy;
 const createConnection = require('./dbconnect');
 const has = require('./hash');
@@ -9,25 +10,27 @@ module.exports = function(passport){
 
 			async function hashAndCheckResults(pass){
       			try{
-					var db = createConnection();
 
+      				//make db connection and get query
+					var db = createConnection();
 					await querie.connect(db);
 					let result = await querie.getUserInfo(db, username);
-					//end connection
 					await querie.end(db);
 
 					//check - user in database?
 					if (result.length < 1){
-            			return done(null, false, { message: 'User NOT FOUND!'});
+						//note - this message will not display yet
+            			return done(null, false, { message: 'Username or Password is incorrect'});
           			}else{
 
-						//run hash compare - get boolean isMatch
+						//check - password correct? compare with hashed pass
 						let isMatch = await has.passCheck(password, result[0].password);
 	
 						//check - password is correct?
 						if(isMatch){
 						    return done(null, result[0]);
 						}else{
+							//note - this message will not display yet
 						    return done(null, false, {message: 'Password incorrect'});
 						}
 	

@@ -56,6 +56,23 @@ Features I Might Want:
 	-Do I want a search, Maybe we can have buttons for the individual crews
 	-Create a tag system, for Sounds/Style
 	-I don't want static page transfers, should be more fluid. 
+
+
+Features by User:
+
+ADM: Add, Edit and Delete Artists Tracks and Users
+
+Mod: Add, Edit and Delete Artists and Tracks
+
+Users: Save Tracks they like:
+		-HOW DO I STORE THIS?
+			-Idea 1: have a single string field in user table (add to and parse during user retrieval)
+			- "14,55,01,22,41,55,66,22,77,33,22,11"
+			-use string search methods for removal
+
+
+
+
 	
 
 

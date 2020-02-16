@@ -90,11 +90,39 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/admlogin', (req, res) => {
-  res.render('admlogin',{
-    username: req.user.username,
-    access_level: req.user.access_level,
-    id: req.user.id
-  });
+  
+  if(req.user === undefined){
+    res.render('login',{
+      title:'Riddim Archive Login',
+      username: '',
+      er: ''
+    });
+  }else{
+
+    var thelevel = req.user.access_level;
+    var theid = req.user.id;
+    var theusername = req.user.username;
+    console.log("LEVEL : " + thelevel + ", ID: " + theid + ", USERNAME: " + theusername);
+
+    switch(thelevel) {
+      case 3:
+        res.send("User is Admin");
+        break;
+      case 2:
+        res.send("User is Moderator");
+        break;
+      case 1:
+        res.send("User is Standard");
+        break;
+      default:
+        res.render('login',{
+          title:'Riddim Archive Login',
+          username: '',
+          er: ''
+        });
+    }//end switch
+  }//end else
+
 });
 
 app.post('/login', (req, res, next) => {

@@ -160,8 +160,9 @@ app.get('/dashboard', (req, res) => {
 app.get('/trackcrud', (req, res) => {
 
   //confirm session and access level
-  res.send('TRACK CRUD');
-
+        res.render('trackcrud',{
+          
+        });
 });
 
 

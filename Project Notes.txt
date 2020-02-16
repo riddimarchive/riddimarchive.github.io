@@ -66,9 +66,9 @@ Mod: Add, Edit and Delete Artists and Tracks
 
 Users: Save Tracks they like:
 		-HOW DO I STORE THIS?
-			-Idea 1: have a single string field in user table (add to and parse during user retrieval)
-			- "14,55,01,22,41,55,66,22,77,33,22,11"
-			-use string search methods for removal
+			-Idea 1: UserFavorites Table
+					foreign	  foreign	primary
+					user id | track id | id    | timestamp | extra info
 
 
 

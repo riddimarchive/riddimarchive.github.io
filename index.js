@@ -156,6 +156,14 @@ app.get('/dashboard', (req, res) => {
 
 });//end dashboard get request
 
+//GET REQUEST - TRACK CRUD PAGE
+app.get('/trackcrud', (req, res) => {
+
+  //confirm session and access level
+  res.send('TRACK CRUD');
+
+});
+
 
 //GET REQUEST - LOGOUT
 app.get('/logout', function(req, res){

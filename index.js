@@ -120,7 +120,6 @@ app.get('/dashboard', (req, res) => {
     var thelevel = req.user.access_level;
     var theid = req.user.id;
     var theusername = req.user.username;
-    console.log("LEVEL : " + thelevel + ", ID: " + theid + ", USERNAME: " + theusername);
 
     //redirect by permission level
     switch(thelevel) {
@@ -160,8 +159,6 @@ app.get('/dashboard', (req, res) => {
 //GET REQUEST - TRACK CRUD PAGE
 app.get('/trackcrud', (req, res) => {
 
-  console.log("ACCESS LEVEL IS" + req.user.access_level);
-
   if(req.user === undefined){
     console.log("User does not Exist");
     res.redirect('/login');
@@ -172,7 +169,29 @@ app.get('/trackcrud', (req, res) => {
     res.render('trackcrud',{
       username: ''
     });
-    
+
+  }else{
+    console.log("User does not have Access");
+    res.redirect('/login');
+  }
+
+});
+
+
+//GET REQUEST - USER CRUD PAGE
+app.get('/usercrud', (req, res) => {
+
+  if(req.user === undefined){
+    console.log("User does not Exist");
+    res.redirect('/login');
+  }
+
+  if(req.user.access_level > 1){
+
+    res.render('usercrud',{
+      username: ''
+    });
+
   }else{
     console.log("User does not have Access");
     res.redirect('/login');

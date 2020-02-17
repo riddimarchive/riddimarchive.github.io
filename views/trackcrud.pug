@@ -8,24 +8,17 @@ block content
 	br
 	br
 	
-	h2 Add User
+	h2 Add Track
 	form(method='POST' action='/trackcreate')
 		div.form-group
-			label(for='username')  Username:
-			input#username.form-control(type='text', name='username', value=`${username}`)
+			label(for='track_name')  Track Name:
+			input#track_name.form-control(type='text', name='track_name')
 		div.form-group
-			label(for='password') Password: 
-			input#password.form-control(type='password', name='password')
-		p User Access Level:
+			label(for='artist_name') Artist Name: 
+			input#artist_name.form-control(type='text', name='artist_name')
 		div.form-group
-			input#3(type='radio', name='accesslevel', value=3)
-			label(for='3') Admin
-			br
-			input#2(type='radio', name='accesslevel', value=2)
-			label(for='2') Mod
-			br
-			input#1(type='radio', name='accesslevel', value=1)
-			label(for='1') Standard
+			label(for='drive_url') Drive URL: 
+			input#drive_url.form-control(type='text', name='drive_url')
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br
@@ -33,7 +26,7 @@ block content
 	br
 	br
 	
-	h2 Edit User
+	h2 Edit Track
 	form(method='POST' action='/trackedit')
 		div.form-group
 			label(for='username')  Username:
@@ -48,7 +41,7 @@ block content
 	br
 	br
 	
-	h2 Delete User
+	h2 Delete Track
 	form(method='POST' action='/trackdelete')
 		div.form-group
 			label(for='username')  Username:

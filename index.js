@@ -156,13 +156,19 @@ app.get('/dashboard', (req, res) => {
 
 });//end dashboard get request
 
+
 //GET REQUEST - TRACK CRUD PAGE
 app.get('/trackcrud', (req, res) => {
 
-  //confirm session and access level
-        res.render('trackcrud',{
-          
-        });
+  console.log("ACCESS LEVEL IS" + req.user.access_level);
+
+  if(req.user.access_level = 1){
+    console.log("you don't have access!!!!!!!!!!");
+    res.redirect('/login');
+  }else{
+    res.render('trackcrud');
+  }
+
 });
 
 

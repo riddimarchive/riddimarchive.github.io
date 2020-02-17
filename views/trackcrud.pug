@@ -16,6 +16,14 @@ block content
 		div.form-group
 			label(for='password') Password: 
 			input#password.form-control(type='password', name='password')
+		p User Access Level:
+		div.form-group
+			input#3(type='radio', name='accesslevel', value=3)
+			label(for='3') Admin
+			input#2(type='radio', name='accesslevel', value=2)
+			label(for='2') Mod
+			input#1(type='radio', name='accesslevel', value=1)
+			label(for='1') Standard
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br

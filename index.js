@@ -184,17 +184,18 @@ app.get('/usercrud', (req, res) => {
   if(req.user === undefined){
     console.log("User does not Exist");
     res.redirect('/login');
-  }
-
-  if(req.user.access_level > 1){
-
-    res.render('usercrud',{
-      username: ''
-    });
-
   }else{
-    console.log("User does not have Access");
-    res.redirect('/login');
+
+      if(req.user.access_level > 1){
+    
+        res.render('usercrud',{
+          username: ''
+        });
+    
+      }else{
+        console.log("User does not have Access");
+        res.redirect('/login');
+      }
   }
 
 });

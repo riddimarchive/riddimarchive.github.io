@@ -162,11 +162,16 @@ app.get('/trackcrud', (req, res) => {
 
   console.log("ACCESS LEVEL IS" + req.user.access_level);
 
-  if(req.user.access_level = 1){
-    console.log("you don't have access!!!!!!!!!!");
+  if(req.user === undefined){
+    console.log("User does not exist");
     res.redirect('/login');
-  }else{
+  }
+  
+  if(req.user.access_level > 1){
     res.render('trackcrud');
+  }else{
+    console.log("User does not have ACCESSSSSSSS");
+    res.redirect('/login');
   }
 
 });

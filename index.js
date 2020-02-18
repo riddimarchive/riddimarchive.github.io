@@ -131,12 +131,6 @@ app.get('/login', (req, res) => {
           id: theid
         });
         break;
-      default:
-        res.render('login',{
-          title:'Riddim Archive Login',
-          username: '',
-          er: ''
-        });
     }//end switch
 
   }//end else

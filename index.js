@@ -405,7 +405,7 @@ app.post('/trackdelete', (req, res, next) => {
                     let result = await querie.getTrackInfo(db, track_name);
                     console.log(result.length);
 
-                    if(result.length = 0){
+                    if(result.length == 0){
                         console.log("cant find track");
                         res.render('trackcrud', {
                           msg: "",
@@ -414,8 +414,6 @@ app.post('/trackdelete', (req, res, next) => {
                     }else{
 
                         let tresult = await querie.deleteTrack(db, track_name);
-    
-                        await querie.end(db);
                         console.log("Track Found");
                         msg2 = "Track Deleted!";
                         res.render('trackcrud', {
@@ -424,6 +422,7 @@ app.post('/trackdelete', (req, res, next) => {
                         });
 
                     }
+                    await querie.end(db);
 
                 }catch(err){
                   console.log(err);

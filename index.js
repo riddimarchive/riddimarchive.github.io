@@ -445,14 +445,50 @@ app.post('/usercreate', (req, res, next) => {
 
   if(!username || !password || !access_level){
             var msg = "Fill in all Fields!";
-            console.log(username + password + access_level);
             res.render('usercrud', {
               msg: msg,
               msg2: ""
             });
     }else{
-      res.send("username " + username + ", password is " + password + ", access_level is " + access_level);
-    }
+
+      async function addyUser(username, password, access_level){
+                try{
+
+                    var db = createConnection();
+
+                    await querie.connect(db);
+                    let result = await querie.getUserInfo(db, username);
+                    console.log(result.length);
+
+                    if(result.length > 0){
+                        console.log("USER ALREADY EXISTY");
+                        res.render('usercrud', {
+                          msg: "USER ALREADY EXISTY",
+                          msg2: ""
+                        });
+                    }else{
+                        let hashedpass = await has.hashPass(password);
+                        console.log("BEFORE ENTRY: " + username + " " + hashedpass + " " + access_level);
+                        let tresult = await querie.addUser(db, username, hashedpass, access_level);
+
+                        res.render('usercrud', {
+                          msg: "USER Added!",
+                          msg2: ""
+                        });
+
+                    }
+                    await querie.end(db);
+
+                }catch(err){
+                  console.log(err);
+                  res.render('error');
+                }
+
+            }
+
+            addyUser(username, password, access_level);
+
+    }//end else
 
 });
 

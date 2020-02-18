@@ -87,10 +87,10 @@ function getAllTracksFromArtist(db, artist_name){
 	return querypromise;
 }
 
-function addUser(db, user){
+function addUser(db, username, password, access_level){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`INSERT INTO users (id, access_level, username, password) VALUES (${user.id}, ${user.access_level}, ${user.username}, ${user.password})`, (error, result, fields) => {
+		db.query(`INSERT INTO users(username, password, access_level) VALUES ("${username}", "${password}", "${access_level}")`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

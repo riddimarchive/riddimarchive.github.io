@@ -437,6 +437,25 @@ app.post('/trackdelete', (req, res, next) => {
 
 });
 
+//POST REQUEST - User Create
+//check for field entry, authenticate and redirect with passport
+app.post('/usercreate', (req, res, next) => {
+
+  var { username, password, access_level } = req.body;
+
+  if(!username || !password || !access_level){
+            var msg = "Fill in all Fields!";
+
+            res.render('usercrud', {
+              msg: msg,
+              msg2: ""
+            });
+    }else{
+      res.send("username " + username + ", password is " + password + ", access_level is " + access_level);
+    }
+
+});
+
 
 //Server Request Handler
 app.listen(port, () => {

@@ -28,19 +28,7 @@ block content
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br
 	p  #{message}
-	
-	h2 Edit Track
-	form(method='POST' action='/trackedit')
-		div.form-group
-			label(for='track_name') Enter Track You Would Like to Edit:
-			input#track_name.form-control(type='text', name='track_name')
-		div
-			button.btn.btn-primary.btn-block(type='submit') Submit
-	br
-	p  #{message2}
-	br
-	br
-	
+		
 	h2 Delete Track
 	form(method='POST' action='/trackdelete')
 		div.form-group
@@ -49,4 +37,5 @@ block content
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br
+	p  #{message2}
 	

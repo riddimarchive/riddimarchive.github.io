@@ -399,13 +399,14 @@ app.post('/trackdelete', (req, res, next) => {
                 try{
 
                     var db = createConnection();
-                    var msg2 = "Track Deleted!"
+                    var msg2 = "Track Not Found";
 
                     await querie.connect(db);
                     let result = await querie.getTrackInfo(db, track_name);
+                    console.log(result.length);
 
                     if(result.length = 0){
-                        msg2 = "Can't Find Track"
+                        console.log("cant find track");
                         res.render('trackcrud', {
                           msg: "",
                           msg2: msg2
@@ -415,8 +416,8 @@ app.post('/trackdelete', (req, res, next) => {
                         let tresult = await querie.deleteTrack(db, track_name);
     
                         await querie.end(db);
-                        console.log(tresult);
-    
+                        console.log("Track Found");
+                        msg2 = "Track Deleted!";
                         res.render('trackcrud', {
                           msg: "",
                           msg2: msg2

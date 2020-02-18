@@ -166,9 +166,7 @@ app.get('/trackcrud', (req, res) => {
 
       if(req.user.access_level > 1){
     
-        res.render('trackcrud',{
-          username: ''
-        });
+        res.render('trackcrud');
     
       }else{
         console.log("User does not have Access");
@@ -320,7 +318,9 @@ app.post('/trackcreate', (req, res, next) => {
                     let tresult = await querie.addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_url);
 
                     await querie.end(db);
-                    console.log(tresult + "   RESULLLLLTTTTTT");
+                    console.log(tresult);
+
+                    res.render('trackcrud');
 
                 }catch(err){
                   console.log(err);

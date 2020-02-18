@@ -344,6 +344,7 @@ app.post('/trackcreate', (req, res, next) => {
                     var db = createConnection();
                     var collab_artist = " ";
                     var artist_id;
+                    var msg = "Track Created!"
 
                     await querie.connect(db);
                     let result = await querie.getArtistInfo(db, artist_name);
@@ -356,7 +357,9 @@ app.post('/trackcreate', (req, res, next) => {
                     await querie.end(db);
                     console.log(tresult);
 
-                    res.render('trackcrud');
+                    res.render('trackcrud', {
+                      msg: msg
+                    });
 
                 }catch(err){
                   console.log(err);

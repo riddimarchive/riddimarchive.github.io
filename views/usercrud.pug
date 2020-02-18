@@ -20,14 +20,14 @@ block content
 			input#password.form-control(type='password', name='password')
 		p User Access Level:
 		div.form-group
-			input#3.form-control(type='radio', name='accesslevel', value=3)
-			label(for='3') Admin
+			label(for='access_level') Admin
+			input#access_level.form-control(type='radio', name='access_level', value=3)
 			br
-			input#2.form-control(type='radio', name='accesslevel', value=2)
-			label(for='2') Mod
+			label(for='access_level') Mod
+			input#access_level.form-control(type='radio', name='access_level', value=2)
 			br
-			input#1.form-control(type='radio', name='accesslevel', value=1)
-			label(for='1') Standard
+			label(for='access_level') Standard
+			input#access_level.form-control(type='radio', name='access_level', value=1)
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br

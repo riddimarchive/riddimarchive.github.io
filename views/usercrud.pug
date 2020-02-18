@@ -8,6 +8,8 @@ block content
 	br
 	br
 	
+	- var message = msg;
+
 	h2 Add User
 	form(method='POST' action='/usercreate')
 		div.form-group
@@ -29,7 +31,7 @@ block content
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br
-
+	p  #{message}
 	br
 	br
 	

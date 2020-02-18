@@ -9,6 +9,9 @@ block content
 	br
 
 	- var message = msg;
+	- var message2 = msg2;
+	//- var message3 = msg3;
+
 	
 	h2 Add Track
 	form(method='POST' action='/trackcreate')
@@ -24,11 +27,7 @@ block content
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br
-	.welcometxt
-		p  #{message}
-	
-	br
-	br
+	p  #{message}
 	
 	h2 Edit Track
 	form(method='POST' action='/trackedit')
@@ -38,18 +37,15 @@ block content
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br
-
+	p  #{message2}
 	br
 	br
 	
 	h2 Delete Track
 	form(method='POST' action='/trackdelete')
 		div.form-group
-			label(for='username')  Username:
-			input#username.form-control(type='text', name='username', value=`${username}`)
-		div.form-group
-			label(for='password') Password: 
-			input#password.form-control(type='password', name='password')
+			label(for='track_name') Enter Track You Would Like to Delete:
+			input#track_name.form-control(type='text', name='track_name')
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br

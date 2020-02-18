@@ -203,7 +203,8 @@ app.get('/trackcrud', (req, res) => {
       if(req.user.access_level > 1){
     
         res.render('trackcrud', {
-              msg: ""
+              msg: msg,
+              msg2: ""
             });
     
       }else{
@@ -335,7 +336,8 @@ app.post('/trackcreate', (req, res, next) => {
             var msg = "Fill in all Fields!";
 
             res.render('trackcrud', {
-              msg: msg
+              msg: msg,
+              msg2: ""
             });
     }else{
       //res.send("Track name is " + track_name + ", Artist Name is " + artist_name + ", drive_url Name is " + drive_url);
@@ -360,7 +362,8 @@ app.post('/trackcreate', (req, res, next) => {
                     console.log(tresult);
 
                     res.render('trackcrud', {
-                      msg: msg
+                      msg: msg,
+                      msg2: ""
                     });
 
                 }catch(err){
@@ -371,6 +374,64 @@ app.post('/trackcreate', (req, res, next) => {
             }
 
             storeFormResults(track_name, artist_name, drive_url);
+
+    }
+
+});
+
+
+//POST REQUEST - Track Delete
+//Make query, delete track with that name
+app.post('/trackdelete', (req, res, next) => {
+
+  var { track_name } = req.body;
+
+  if(!track_name){
+            var msg2 = "Enter Track Name!";
+
+            res.render('trackcrud', {
+              msg: "",
+              msg2: msg2
+            });
+  }else{
+      //make queries, get all artist/track info and render artist page
+            async function deletyTrack(track_name){
+                try{
+
+                    var db = createConnection();
+                    var msg2 = "Track Deleted!"
+
+                    await querie.connect(db);
+                    let result = await querie.getTrackInfo(db, track_name);
+
+                    if(result.length = 0){
+                        msg2 = "Can't Find Track"
+                        res.render('trackcrud', {
+                          msg: "",
+                          msg2: msg2
+                        });
+                    }else{
+
+                        let tresult = await querie.deleteTrack(db, track_name);
+    
+                        await querie.end(db);
+                        console.log(tresult);
+    
+                        res.render('trackcrud', {
+                          msg: "",
+                          msg2: msg2
+                        });
+
+                    }
+
+                }catch(err){
+                  console.log(err);
+                  res.render('error');
+                }
+
+            }
+
+            deletyTrack(track_name);
 
     }
 

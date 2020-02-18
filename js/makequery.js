@@ -49,6 +49,25 @@ function getArtistInfo(db, artist_name){
 
 }
 
+function getTrackInfo(db, track_name){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT * FROM tracks WHERE track_name = "${track_name}"`, (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+
+}
+
 function getAllTracksFromArtist(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -106,10 +125,28 @@ function addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_u
 	return querypromise;
 }
 
+function deleteTrack(db, track_name){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`DELETE FROM tracks WHERE track_name = "${track_name}" LIMIT 1`, (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
 function addArtist(db, artist){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`INSERT INTO users (id, artist_name, crew, country, info) VALUES (${artist.id}, ${artist.artist_name}, ${artist.crew}, ${artist.country}, ${artist.info})`, (error, result, fields) => {
+		db.query(`INSERT INTO users (id, artist_name, crew, country, info) VALUES (${artist.id}, "${artist.artist_name}", "${artist.crew}", "${artist.country}", "${artist.info}")`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -166,9 +203,11 @@ module.exports = {
 	connect,
 	end,
 	getArtistInfo,
+	getTrackInfo,
 	getAllTracksFromArtist,
 	addUser,
 	addTrack,
+	deleteTrack,
 	addArtist,
 	getUserByid,
 	getUserInfo

@@ -316,7 +316,7 @@ app.post('/trackcreate', (req, res, next) => {
 
                     //store artist query result
                     artist_id = result[0].id;
-                    console.log("BEFORE ENTRY: -> "artist_id + " " + artist_name + " " + track_name + " " + collab_artist + " " + drive_url);
+                    console.log("BEFORE ENTRY: -> " + artist_id + " " + artist_name + " " + track_name + " " + collab_artist + " " + drive_url);
                     let tresult = await querie.addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_url);
 
                     await querie.end(db);

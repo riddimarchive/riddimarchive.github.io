@@ -289,6 +289,25 @@ app.post('/login', (req, res, next) => {
 
 });
 
+//POST REQUEST - Track Create
+//check for field entry, authenticate and redirect with passport
+app.post('/trackcreate', (req, res, next) => {
+
+  var { track_name, artist_name, drive_url } = req.body;
+
+  if(!track_name || !artist_name || !drive_url){
+            var er = "Fill in all Fields!";
+
+            res.render('trackcrud', {
+              er: er
+            });
+    }else{
+      res.send("Track name is " + track_name + ", Artist Name is " + artist_name + ", drive_url Name is " + drive_url);
+
+    }
+
+});
+
 
 //Server Request Handler
 app.listen(port, () => {

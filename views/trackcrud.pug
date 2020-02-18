@@ -7,11 +7,13 @@ block content
 		input(type='button', value='Go Back', onclick="self.location='https://riddim-archive.herokuapp.com'")
 	br
 	br
+
+	- var message = msg;
 	
 	h2 Add Track
 	form(method='POST' action='/trackcreate')
 		div.form-group
-			label(for='track_name')  Track Name:
+			label(for='track_name') Track Name:
 			input#track_name.form-control(type='text', name='track_name')
 		div.form-group
 			label(for='artist_name') Artist Name: 
@@ -22,6 +24,8 @@ block content
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br
+	.welcometxt
+		p  #{message}
 	
 	br
 	br
@@ -29,11 +33,8 @@ block content
 	h2 Edit Track
 	form(method='POST' action='/trackedit')
 		div.form-group
-			label(for='username')  Enter Track You Would Like to Edit:
-			input#username.form-control(type='text', name='username', value=`${username}`)
-		div.form-group
-			label(for='password') Password: 
-			input#password.form-control(type='password', name='password')
+			label(for='track_name') Enter Track You Would Like to Edit:
+			input#track_name.form-control(type='text', name='track_name')
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br
@@ -52,6 +53,4 @@ block content
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br
-	ul
-		.uldiv
-			li.errortext= `${msg}`
+	

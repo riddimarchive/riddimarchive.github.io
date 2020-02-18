@@ -202,7 +202,9 @@ app.get('/trackcrud', (req, res) => {
 
       if(req.user.access_level > 1){
     
-        res.render('trackcrud');
+        res.render('trackcrud', {
+              msg: ""
+            });
     
       }else{
         console.log("User does not have Access");
@@ -330,10 +332,10 @@ app.post('/trackcreate', (req, res, next) => {
   var { track_name, artist_name, drive_url } = req.body;
 
   if(!track_name || !artist_name || !drive_url){
-            var er = "Fill in all Fields!";
+            var msg = "Fill in all Fields!";
 
             res.render('trackcrud', {
-              er: er
+              msg: msg
             });
     }else{
       //res.send("Track name is " + track_name + ", Artist Name is " + artist_name + ", drive_url Name is " + drive_url);

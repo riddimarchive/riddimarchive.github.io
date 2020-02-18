@@ -310,11 +310,9 @@ app.post('/login', (req, res, next) => {
   var { username, password } = req.body;
 
   if(!username || !password){
-            var er = "Fill in all Fields!";
-
             res.render('login', {
               username: username,
-              er: er
+              er: "Fill in all Fields!"
             });
     }else{
       passport.authenticate('local', {
@@ -333,10 +331,8 @@ app.post('/trackcreate', (req, res, next) => {
   var { track_name, artist_name, drive_url } = req.body;
 
   if(!track_name || !artist_name || !drive_url){
-            var msg = "Fill in all Fields!";
-
             res.render('trackcrud', {
-              msg: msg,
+              msg: "Fill in all Fields!",
               msg2: ""
             });
     }else{
@@ -348,7 +344,6 @@ app.post('/trackcreate', (req, res, next) => {
                     var db = createConnection();
                     var collab_artist = " ";
                     var artist_id;
-                    var msg = "Track Created!"
 
                     await querie.connect(db);
                     let result = await querie.getArtistInfo(db, artist_name);
@@ -362,7 +357,7 @@ app.post('/trackcreate', (req, res, next) => {
                     console.log(tresult);
 
                     res.render('trackcrud', {
-                      msg: msg,
+                      msg: "Track Created!",
                       msg2: ""
                     });
 
@@ -387,11 +382,9 @@ app.post('/trackdelete', (req, res, next) => {
   var { track_name } = req.body;
 
   if(!track_name){
-            var msg2 = "Enter Track Name!";
-
             res.render('trackcrud', {
               msg: "",
-              msg2: msg2
+              msg2: "Enter Track Name!"
             });
   }else{
       //make queries, get all artist/track info and render artist page
@@ -399,7 +392,6 @@ app.post('/trackdelete', (req, res, next) => {
                 try{
 
                     var db = createConnection();
-                    var msg2 = "Track Not Found";
 
                     await querie.connect(db);
                     let result = await querie.getTrackInfo(db, track_name);
@@ -409,16 +401,15 @@ app.post('/trackdelete', (req, res, next) => {
                         console.log("cant find track");
                         res.render('trackcrud', {
                           msg: "",
-                          msg2: msg2
+                          msg2: "Track Not Found"
                         });
                     }else{
 
                         let tresult = await querie.deleteTrack(db, track_name);
                         console.log("Track Found");
-                        msg2 = "Track Deleted!";
                         res.render('trackcrud', {
                           msg: "",
-                          msg2: msg2
+                          msg2: "Track Deleted!"
                         });
 
                     }
@@ -444,9 +435,8 @@ app.post('/usercreate', (req, res, next) => {
   var { username, password, access_level } = req.body;
 
   if(!username || !password || !access_level){
-            var msg = "Fill in all Fields!";
             res.render('usercrud', {
-              msg: msg,
+              msg: "Fill in all Fields!",
               msg2: ""
             });
     }else{

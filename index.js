@@ -445,7 +445,7 @@ app.post('/usercreate', (req, res, next) => {
 
   if(!username || !password || !access_level){
             var msg = "Fill in all Fields!";
-
+            console.log(username + password + access_level);
             res.render('usercrud', {
               msg: msg,
               msg2: ""

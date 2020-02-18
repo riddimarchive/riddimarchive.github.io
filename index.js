@@ -302,7 +302,34 @@ app.post('/trackcreate', (req, res, next) => {
               er: er
             });
     }else{
-      res.send("Track name is " + track_name + ", Artist Name is " + artist_name + ", drive_url Name is " + drive_url);
+      //res.send("Track name is " + track_name + ", Artist Name is " + artist_name + ", drive_url Name is " + drive_url);
+      //make queries, get all artist/track info and render artist page
+            async function storeFormResults(track_name, artist_name, drive_url){
+                try{
+
+                    var db = createConnection();
+                    var collab_artist = "";
+                    var artist_id;
+
+                    await querie.connect(db);
+                    let result = await querie.getArtistInfo(db, artist_name);
+
+                    //store artist query result
+                    artist_id = result[0].id;
+
+                    let tresult = await querie.addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_url);
+
+                    await querie.end(db);
+                    console.log(tresult + "   RESULLLLLTTTTTT");
+
+                }catch(err){
+                  console.log(err);
+                  res.render('error');
+                }
+
+            }
+
+            storeFormResults(track_name, artist_name, drive_url);
 
     }
 

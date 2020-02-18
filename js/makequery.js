@@ -87,10 +87,10 @@ function addUser(db, user){
 	return querypromise;
 }
 
-function addTrack(db, track){
+function addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_url){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`INSERT INTO tracks (id, artist_id, artist_name, track_name, collab_artist, collab_artist2, collab_artist3, year, drive_url) VALUES (${track.id}, ${track.artist_id}, ${track.artist_name}, ${track.track_name}, ${track.collab_artist}, ${track.collab_artist2}, ${track.collab_artist3}, ${track.year}, ${track.drive_url})`, (error, result, fields) => {
+		db.query(`INSERT INTO tracks (artist_id, artist_name, track_name, collab_artist, drive_url) VALUES (${artist_id}, ${artist_name}, ${track_name}, ${collab_artist}, ${drive_url})`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

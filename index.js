@@ -203,7 +203,7 @@ app.get('/trackcrud', (req, res) => {
       if(req.user.access_level > 1){
     
         res.render('trackcrud', {
-              msg: msg,
+              msg: "",
               msg2: ""
             });
     

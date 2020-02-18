@@ -93,11 +93,53 @@ app.get('/faq', (req, res) => {
 //GET REQUEST - LOGIN PAGE
 app.get('/login', (req, res) => {
 
-  res.render('login',{
-    title:'Riddim Archive Login',
-    username: '',
-    er: ''
-  });
+  //handle non-login requests, go back to home
+  if(req.user === undefined){
+
+    res.render('login',{
+      title:'Riddim Archive Login',
+      username: '',
+      er: ''
+    });
+
+  }else{
+    //store user returned by passport (req.user)
+    var thelevel = req.user.access_level;
+    var theid = req.user.id;
+    var theusername = req.user.username;
+
+    //redirect by permission level
+    switch(thelevel) {
+      case 3:
+        res.render('admdash',{
+          username: theusername,
+          access_level: thelevel,
+          id: theid
+        });
+        break;
+      case 2:
+        res.render('moddash',{
+          username: theusername,
+          access_level: thelevel,
+          id: theid
+        });
+        break;
+      case 1:
+        res.render('userdash',{
+          username: theusername,
+          access_level: thelevel,
+          id: theid
+        });
+        break;
+      default:
+        res.render('login',{
+          title:'Riddim Archive Login',
+          username: '',
+          er: ''
+        });
+    }//end switch
+
+  }//end else
 
 });
 

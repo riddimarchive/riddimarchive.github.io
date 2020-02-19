@@ -161,10 +161,10 @@ function deleteTrack(db, track_name){
 	return querypromise;
 }
 
-function addArtist(db, artist){
+function addArtist(db, artist_name, crew, country, info){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`INSERT INTO users (id, artist_name, crew, country, info) VALUES (${artist.id}, "${artist.artist_name}", "${artist.crew}", "${artist.country}", "${artist.info}")`, (error, result, fields) => {
+		db.query(`INSERT INTO artists (artist_name, crew, country, info) VALUES ("${artist_name}", "${crew}", "${country}", "${info}")`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -174,6 +174,24 @@ function addArtist(db, artist){
 
 		});
 
+
+	});
+
+	return querypromise;
+}
+
+function deleteArtist(db, artist_name){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`DELETE FROM artists WHERE artist_name = "${artist_name}" LIMIT 1`, (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
 
 	});
 
@@ -228,6 +246,7 @@ module.exports = {
 	addTrack,
 	deleteTrack,
 	addArtist,
+	deleteArtist,
 	getUserByid,
 	getUserInfo
 };

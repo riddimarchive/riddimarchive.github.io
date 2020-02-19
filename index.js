@@ -529,6 +529,60 @@ app.post('/userdelete', (req, res, next) => {
 
 });
 
+//POST REQUEST - Artist Create
+//check for field entry, make query to add artist
+app.post('/artistcreate', (req, res, next) => {
+
+  var { artist_name, crew, country, info } = req.body;
+
+  if(!artist_name){
+            res.render('artcrud', {
+              msg: "Fill in Artist Name",
+              msg2: ""
+            });
+    }else{
+            if(!crew){ crew = ""; }
+            if(!country){ country = ""; }
+            if(!info){ info = ""; }
+
+            async function addyArtist(artist_name, crew, country, info){
+                try{
+
+                    var db = createConnection();
+
+                    await querie.connect(db);
+                    let result = await querie.getArtistInfo(db, artist_name);
+
+                    if(result.length > 0){
+                        res.render('artcrud', {
+                          msg: "Artist ALREADY EXISTY",
+                          msg2: ""
+                        });
+                    }else{
+
+                        let tresult = await querie.addArtist(db, artist_name, crew, country, info);
+                        res.render('artcrud', {
+                          msg: "Artist Added!",
+                          msg2: ""
+                        });
+
+                    }
+
+                    await querie.end(db);
+
+                }catch(err){
+                  console.log(err);
+                  res.render('error');
+                }
+
+            }
+
+            addyArtist(artist_name, crew, country, info);
+
+    }
+
+});
+
 
 //Server Request Handler
 app.listen(port, () => {

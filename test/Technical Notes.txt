@@ -63,4 +63,6 @@ connecty.query('SELECT * FROM tracks', (error, tracks, fields) => {
   }
   console.log(tracks);
 });
+
+ALTER TABLE tablename AUTO_INCREMENT = 1
 	

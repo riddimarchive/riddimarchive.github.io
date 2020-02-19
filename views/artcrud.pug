@@ -1,0 +1,36 @@
+extends index3
+
+block content
+	h1 ARTIST C.R.U.D
+	form
+		input(type='button', value='Go Back', onclick="self.location='https://riddim-archive.herokuapp.com'")
+	
+	- var message = msg;
+	- var message2 = msg2;
+
+	h2 Add Artist
+	form(method='POST' action='/artistcreate')
+		div.form-group
+			label(for='artist_name')  Artist Name:
+			input#artist_name.form-control(type='text', name='artist_name')
+		div.form-group
+			label(for='crew') Crew: 
+			input#crew.form-control(type='text', name='crew')
+		div.form-group
+			label(for='country') Country: 
+			input#country.form-control(type='text', name='country')
+		div.form-group
+			label(for='info') Info: 
+			input#info.form-control(type='text', name='info')
+		div
+			button.btn.btn-primary.btn-block(type='submit') Submit
+	p  #{message}
+	
+	h2 Delete User
+	form(method='POST' action='/artistdelete')
+		div.form-group
+			label(for='artist_name')  Artist Name:
+			input#artist_name.form-control(type='text', name='artist_name')
+		div
+			button.btn.btn-primary.btn-block(type='submit') Submit
+	p  #{message2}

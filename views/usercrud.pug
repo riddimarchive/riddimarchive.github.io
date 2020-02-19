@@ -2,11 +2,8 @@ extends index3
 
 block content
 	h1 TRACK C.R.U.D
-	br
 	form
 		input(type='button', value='Go Back', onclick="self.location='https://riddim-archive.herokuapp.com'")
-	br
-	br
 	
 	- var message = msg;
 	- var message2 = msg2;
@@ -15,7 +12,7 @@ block content
 	form(method='POST' action='/usercreate')
 		div.form-group
 			label(for='username')  Username:
-			input#username.form-control(type='text', name='username', value=`${username}`)
+			input#username.form-control(type='text', name='username')
 		div.form-group
 			label(for='password') Password: 
 			input#password.form-control(type='password', name='password')
@@ -31,10 +28,7 @@ block content
 			input#access_level.form-control(type='radio', name='access_level', value=1)
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
-	br
 	p  #{message}
-	br
-	br
 	
 	h2 Delete User
 	form(method='POST' action='/userdelete')
@@ -43,5 +37,4 @@ block content
 			input#username.form-control(type='text', name='username')
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
-	br
 	p  #{message2}

@@ -232,6 +232,28 @@ app.get('/usercrud', (req, res) => {
 
 });
 
+//GET REQUEST - ARTIST CRUD PAGE
+app.get('/artcrud', (req, res) => {
+
+  if(req.user === undefined){
+    console.log("User does not Exist");
+    res.redirect('/login');
+  }else{
+
+      if(req.user.access_level > 1){
+    
+        res.render('artcrud',{
+          username: ''
+        });
+    
+      }else{
+        console.log("User does not have Access");
+        res.redirect('/login');
+      }
+  }
+
+});
+
 
 //GET REQUEST - LOGOUT
 app.get('/logout', function(req, res){

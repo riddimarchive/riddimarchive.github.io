@@ -9,6 +9,7 @@ block content
 	br
 	
 	- var message = msg;
+	- var message2 = msg2;
 
 	h2 Add User
 	form(method='POST' action='/usercreate')
@@ -36,11 +37,11 @@ block content
 	br
 	
 	h2 Delete User
-	form(method='POST' action='/trackdelete')
+	form(method='POST' action='/userdelete')
 		div.form-group
 			label(for='username')  Username:
 			input#username.form-control(type='text', name='username')
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br
-
+	p  #{message2}

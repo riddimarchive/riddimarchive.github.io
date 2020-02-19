@@ -180,12 +180,6 @@ app.get('/dashboard', (req, res) => {
           id: theid
         });
         break;
-      default:
-        res.render('login',{
-          title:'Riddim Archive Login',
-          username: '',
-          er: ''
-        });
     }//end switch
   }//end else
 
@@ -479,6 +473,59 @@ app.post('/usercreate', (req, res, next) => {
             addyUser(username, password, access_level);
 
     }//end else
+
+});
+
+//POST REQUEST - User Delete
+//Make query, User track with that name
+app.post('/userdelete', (req, res, next) => {
+
+  var { username } = req.body;
+
+  if(!username){
+            res.render('usercrud', {
+              msg: "",
+              msg2: "Enter User Name!"
+            });
+  }else{
+      //make queries, get all artist/track info and render artist page
+            async function deletyUser(username){
+                try{
+
+                    var db = createConnection();
+
+                    await querie.connect(db);
+                    let result = await querie.getUserInfo(db, username);
+                    console.log(result.length);
+
+                    if(result.length == 0){
+                        console.log("cant find user");
+                        res.render('usercrud', {
+                          msg: "",
+                          msg2: "User Not Found"
+                        });
+                    }else{
+
+                        let tresult = await querie.deleteUser(db, username);
+                        console.log("User Found");
+                        res.render('usercrud', {
+                          msg: "",
+                          msg2: "User Deleted!"
+                        });
+
+                    }
+                    await querie.end(db);
+
+                }catch(err){
+                  console.log(err);
+                  res.render('error');
+                }
+
+            }
+
+            deletyUser(username);
+
+    }
 
 });
 

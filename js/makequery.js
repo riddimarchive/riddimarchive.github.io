@@ -106,6 +106,24 @@ function addUser(db, username, password, access_level){
 	return querypromise;
 }
 
+function deleteUser(db, username){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`DELETE FROM users WHERE username = "${username}" LIMIT 1`, (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
 function addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_url){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -206,6 +224,7 @@ module.exports = {
 	getTrackInfo,
 	getAllTracksFromArtist,
 	addUser,
+	deleteUser,
 	addTrack,
 	deleteTrack,
 	addArtist,

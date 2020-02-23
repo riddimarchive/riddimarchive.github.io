@@ -71,7 +71,7 @@ function getTrackInfo(db, track_name){
 function getAllTracksFromArtist(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT * FROM tracks WHERE artist_name = "${artist_name}"`, (error, result, fields) => {
+		db.query(`SELECT tracks.track_name, tracks.drive_url, artists.id, artists.crew, artists.country, artists.artist_name FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name WHERE tracks.artist_name = "${artist_name}"`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

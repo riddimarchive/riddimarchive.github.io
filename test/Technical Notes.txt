@@ -66,3 +66,5 @@ connecty.query('SELECT * FROM tracks', (error, tracks, fields) => {
 
 ALTER TABLE tablename AUTO_INCREMENT = 1
 	
+join queries together! more efficient
+look into routers to split up index

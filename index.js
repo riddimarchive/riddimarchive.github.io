@@ -279,13 +279,13 @@ app.get('/artist/:name', function(req,res){
           var db = createConnection();
 
           await querie.connect(db);
-          let result = await querie.getArtistInfo(db, name);
+          //let result = await querie.getArtistInfo(db, name);
 
           //store artist query result
-          artist.id = result[0].id;
-          artist.artist_name = result[0].artist_name;
-          artist.crew = result[0].crew;
-          artist.country = result[0].country;
+          //artist.id = result[0].id;
+          //artist.artist_name = result[0].artist_name;
+          //artist.crew = result[0].crew;
+          //artist.country = result[0].country;
 
           let tresult = await querie.getAllTracksFromArtist(db, name);
 
@@ -294,7 +294,10 @@ app.get('/artist/:name', function(req,res){
             var row = {
               'track_name':tresult[i].track_name,
               'artist_name':tresult[i].artist_name,
-              'drive_url': 'https://drive.google.com/uc?export=download&id=' + tresult[i].drive_url
+              'drive_url': 'https://drive.google.com/uc?export=download&id=' + tresult[i].drive_url,
+              'crew': tresult[i].crew,
+              'country': tresult[i].country,
+              'artist_id': tresult[i].artist_id
             }
             tracks.push(row);
           }
@@ -303,7 +306,6 @@ app.get('/artist/:name', function(req,res){
 
           res.render('artist',{
             artist_name: name,
-            artist: artist,
             tracks: tracks
           });
 

@@ -603,6 +603,58 @@ app.post('/artistcreate', (req, res, next) => {
 
 });
 
+//POST REQUEST - Artist Delete
+app.post('/artistdelete', (req, res, next) => {
+
+  var { artist_name } = req.body;
+
+  if(!artist_name){
+            res.render('artcrud', {
+              msg: "",
+              msg2: "Enter Artist Name!"
+            });
+  }else{
+      //make queries, get all artist/track info and render artist page
+            async function deletyArtist(artist_name){
+                try{
+
+                    var db = createConnection();
+
+                    await conquerie.connect(db);
+                    let result = await artquerie.getArtistInfo(db, artist_name);
+                    console.log(result.length);
+
+                    if(result.length == 0){
+                        console.log("cant find artist");
+                        res.render('artcrud', {
+                          msg: "",
+                          msg2: "Artist Not Found"
+                        });
+                    }else{
+
+                        let tresult = await artquerie.deleteArtist(db, artist_name);
+                        console.log("Artist Found");
+                        res.render('artcrud', {
+                          msg: "",
+                          msg2: "Artist Deleted!"
+                        });
+
+                    }
+                    await conquerie.end(db);
+
+                }catch(err){
+                  console.log(err);
+                  res.render('error');
+                }
+
+            }
+
+            deletyArtist(artist_name);
+
+    }
+
+});
+
 
 //Server Request Handler
 app.listen(port, () => {

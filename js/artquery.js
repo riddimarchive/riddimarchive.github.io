@@ -1,0 +1,61 @@
+function getArtistInfo(db, artist_name){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT * FROM artists WHERE artist_name = "${artist_name}"`, (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+
+}
+
+function addArtist(db, artist_name, crew, country, info){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`INSERT INTO artists (artist_name, crew, country, info) VALUES ("${artist_name}", "${crew}", "${country}", "${info}")`, (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+
+	});
+
+	return querypromise;
+}
+
+function deleteArtist(db, artist_name){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`DELETE FROM artists WHERE artist_name = "${artist_name}" LIMIT 1`, (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
+module.exports = {
+	getArtistInfo,
+	addArtist,
+	deleteArtist
+};

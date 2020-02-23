@@ -2,7 +2,8 @@
 const LocalStrategy = require('passport-local').Strategy;
 const createConnection = require('./dbconnect');
 const has = require('./hash');
-const querie = require('./makequery');
+const conquerie = require('./conquery');
+const userquerie = require('./userquery');
 
 module.exports = function(passport){
 	passport.use(
@@ -13,9 +14,9 @@ module.exports = function(passport){
 
       				//make db connection and get query
 					var db = createConnection();
-					await querie.connect(db);
-					let result = await querie.getUserInfo(db, username);
-					await querie.end(db);
+					await conquerie.connect(db);
+					let result = await userquerie.getUserInfo(db, username);
+					await conquerie.end(db);
 
 					//check - user in database?
 					if (result.length < 1){
@@ -57,9 +58,9 @@ module.exports = function(passport){
   		async function doThings(id){
       			try{
 
-  						await querie.connect(db);
-						let result = await querie.getUserByid(db, id);
-						await querie.end(db);
+  						await conquerie.connect(db);
+						let result = await userquerie.getUserByid(db, id);
+						await conquerie.end(db);
 
 						console.log("DeSerializing...");
     					done(null, result[0]);

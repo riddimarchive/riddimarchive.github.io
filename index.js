@@ -10,7 +10,10 @@ const passport = require('passport');
 
 //file reqs: database connect, query functions, hash functions
 const createConnection = require('./js/dbconnect');
-const querie = require('./js/makequery');
+const conquerie = require('./js/conquery');
+const artquerie = require('./js/artquery');
+const trackquerie = require('./js/trackquery');
+const userquerie = require('./js/userquery');
 const has = require('./js/hash');
 
 
@@ -278,16 +281,9 @@ app.get('/artist/:name', function(req,res){
 
           var db = createConnection();
 
-          await querie.connect(db);
-          //let result = await querie.getArtistInfo(db, name);
+          await conquerie.connect(db);
 
-          //store artist query result
-          //artist.id = result[0].id;
-          //artist.artist_name = result[0].artist_name;
-          //artist.crew = result[0].crew;
-          //artist.country = result[0].country;
-
-          let tresult = await querie.getAllTracksFromArtist(db, name);
+          let tresult = await trackquerie.getAllTracksFromArtist(db, name);
 
           //store track query results
           for (var i = 0; i < tresult.length; i++) {
@@ -302,7 +298,7 @@ app.get('/artist/:name', function(req,res){
             tracks.push(row);
           }
 
-          await querie.end(db);
+          await conquerie.end(db);
 
           res.render('artist',{
             artist_name: name,
@@ -363,15 +359,15 @@ app.post('/trackcreate', (req, res, next) => {
                     var collab_artist = " ";
                     var artist_id;
 
-                    await querie.connect(db);
-                    let result = await querie.getArtistInfo(db, artist_name);
+                    await conquerie.connect(db);
+                    let result = await artquerie.getArtistInfo(db, artist_name);
 
                     //store artist query result
                     artist_id = result[0].id;
                     console.log("BEFORE ENTRY: -> " + artist_id + " " + artist_name + " " + track_name + " " + collab_artist + " " + drive_url);
-                    let tresult = await querie.addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_url);
+                    let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_url);
 
-                    await querie.end(db);
+                    await conquerie.end(db);
                     console.log(tresult);
 
                     res.render('trackcrud', {
@@ -411,8 +407,8 @@ app.post('/trackdelete', (req, res, next) => {
 
                     var db = createConnection();
 
-                    await querie.connect(db);
-                    let result = await querie.getTrackInfo(db, track_name);
+                    await conquerie.connect(db);
+                    let result = await trackquerie.getTrackInfo(db, track_name);
                     console.log(result.length);
 
                     if(result.length == 0){
@@ -423,7 +419,7 @@ app.post('/trackdelete', (req, res, next) => {
                         });
                     }else{
 
-                        let tresult = await querie.deleteTrack(db, track_name);
+                        let tresult = await trackquerie.deleteTrack(db, track_name);
                         console.log("Track Found");
                         res.render('trackcrud', {
                           msg: "",
@@ -431,7 +427,7 @@ app.post('/trackdelete', (req, res, next) => {
                         });
 
                     }
-                    await querie.end(db);
+                    await conquerie.end(db);
 
                 }catch(err){
                   console.log(err);
@@ -464,8 +460,8 @@ app.post('/usercreate', (req, res, next) => {
 
                     var db = createConnection();
 
-                    await querie.connect(db);
-                    let result = await querie.getUserInfo(db, username);
+                    await conquerie.connect(db);
+                    let result = await userquerie.getUserInfo(db, username);
                     console.log(result.length);
 
                     if(result.length > 0){
@@ -477,7 +473,7 @@ app.post('/usercreate', (req, res, next) => {
                     }else{
                         let hashedpass = await has.hashPass(password);
                         console.log("BEFORE ENTRY: " + username + " " + hashedpass + " " + access_level);
-                        let tresult = await querie.addUser(db, username, hashedpass, access_level);
+                        let tresult = await userquerie.addUser(db, username, hashedpass, access_level);
 
                         res.render('usercrud', {
                           msg: "USER Added!",
@@ -485,7 +481,7 @@ app.post('/usercreate', (req, res, next) => {
                         });
 
                     }
-                    await querie.end(db);
+                    await conquerie.end(db);
 
                 }catch(err){
                   console.log(err);
@@ -518,8 +514,8 @@ app.post('/userdelete', (req, res, next) => {
 
                     var db = createConnection();
 
-                    await querie.connect(db);
-                    let result = await querie.getUserInfo(db, username);
+                    await conquerie.connect(db);
+                    let result = await userquerie.getUserInfo(db, username);
                     console.log(result.length);
 
                     if(result.length == 0){
@@ -530,7 +526,7 @@ app.post('/userdelete', (req, res, next) => {
                         });
                     }else{
 
-                        let tresult = await querie.deleteUser(db, username);
+                        let tresult = await userquerie.deleteUser(db, username);
                         console.log("User Found");
                         res.render('usercrud', {
                           msg: "",
@@ -538,7 +534,7 @@ app.post('/userdelete', (req, res, next) => {
                         });
 
                     }
-                    await querie.end(db);
+                    await conquerie.end(db);
 
                 }catch(err){
                   console.log(err);
@@ -574,8 +570,8 @@ app.post('/artistcreate', (req, res, next) => {
 
                     var db = createConnection();
 
-                    await querie.connect(db);
-                    let result = await querie.getArtistInfo(db, artist_name);
+                    await conquerie.connect(db);
+                    let result = await artquerie.getArtistInfo(db, artist_name);
 
                     if(result.length > 0){
                         res.render('artcrud', {
@@ -584,7 +580,7 @@ app.post('/artistcreate', (req, res, next) => {
                         });
                     }else{
 
-                        let tresult = await querie.addArtist(db, artist_name, crew, country, info);
+                        let tresult = await artquerie.addArtist(db, artist_name, crew, country, info);
                         res.render('artcrud', {
                           msg: "Artist Added!",
                           msg2: ""
@@ -592,7 +588,7 @@ app.post('/artistcreate', (req, res, next) => {
 
                     }
 
-                    await querie.end(db);
+                    await conquerie.end(db);
 
                 }catch(err){
                   console.log(err);

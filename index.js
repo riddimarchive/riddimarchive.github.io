@@ -16,8 +16,6 @@ const trackquerie = require('./js/trackquery');
 const userquerie = require('./js/userquery');
 const has = require('./js/hash');
 
-
- 
 // create new express app and save it as "app"
 const app = express();
 

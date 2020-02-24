@@ -23,64 +23,12 @@ block content
 
   .fishcontain
     .fish
-      .fishchild
-        a(href='artist/A3')
-          img(src='Images/Logos/A3.jpg' alt='Images/PageIMG/fail.png' height='250' width='250')
-        .middle
-          .imgtext A3
-      .fishchild
-        a(href='artist/AD')
-          img(src='Images/Logos/AD.png' alt='Images/PageIMG/fail.png' height='250' width='250')
-        .middle
-          .imgtext AD
-      .fishchild
-        a(href='artist/Airvalue')
-          img(src='Images/Logos/Airvalue.jpg' alt='Images/PageIMG/fail.png' height='250' width='250')
-        .middle
-          .imgtext Airvalue
-      .fishchild
-        a(href='artist/Akirah')
-          img(src='Images/Logos/Akirah.jpg' alt='Images/PageIMG/fail.png' height='250' width='250')
-        .middle
-          .imgtext Akirah
-      .fishchild
-        a(href='artist/Allesnik')
-          img(src='Images/Logos/Allesnik.jpg' alt='Images/PageIMG/fail.png' height='250' width='250')
-        .middle
-          .imgtext Allesnik
-      .fishchild
-        a(href='artist/AnswerD')
-          img(src='Images/Logos/AnswerD.png' alt='Images/PageIMG/fail.png' height='250' width='250')
-        .middle
-          .imgtext AnswerD
-      .fishchild
-        a(href='artist/Antikz')
-          img(src='Images/Logos/Antikz.jpeg' alt='Images/PageIMG/fail.png' height='250' width='250')
-        .middle
-          .imgtext Antikz
-      .fishchild
-        a(href='artist/Audiak')
-          img(src='Images/Logos/Audiak.jpg' alt='Images/PageIMG/fail.png' height='250' width='250')
-        .middle
-          .imgtext Audiak
-      .fishchild
-        a(href='artist/Aweminus')
-          img(src='Images/Logos/Aweminus.jpg' alt='Images/PageIMG/fail.png' height='250' width='250')
-        .middle
-          .imgtext Aweminus
-      .fishchild
-        a(href='artist/Ayonikz')
-          img(src='Images/Logos/Ayonikz.jpg' alt='Images/PageIMG/fail.png' height='250' width='250')
-        .middle
-          .imgtext Ayonikz
-      .fishchild
-        a(href='artist/Badklaat')
-          img(src='Images/Logos/Badklaat.jpg' alt='Images/PageIMG/fail.png' height='250' width='250')
-        .middle
-          .imgtext Badklaat
-  - var x = artists;
+      - var x = artists;
   
   ul
     each artist in x
-      .uldiv
-        li.tunetext= `${artist.artist_name}`
+      .fishchild
+        a(href=`artist/${artist.artist_name}`)
+          img(src=`Images/Logos/${artist.artist_name}.jpg` alt='Images/PageIMG/fail.png' height='250' width='250')
+        .middle
+          .imgtext `${artist.artist_name}`

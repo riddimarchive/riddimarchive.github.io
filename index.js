@@ -49,9 +49,6 @@ app.use(passport.session());
 //GET REQUEST - INIT
 //render homepage, handle page errors
 app.get('/', (req, res) => {
-  res.render('homepage',{
-    title:'Riddim Archive Index'
-  });
 
   // error page route
   app.use((req, res, next) => {
@@ -68,18 +65,40 @@ app.get('/', (req, res) => {
     res.render('error');
   });
 
+  async function homeResponse(){
+      try{
+
+              var artists = [];
+
+              var db = createConnection();
+              await conquerie.connect(db);
+
+              let tresult = await artquerie.getAllArtists(db);
+
+              //store track query results
+              for (var i = 0; i < tresult.length; i++) {
+                var row = {
+                  'artist_name': tresult[i].artist_name
+                }
+                artists.push(row);
+              }
+
+              await conquerie.end(db);
+
+              res.render('homepage',{
+                title:'Riddim Archive Index',
+                artists: artists
+              });
+
+          }catch(err){
+              console.log(err);
+              res.render('error');
+          }
+  }
+
+  homeResponse();
+
 });
-
-
-//GET REQUEST - HOMEPAGE
-app.get('/home', (req, res) => {
-
-  res.render('homepage',{
-    title:'Riddim Archive Index'
-  });
-
-});
-
 
 //GET REQUEST - FAQ PAGE
 app.get('/faq', (req, res) => {

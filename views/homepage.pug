@@ -20,6 +20,7 @@ block content
     br
   .space
     br
+
   .fishcontain
     .fish
       .fishchild
@@ -77,3 +78,9 @@ block content
           img(src='Images/Logos/Badklaat.jpg' alt='Images/PageIMG/fail.png' height='250' width='250')
         .middle
           .imgtext Badklaat
+  - var x = artists;
+  
+  ul
+    each artist in x
+      .uldiv
+        li.tunetext= `${artist.artist_name}`

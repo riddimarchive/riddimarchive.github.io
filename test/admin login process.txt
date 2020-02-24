@@ -4,3 +4,15 @@
 //if 2 - compare password field to DB
 //if 3 - compare password to process.env.ADMIN_PASS
 /be sure to use post request
+
+
+
+
+//GET REQUEST - HOMEPAGE
+app.get('/home', (req, res) => {
+
+  res.render('homepage',{
+    title:'Riddim Archive Index'
+  });
+
+});

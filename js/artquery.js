@@ -17,6 +17,25 @@ function getArtistInfo(db, artist_name){
 
 }
 
+function getAllArtists(db){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT artist_name FROM artists`, (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+
+}
+
 function addArtist(db, artist_name, crew, country, info){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -56,6 +75,7 @@ function deleteArtist(db, artist_name){
 
 module.exports = {
 	getArtistInfo,
+	getAllArtists,
 	addArtist,
 	deleteArtist
 };

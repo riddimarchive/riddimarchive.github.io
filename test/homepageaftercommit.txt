@@ -20,11 +20,15 @@ block content
     br
   .space
     br
-  - var x = artists;
 
   .fishcontain
     .fish
+      - var x = artists;
+  
+  ul
+    each artist in x
       .fishchild
-        each artist in x
-          a(href=`artist/${artist.artist_name}`)
-            img(src=`Images/Logos/${artist.artist_name}.jpg` alt='Images/PageIMG/fail.png' height='250' width='250')
+        a(href=`artist/${artist.artist_name}`)
+          img(src=`Images/Logos/${artist.artist_name}.jpg` alt='Images/PageIMG/fail.png' height='250' width='250')
+        .middle
+          .imgtext `${artist.artist_name}`

@@ -34,6 +34,7 @@ body {
   border-width: 2px;
   border-color: #000;
   border-radius: 8px;
+  justify-content: space-around;
 }
 
 .fishchild img:hover{

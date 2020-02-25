@@ -26,5 +26,5 @@ block content
     .fish
       .fishchild
         each artist in x
-          a(href=`artist/${artist.artist_name}`)
+          a(href=`artist/${artist.artist_name}`) `${artist.artist_name}`
             img(src=`Images/Logos/${artist.artist_name}.jpg` alt="ADD ARTIST IMG HERE" height='250' width='250')

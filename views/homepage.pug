@@ -20,6 +20,13 @@ block content
     br
   .space
     br
+  .searchform
+    form(method='POST' action='/search')
+      div.form-group
+        label(for='search_results') Artist/Crew Search
+        input#search_results.form-control(type='text', name='search_results' value="Search for Artist/Crew...")
+      div
+        button.btn.btn-primary.btn-block(type='submit') Submit
   - var x = artists;
 
   .fishcontain

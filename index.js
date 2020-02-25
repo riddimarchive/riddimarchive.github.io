@@ -672,6 +672,15 @@ app.post('/artistdelete', (req, res, next) => {
 
 });
 
+//POST REQUEST - Artist Delete
+app.post('/search', (req, res, next) => {
+
+  var { search_results } = req.body;
+
+  res.send("Search Results are: " + search_results);
+  
+});
+
 
 //Server Request Handler
 app.listen(port, () => {

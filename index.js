@@ -675,10 +675,10 @@ app.post('/artistdelete', (req, res, next) => {
 //POST REQUEST - Artist Delete
 app.post('/search', (req, res, next) => {
 
-  var { search_results } = req.body;
+  var { search_results, search_style } = req.body;
 
-  res.send("Search Results are: " + search_results);
-  
+  res.send("Search Results are: " + search_results + ", search style is: " + search_style);
+
 });
 
 

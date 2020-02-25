@@ -25,8 +25,14 @@ block content
       div.form-group
         label(for='search_results') Artist/Crew Search
         input#search_results.form-control(type='text', name='search_results' value="Search for Artist/Crew...")
+      div.form-group
+        label(for='search_style') Artist
+        input#search_style.form-control(type='radio', name='search_style', value=0)
+        label(for='search_style') Crew
+        input#search_style.form-control(type='radio', name='search_style', value=1)
       div
         button.btn.btn-primary.btn-block(type='submit') Submit
+        
   - var x = artists;
 
   .fishcontain

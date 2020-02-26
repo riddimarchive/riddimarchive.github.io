@@ -27,7 +27,6 @@ body {
 	flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-  width:1;
 }
 
 .fishchild img{
@@ -39,6 +38,14 @@ body {
 
 .fishchild img:hover{
 	opacity: 0.3;
+}
+
+.searchform{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  width:1;
 }
 
 .uldiv{

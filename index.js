@@ -679,11 +679,15 @@ app.post('/search', (req, res, next) => {
 
   if(!search_results || !search_style){
 
+      console.log("***a field is empty")
       if(!search_style){
+
+        console.log("***no search style");
         res.render('homepage', {
           msg: "Enter Search Style!",
         });
       }else{
+        console.log("***no artist");
         res.render('homepage', {
           msg: "Enter a Search!",
         });
@@ -759,7 +763,7 @@ app.post('/search', (req, res, next) => {
         }
 
     }
-
+    console.log("***running function")
     searchArtist(search_results, search_style);
 
   }

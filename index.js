@@ -474,8 +474,6 @@ app.post('/usercreate', (req, res, next) => {
             });
     }else{
 
-      username = SqlString.escape(username);
-      password = SqlString.escape(password);
       async function addyUser(username, password, access_level){
                 try{
 
@@ -698,7 +696,7 @@ app.post('/search', (req, res, next) => {
       }
 
   }else{
-
+    search_results = SqlString.escape(search_results);
     async function searchArtist(search_results, search_style){
         try{
             var artists = [];

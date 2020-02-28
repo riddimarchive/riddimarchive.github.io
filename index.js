@@ -678,8 +678,10 @@ app.post('/artistdelete', (req, res, next) => {
 app.post('/search', (req, res, next) => {
 
   var { search_results, search_style } = req.body;
+  search_results = SqlString.escape(search_results);
+  res.send(search_results);
 
-  if(!search_results || !search_style){
+  /*if(!search_results || !search_style){
 
       console.log("***a field is empty")
       if(!search_style){
@@ -696,7 +698,7 @@ app.post('/search', (req, res, next) => {
       }
 
   }else{
-    search_results = SqlString.escape(search_results);
+    //search_results = SqlString.escape(search_results);
     async function searchArtist(search_results, search_style){
         try{
             var artists = [];
@@ -775,7 +777,7 @@ app.post('/search', (req, res, next) => {
     searchArtist(search_results, search_style);
 
   }
-
+*/
 });
 
 

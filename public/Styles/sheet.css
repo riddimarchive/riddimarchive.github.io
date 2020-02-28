@@ -27,6 +27,7 @@ body {
 	flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
+  width: 
 }
 
 .searchform input[type=text], select {
@@ -44,6 +45,7 @@ body {
   border-width: 2px;
   border-color: #000;
   border-radius: 8px;
+  flex-grow: 1;
 }
 
 .fishchild img:hover{

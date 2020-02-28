@@ -20,6 +20,7 @@ block content
     br
   .space
     br
+  - var message = msg;
   .searchform
     form(method='POST' action='/search')
       div.form-group
@@ -32,5 +33,7 @@ block content
         input#search_style.form-control(type='radio', name='search_style', value=1)
       div
         button.btn.btn-primary.btn-block(type='submit') Submit
+  br
+  p  #{message}
         
   h1 Artists Not FOUND

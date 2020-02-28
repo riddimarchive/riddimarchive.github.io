@@ -684,17 +684,13 @@ app.post('/search', (req, res, next) => {
       if(!search_style){
 
         console.log("***no search style");
-        res.render('homepage', {
-          title:'Riddim Archive Index',
-          msg: "Enter Search Style!",
-          artists: ""
+        res.render('homepagenf', {
+          msg: "Enter Search Style!"
         });
       }else{
         console.log("***no artist");
-        res.render('homepage', {
-          title:'Riddim Archive Index',
-          msg: "Enter a Search!",
-          artists: ""
+        res.render('homepagenf', {
+          msg: "Enter a Search!"
         });
       }
 
@@ -714,7 +710,9 @@ app.post('/search', (req, res, next) => {
               if(result.length == 0){
                 await conquerie.end(db);
                 console.log("No items found");
-                res.render('homepagenf');
+                res.render('homepagenf',{
+                  msg: ""
+                });
               }else{
 
                   for (var i = 0; i < result.length; i++) {
@@ -743,7 +741,9 @@ app.post('/search', (req, res, next) => {
               if(cresult.length == 0){
                 await conquerie.end(db);
                 console.log("No items found");
-                res.render('homepagenf');
+                res.render('homepagenf',{
+                  msg: ""
+                });
               }else{
 
                   for (var i = 0; i < cresult.length; i++) {

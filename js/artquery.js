@@ -39,7 +39,7 @@ function getAllArtists(db){
 function searchArtists(db, search_results){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT artist_name FROM artists WHERE artist_name LIKE ${search_results}%`, (error, result, fields) => {
+		db.query(`SELECT artist_name FROM artists WHERE artist_name LIKE '${search_results}'%`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

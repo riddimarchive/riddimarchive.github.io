@@ -467,7 +467,6 @@ app.post('/usercreate', (req, res, next) => {
 
   var { username, password, access_level } = req.body;
 
-  username = SqlString.escape(username);
   if(!username || !password || !access_level){
             res.render('usercrud', {
               msg: "Fill in all Fields!",
@@ -475,6 +474,8 @@ app.post('/usercreate', (req, res, next) => {
             });
     }else{
 
+      username = SqlString.escape(username);
+      password = SqlString.escape(password);
       async function addyUser(username, password, access_level){
                 try{
 

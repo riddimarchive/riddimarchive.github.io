@@ -29,7 +29,8 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "pug": "^2.0.4",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "sqlstring": "^2.3.1"
   },
   "devDependencies": {}
 }

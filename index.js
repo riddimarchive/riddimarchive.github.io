@@ -7,6 +7,7 @@ const request = require('request');
 const path = require('path');
 const createError = require('http-errors');
 const passport = require('passport');
+var SqlString = require('sqlstring');
 
 //file reqs: database connect, query functions, hash functions
 const createConnection = require('./js/dbconnect');
@@ -466,6 +467,7 @@ app.post('/usercreate', (req, res, next) => {
 
   var { username, password, access_level } = req.body;
 
+  username = SqlString.escape(username);
   if(!username || !password || !access_level){
             res.render('usercrud', {
               msg: "Fill in all Fields!",

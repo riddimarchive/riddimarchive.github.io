@@ -698,7 +698,7 @@ app.post('/search', (req, res, next) => {
       }
 
   }else{
-    //search_results = SqlString.escape(search_results);
+    search_results = SqlString.escape(search_results);
     async function searchArtist(search_results, search_style){
         try{
             var artists = [];

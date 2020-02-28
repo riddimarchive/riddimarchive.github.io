@@ -687,14 +687,14 @@ app.post('/search', (req, res, next) => {
         res.render('homepage', {
           title:'Riddim Archive Index',
           msg: "Enter Search Style!",
-          artists: artists
+          artists: ""
         });
       }else{
         console.log("***no artist");
         res.render('homepage', {
           title:'Riddim Archive Index',
           msg: "Enter a Search!",
-          artists: artists
+          artists: ""
         });
       }
 

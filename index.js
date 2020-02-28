@@ -693,7 +693,7 @@ app.post('/search', (req, res, next) => {
         });
       }
 
-  }else{
+  }else if(search_results != undefined && search_style != undefined){
 
     async function searchArtist(search_results, search_style){
         try{

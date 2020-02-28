@@ -57,6 +57,11 @@ body {
   flex-wrap: wrap;
   width:100%;
 }
+.notfoundtext{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
 .uldiv{
   list-style-type: none;

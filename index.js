@@ -75,7 +75,7 @@ app.get('/', (req, res) => {
 
               let tresult = await artquerie.getAllArtists(db);
 
-              //store track query results
+              //store results
               for (var i = 0; i < tresult.length; i++) {
                 var row = {
                   'artist_name': tresult[i].artist_name
@@ -677,7 +677,92 @@ app.post('/search', (req, res, next) => {
 
   var { search_results, search_style } = req.body;
 
-  res.send("Search Results are: " + search_results + ", search style is: " + search_style);
+  if(!search_results || !search_style){
+
+      if(!search_style){
+        res.render('homepage', {
+          msg: "Enter Search Style!",
+        });
+      }else{
+        res.render('homepage', {
+          msg: "Enter a Search!",
+        });
+      }
+
+  }else{
+
+    async function searchArtist(search_results, search_style){
+        try{
+            var artists = [];
+            var db = createConnection();
+
+            await conquerie.connect(db);
+
+            if(search_style == 0){
+
+              let result = await artquerie.searchArtists(db, search_results);
+
+              if(result.length == 0){
+                await conquerie.end(db);
+                console.log("No items found");
+                res.render('homepagenf');
+              }else{
+
+                  for (var i = 0; i < result.length; i++) {
+                    var row = {
+                      'artist_name': result[i].artist_name
+                    }
+                    artists.push(row);
+                  }//end for
+
+                  //end query and render
+                  await conquerie.end(db);
+                  res.render('homepage',{
+                    title:'Riddim Archive Index',
+                    artists: artists
+                  });
+              }//end else
+
+
+
+            }//end if, search style is 1, do crew search
+            else{
+
+              let cresult = await artquerie.searchArtistsByCrew(db, search_results);
+              
+              if(result.length == 0){
+                await conquerie.end(db);
+                console.log("No items found");
+                res.render('homepagenf');
+              }else{
+
+                  for (var i = 0; i < cresult.length; i++) {
+                    var row = {
+                      'artist_name': cresult[i].artist_name
+                    }
+                    artists.push(row);
+                  }//end for
+
+                  //end query and render
+                  await conquerie.end(db);
+                  res.render('homepage',{
+                    title:'Riddim Archive Index',
+                    artists: artists
+                  });
+              }//end else
+
+            }//end else
+
+        }catch(err){
+          console.log(err);
+          res.render('error');
+        }
+
+    }
+
+    searchArtist(search_results, search_style);
+
+  }
 
 });
 

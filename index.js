@@ -280,7 +280,7 @@ app.get('/artcrud', (req, res) => {
 //GET REQUEST - LOGOUT
 app.get('/logout', function(req, res){
   req.logout();
-  res.redirect('/home');
+  res.redirect('/');
 });
 
 

@@ -87,6 +87,7 @@ app.get('/', (req, res) => {
 
               res.render('homepage',{
                 title:'Riddim Archive Index',
+                msg: "",
                 artists: artists
               });
 
@@ -684,16 +685,20 @@ app.post('/search', (req, res, next) => {
 
         console.log("***no search style");
         res.render('homepage', {
+          title:'Riddim Archive Index',
           msg: "Enter Search Style!",
+          artists: artists
         });
       }else{
         console.log("***no artist");
         res.render('homepage', {
+          title:'Riddim Archive Index',
           msg: "Enter a Search!",
+          artists: artists
         });
       }
 
-  }else if(search_results != undefined && search_style != undefined){
+  }else{
 
     async function searchArtist(search_results, search_style){
         try{
@@ -723,6 +728,7 @@ app.post('/search', (req, res, next) => {
                   await conquerie.end(db);
                   res.render('homepage',{
                     title:'Riddim Archive Index',
+                    msg: "",
                     artists: artists
                   });
               }//end else
@@ -751,6 +757,7 @@ app.post('/search', (req, res, next) => {
                   await conquerie.end(db);
                   res.render('homepage',{
                     title:'Riddim Archive Index',
+                    msg: "",
                     artists: artists
                   });
               }//end else
@@ -763,7 +770,7 @@ app.post('/search', (req, res, next) => {
         }
 
     }
-    console.log("***running function")
+    console.log("running function");
     searchArtist(search_results, search_style);
 
   }

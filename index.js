@@ -730,7 +730,7 @@ app.post('/search', (req, res, next) => {
 
               let cresult = await artquerie.searchArtistsByCrew(db, search_results);
               
-              if(result.length == 0){
+              if(cresult.length == 0){
                 await conquerie.end(db);
                 console.log("No items found");
                 res.render('homepagenf');

@@ -60,6 +60,9 @@ body {
   flex-wrap: wrap;
   flex-grow: 1;
 }
+.searchcontain{
+  padding: 20px;
+}
 .notfoundtext{
   display: flex;
   justify-content: center;

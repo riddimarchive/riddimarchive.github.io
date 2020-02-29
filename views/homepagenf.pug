@@ -21,23 +21,24 @@ block content
   .space
     br
   - var message = msg;
-  .searchform
-    form(method='POST' action='/search')
-      div.form-group
-        label(for='search_results')       Search
-        input#search_results.form-control(type='text', name='search_results' placeholder="Search for Artist/Crew...")
-      div.form-group
-        label(for='search_style') Artist
-        input#search_style.form-control(type='radio', name='search_style', checked="checked", value=0)
-        label(for='search_style') Crew
-        input#search_style.form-control(type='radio', name='search_style', value=1)
-      div
-        button.btn.btn-primary.btn-block(type='submit') Submit
-      div
-        p #{message}
-      div
-        form
-          input(type='button', value='Reload back to All Artists', onclick="self.location='https://riddim-archive.herokuapp.com/'")
+  .searchcontain
+    .searchform
+      form(method='POST' action='/search')
+        div.form-group
+          label(for='search_results')       Search
+          input#search_results.form-control(type='text', name='search_results' placeholder="Search for Artist/Crew...")
+        div.form-group
+          label(for='search_style') Artist
+          input#search_style.form-control(type='radio', name='search_style', checked="checked", value=0)
+          label(for='search_style') Crew
+          input#search_style.form-control(type='radio', name='search_style', value=1)
+        div
+          button.btn.btn-primary.btn-block(type='submit') Submit
+        div
+          p #{message}
+        div
+          form
+            input(type='button', value='Reload back to All Artists', onclick="self.location='https://riddim-archive.herokuapp.com/'")
   br
   .notfoundtext
     h1 ARTISTS NOT FOUND, PLEASE TRY AGAIN YO

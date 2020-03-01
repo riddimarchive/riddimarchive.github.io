@@ -49,8 +49,13 @@ block content
       b I wanna support this site in some other way!
       br
       p Much love, sharing this site with anyone new or old to the genre is much appreciated! If you are better than me at Webdesign/Coding (which is not saying much believe me fam), and want to help out, Hit me up hereeee! Lastly, if you'd like to donate to help recoop the site costs, you can here. In NO way is this required. To be honest, site costs are really low so far, so I'm not trippin. I made this site for the love of RIDDIMMMM (and to get webdesign practice lol).
-      form
-            input(type='button', value='Donate If You Like', onclick="paypal.me/riddimarchive")
+      form(action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
+            input(type='hidden', name='cmd', value='_donations')
+            input(type='hidden', name='business', value='4RCMFJAVJJCL4')
+            input(type='hidden', name='currency_code', value='USD')
+            input(type='image', src='https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif', border='0', name='submit', title='PayPal - The safer, easier way to pay online!', alt='Donate with PayPal button')
+            img(alt='', border='0', src='https://www.paypal.com/en_US/i/scr/pixel.gif', width='1', height='1')
+
       br
       b I have another random question, how can I contact you?
       br

@@ -9,7 +9,7 @@ block content
 	- var message2 = msg2;
 
 	h2 Add Artist
-	form(method='POST' action='/artistcreate')
+	form(method='POST', action='/artistcreate', enctype='multipart/form-data')
 		div.form-group
 			label(for='artist_name')  Artist Name:
 			input#artist_name.form-control(type='text', name='artist_name')
@@ -22,6 +22,9 @@ block content
 		div.form-group
 			label(for='info') Info: 
 			input#info.form-control(type='text', name='info')
+		div.form-group
+			label(for='img') Upload IMG: 
+			input#img.form-control(type='file', name='img')
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	p  #{message}

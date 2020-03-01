@@ -3,6 +3,7 @@
 const express = require('express');
 const session = require('express-session');
 const fs = require('fs');
+const fileUpload = require('express-fileupload');
 const request = require('request');
 const path = require('path');
 const createError = require('http-errors');
@@ -32,6 +33,9 @@ app.set('view engine','pug');
 
 //bodyparser - obtain info from post requests in req.body
 app.use(express.urlencoded({ extended: false }));
+
+//express file-upload
+app.use(fileUpload());
 
 //express-session
 app.use(session({
@@ -573,6 +577,21 @@ app.post('/userdelete', (req, res, next) => {
 app.post('/artistcreate', (req, res, next) => {
 
   var { artist_name, crew, country, info } = req.body;
+
+  if (!req.files || Object.keys(req.files).length === 0) {
+    console.log('No files were uploaded.');
+  }else{
+
+  let artist_img = req.files.img;
+  artist_img.mv(`../public/Images/Logos/${artist_name}.jpg`, function(err) {
+    if (err){
+      console.log(err);
+    }
+
+    console.log('File uploaded!');
+  });
+
+  }//end file transfer
 
   if(!artist_name){
             res.render('artcrud', {

@@ -583,7 +583,7 @@ app.post('/artistcreate', (req, res, next) => {
   }else{
 
   let artist_img = req.files.img;
-  artist_img.mv(`../public/Images/Logos/${artist_name}.jpg`, function(err) {
+  artist_img.mv(`public/Images/Logos/${artist_name}.jpg`, function(err) {
     if (err){
       console.log(err);
     }

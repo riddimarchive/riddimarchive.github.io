@@ -578,21 +578,6 @@ app.post('/artistcreate', (req, res, next) => {
 
   var { artist_name, crew, country, info } = req.body;
 
-  if (!req.files || Object.keys(req.files).length === 0) {
-    console.log('No files were uploaded.');
-  }else{
-
-  let artist_img = req.files.img;
-  artist_img.mv(`public/Images/Logos/${artist_name}.jpg`, function(err) {
-    if (err){
-      console.log(err);
-    }
-
-    console.log('File uploaded!');
-  });
-
-  }//end file transfer
-
   if(!artist_name){
             res.render('artcrud', {
               msg: "Fill in Artist Name",

@@ -31,7 +31,7 @@ block content
 			label(for='img')  
 			input#img.form-control(type='file', name='img')
 		p You may submit either a private link for site admins to download the tune, or you can submit a MP3, WAV or ZIP in the file uploader below.
-		p Either way, they will be securely emailed to site owners for submission.
+		| Either way, they will be securely emailed to site owners for submission.
 		div Download Link
 		div.form-group
 			label(for='link') 
@@ -43,7 +43,10 @@ block content
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	p  #{message}
-
+	br
+	br
+	br
+	br
 	h2 Add Track (Non-Artist Submission)
 	p Note: This is only to submit free tunes from artists that the library is missing. NO PLATES or Released tunes will be posted without Artist/Label Permission. I will verify.
 	form(method='POST' action='/tracksubmission')

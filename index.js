@@ -339,6 +339,24 @@ app.get('/artist/:name', function(req,res){
 
 });
 
+//GET REQUEST - REQUEST HANDLER
+app.get('/req/:page', function(req,res){
+
+  //store page from url
+  var pagey = req.params.page;
+
+  if(pagey = "submission"){
+    res.render('submission',{
+      msg: "",
+      msg2: ""
+    });
+
+  }else{
+    res.send(pagey);
+  }
+
+});
+
 
 //POST REQUEST - LOGIN FORM
 //check for field entry, authenticate and redirect with passport

@@ -11,32 +11,32 @@ block content
 	h2 Artist Submission (Please only submit yourself!) 
 	p Note: You can submit released tunes, or even old exclusives if you wish to do so. I will only be uploading these kinds of tunes with the artist's permission.
 	form(method='POST', action='/submission', enctype='multipart/form-data')
-		div Artist Name:
+		.label Artist Name:
 		div.form-group
 			input#artist_name.form-control(type='text', name='artist_name')
-		div Crew:
+		.label Crew:
 		div.form-group
 			label(for='crew') 
 			input#crew.form-control(type='text', name='crew')
-		div Country:
+		.label Country:
 		div.form-group
 			label(for='country')  
 			input#country.form-control(type='text', name='country')
-		div Info (Short sentence or two about you and your style, Be creative!):
+		.label Info (Short sentence or two about you and your style, Be creative!):
 		div.form-group
 			label(for='info')  
 			input#info.form-control(type='text', name='info')
-		div Upload Page Image (please make this at least 275px x 275px - square image Preferred):
+		.label Upload Page Image (please make this at least 275px x 275px - square image Preferred):
 		div.form-group
 			label(for='img')  
 			input#img.form-control(type='file', name='img')
-		p You may submit either a private link for site admins to download the tune, or you can submit a MP3, WAV or ZIP in the file uploader below.
+		.label You may submit either a private link for site admins to download the tune, or you can submit a MP3, WAV or ZIP in the file uploader below.
 		| Either way, they will be securely emailed to site owners for submission.
-		div Download Link
+		.label Download Link
 		div.form-group
 			label(for='link') 
 			input#link.form-control(type='text', name='link')
-		div Upload File:
+		.label Upload File:
 		div.form-group
 			label(for='filey')
 			input#filey.form-control(type='file', name='filey')

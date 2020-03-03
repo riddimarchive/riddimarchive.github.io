@@ -10,6 +10,11 @@ body {
   
 }
 
+.question{
+  font-weight: bold;
+  font-size: x-large;
+}
+
 .header{
 	display: flex;
 	justify-content: center;

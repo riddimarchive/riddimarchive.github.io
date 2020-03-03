@@ -345,15 +345,37 @@ app.get('/req/:page', function(req,res){
   //store page from url
   var pagey = req.params.page;
 
-  if(pagey = "submission"){
-    res.render('submission',{
-      msg: "",
-      msg2: ""
-    });
-
-  }else{
-    res.send(pagey);
-  }
+  switch(pagey) {
+      case "submission":
+        res.render('submission',{
+          msg: "",
+          msg2: ""
+        });
+        break;
+      case "tunereport":
+        res.render('tunereport',{
+          msg: "",
+          msg2: ""
+        });
+        break;
+      case "removal":
+        res.render('removal',{
+          msg: "",
+          msg2: ""
+        });
+        break;
+      case "question":
+        res.render('question',{
+          msg: "",
+          msg2: ""
+        });
+        break;
+      default:
+        res.render('faq',{
+          title:'Riddim Archive FAQ'
+        });
+        break;
+    }//end switch
 
 });
 

@@ -15,6 +15,11 @@ body {
   font-size: x-large;
 }
 
+.label{
+  font-weight: bold;
+  font-size: x-large;
+}
+
 .header{
 	display: flex;
 	justify-content: center;

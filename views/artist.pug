@@ -12,6 +12,14 @@ block content
 	br
 
 	- var x = tracks;
+	#divy
+
+	script
+		x.forEach(myFunction);
+
+		function myFunction(item, index) {
+  			document.getElementById("demo").innerHTML += index + ":" + x[index].track_name + "<br>"; 
+		}
 	
 	ul
 		each track in x

@@ -1,8 +1,8 @@
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: bebas-neue-rounded, sans-serif;
   font-style: normal;
-  font-size: large;
-  font-weight: 100;
+  font-weight: 400;
+  font-size: large
   color: white;
   background-color: #778899;
 }

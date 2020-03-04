@@ -15,10 +15,8 @@ block content
 	#divy
 
 	script
-		x.forEach(myFunction);
-
-		function myFunction(item, index) {
-  			document.getElementById("demo").innerHTML += index + ":" + x[index].track_name + "<br>"; 
+		for (var i = 0; i < x.length; i++) {
+    		document.getElementById("divy").innerHTML += index + ":" + x[i].track_name + "<br>";
 		}
 	
 	ul

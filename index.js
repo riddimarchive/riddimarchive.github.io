@@ -836,7 +836,7 @@ app.post('/submission', (req, res, next) => {
 
   let artist_img = req.files.img;
   let thefile = req.files.filey;
-  res.send(artist_img);
+  res.write(artist_img);
 
   }
 

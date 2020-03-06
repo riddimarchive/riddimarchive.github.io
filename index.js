@@ -825,6 +825,26 @@ app.post('/search', (req, res, next) => {
 
 });
 
+//POST REQUEST - Artist Submission
+app.post('/submission', (req, res, next) => {
+
+  var { artist_name, crew, country, info, link } = req.body;
+
+  if (!req.files || Object.keys(req.files).length === 0) {
+    console.log('No files were uploaded.');
+  }else{
+
+  let artist_img = req.files.img;
+  let thefile = req.files.filey;
+  res.send(thefile);
+
+  }
+
+  res.send('No files were uploaded.' + artist_name + crew + country + info + link);
+
+
+});
+
 
 //Server Request Handler
 app.listen(port, () => {

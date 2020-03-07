@@ -18,6 +18,7 @@ const artquerie = require('./js/artquery');
 const trackquerie = require('./js/trackquery');
 const userquerie = require('./js/userquery');
 const has = require('./js/hash');
+const filestore = require('./js/filestore');
 
 // create new express app and save it as "app"
 const app = express();

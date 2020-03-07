@@ -848,11 +848,11 @@ app.post('/submission', (req, res, next) => {
       let transporter = nodemailer.createTransport({
         host: 'smtp.mail.yahoo.com',
         service: 'yahoo',
-        port: 587,
+        port: 465,
         secure: false, // true for 465, false for other ports
         auth: {
-          user: `${process.env.EMAIL}`, 
-          pass: `${process.env.EMAIL_PASSWORD}` 
+          user: `"${process.env.EMAIL}"`, 
+          pass: `"${process.env.EMAIL_PASSWORD}"` 
         }
       });
 

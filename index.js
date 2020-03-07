@@ -836,6 +836,7 @@ app.post('/req/submission', (req, res, next) => {
   }else{
 
       let artist_img = req.files.img;
+      //need to make this async
       artist_img.mv(`public/Images/Logos/${req.body.artist_name}.jpg`, function(err) {
         if (err){
           console.log(err);
@@ -872,6 +873,7 @@ app.post('/req/submission', (req, res, next) => {
         to: process.env.EMAIL,
         subject: 'Artist Self-Submission',
         text: output,
+        /*
         attachments: [
           {
               filename: `${req.body.artist_name}.jpg`,
@@ -882,6 +884,7 @@ app.post('/req/submission', (req, res, next) => {
             path: `public/Files/${req.files.filey.name}` // stream this file
           }
         ]
+        */
       };
 
       transporter.sendMail(mailOptions, (error, info) => {

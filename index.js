@@ -835,6 +835,12 @@ app.post('/req/submission', (req, res, next) => {
   }else{
 
       let artist_img = req.files.img;
+      artist_img.mv(`public/Images/Logos/${req.body.artist_name}.jpg`, function(err) {
+        if (err){
+          console.log(err);
+        }
+          console.log('File uploaded!');
+      });
       let thefile = req.files.filey;
 
       const output = 
@@ -859,7 +865,10 @@ app.post('/req/submission', (req, res, next) => {
         to: process.env.EMAIL,
         subject: 'Artist Self-Submission',
         text: output,
-        attachments: artist_img
+        attachments: [{
+              filename: `${req.body.artist_name}.jpg`,
+              path: `public/Images/Logos/${req.body.artist_name}.jpg` // stream this file
+          }
       };
 
       transporter.sendMail(mailOptions, (error, info) => {

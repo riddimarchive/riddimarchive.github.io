@@ -13,7 +13,7 @@ var SqlString = require('sqlstring');
 
 //file reqs: database connect, query functions, hash functions
 const createConnection = require('./js/dbconnect');
-let transporter = require('./js/emailtransport');
+const transporter = require('./js/emailtransport');
 const conquerie = require('./js/conquery');
 const artquerie = require('./js/artquery');
 const trackquerie = require('./js/trackquery');

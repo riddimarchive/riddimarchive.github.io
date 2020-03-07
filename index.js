@@ -846,13 +846,10 @@ app.post('/submission', (req, res, next) => {
        Artist Info: ${req.body.artist_name} / Artist Link: ${req.body.artist_name}`;
 
       let transporter = nodemailer.createTransport({
-        host: 'smtp.mail.yahoo.com',
-        service: 'yahoo',
-        port: 465,
-        secure: false, // true for 465, false for other ports
+        service: 'gmail',
         auth: {
-          user: `"${process.env.EMAIL}"`, 
-          pass: `"${process.env.EMAIL_PASSWORD}"` 
+          user: process.env.EMAIL, 
+          pass: process.env.EMAIL_PASSWORD
         }
       });
 

@@ -868,7 +868,7 @@ app.post('/req/submission', (req, res, next) => {
         attachments: [{
               filename: `${req.body.artist_name}.jpg`,
               path: `public/Images/Logos/${req.body.artist_name}.jpg` // stream this file
-          }
+          }]
       };
 
       transporter.sendMail(mailOptions, (error, info) => {

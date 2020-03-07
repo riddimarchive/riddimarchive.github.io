@@ -850,8 +850,8 @@ app.post('/submission', (req, res, next) => {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-          user: `"${process.env.EMAIL}"`, 
-          pass: `"${process.env.EMAIL_PASSWORD}"` 
+          user: `${process.env.EMAIL}`, 
+          pass: `${process.env.EMAIL_PASSWORD}` 
         }
       });
 

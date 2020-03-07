@@ -859,7 +859,7 @@ app.post('/req/submission', (req, res, next) => {
         to: process.env.EMAIL,
         subject: 'Artist Self-Submission',
         text: output,
-        attachments: thefile
+        attachments: artist_img
       };
 
       transporter.sendMail(mailOptions, (error, info) => {

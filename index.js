@@ -842,7 +842,7 @@ app.post('/req/submission', (req, res, next) => {
           console.log('File uploaded!');
       });
       let thefile = req.files.filey;
-      thefile.mv(`public/Files/${req.files.filey.name}.mp3`, function(err) {
+      thefile.mv(`public/Files/${req.files.filey.name}`, function(err) {
         if (err){
           console.log(err);
         }
@@ -878,7 +878,7 @@ app.post('/req/submission', (req, res, next) => {
           },
           {
             filename: `${req.files.filey.name}.mp3`,
-            path: `public/Files/${req.files.filey.name}.mp3` // stream this file
+            path: `public/Files/${req.files.filey.name}` // stream this file
           }
         ]
       };

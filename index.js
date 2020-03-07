@@ -840,8 +840,12 @@ app.post('/submission', (req, res, next) => {
 
       const output = 
       `Artist Self-Submission!
-       Artist Name: ${req.body.artist_name} / Crew: ${req.body.crew} / Country: ${req.body.country} / 
-       Artist Info: ${req.body.info} / Artist Link: ${req.body.link}`;
+      
+       Artist Name: ${req.body.artist_name}
+       Crew: ${req.body.crew}
+       Country: ${req.body.country}
+       Artist Info: ${req.body.info}
+       Artist Link: ${req.body.link}`;
 
       let transporter = nodemailer.createTransport({
         service: 'gmail',

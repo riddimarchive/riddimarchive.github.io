@@ -842,6 +842,12 @@ app.post('/req/submission', (req, res, next) => {
           console.log('File uploaded!');
       });
       let thefile = req.files.filey;
+      thefile.mv(`public/Files/${req.files.filey.name}.mp3`, function(err) {
+        if (err){
+          console.log(err);
+        }
+          console.log('File uploaded!');
+      });
 
       const output = 
       `Artist Self-Submission!
@@ -865,10 +871,16 @@ app.post('/req/submission', (req, res, next) => {
         to: process.env.EMAIL,
         subject: 'Artist Self-Submission',
         text: output,
-        attachments: [{
+        attachments: [
+          {
               filename: `${req.body.artist_name}.jpg`,
               path: `public/Images/Logos/${req.body.artist_name}.jpg` // stream this file
-          }]
+          },
+          {
+            filename: `${req.files.filey.name}.mp3`,
+            path: `public/Files/${req.files.filey.name}.mp3` // stream this file
+          }
+        ]
       };
 
       transporter.sendMail(mailOptions, (error, info) => {

@@ -829,9 +829,7 @@ app.post('/search', (req, res, next) => {
 
 //POST REQUEST - Artist Submission
 app.post('/submission', (req, res, next) => {
-
-  var { artist_name, crew, country, info, link } = req.body;
-
+  
   if (!req.files || Object.keys(req.files).length === 0) {
     console.log('No files were uploaded.');
     res.send('No files were uploaded.');
@@ -868,7 +866,10 @@ app.post('/submission', (req, res, next) => {
         console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
       });
 
-      res.send('Email sent?');
+      res.render('submission',{
+        msg: "Form Submitted! Admins will begin adding your page!",
+        msg2: ""
+      });
   }
 
 });

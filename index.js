@@ -8,10 +8,12 @@ const request = require('request');
 const path = require('path');
 const createError = require('http-errors');
 const passport = require('passport');
+const nodemailer = require('nodemailer');
 var SqlString = require('sqlstring');
 
 //file reqs: database connect, query functions, hash functions
 const createConnection = require('./js/dbconnect');
+let transporter = require('./js/emailtransport');
 const conquerie = require('./js/conquery');
 const artquerie = require('./js/artquery');
 const trackquerie = require('./js/trackquery');
@@ -832,16 +834,35 @@ app.post('/submission', (req, res, next) => {
 
   if (!req.files || Object.keys(req.files).length === 0) {
     console.log('No files were uploaded.');
+    res.send('No files were uploaded.');
   }else{
 
-  let artist_img = req.files.img;
-  let thefile = req.files.filey;
-  res.write(artist_img);
+      let artist_img = req.files.img;
+      let thefile = req.files.filey;
 
+      const output = 
+      `Artist Self-Submission!
+       Artist Name: ${req.body.artist_name} / Crew: ${req.body.artist_name} / Country: ${req.body.artist_name} / 
+       Artist Info: ${req.body.artist_name} / Artist Link: ${req.body.artist_name}`;
+
+      let mailOptions = {
+        from: `"Nodeemailer Contact" <${process.env.EMAIL}>`,
+        to: `<${process.env.EMAIL}>`,
+        subject: 'Artist Self-Submission',
+        text: output,
+        html: ""
+      };
+
+      transporter.sendMail(mailOptions, (error, info) =>{
+        if (error){
+            return console.log(error);
+        }
+        console.log("Message sent: %s", info.messageId);
+        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+      });
   }
 
-  res.send('No files were uploaded.' + artist_name + crew + country + info + link);
-
+  res.send('Email sent?');
 
 });
 

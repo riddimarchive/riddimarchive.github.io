@@ -837,19 +837,23 @@ app.post('/req/submission', (req, res, next) => {
 
       let artist_img = req.files.img;
       //need to make this async
+      /*
       artist_img.mv(`public/Images/Logos/${req.body.artist_name}.jpg`, function(err) {
         if (err){
           console.log(err);
         }
           console.log('File uploaded!');
       });
+      */
       let thefile = req.files.filey;
+      /*
       thefile.mv(`public/Files/${req.files.filey.name}`, function(err) {
         if (err){
           console.log(err);
         }
           console.log('File uploaded!');
       });
+      */
 
       const output = 
       `Artist Self-Submission!

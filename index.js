@@ -13,7 +13,6 @@ var SqlString = require('sqlstring');
 
 //file reqs: database connect, query functions, hash functions
 const createConnection = require('./js/dbconnect');
-//const transporter = require('./js/emailtransport');
 const conquerie = require('./js/conquery');
 const artquerie = require('./js/artquery');
 const trackquerie = require('./js/trackquery');
@@ -859,7 +858,8 @@ app.post('/submission', (req, res, next) => {
         from: process.env.EMAIL,
         to: process.env.EMAIL,
         subject: 'Artist Self-Submission',
-        text: output
+        text: output,
+        attachments: [artist_img, thefile]
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
@@ -867,7 +867,6 @@ app.post('/submission', (req, res, next) => {
             return console.log(error);
         }
         console.log("Message sent: %s", info.messageId);
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
       });
 
       res.render('submission',{

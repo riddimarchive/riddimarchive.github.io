@@ -20,6 +20,12 @@ body {
   font-size: x-large;
 }
 
+.labelg{
+  font-weight: bold;
+  font-size: x-large;
+  color: greenyellow;
+}
+
 .header{
 	display: flex;
 	justify-content: center;

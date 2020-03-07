@@ -854,8 +854,8 @@ app.post('/submission', (req, res, next) => {
       });
 
       let mailOptions = {
-        from: `"Nodeemailer Contact" <${process.env.EMAIL}>`,
-        to: `<${process.env.EMAIL}>`,
+        from: process.env.EMAIL,
+        to: process.env.EMAIL,
         subject: 'Artist Self-Submission',
         text: output
       };

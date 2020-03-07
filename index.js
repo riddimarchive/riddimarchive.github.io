@@ -827,7 +827,7 @@ app.post('/search', (req, res, next) => {
 });
 
 //POST REQUEST - Artist Submission
-app.post('/submission', (req, res, next) => {
+app.post('/req/submission', (req, res, next) => {
   
   if (!req.files || Object.keys(req.files).length === 0) {
     console.log('No files were uploaded.');
@@ -859,7 +859,7 @@ app.post('/submission', (req, res, next) => {
         to: process.env.EMAIL,
         subject: 'Artist Self-Submission',
         text: output,
-        attachments: [artist_img, thefile]
+        attachments: thefile
       };
 
       transporter.sendMail(mailOptions, (error, info) => {

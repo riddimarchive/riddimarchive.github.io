@@ -11,7 +11,7 @@ block content
 
 	h2 Artist Submission (Please only submit yourself!) 
 	p Note: You can submit released tunes, or even old exclusives if you wish to do so. I will only be uploading these kinds of tunes with the artist's permission.
-	form(method='POST', action='/submission', enctype='multipart/form-data')
+	form(method='POST', action='/req/submission', enctype='multipart/form-data')
 		.label Artist Name:
 		div.form-group
 			input#artist_name.form-control(type='text', name='artist_name')
@@ -31,7 +31,7 @@ block content
 		div.form-group
 			label(for='img')  
 			input#img.form-control(type='file', name='img')
-		.label Please submit private download link, OR MP3, WAV or ZIP
+		.label Please submit private download link, OR MP3, WAV or ZIP (max 25MB)
 		.label Download Link
 		div.form-group
 			label(for='link') 

@@ -111,7 +111,9 @@ body {
 }
 
 .contact{
-  display: block;
+  display: flex;
+  align-items: center;
+  align-self: center;
 }
 
 .contact form{

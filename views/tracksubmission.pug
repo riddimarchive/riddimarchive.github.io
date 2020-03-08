@@ -1,0 +1,33 @@
+extends index2
+
+block content
+	txt  
+	form
+		input(type='button', value='Go Back', onclick="self.location='https://riddim-archive.herokuapp.com/faq'")
+    h1 Add Track (Non-Artist Submission)
+    - var message = msg;
+    .labelg #{message2}
+    p Note: This is only to submit free tunes from artists that the library is missing. NO PLATES or Released tunes will be posted without Artist/Label Permission. I will verify.
+	.contact
+		form(method='POST' action='/tracksubmission')
+			.label Artist Name:
+			br
+			div.form-group
+				input#artist_name.form-control(type='text', name='artist_name')
+			br
+			.label Please submit private download link to the tune(s) you would like to add.
+			br
+			div Recommended Upload Sites:
+				txt  
+				a(href='http://we.tl/') We Transfer
+				txt  
+				a(href='https://drive.google.com/') Google Drive
+				txt  
+				a(href='https://www.mediafire.com/') Mediafire
+			br
+			div.form-group
+				input#link.form-control(type='text', name='link')
+			br
+
+			div
+				button.btn.btn-primary.btn-block(type='submit') Submit

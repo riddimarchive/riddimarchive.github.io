@@ -1,11 +1,11 @@
 extends index2
 
 block content
+	txt  
 	form
 		input(type='button', value='Go Back', onclick="self.location='https://riddim-archive.herokuapp.com/faq'")
 	h1 Artist Submission (Please only submit yourself!) 
 	- var message = msg;
-	- var message2 = msg2;
 	.labelg #{message}
 	p Note: You can submit released tunes, or even old exclusives if you wish to do so. I will only be uploading these kinds of tunes with the artist's permission.
 	.contact
@@ -15,30 +15,31 @@ block content
 			div.form-group
 				input#artist_name.form-control(type='text', name='artist_name')
 			br
+
 			.label Crew:
 			br
-			div.form-group
-				label(for='crew') 
+			div.form-group 
 				input#crew.form-control(type='text', name='crew')
 			br
+
 			.label Country:
 			br
-			div.form-group
-				label(for='country')  
+			div.form-group  
 				input#country.form-control(type='text', name='country')
 			br
+
 			.label Info (Short sentence or two about you and your style, Be creative!):
 			br
-			div.form-group
-				label(for='info')  
+			div.form-group  
 				textarea#info.form-control(type='text', name='info' rows='5')
 			br
-			.label Upload Page Image (please make this at least 275px x 275px - square image Preferred):
+
+			.label Upload Page Image (min size: 275px x 275px):
 			br
 			div.form-group
-				label(for='img')  
 				input#img.form-control(type='file', name='img')
 			br
+			
 			.label Please submit private download link to the tune(s) you would like to add.
 			br
 			div Recommended Upload Sites:
@@ -49,36 +50,10 @@ block content
 				txt  
 				a(href='https://www.mediafire.com/') Mediafire
 			br
-			.label Download Link
-			br
 			div.form-group
-				label(for='link') 
 				input#link.form-control(type='text', name='link')
 			br
+
 			div
 				button.btn.btn-primary.btn-block(type='submit') Submit
 	br
-	br
-	.labelg #{message2}
-
-	h2 Add Track (Non-Artist Submission)
-	p Note: This is only to submit free tunes from artists that the library is missing. NO PLATES or Released tunes will be posted without Artist/Label Permission. I will verify.
-	form(method='POST' action='/tracksubmission')
-		div.form-group
-			label(for='artist_name') Artist Name: 
-			input#artist_name.form-control(type='text', name='artist_name')
-		.label Please submit private download link to the tune(s) you would like to add.
-		div Recommended Upload Sites:
-			txt  
-			a(href='http://we.tl/') We Transfer
-			txt  
-			a(href='https://drive.google.com/') Google Drive
-			txt  
-			a(href='https://www.mediafire.com/') Mediafire
-		.label Download Link
-		div.form-group
-			label(for='link') 
-			input#link.form-control(type='text', name='link')
-		div
-			button.btn.btn-primary.btn-block(type='submit') Submit
-	p  #{message}

@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 function storeArtistImage(artist_image, artist_name){
 
 	let filepromise = new Promise(function(resolve, reject){
-        artist_image.mv(`..public/Images/Logos/${artist_name}.jpg`, function(err) {
+        artist_image.mv(`../public/Images/Logos/${artist_name}.jpg`, function(err) {
             if (err){
                 console.error('File couldnt be uploaded');
                 reject(err);
@@ -47,7 +47,7 @@ function emailArtistForm(artist_name, crew, country, info, link, artist_img){
                 attachments: [
                   {
                       filename: `${artist_name}.jpg`,
-                      path: `..public/Images/Logos/${artist_name}.jpg` // stream this file
+                      path: `../public/Images/Logos/${artist_name}.jpg` // stream this file
                   }
                 ]
             };

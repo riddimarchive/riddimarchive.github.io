@@ -26,12 +26,16 @@ block content
 		.label Info (Short sentence or two about you and your style, Be creative!):
 		div.form-group
 			label(for='info')  
-			input#info.form-control(type='text', name='info')
+			textarea#info.form-control(type='text', name='info' rows='5')
 		.label Upload Page Image (please make this at least 275px x 275px - square image Preferred):
 		div.form-group
 			label(for='img')  
 			input#img.form-control(type='file', name='img')
-		.label Please submit private download link to the tune(s) you would like to add. 
+		.label Please submit private download link to the tune(s) you would like to add.
+		div Recommended Upload Sites:
+			a(href='http://we.tl/') We Transfer
+			a(href='https://drive.google.com/') Google Drive
+			a(href='https://www.mediafire.com/') Mediafire
 		.label Download Link
 		div.form-group
 			label(for='link') 

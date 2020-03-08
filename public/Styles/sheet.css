@@ -133,7 +133,7 @@ body {
 }
 
 .contact form button, .contact form input, .contact form textarea{
-  width:90%;
+  width:75%;
   padding:1em;
   border:1px solid #c9e6ff;
 }

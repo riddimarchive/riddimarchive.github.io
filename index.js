@@ -18,7 +18,7 @@ const artquerie = require('./js/artquery');
 const trackquerie = require('./js/trackquery');
 const userquerie = require('./js/userquery');
 const has = require('./js/hash');
-const filestore = require('./js/filestore');
+const emailer = require('./js/email');
 
 // create new express app and save it as "app"
 const app = express();
@@ -830,78 +830,33 @@ app.post('/search', (req, res, next) => {
 //POST REQUEST - Artist Submission
 app.post('/req/submission', (req, res, next) => {
   
+  var { artist_name, crew, country, info, link} = req.body;
+  //required: name, link, and image
+
   if (!req.files || Object.keys(req.files).length === 0) {
-    console.log('No files were uploaded.');
-    res.send('No files were uploaded.');
+    console.log('No image was uploaded.');
+    res.render('submission',{
+      msg: "Please include Image!",
+      msg2: ""
+    });
   }else{
 
       let artist_img = req.files.img;
-      //need to make this async
-      /*
-      artist_img.mv(`public/Images/Logos/${req.body.artist_name}.jpg`, function(err) {
-        if (err){
+
+      async function makeEmail(artist_name, crew, country, info, link, artist_img){
+        try{
+          await emailer.storeArtistImage(artist_img, artist_name);
+          await emailer.emailArtistForm(artist_name, crew, country, info, link, artist_img);
+          res.render('submission',{
+            msg: "Form Submitted! Admins will begin adding your page!",
+            msg2: ""
+          });
+
+        }catch(err){
           console.log(err);
+          res.render('error');
         }
-          console.log('File uploaded!');
-      });
-      */
-      let thefile = req.files.filey;
-      /*
-      thefile.mv(`public/Files/${req.files.filey.name}`, function(err) {
-        if (err){
-          console.log(err);
-        }
-          console.log('File uploaded!');
-      });
-      */
-
-      const output = 
-      `Artist Self-Submission!
-      
-       Artist Name: ${req.body.artist_name}
-       Crew: ${req.body.crew}
-       Country: ${req.body.country}
-       Artist Info: ${req.body.info}
-       Artist Link: ${req.body.link}`;
-
-      let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.EMAIL, 
-          pass: process.env.EMAIL_PASSWORD
-        }
-      });
-
-      let mailOptions = {
-        from: process.env.EMAIL,
-        to: process.env.EMAIL,
-        subject: 'Artist Self-Submission',
-        text: output,
-        /*
-        attachments: [
-          {
-              filename: `${req.body.artist_name}.jpg`,
-              path: `public/Images/Logos/${req.body.artist_name}.jpg` // stream this file
-          },
-          {
-            filename: `${req.files.filey.name}.mp3`,
-            path: `public/Files/${req.files.filey.name}` // stream this file
-          }
-        ]
-        */
-      };
-
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error){
-            return console.log(error);
-        }
-        console.log("Message sent: %s", info.messageId);
-      });
-
-      res.render('submission',{
-        msg: "Form Submitted! Admins will begin adding your page!",
-        msg2: ""
-      });
+    }
   }
 
 });

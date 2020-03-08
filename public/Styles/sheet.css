@@ -110,7 +110,7 @@ body {
 	border: 1px #ccc solid;
 }
 
-.contact{
+.contactdiv{
   display: flex;
   align-items: center;
   align-self: center;

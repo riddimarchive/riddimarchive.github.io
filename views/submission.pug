@@ -14,19 +14,19 @@ block content
 	form(method='POST', action='/req/submission', enctype='multipart/form-data')
 		.label Artist Name:
 		div.form-group
-			textarea#artist_name.form-control(type='text', name='artist_name' cols='10')
+			input#artist_name.form-control(type='text', name='artist_name')
 		.label Crew:
 		div.form-group
 			label(for='crew') 
-			textarea#crew.form-control(type='text', name='crew' cols='10')
+			input#crew.form-control(type='text', name='crew')
 		.label Country:
 		div.form-group
 			label(for='country')  
-			textarea#country.form-control(type='text', name='country' cols='10')
+			input#country.form-control(type='text', name='country')
 		.label Info (Short sentence or two about you and your style, Be creative!):
 		div.form-group
 			label(for='info')  
-			textarea#info.form-control(type='text', name='info' rows='5' cols='10')
+			textarea#info.form-control(type='text', name='info' rows='5')
 		.label Upload Page Image (please make this at least 275px x 275px - square image Preferred):
 		div.form-group
 			label(for='img')  
@@ -39,7 +39,7 @@ block content
 		.label Download Link
 		div.form-group
 			label(for='link') 
-			textarea#link.form-control(type='text', name='link' cols='10')
+			input#link.form-control(type='text', name='link')
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
 	br

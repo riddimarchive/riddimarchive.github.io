@@ -142,6 +142,7 @@ body {
   background:#c9e6ff;
   border:0;
   text-transform: uppercase;
+  font-size: 32px;
 }
 
 .contact form button:hover,.contact form button:focus{

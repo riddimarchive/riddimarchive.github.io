@@ -22,42 +22,47 @@ block content
       br
       p This site is designed to preserve the amazing Riddim sub-genre of Dubstep. I seek to create a one-stop place where anyone can easily have access to all the amazing tunes and artists that this genre has to offer. I seek to allow people to re-discover amazing artists which no longer produce, but have made a lasting impact on the Riddim landscape. If you are new to riddim and want to get in touch with the classics, this site is for you!
       br
-      .question I can't find this specific artist/song, what gives?
+      .question I WANT to include my page/music here so others can find me.
       br
-      p Alas, I am only one lonely nerd coding this site, my collection is only limited to that which I was able to collect during my time in scene. (I got into the riddim scene in 2011, later than I would have liked, so there's still plenty I'm missing unfortunetly...) BUT YOU CAN HELP WITH THIS!!!! I want to expand the library here, so if there's an artist or song I am missing here, Feel free to send it along here. (DON'T send me plates or paid tunes please, especially if you didn't produce them. They will not be displayed here.)
-      form
-            input(type='button', value='Tune / Artist Submission', onclick="self.location='https://riddim-archive.herokuapp.com/req/submission'")
-      br
-      .question I Can't Download the File I want. (Google Drive Error)
-      br
-      p My Apologies, Google Drive has a limit on downloads sometimes. Let me know what you were trying to get at this link and I'll put it back up ASAP
-      form
-            input(type='button', value='Tune not available', onclick="self.location='https://riddim-archive.herokuapp.com/req/tunereport'")
+      p I'm down as fuck, send me tunes/some bio info here and I'll start building your page
+      .contact
+            form
+                  input(type='button', value='Artist Self-Submission', onclick="self.location='https://riddim-archive.herokuapp.com/req/submission'")
       br
       .question I DON'T want my Artist Page/Song on your page.
       br
       p My Sincerest Apologies. With this site I aim to share released works and celebrate awesome riddim talent, But I totally understand if you don't want to be included. Click This Link to give me the details, and I'll remove what you have requested ASAP.
-      form
-            input(type='button', value='Artist/Song Removal', onclick="self.location='https://riddim-archive.herokuapp.com/req/removal'")
+      .contact
+            form
+                  input(type='button', value='Artist/Song Removal', onclick="self.location='https://riddim-archive.herokuapp.com/req/removal'")
       br
-      .question I WANT to include my page/music here so others can find me.
+      .question I Can't Download the File I want. (Google Drive Error)
       br
-      p I'm down as fuck, send me tunes/some bio info here and I'll start building your page
-      form
-            input(type='button', value='Tune / Artist Submission', onclick="self.location='https://riddim-archive.herokuapp.com/req/submission'")
+      p My Apologies, Google Drive has a limit on downloads sometimes. Let me know what you were trying to get at this link and I'll put it back up ASAP
+      .contact
+            form
+                  input(type='button', value='Tune Not Available', onclick="self.location='https://riddim-archive.herokuapp.com/req/tunereport'")
+      br
+      .question I can't find this specific artist/song, what gives?
+      br
+      p Alas, I am only one lonely nerd coding this site, my collection is only limited to that which I was able to collect during my time in scene. (I got into the riddim scene in 2011, later than I would have liked, so there's still plenty I'm missing unfortunetly...) BUT YOU CAN HELP WITH THIS!!!! I want to expand the library here, so if there's an artist or song I am missing here, Feel free to send it along here. (DON'T send me plates or paid tunes please, especially if you didn't produce them. They will not be displayed here.)
+            form
+                  input(type='button', value='Tune Submission', onclick="self.location='https://riddim-archive.herokuapp.com/req/tracksubmission'")
       br
       .question I wanna support this site in some other way!
       br
       p Much love, sharing this site with anyone new or old to the genre is much appreciated! If you are better than me at Webdesign/Coding (which is not saying much believe me fam), and want to help out, Hit me up hereeee! Lastly, if you'd like to donate to help recoop the site costs, you can here. In NO way is this required. To be honest, site costs are really low so far, so I'm not trippin. I made this site for the love of RIDDIMMMM (and to get webdesign practice lol).
-      form(action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
-            input(type='hidden', name='cmd', value='_donations')
-            input(type='hidden', name='business', value='4RCMFJAVJJCL4')
-            input(type='hidden', name='currency_code', value='USD')
-            input(type='image', src='https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif', border='0', name='submit', title='PayPal - The safer, easier way to pay online!', alt='Donate with PayPal button')
-            img(alt='', border='0', src='https://www.paypal.com/en_US/i/scr/pixel.gif', width='1', height='1')
+      .contact
+            form(action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
+                  input(type='hidden', name='cmd', value='_donations')
+                  input(type='hidden', name='business', value='4RCMFJAVJJCL4')
+                  input(type='hidden', name='currency_code', value='USD')
+                  input(type='image', src='https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif', border='0', name='submit', title='PayPal - The safer, easier way to pay online!', alt='Donate with PayPal button')
+                  img(alt='', border='0', src='https://www.paypal.com/en_US/i/scr/pixel.gif', width='1', height='1')
 
       br
       .question I have another random question, how can I contact you?
       br
-      form
-            input(type='button', value='Right Here, Bruv', onclick="self.location='https://riddim-archive.herokuapp.com/req/question'")
+      .contact
+            form
+                  input(type='button', value='Right Here, Bruv', onclick="self.location='https://riddim-archive.herokuapp.com/req/question'")

@@ -354,6 +354,12 @@ app.get('/req/:page', function(req,res){
           msg2: ""
         });
         break;
+      case "tracksubmission":
+        res.render('tracksubmission',{
+          msg: "",
+          msg2: ""
+        });
+        break;
       case "tunereport":
         res.render('tunereport',{
           msg: "",

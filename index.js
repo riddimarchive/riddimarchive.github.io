@@ -840,27 +840,33 @@ app.post('/req/submission', (req, res, next) => {
       msg2: ""
     });
   }else{
-
-      let artist_img = req.files.img;
-
-      async function makeEmail(artist_name, crew, country, info, link, artist_img){
-          try{
-            await emailer.storeArtistImage(artist_img, artist_name);
-            await emailer.emailArtistForm(artist_name, crew, country, info, link, artist_img);
-            res.render('submission',{
-              msg: "Form Submitted! Admins will begin adding your page!",
-              msg2: ""
-            });
-
-          }catch(err){
-            console.log(err);
-            res.render('error');
-          }
-      }
-
-      console.log("running function");
-      makeEmail(artist_name, crew, country, info, link, artist_img);
-    
+      if (!artist_name || !link){
+        res.render('submission',{
+          msg: "Please include Artist Name and Download Link!",
+          msg2: ""
+        });
+      }else{
+            let artist_img = req.files.img;
+            
+            async function makeEmail(artist_name, crew, country, info, link, artist_img){
+                try{
+                  await emailer.storeArtistImage(artist_img, artist_name);
+                  await emailer.emailArtistForm(artist_name, crew, country, info, link, artist_img);
+                  res.render('submission',{
+                    msg: "Form Submitted! Admins will begin adding your page!",
+                    msg2: ""
+                  });
+                    
+                }catch(err){
+                  console.log(err);
+                  res.render('error');
+                }
+            }
+              
+            console.log("running function");
+            makeEmail(artist_name, crew, country, info, link, artist_img);
+        }
+          
   }
 
 });

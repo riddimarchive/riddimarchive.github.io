@@ -14,25 +14,31 @@ block content
 	.contact
 		form(method='POST', action='/req/submission', enctype='multipart/form-data')
 			.label Artist Name:
+			br
 			div.form-group
 				input#artist_name.form-control(type='text', name='artist_name')
 			.label Crew:
+			br
 			div.form-group
 				label(for='crew') 
 				input#crew.form-control(type='text', name='crew')
 			.label Country:
+			br
 			div.form-group
 				label(for='country')  
 				input#country.form-control(type='text', name='country')
 			.label Info (Short sentence or two about you and your style, Be creative!):
+			br
 			div.form-group
 				label(for='info')  
 				textarea#info.form-control(type='text', name='info' rows='5')
 			.label Upload Page Image (please make this at least 275px x 275px - square image Preferred):
+			br
 			div.form-group
 				label(for='img')  
 				input#img.form-control(type='file', name='img')
 			.label Please submit private download link to the tune(s) you would like to add.
+			br
 			div Recommended Upload Sites:
 				txt  
 				a(href='http://we.tl/') We Transfer
@@ -40,7 +46,9 @@ block content
 				a(href='https://drive.google.com/') Google Drive
 				txt  
 				a(href='https://www.mediafire.com/') Mediafire
+			br
 			.label Download Link
+			br
 			div.form-group
 				label(for='link') 
 				input#link.form-control(type='text', name='link')

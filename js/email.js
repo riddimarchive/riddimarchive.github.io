@@ -10,7 +10,7 @@ function storeArtistImage(artist_image, artist_name){
         artist_image.mv(`..public/Images/Logos/${artist_name}.jpg`, function(err) {
             if (err){
                 console.error('File couldnt be uploaded');
-                reject(error);
+                reject(err);
             }
             resolve("File Stored!");
           });

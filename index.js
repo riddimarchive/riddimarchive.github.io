@@ -844,19 +844,23 @@ app.post('/req/submission', (req, res, next) => {
       let artist_img = req.files.img;
 
       async function makeEmail(artist_name, crew, country, info, link, artist_img){
-        try{
-          await emailer.storeArtistImage(artist_img, artist_name);
-          await emailer.emailArtistForm(artist_name, crew, country, info, link, artist_img);
-          res.render('submission',{
-            msg: "Form Submitted! Admins will begin adding your page!",
-            msg2: ""
-          });
+          try{
+            await emailer.storeArtistImage(artist_img, artist_name);
+            await emailer.emailArtistForm(artist_name, crew, country, info, link, artist_img);
+            res.render('submission',{
+              msg: "Form Submitted! Admins will begin adding your page!",
+              msg2: ""
+            });
 
-        }catch(err){
-          console.log(err);
-          res.render('error');
-        }
-    }
+          }catch(err){
+            console.log(err);
+            res.render('error');
+          }
+      }
+
+      console.log("running function");
+      makeEmail(artist_name, crew, country, info, link, artist_img);
+    
   }
 
 });

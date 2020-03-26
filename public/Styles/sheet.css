@@ -65,7 +65,7 @@ body {
 }
 
 a{
-  text-decoration: overline;
+  text-decoration: none;
 }
 
 .fishchild img:hover{

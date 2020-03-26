@@ -84,7 +84,7 @@ body {
   flex-wrap: wrap;
 }
 
-.ul{
+ul{
   list-style-type: none;
   display: flex;
 	flex-direction: row;

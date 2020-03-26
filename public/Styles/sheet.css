@@ -101,6 +101,11 @@ a{
   display: flex;
   justify-content: center;
 }
+.artisth1{
+  display: flex;
+  justify-content: center;
+}
+
 .artistinfo{
   display: flex;
   justify-content: center;

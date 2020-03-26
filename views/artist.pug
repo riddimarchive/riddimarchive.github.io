@@ -4,10 +4,10 @@ block content
 	br
 	script.
 		document.addEventListener('play', function(e){
-		var audios = document.getElementsByTagName('audio');
-		for(var i = 0, len = audios.length; i < len;i++){
-		if(audios[i] != e.target){
-		audios[i].pause();
+		var iframes = document.getElementsByTagName('iframe');
+		for(var i = 0, len = iframes.length; i < len;i++){
+		if(iframes[i] != e.target){
+		iframes[i].pause();
 		}
 		}
 		}, true);

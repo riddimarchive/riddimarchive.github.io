@@ -94,12 +94,8 @@ a{
   justify-content: space-between;
   padding-right: 50px;
   flex-wrap: wrap;
-  line-height: 60px;
 }
 
-audio{
-  transform: scale(1.3);
-}
 
 .artistpage{
   display: flex;

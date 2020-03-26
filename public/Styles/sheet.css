@@ -64,6 +64,10 @@ body {
   flex-grow: 1;
 }
 
+a{
+  text-decoration: overline;
+}
+
 .fishchild img:hover{
 	opacity: 0.3;
 }

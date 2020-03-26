@@ -306,11 +306,15 @@ app.get('/artist/:name', function(req,res){
           var info = "";
 
           var db = createConnection();
-
+          console.log("connecting");
           await conquerie.connect(db);
+          console.log("connected to db");
           let result = await artquerie.getArtistInfo(db, name);
+          console.log("got artist info");
           info = `${result[0].info}`;
+          console.log("info is " + info);
           let tresult = await trackquerie.getAllTracksFromArtist(db, name);
+          console.log("got all tracks");
 
           //store track query results
           for (var i = 0; i < tresult.length; i++) {
@@ -324,9 +328,9 @@ app.get('/artist/:name', function(req,res){
             }
             tracks.push(row);
           }
-
+          console.log("track info stored");
           await conquerie.end(db);
-
+          console.log("db connection ended, rendering page...");
           res.render('artist',{
             artist_name: name,
             info: info,
@@ -339,7 +343,7 @@ app.get('/artist/:name', function(req,res){
       }
 
   }
-
+  console.log("doing fcn");
   artistPageResponse(art_name);
 
 });

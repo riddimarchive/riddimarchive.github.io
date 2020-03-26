@@ -43,7 +43,6 @@ body {
 	flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-  width: 
 }
 
 .searchform input[type=text], select {
@@ -87,6 +86,10 @@ body {
 
 .uldiv{
   list-style-type: none;
+  display: flex;
+	flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .welcometxt{

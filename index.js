@@ -316,7 +316,7 @@ app.get('/artist/:name', function(req,res){
             var row = {
               'track_name':tresult[i].track_name,
               'artist_name':tresult[i].artist_name,
-              'drive_url': 'https://drive.google.com/open?id=' + tresult[i].drive_url,
+              'drive_url': 'https://drive.google.com/file/d/' + tresult[i].drive_url + '/view?usp=sharing',
               'crew': tresult[i].crew,
               'country': tresult[i].country,
               'artist_id': tresult[i].artist_id

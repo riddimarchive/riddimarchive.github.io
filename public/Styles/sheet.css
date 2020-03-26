@@ -103,6 +103,7 @@ a{
   display: flex;
   justify-content: center;
   font-size: large;
+  width: 800px;
 }
 
 ul{

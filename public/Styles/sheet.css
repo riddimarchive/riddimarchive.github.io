@@ -96,6 +96,11 @@ a{
   flex-wrap: wrap;
 }
 
+audio{
+  width: 600px;
+  transform: scale(1.10);
+}
+
 .artistpage{
   display: flex;
   justify-content: center;

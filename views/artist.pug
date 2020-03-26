@@ -12,15 +12,17 @@ block content
 	br
 
 	- var x = tracks;
+
 	.ulcontain
 		each track in x
 			ul
 				.uldiv
-					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­ ${track.track_name}`
+					li.tunetext= `                              ${track.track_name}`
 					audio(src=track.drive_url, type='audio/mpeg', controls='')
 						code audio
 					li.tunetext= `       `
-					a(href=track.drive_url)  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­    ­   ­  ­   ­   ­ Download Tune
+					a(href=track.drive_url)
+						img(border='0', alt='Download Tune', src='../Images/PageIMG/download.png', width='100', height='50')
 					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
 					a(href="")  
 	p TEST thing let's see if this works.

@@ -84,14 +84,16 @@ body {
   flex-wrap: wrap;
 }
 
-ul{
-  list-style-type: none;
+.ulcontain{
   display: flex;
 	flex-direction: row;
   justify-content: space-around;
   flex-wrap: wrap;
 }
 
+ul{
+list-style-type: none;
+}
 .welcometxt{
   display: flex;
   justify-content: center;

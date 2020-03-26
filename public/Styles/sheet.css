@@ -99,6 +99,11 @@ a{
   display: flex;
   justify-content: center;
 }
+.artistinfo{
+  display: flex;
+  justify-content: center;
+  font-size: large;
+}
 
 ul{
 list-style-type: none;

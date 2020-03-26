@@ -84,7 +84,7 @@ body {
   flex-wrap: wrap;
 }
 
-.uldiv{
+.ul{
   list-style-type: none;
   display: flex;
 	flex-direction: row;

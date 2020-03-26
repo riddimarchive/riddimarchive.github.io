@@ -307,7 +307,8 @@ app.get('/artist/:name', function(req,res){
           var db = createConnection();
 
           await conquerie.connect(db);
-
+          let result = await artquerie.getArtistInfo(db, name);
+          var info = result[0].info;
           let tresult = await trackquerie.getAllTracksFromArtist(db, name);
 
           //store track query results
@@ -327,6 +328,7 @@ app.get('/artist/:name', function(req,res){
 
           res.render('artist',{
             artist_name: name,
+            info: info,
             tracks: tracks
           });
 

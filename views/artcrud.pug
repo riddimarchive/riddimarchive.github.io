@@ -9,28 +9,43 @@ block content
 	- var message2 = msg2;
 
 	h2 Add Artist
-	form(method='POST', action='/artistcreate', enctype='multipart/form-data')
-		div.form-group
-			label(for='artist_name')  Artist Name:
-			input#artist_name.form-control(type='text', name='artist_name')
-		div.form-group
-			label(for='crew') Crew: 
-			input#crew.form-control(type='text', name='crew')
-		div.form-group
-			label(for='country') Country: 
-			input#country.form-control(type='text', name='country')
-		div.form-group
-			label(for='info') Info: 
-			input#info.form-control(type='text', name='info')
-		div
-			button.btn.btn-primary.btn-block(type='submit') Submit
+	.contactdiv
+		.contact
+			form(method='POST', action='/artistcreate', enctype='multipart/form-data')
+				.label Artist Name:
+				br
+				div.form-group
+					input#artist_name.form-control(type='text', name='artist_name')
+				br
+
+				.label Crew:
+				br
+				div.form-group
+					input#crew.form-control(type='text', name='crew')
+				br
+
+				.label Country:
+				br
+				div.form-group 
+					input#country.form-control(type='text', name='country')
+				br
+
+				.label Info (Short sentence or two about you and your style, Be creative!):
+				br
+				div.form-group
+					textarea#info.form-control(type='text', name='info' rows='5')
+				br
+				div
+					button.btn.btn-primary.btn-block(type='submit') Submit
 	p  #{message}
 	
 	h2 Delete User
-	form(method='POST' action='/artistdelete')
-		div.form-group
-			label(for='artist_name')  Artist Name:
-			input#artist_name.form-control(type='text', name='artist_name')
-		div
-			button.btn.btn-primary.btn-block(type='submit') Submit
+	.contactdiv
+		.contact
+			form(method='POST' action='/artistdelete')
+				.label Artist Name:
+				div.form-group
+					input#artist_name.form-control(type='text', name='artist_name')
+				div
+					button.btn.btn-primary.btn-block(type='submit') Submit
 	p  #{message2}

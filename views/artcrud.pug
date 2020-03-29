@@ -9,6 +9,7 @@ block content
 	- var message2 = msg2;
 
 	h2 Add Artist
+	.labelg #{message}
 	.contactdiv
 		.contact
 			form(method='POST', action='/artistcreate', enctype='multipart/form-data')
@@ -37,20 +38,20 @@ block content
 				br
 				div
 					button.btn.btn-primary.btn-block(type='submit') Submit
-	p  #{message}
 	br
 	br
 	br
-
-	h1 *-*-*-*-*-*-*
+	br
 
 	h2 Delete Artist
+	.labelg #{message2}
 	.contactdiv
 		.contact
 			form(method='POST' action='/artistdelete')
 				.label Artist Name:
 				div.form-group
 					input#artist_name.form-control(type='text', name='artist_name')
+				br
+				
 				div
 					button.btn.btn-primary.btn-block(type='submit') Submit
-	p  #{message2}

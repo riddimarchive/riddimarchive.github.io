@@ -9,27 +9,47 @@ block content
 	- var message2 = msg2;
 	//- var message3 = msg3;
 
+	.labelg #{message}
+	.labelg #{message2}
+
 	h2 Add Track
-	form(method='POST' action='/trackcreate')
-		div.form-group
-			label(for='track_name') Track Name:
-			input#track_name.form-control(type='text', name='track_name')
-		div.form-group
-			label(for='artist_name') Artist Name: 
-			input#artist_name.form-control(type='text', name='artist_name')
-		div.form-group
-			label(for='drive_url') Drive URL: 
-			input#drive_url.form-control(type='text', name='drive_url')
-		div
-			button.btn.btn-primary.btn-block(type='submit') Submit
-	p  #{message}
+	.contactdiv
+		.contact
+			form(method='POST' action='/trackcreate')
+				.label Track Name:
+				br
+				div.form-group
+					input#track_name.form-control(type='text', name='track_name')
+				br
+
+				.label Artist Name:
+				br
+				div.form-group
+					input#artist_name.form-control(type='text', name='artist_name')
+				br
+
+				.label Drive URL:
+				div.form-group
+					input#drive_url.form-control(type='text', name='drive_url')
+				br
+
+				div
+					button.btn.btn-primary.btn-block(type='submit') Submit
+	br
+	br
+	br
+	br
 		
 	h2 Delete Track
-	form(method='POST' action='/trackdelete')
-		div.form-group
-			label(for='track_name') Track Name:
-			input#track_name.form-control(type='text', name='track_name')
-		div
-			button.btn.btn-primary.btn-block(type='submit') Submit
-	p  #{message2}
+	.contactdiv
+		.contact
+			form(method='POST' action='/trackdelete')
+				.label Track Name:
+				br
+				div.form-group
+					input#track_name.form-control(type='text', name='track_name')
+				br
+		
+				div
+					button.btn.btn-primary.btn-block(type='submit') Submit
 	

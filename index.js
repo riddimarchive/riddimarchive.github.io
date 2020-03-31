@@ -536,8 +536,7 @@ app.post('/usercreate', (req, res, next) => {
 
       async function addyUser(username, password, access_level){
                 try{
-                    username = SqlString.escape(username);
-                    password = SqlString.escape(password);
+
                     var db = createConnection();
 
                     await conquerie.connect(db);
@@ -591,8 +590,7 @@ app.post('/userdelete', (req, res, next) => {
       //make queries, get all artist/track info and render artist page
             async function deletyUser(username){
                 try{
-                    username = SqlString.escape(username);
-                    password = SqlString.escape(password);
+
                     var db = createConnection();
 
                     await conquerie.connect(db);

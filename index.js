@@ -375,8 +375,7 @@ app.get('/req/:page', function(req,res){
         break;
       case "removal":
         res.render('removal',{
-          msg: "",
-          msg2: ""
+          msg: ""
         });
         break;
       case "question":

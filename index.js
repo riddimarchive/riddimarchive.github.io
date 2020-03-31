@@ -363,8 +363,7 @@ app.get('/req/:page', function(req,res){
         break;
       case "tracksubmission":
         res.render('tracksubmission',{
-          msg: "",
-          msg2: ""
+          msg: ""
         });
         break;
       case "tunereport":
@@ -379,8 +378,7 @@ app.get('/req/:page', function(req,res){
         break;
       case "question":
         res.render('question',{
-          msg: "",
-          msg2: ""
+          msg: ""
         });
         break;
       default:
@@ -887,7 +885,7 @@ app.post('/req/removal', (req, res, next) => {
   
   var { info } = req.body;
 
-  var reason = "Artist/Track Removal Request"
+  var reason = "Artist/Track Removal Request";
 
   if (!info){
     res.render('removal',{
@@ -918,7 +916,7 @@ app.post('/req/tunereport', (req, res, next) => {
   
   var { info } = req.body;
 
-  var reason = "Tune Is Broken/Missing Alert"
+  var reason = "Tune Is Broken/Missing Alert";
 
   if (!info){
     res.render('tunereport',{
@@ -944,12 +942,48 @@ app.post('/req/tunereport', (req, res, next) => {
           
 });
 
+//POST REQUEST - Track Submission
+app.post('/req/tracksubmission', (req, res, next) => {
+  
+  var { artist_name, link } = req.body;
+
+  var reason = "Track Submission (Non Artist)";
+  var info = "";
+
+  if (!artist_name || !link){
+    res.render('tracksubmission',{
+      msg: "Please include artist name and link!"
+    });
+  }else{
+        info = `Artist Name: ${artist_name} 
+
+        Link: ${link}`;
+
+        async function makeEmail(reason, info){
+            try{
+              await emailer.standardEmail(reason, info);
+              res.render('tracksubmission',{
+                msg: "Form Submitted! We will add tunes to Riddim Archive if approved!"
+              });
+                
+            }catch(err){
+              console.log(err);
+              res.render('error');
+            }
+        }
+          
+        console.log("running function");
+        makeEmail(reason, info);
+    }
+          
+});
+
 //POST REQUEST - Question
 app.post('/req/question', (req, res, next) => {
   
   var { info } = req.body;
 
-  var reason = "Question/Comment"
+  var reason = "Question/Comment";
 
   if (!info){
     res.render('question',{

@@ -944,6 +944,36 @@ app.post('/req/tunereport', (req, res, next) => {
           
 });
 
+//POST REQUEST - Question
+app.post('/req/question', (req, res, next) => {
+  
+  var { info } = req.body;
+
+  var reason = "Question/Comment"
+
+  if (!info){
+    res.render('question',{
+      msg: "Please include your question/comment!"
+    });
+  }else{
+        async function makeEmail(reason, info){
+            try{
+              await emailer.standardEmail(reason, info);
+              res.render('question',{
+                msg: "Form Submitted! We will reply as soon as we can!"
+              });
+                
+            }catch(err){
+              console.log(err);
+              res.render('error');
+            }
+        }
+          
+        console.log("running function");
+        makeEmail(reason, info);
+    }
+          
+});
 
 //Server Request Handler
 app.listen(port, () => {

@@ -369,8 +369,7 @@ app.get('/req/:page', function(req,res){
         break;
       case "tunereport":
         res.render('tunereport',{
-          msg: "",
-          msg2: ""
+          msg: ""
         });
         break;
       case "removal":
@@ -900,6 +899,37 @@ app.post('/req/removal', (req, res, next) => {
               await emailer.standardEmail(reason, info);
               res.render('removal',{
                 msg: "Form Submitted! We will remove the track/artist page ASAP!"
+              });
+                
+            }catch(err){
+              console.log(err);
+              res.render('error');
+            }
+        }
+          
+        console.log("running function");
+        makeEmail(reason, info);
+    }
+          
+});
+
+//POST REQUEST - Tune Broken Report
+app.post('/req/tunereport', (req, res, next) => {
+  
+  var { info } = req.body;
+
+  var reason = "Tune Is Broken/Missing Alert"
+
+  if (!info){
+    res.render('tunereport',{
+      msg: "Please include the tune that is missing!"
+    });
+  }else{
+        async function makeEmail(reason, info){
+            try{
+              await emailer.standardEmail(reason, info);
+              res.render('tunereport',{
+                msg: "Form Submitted! We will fix/reupload the broken tune!"
               });
                 
             }catch(err){

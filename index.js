@@ -397,6 +397,10 @@ app.post('/login', (req, res, next) => {
 
   var { username, password } = req.body;
 
+  username = SqlString.escape(username);
+  password = SqlString.escape(password);
+  res.send("Username: " + username + "  Password: "+ password);
+  /*
   if(!username || !password){
             res.render('login', {
               username: username,
@@ -409,6 +413,7 @@ app.post('/login', (req, res, next) => {
       })(req, res, next);
 
     }
+  */
 
 });
 

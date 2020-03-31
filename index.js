@@ -404,7 +404,7 @@ app.post('/login', (req, res, next) => {
             });
     }else{
       //username = SqlString.escape(username);
-      password = SqlString.escape(password);
+      //password = SqlString.escape(password);
       //res.send("Username: " + username + "  Password: "+ password);
       passport.authenticate('local', {
         successRedirect: '/dashboard',

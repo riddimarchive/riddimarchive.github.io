@@ -396,16 +396,16 @@ app.get('/req/:page', function(req,res){
 app.post('/login', (req, res, next) => {
 
   var { username, password } = req.body;
-
-  //username = SqlString.escape(username);
-  //password = SqlString.escape(password);
-  //res.send("Username: " + username + "  Password: "+ password);
+  
   if(!username || !password){
             res.render('login', {
               username: username,
               er: "Fill in all Fields!"
             });
     }else{
+      username = SqlString.escape(username);
+      password = SqlString.escape(password);
+      //res.send("Username: " + username + "  Password: "+ password);
       passport.authenticate('local', {
         successRedirect: '/dashboard',
         failureRedirect: '/login'
@@ -536,6 +536,8 @@ app.post('/usercreate', (req, res, next) => {
                 try{
 
                     var db = createConnection();
+                    username = SqlString.escape(username);
+                    password = SqlString.escape(password);
 
                     await conquerie.connect(db);
                     let result = await userquerie.getUserInfo(db, username);
@@ -548,13 +550,8 @@ app.post('/usercreate', (req, res, next) => {
                           msg2: ""
                         });
                     }else{
-                        
-                        password = SqlString.escape(password);
-                        console.log("pass boi " + password);
                         let hashedpass = await has.hashPass(password);
 
-                        res.send("HASHEDDDDDDD: " + hashedpass);
-                        /*
                         console.log("BEFORE ENTRY: " + username + " " + hashedpass + " " + access_level);
                         let tresult = await userquerie.addUser(db, username, hashedpass, access_level);
 
@@ -562,7 +559,6 @@ app.post('/usercreate', (req, res, next) => {
                           msg: "USER Added!",
                           msg2: ""
                         });
-                        */
                     }
                     await conquerie.end(db);
 
@@ -596,6 +592,7 @@ app.post('/userdelete', (req, res, next) => {
                 try{
 
                     var db = createConnection();
+                    username = SqlString.escape(username);
 
                     await conquerie.connect(db);
                     let result = await userquerie.getUserInfo(db, username);

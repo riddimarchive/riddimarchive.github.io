@@ -548,7 +548,9 @@ app.post('/usercreate', (req, res, next) => {
                           msg2: ""
                         });
                     }else{
+                        
                         password = SqlString.escape(password);
+                        console.log("pass boi " + password);
                         let hashedpass = await has.hashPass(password);
 
                         res.send("HASHEDDDDDDD: " + hashedpass);

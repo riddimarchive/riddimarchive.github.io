@@ -52,6 +52,7 @@ function emailArtistForm(artist_name, crew, country, info, link, artist_img){
               }
             ]
         };
+
         console.log("sending email");
         transporter.sendMail(mailOptions, (error, info) => {
             if (error){
@@ -66,7 +67,44 @@ function emailArtistForm(artist_name, crew, country, info, link, artist_img){
 	return filepromise;
 }
 
+function standardEmail(reason, info){
+    let emailpromise = new Promise(function(resolve, reject){
+        const output = 
+            `${reason}!
+            
+            Info: ${info}`;
+
+            let transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: process.env.EMAIL, 
+                  pass: process.env.EMAIL_PASSWORD
+                }
+            });
+
+            let mailOptions = {
+                from: process.env.EMAIL,
+                to: process.env.EMAIL,
+                subject: `${reason}`,
+                text: output,
+            };
+
+            console.log("sending email");
+            transporter.sendMail(mailOptions, (error, info) => {
+            if (error){
+                console.error('Email could not be sent');
+                reject(error);
+            }
+            console.log("Email sent: %s", info.messageId);
+            resolve("Email Sent!");
+          }); 
+    });
+
+    return emailpromise;
+}
+
 module.exports = {
     storeArtistImage,
-    emailArtistForm
+    emailArtistForm,
+    standardEmail
 };

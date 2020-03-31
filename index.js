@@ -883,6 +883,37 @@ app.post('/req/submission', (req, res, next) => {
 
 });
 
+//POST REQUEST - Artist Removal
+app.post('/req/removal', (req, res, next) => {
+  
+  var { info } = req.body;
+
+  var reason = "Artist/Track Removal Request"
+
+  if (!info){
+    res.render('removal',{
+      msg: "Please include what you would like removed!"
+    });
+  }else{
+        async function makeEmail(reason, info){
+            try{
+              await emailer.standardEmail(reason, info);
+              res.render('removal',{
+                msg: "Form Submitted! We will remove the track/artist page ASAP!"
+              });
+                
+            }catch(err){
+              console.log(err);
+              res.render('error');
+            }
+        }
+          
+        console.log("running function");
+        makeEmail(reason, info);
+    }
+          
+});
+
 
 //Server Request Handler
 app.listen(port, () => {

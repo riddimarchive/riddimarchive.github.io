@@ -593,7 +593,6 @@ app.post('/userdelete', (req, res, next) => {
                 try{
 
                     var db = createConnection();
-                    username = SqlString.escape(username);
 
                     await conquerie.connect(db);
                     let result = await userquerie.getUserInfo(db, username);

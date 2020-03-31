@@ -11,7 +11,7 @@ module.exports = function(passport){
 
 			async function hashAndCheckResults(pass){
       			try{
-
+					console.log ("before auth: "+ username + password);
       				//make db connection and get query
 					var db = createConnection();
 					await conquerie.connect(db);

@@ -403,9 +403,8 @@ app.post('/login', (req, res, next) => {
               er: "Fill in all Fields!"
             });
     }else{
-      username = SqlString.escape(username);
       password = SqlString.escape(password);
-      //res.send("Username: " + username + "  Password: "+ password);
+      res.send("Username: " + username + "  Password: "+ password);
       
       passport.authenticate('local', {
         successRedirect: '/dashboard',

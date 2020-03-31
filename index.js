@@ -550,7 +550,11 @@ app.post('/usercreate', (req, res, next) => {
                           msg2: ""
                         });
                     }else{
+                        password = SqlString.escape(password);
                         let hashedpass = await has.hashPass(password);
+
+                        res.send("HASHEDDDDDDD: " + hashedpass);
+                        /*
                         console.log("BEFORE ENTRY: " + username + " " + hashedpass + " " + access_level);
                         let tresult = await userquerie.addUser(db, username, hashedpass, access_level);
 
@@ -558,7 +562,7 @@ app.post('/usercreate', (req, res, next) => {
                           msg: "USER Added!",
                           msg2: ""
                         });
-
+                        */
                     }
                     await conquerie.end(db);
 

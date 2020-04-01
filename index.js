@@ -271,7 +271,8 @@ app.get('/artcrud', (req, res) => {
       if(req.user.access_level > 1){
     
         res.render('artcrud',{
-          username: ''
+          msg: "",
+          msg2: ""
         });
     
       }else{

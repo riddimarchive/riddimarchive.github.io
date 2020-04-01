@@ -955,7 +955,9 @@ app.post('/req/tracksubmission', (req, res, next) => {
       msg: "Please include artist name and link!"
     });
   }else{
-        info = `Artist Name: ${artist_name} 
+        info = `
+        
+        Artist Name: ${artist_name} 
 
         Link: ${link}`;
 

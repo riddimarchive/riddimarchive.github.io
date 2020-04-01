@@ -56,7 +56,7 @@ function getUserByid(db, id){
 function getUserInfo(db, username){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT * FROM users WHERE username = "${username}"`, (error, result, fields) => {
+		db.query(`SELECT * FROM users WHERE username = ?`, [username], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

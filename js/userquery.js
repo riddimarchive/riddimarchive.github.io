@@ -20,7 +20,7 @@ function addUser(db, username, password, access_level){
 function deleteUser(db, username){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`DELETE FROM users WHERE username = ${username} LIMIT 1`, (error, result, fields) => {
+		db.query(`DELETE FROM users WHERE username = ? LIMIT 1`, [username], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -38,7 +38,7 @@ function deleteUser(db, username){
 function getUserByid(db, id){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT * FROM users WHERE id = "${id}"`, (error, result, fields) => {
+		db.query(`SELECT * FROM users WHERE id = ?`, [id], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

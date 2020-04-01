@@ -18,13 +18,28 @@ body
         path(d='M0,23 30,23', stroke='#fff', stroke-width='5')
   ul.navbar-nav
     li
+      a(href='#') Login
+    li
       a(href='#') Home
     li
-      a(href='#') About
-    li
-      a(href='#') Services
-    li
-      a(href='#') Contact
+      a(href='#') FAQ
+#side-menu.side-nav
+  a.btn-close(href='#', onclick='closeSlideMenu()') ×
+  a(href='#') Login
+  a(href='#') Home
+  a(href='#') FAQ
+#main
+  h1 Responsive Side Menu
+script.
+  function openSlideMenu(){
+  document.getElementById('side-menu').style.width = '250px';
+  document.getElementById('main').style.marginLeft = '250px';
+  }
+  function closeSlideMenu(){
+  document.getElementById('side-menu').style.width = '0';
+  document.getElementById('main').style.marginLeft = '0';
+  }
+
   .toplogo
     a.btn.btn-link(href='../')
       img(src='Images/Logos/Logosmall.png' alt='Images/PageIMG/fail.png' height='263' width='225')

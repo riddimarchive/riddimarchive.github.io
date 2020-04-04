@@ -17,10 +17,10 @@ block content
     var x = document.getElementById("tunesoftheweek");
     var y = document.getElementById("tuneslink");
 
-    if (x.style.display === "none") {
-    x.style.display = "block";
-    } else {
-    x.style.display = "none";
+    if(x.display == 'none' || x.display == ''){
+    x.display = 'block';
+    }else{
+    x.display = 'none';
     }
 
     if (y.innerHTML === "vvv Click Here for Tunes of the Week! vvv") {

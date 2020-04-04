@@ -2,14 +2,10 @@
 //module reqs: express and express session, fs, http request, path and errors, and passport
 const express = require('express');
 const session = require('express-session');
-const fs = require('fs');
 const fileUpload = require('express-fileupload');
-const request = require('request');
 const path = require('path');
 const createError = require('http-errors');
 const passport = require('passport');
-const nodemailer = require('nodemailer');
-var SqlString = require('sqlstring');
 
 //file reqs: database connect, query functions, hash functions
 const createConnection = require('./js/dbconnect');

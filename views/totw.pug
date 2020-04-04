@@ -1,0 +1,40 @@
+extends index2
+
+block content
+	br
+	script.
+		document.addEventListener('play', function(e){
+		var audios = document.getElementsByTagName('audio');
+		for(var i = 0, len = audios.length; i < len;i++){
+		if(audios[i] != e.target){
+		audios[i].pause();
+		}
+		}
+		}, true);
+	.artisth1
+		h1 #{artist_name}
+	.artistpage
+		img(src=`../Images/Logos/${artist_name}.jpg`, alt="ADD ARTIST IMG HERE", height='275', width='275')
+	br
+	.artistinfo
+		h3 #{info}
+	br
+	br
+	br
+
+
+	- var x = tracks;
+
+	.ulcontain
+		each track in x
+			ul
+				.uldiv
+					li.tunetext= `${track.track_name}`
+					audio(src=track.drive_url, type='audio/mpeg', controls='') Sorry Bruv, Your Browser Can't Play dis chune!
+					li.tunetext= `       `
+					a(href=track.drive_url)
+						img(border='0', alt='Download Tune', src='../Images/PageIMG/download.png', height='50')
+					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
+					a(href="")  
+	p TEST thing let's see if this works.
+			

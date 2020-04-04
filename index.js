@@ -72,9 +72,21 @@ app.get('/', (req, res) => {
       try{
 
               var artists = [];
+              var totw = [];
 
               var db = createConnection();
               await conquerie.connect(db);
+
+              let result = await trackquerie.getTracksOfTheWeek(db);
+
+              for (var i = 0; i < result.length; i++) {
+                var row = {
+                  'track_name':result[i].track_name,
+                  'artist_name':result[i].artist_name,
+                  'drive_url': result[i].drive_url
+                }
+                totw.push(row);
+              }
 
               let tresult = await artquerie.getAllArtists(db);
 
@@ -91,7 +103,8 @@ app.get('/', (req, res) => {
               res.render('homepage',{
                 title:'Riddim Archive Index',
                 msg: "",
-                artists: artists
+                artists: artists,
+                totw: totw
               });
 
           }catch(err){
@@ -782,7 +795,8 @@ app.post('/search', (req, res, next) => {
                   res.render('homepage',{
                     title:'Riddim Archive Index',
                     msg: "",
-                    artists: artists
+                    artists: artists,
+                    totw: ""
                   });
               }//end else
 
@@ -813,7 +827,8 @@ app.post('/search', (req, res, next) => {
                   res.render('homepage',{
                     title:'Riddim Archive Index',
                     msg: "",
-                    artists: artists
+                    artists: artists,
+                    totw: ""
                   });
               }//end else
 

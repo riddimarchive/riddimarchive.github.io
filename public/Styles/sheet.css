@@ -98,6 +98,15 @@ a{
   flex-wrap: wrap;
 }
 
+.ulcontaintotw{
+  display: flex;
+	flex-direction: row;
+  justify-content: space-between;
+  padding-left: 50px;
+  padding-right: 100px;
+  flex-wrap: wrap;
+}
+
 
 .artistpage{
   display: flex;
@@ -144,6 +153,11 @@ list-style-type: none;
 li.tunetext{
   font-size: xx-large;
 }
+
+li.tunetexttotw{
+  font-size: large;
+}
+
 .contactdiv{
   align-items: center;
   align-self: center;

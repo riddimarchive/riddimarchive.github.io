@@ -4,16 +4,16 @@ block content
   .artisth1
     h1 Tunes Of The Week!
   - var y = totw;
-  .ulcontain
+  .ulcontaintotw
     each track in y
       ul
-        .uldiv
-          li.tunetext= `${track.track_name}`
+        .uldivtotw
+          li.tunetexttotw= `${track.track_name}`
           audio(src=track.drive_url, type='audio/mpeg', controls='') Sorry Bruv, Your Browser Can't Play dis chune!
-          li.tunetext= `       `
+          li.tunetexttotw= `       `
           a(href=track.drive_url)
             img(border='0', alt='Download Tune', src='Images/PageIMG/download.png', height='50')
-          li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
+          li.tunetexttotw= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
           a(href="")
 
   - var message = msg;

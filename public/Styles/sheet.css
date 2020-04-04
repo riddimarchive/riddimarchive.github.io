@@ -222,6 +222,7 @@ p{
 
 #tunesoftheweek{
   display: none;
+  border: black solid 1px;
 }
 
 li.tunetexttotw{

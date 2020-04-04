@@ -13,24 +13,25 @@ block content
 
   script.
     function toggleVisible(){
+    console.log("clicked");
     var x = document.getElementById("tunesoftheweek");
     var y = document.getElementById("tuneslink");
-    
+
     if (x.style.display === "none") {
     x.style.display = "block";
     } else {
     x.style.display = "none";
     }
 
-    if (y.innerHTML === "Click Here for Tunes of the Week!") {
-    y.innerHTML = "Collapse List";
+    if (y.innerHTML === "vvv Click Here for Tunes of the Week! vvv") {
+    y.innerHTML = "^^^ Collapse List ^^^";
     } else {
-    y.innerHTML = "Click Here for Tunes of the Week!";
+    y.innerHTML = "vvv Click Here for Tunes of the Week! vvv";
     }
     }
 
   .artisth1
-    a#tuneslink(title='Totw', href='', onclick='toggleVisible();return false;') Click Here for Tunes of the Week!
+    a#tuneslink(title='Totw', href='', onclick='toggleVisible();return false;') vvv Click Here for Tunes of the Week! vvv
   - var y = totw;
   div#tunesoftheweek
     .ulcontaintotw

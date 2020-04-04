@@ -13,12 +13,12 @@ block content
 
   script.
     function makeVisible(){
-    document.getElementById('ulcontaintotw').style.display = 'flex';
-    document.getElementById('tunetexttotw').style.display = '';
-    document.getElementById('totw').style.display = '';
+    document.getElementById('ulcontaintotw').display = 'flex';
+    document.getElementById('tunetexttotw').display = '';
+    document.getElementById('totw').display = '';
     }
   .artisth1
-    a(title='Totw', href='#', onclick='makeVisible();return false;') Click Here for Tunes of the Week!
+    a(title='Totw', href='', onclick='makeVisible();return false;') Click Here for Tunes of the Week!
   - var y = totw;
   .ulcontaintotw
     each track in y

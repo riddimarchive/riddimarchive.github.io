@@ -138,7 +138,7 @@ list-style-type: none;
 	margin-bottom: 17px
 }
 .fish div{
-	border: 1px #ccc solid;
+  padding-left: 1em;
 }
 
 li.tunetext{
@@ -193,6 +193,7 @@ li.tunetext{
   background-color:#3b5998;
   overflow:hidden;
   height:45px;
+  margin: 0px 0px 0px 0px;
 }
 
 .navbar a{

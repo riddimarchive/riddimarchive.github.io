@@ -767,6 +767,7 @@ app.post('/search', (req, res, next) => {
     async function searchArtist(search_results, search_style){
         try{
             var artists = [];
+            var totw = [];
             var db = createConnection();
 
             await conquerie.connect(db);
@@ -790,13 +791,24 @@ app.post('/search', (req, res, next) => {
                     artists.push(row);
                   }//end for
 
+                  let zresult = await trackquerie.getTracksOfTheWeek(db);
+
+                  for (var i = 0; i < zresult.length; i++) {
+                    var row = {
+                      'track_name':zresult[i].track_name,
+                      'artist_name':zresult[i].artist_name,
+                      'drive_url': zresult[i].drive_url
+                    }
+                    totw.push(row);
+                  }
+
                   //end query and render
                   await conquerie.end(db);
                   res.render('homepage',{
                     title:'Riddim Archive Index',
                     msg: "",
                     artists: artists,
-                    totw: ""
+                    totw: totw
                   });
               }//end else
 
@@ -822,13 +834,24 @@ app.post('/search', (req, res, next) => {
                     artists.push(row);
                   }//end for
 
+                  let gresult = await trackquerie.getTracksOfTheWeek(db);
+
+                  for (var i = 0; i < gresult.length; i++) {
+                    var row = {
+                      'track_name':gresult[i].track_name,
+                      'artist_name':gresult[i].artist_name,
+                      'drive_url': gresult[i].drive_url
+                    }
+                    totw.push(row);
+                  }
+
                   //end query and render
                   await conquerie.end(db);
                   res.render('homepage',{
                     title:'Riddim Archive Index',
                     msg: "",
                     artists: artists,
-                    totw: ""
+                    totw: totw
                   });
               }//end else
 

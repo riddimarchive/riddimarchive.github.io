@@ -13,25 +13,24 @@ block content
 
   script.
     function makeVisible(){
-    document.getElementById('ulcontaintotw').display = 'flex';
-    document.getElementById('tunetexttotw').display = '';
-    document.getElementById('totw').display = '';
+    document.getElementById("tunesoftheweek").style.display = "block";
     }
   .artisth1
     a(title='Totw', href='', onclick='makeVisible();return false;') Click Here for Tunes of the Week!
   - var y = totw;
-  .ulcontaintotw
-    each track in y
-      ul
-        .uldivtotw
-          li.tunetexttotw= `${track.artist_name} - ${track.track_name}`
-          .totw
-            audio(src=track.drive_url, type='audio/mpeg', controls='') Sorry Bruv, Your Browser Can't Play dis chune!
-          li.tunetexttotw= `       `
-          a(href=track.drive_url)
-            img(border='0', alt='Download Tune', src='Images/PageIMG/download.png', height='35', width='160')
-          li.tunetexttotw= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
-          a(href="")
+  div#tunesoftheweek
+    .ulcontaintotw
+      each track in y
+        ul
+          .uldivtotw
+            li.tunetexttotw= `${track.artist_name} - ${track.track_name}`
+            .totw
+              audio(src=track.drive_url, type='audio/mpeg', controls='') Sorry Bruv, Your Browser Can't Play dis chune!
+            li.tunetexttotw= `       `
+            a(href=track.drive_url)
+              img(border='0', alt='Download Tune', src='Images/PageIMG/download.png', height='35', width='160')
+            li.tunetexttotw= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
+            a(href="")
 
   - var message = msg;
   .searchcontain

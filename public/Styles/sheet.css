@@ -220,13 +220,16 @@ p{
   padding-right: 100px;
 }
 
-li.tunetexttotw{
+#tunesoftheweek{
   display: none;
+}
+
+li.tunetexttotw{
   font-size: medium;
 }
 
 .ulcontaintotw{
-  display: none;
+  display: flex;
 	flex-direction: row;
   justify-content: space-between;
   padding-left: 50px;
@@ -235,7 +238,6 @@ li.tunetexttotw{
 }
 
 .totw audio{
-  display: none;
   width: 250px;
   height: 39px;
 }

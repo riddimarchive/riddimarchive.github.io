@@ -13,6 +13,7 @@ body {
 .question{
   font-weight: bold;
   font-size: x-large;
+  text-decoration: underline;
 }
 
 .label{

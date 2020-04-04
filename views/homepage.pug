@@ -18,7 +18,7 @@ block content
     each track in y
       ul
         .uldivtotw
-          li.tunetexttotw= `${track.track_name}`
+          li.tunetexttotw= `${track.artist_name} - ${track.track_name}`
           .totw
             audio(src=track.drive_url, type='audio/mpeg', controls='') Sorry Bruv, Your Browser Can't Play dis chune!
           li.tunetexttotw= `       `

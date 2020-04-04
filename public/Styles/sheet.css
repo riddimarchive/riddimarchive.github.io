@@ -98,16 +98,6 @@ a{
   flex-wrap: wrap;
 }
 
-.ulcontaintotw{
-  display: flex;
-	flex-direction: row;
-  justify-content: space-between;
-  padding-left: 50px;
-  padding-right: 100px;
-  flex-wrap: wrap;
-}
-
-
 .artistpage{
   display: flex;
   justify-content: center;
@@ -152,10 +142,6 @@ list-style-type: none;
 
 li.tunetext{
   font-size: xx-large;
-}
-
-li.tunetexttotw{
-  font-size: medium;
 }
 
 .contactdiv{
@@ -234,7 +220,22 @@ p{
   padding-right: 100px;
 }
 
+li.tunetexttotw{
+  display: none;
+  font-size: medium;
+}
+
+.ulcontaintotw{
+  display: none;
+	flex-direction: row;
+  justify-content: space-between;
+  padding-left: 50px;
+  padding-right: 100px;
+  flex-wrap: wrap;
+}
+
 .totw audio{
+  display: none;
   width: 250px;
   height: 39px;
 }

@@ -11,8 +11,14 @@ block content
     }
     }, true);
 
+  script.
+    function makeVisible{
+    document.getElementById('ulcontaintotw').style.display = 'flex';
+    document.getElementById('tunetexttotw').style.display = '';
+    document.getElementById('totw').style.display = '';
+    }
   .artisth1
-    h1 Tunes Of The Week!
+    a(title='Totw', href='#', onclick='makeVisible();return false;') Click Here for Tunes of the Week!
   - var y = totw;
   .ulcontaintotw
     each track in y

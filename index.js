@@ -49,6 +49,10 @@ app.use(express.static('public'));
 app.use(passport.initialize());
 app.use(passport.session());
 
+//GET REQUESTS
+
+//***********************
+
 //GET REQUEST - INIT
 //render homepage, handle page errors
 app.get('/', (req, res) => {
@@ -70,47 +74,46 @@ app.get('/', (req, res) => {
 
   async function homeResponse(){
       try{
+        var artists = [];
+        var totw = [];
 
-              var artists = [];
-              var totw = [];
+        var db = createConnection();
+        await conquerie.connect(db);
 
-              var db = createConnection();
-              await conquerie.connect(db);
+        let result = await trackquerie.getTracksOfTheWeek(db);
 
-              let result = await trackquerie.getTracksOfTheWeek(db);
-
-              for (var i = 0; i < result.length; i++) {
-                var row = {
-                  'track_name':result[i].track_name,
-                  'artist_name':result[i].artist_name,
-                  'drive_url': result[i].drive_url
-                }
-                totw.push(row);
-              }
-
-              let tresult = await artquerie.getAllArtists(db);
-
-              //store results
-              for (var i = 0; i < tresult.length; i++) {
-                var row = {
-                  'artist_name': tresult[i].artist_name
-                }
-                artists.push(row);
-              }
-
-              await conquerie.end(db);
-
-              res.render('homepage',{
-                title:'Riddim Archive Index',
-                msg: "",
-                artists: artists,
-                totw: totw
-              });
-
-          }catch(err){
-              console.log(err);
-              res.render('error');
+        for (var i = 0; i < result.length; i++) {
+          var row = {
+            'track_name':result[i].track_name,
+            'artist_name':result[i].artist_name,
+            'drive_url': result[i].drive_url
           }
+          totw.push(row);
+        }
+
+        let tresult = await artquerie.getAllArtists(db);
+
+        //store results
+        for (var i = 0; i < tresult.length; i++) {
+          var row = {
+            'artist_name': tresult[i].artist_name
+          }
+          artists.push(row);
+        }
+
+        await conquerie.end(db);
+
+        res.render('homepage',{
+          title:'Riddim Archive Index',
+          msg: "",
+          artists: artists,
+          totw: totw
+        });
+
+        }catch(err){
+          console.log(err);
+          res.render('error');
+        }
   }
 
   homeResponse();
@@ -119,20 +122,18 @@ app.get('/', (req, res) => {
 
 //GET REQUEST - FAQ PAGE
 app.get('/faq', (req, res) => {
-
+  
   res.render('faq',{
     title:'Riddim Archive FAQ'
   });
 
 });
 
-
 //GET REQUEST - LOGIN PAGE
 app.get('/login', (req, res) => {
 
   //handle non-login requests, go back to home
   if(req.user === undefined){
-
     res.render('login',{
       title:'Riddim Archive Login',
       username: '',
@@ -142,36 +143,27 @@ app.get('/login', (req, res) => {
   }else{
     //store user returned by passport (req.user)
     var thelevel = req.user.access_level;
-    var theid = req.user.id;
     var theusername = req.user.username;
 
     //redirect by permission level
     switch(thelevel) {
       case 3:
         res.render('admdash',{
-          username: theusername,
-          access_level: thelevel,
-          id: theid
+          username: theusername
         });
         break;
       case 2:
         res.render('moddash',{
-          username: theusername,
-          access_level: thelevel,
-          id: theid
+          username: theusername
         });
         break;
       case 1:
         res.render('userdash',{
-          username: theusername,
-          access_level: thelevel,
-          id: theid
+          username: theusername
         });
         break;
     }//end switch
-
   }//end else
-
 });
 
 
@@ -191,36 +183,28 @@ app.get('/dashboard', (req, res) => {
 
     //store user returned by passport (req.user)
     var thelevel = req.user.access_level;
-    var theid = req.user.id;
     var theusername = req.user.username;
 
     //redirect by permission level
     switch(thelevel) {
       case 3:
         res.render('admdash',{
-          username: theusername,
-          access_level: thelevel,
-          id: theid
+          username: theusername
         });
         break;
       case 2:
         res.render('moddash',{
-          username: theusername,
-          access_level: thelevel,
-          id: theid
+          username: theusername
         });
         break;
       case 1:
         res.render('userdash',{
-          username: theusername,
-          access_level: thelevel,
-          id: theid
+          username: theusername
         });
         break;
     }//end switch
   }//end else
-
-});//end dashboard get request
+});
 
 
 //GET REQUEST - TRACK CRUD PAGE
@@ -400,6 +384,9 @@ app.get('/req/:page', function(req,res){
 
 });
 
+//POST REQUESTS
+
+//***********************
 
 //POST REQUEST - LOGIN FORM
 //check for field entry, authenticate and redirect with passport

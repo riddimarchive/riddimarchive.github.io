@@ -233,3 +233,8 @@ li.tunetexttotw{
 p{
   padding-right: 100px;
 }
+
+.totw audio{
+  width: 250px;
+  height: 39px;
+}

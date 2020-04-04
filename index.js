@@ -215,21 +215,17 @@ app.get('/trackcrud', (req, res) => {
     res.redirect('/login');
   }else{
 
-      if(req.user.access_level > 1){
-    
+      if(req.user.access_level > 1){   
         res.render('trackcrud', {
               msg: "",
               msg2: ""
             });
-    
       }else{
         console.log("User does not have Access");
         res.redirect('/login');
-      }
-  }
-
+      }//end inner else
+  }//end main else
 });
-
 
 //GET REQUEST - USER CRUD PAGE
 app.get('/usercrud', (req, res) => {
@@ -248,9 +244,8 @@ app.get('/usercrud', (req, res) => {
       }else{
         console.log("User does not have Access");
         res.redirect('/login');
-      }
-  }
-
+      }//end inner else
+  }//end main else
 });
 
 //GET REQUEST - ARTIST CRUD PAGE
@@ -271,9 +266,8 @@ app.get('/artcrud', (req, res) => {
       }else{
         console.log("User does not have Access");
         res.redirect('/login');
-      }
-  }
-
+      }//end inner else
+  }//end main else
 });
 
 
@@ -300,17 +294,12 @@ app.get('/artist/:name', function(req,res){
           var info = "";
 
           var db = createConnection();
-          console.log("connecting");
           await conquerie.connect(db);
-          console.log("connected to db");
-          let result = await artquerie.getArtistInfo(db, name);
-          console.log("got artist info");
-          info = `${result[0].info}`;
-          console.log("info is " + info);
-          let tresult = await trackquerie.getAllTracksFromArtist(db, name);
-          console.log("got all tracks");
 
-          //store track query results
+          let result = await artquerie.getArtistInfo(db, name);
+          info = `${result[0].info}`;
+
+          let tresult = await trackquerie.getAllTracksFromArtist(db, name);
           for (var i = 0; i < tresult.length; i++) {
             var row = {
               'track_name':tresult[i].track_name,
@@ -322,9 +311,9 @@ app.get('/artist/:name', function(req,res){
             }
             tracks.push(row);
           }
-          console.log("track info stored");
+
           await conquerie.end(db);
-          console.log("db connection ended, rendering page...");
+
           res.render('artist',{
             artist_name: name,
             info: info,
@@ -351,8 +340,7 @@ app.get('/req/:page', function(req,res){
   switch(pagey) {
       case "submission":
         res.render('submission',{
-          msg: "",
-          msg2: ""
+          msg: ""
         });
         break;
       case "tracksubmission":
@@ -381,7 +369,6 @@ app.get('/req/:page', function(req,res){
         });
         break;
     }//end switch
-
 });
 
 //POST REQUESTS
@@ -395,18 +382,16 @@ app.post('/login', (req, res, next) => {
   var { username, password } = req.body;
 
   if(!username || !password){
-            res.render('login', {
-              username: username,
-              er: "Fill in all Fields!"
-            });
-    }else{
-      passport.authenticate('local', {
-        successRedirect: '/dashboard',
-        failureRedirect: '/login'
-      })(req, res, next);
-
-    }
-
+    res.render('login', {
+      username: username,
+      er: "Fill in all Fields!"
+    });
+  }else{
+    passport.authenticate('local', {
+      successRedirect: '/dashboard',
+      failureRedirect: '/login'
+    })(req, res, next);
+  }
 });
 
 //POST REQUEST - Track Create
@@ -416,47 +401,40 @@ app.post('/trackcreate', (req, res, next) => {
   var { track_name, artist_name, drive_url } = req.body;
 
   if(!track_name || !artist_name || !drive_url){
+      res.render('trackcrud', {
+        msg: "Fill in all Fields!",
+        msg2: ""
+      });
+    }else{
+      //make queries, get all artist/track info and render artist page
+      async function storeFormResults(track_name, artist_name, drive_url){
+          try{
+            var db = createConnection();
+            var collab_artist = " ";
+            var artist_id;
+
+            await conquerie.connect(db);
+            let result = await artquerie.getArtistInfo(db, artist_name);
+
+            //store artist query result
+            artist_id = result[0].id;
+            let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_url);
+
+            await conquerie.end(db);
+            console.log(tresult);
+
             res.render('trackcrud', {
-              msg: "Fill in all Fields!",
+              msg: "Track Created!",
               msg2: ""
             });
-    }else{
-      //res.send("Track name is " + track_name + ", Artist Name is " + artist_name + ", drive_url Name is " + drive_url);
-      //make queries, get all artist/track info and render artist page
-            async function storeFormResults(track_name, artist_name, drive_url){
-                try{
+          }catch(err){
+            console.log(err);
+            res.render('error');
+          }
+      }//end async
 
-                    var db = createConnection();
-                    var collab_artist = " ";
-                    var artist_id;
-
-                    await conquerie.connect(db);
-                    let result = await artquerie.getArtistInfo(db, artist_name);
-
-                    //store artist query result
-                    artist_id = result[0].id;
-                    console.log("BEFORE ENTRY: -> " + artist_id + " " + artist_name + " " + track_name + " " + collab_artist + " " + drive_url);
-                    let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_url);
-
-                    await conquerie.end(db);
-                    console.log(tresult);
-
-                    res.render('trackcrud', {
-                      msg: "Track Created!",
-                      msg2: ""
-                    });
-
-                }catch(err){
-                  console.log(err);
-                  res.render('error');
-                }
-
-            }
-
-            storeFormResults(track_name, artist_name, drive_url);
-
-    }
-
+      storeFormResults(track_name, artist_name, drive_url);
+    }//end else
 });
 
 

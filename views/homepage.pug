@@ -12,11 +12,16 @@ block content
     }, true);
 
   script.
-    function makeVisible(){
-    document.getElementById("tunesoftheweek").style.display = "block";
+    function toggleVisible(){
+    var x = document.getElementById("tunesoftheweek");
+    if (x.style.display === "none") {
+    x.style.display = "block";
+    } else {
+    x.style.display = "none";
+    }
     }
   .artisth1
-    a(title='Totw', href='', onclick='makeVisible();return false;') Click Here for Tunes of the Week!
+    a(title='Totw', href='', onclick='toggleVisible();return false;') Click Here for Tunes of the Week!
   - var y = totw;
   div#tunesoftheweek
     .ulcontaintotw

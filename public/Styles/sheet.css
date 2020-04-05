@@ -248,6 +248,10 @@ li.tunetexttotw{
   display: flex;
   justify-content: center;
 }
+.regaudio{
+    display: flex;
+    justify-content: center;
+}
 
 .downloadbutton{
   display: flex;

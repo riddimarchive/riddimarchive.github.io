@@ -26,12 +26,12 @@
     "express-session": "^1.17.0",
     "fs": "0.0.1-security",
     "http-errors": "^1.7.3",
-    "mysql": "^2.17.1",
-    "nodemailer": "^6.4.4",
+    "mysql": "^2.18.1",
+    "nodemailer": "^6.4.6",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "pug": "^2.0.4",
-    "request": "^2.88.0",
+    "request": "^2.88.2",
     "sqlstring": "^2.3.1"
   },
   "devDependencies": {}

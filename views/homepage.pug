@@ -41,8 +41,9 @@ block content
             .totw
               audio(src=track.drive_url, type='audio/mpeg', controls='') Sorry Bruv, Your Browser Can't Play dis chune!
             li.tunetexttotw= `       `
-            a(href=track.drive_url)
-              img(border='0', alt='Download Tune', src='Images/PageIMG/download.png', height='35', width='160')
+            .downloadbutton
+              a(href=track.drive_url)
+                img(border='0', alt='Download Tune', src='Images/PageIMG/download.png', height='35', width='160')
             li.tunetexttotw= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
             a(href="")
 

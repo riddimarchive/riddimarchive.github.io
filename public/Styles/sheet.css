@@ -227,6 +227,7 @@ p{
 
 li.tunetexttotw{
   font-size: medium;
+  text-align: center;
 }
 
 .ulcontaintotw{
@@ -241,4 +242,8 @@ li.tunetexttotw{
 .totw audio{
   width: 250px;
   height: 39px;
+}
+
+.downloadbutton{
+  align-items: center;
 }

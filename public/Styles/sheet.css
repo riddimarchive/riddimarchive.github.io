@@ -243,7 +243,12 @@ li.tunetexttotw{
   width: 250px;
   height: 39px;
 }
+.totw{
+  display: flex;
+  justify-content: center;
+}
 
 .downloadbutton{
-  align-items: center;
+  display: flex;
+  justify-content: center;
 }

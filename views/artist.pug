@@ -21,6 +21,8 @@ block content
 	br
 	br
 	br
+	script.
+		$('h1').hide();
 
 
 	- var x = tracks;
@@ -42,12 +44,13 @@ block content
 					.downloadbutton
 						a(href=track.drive_url)
 							img(border='0', alt='Download Tune', src='../Images/PageIMG/download.png', height='50')
-						button(onclick='addFavorite()') Add Favorite
-							script.
-								function addFavorite(userid) {
-									console.log(userid);
-									console.log("Bootun Clickyed");
-								}
+						form(method='POST' action='/#')
+							div.form-group
+								input(type='hidden', name='trackid', value=`${track.id}`)
+							div.form-group
+								input(type='hidden', name='userid', value=`${userid}`)
+							div
+								input(type='submit', value='Add Favorite')
 					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
 					a(href="")  
 	p TEST thing let's see if this works.

@@ -30,10 +30,10 @@ block content
 
 	h1 #{test}
 	h2 above is track 2 id
-	
+
 	.ulcontain
 		each track in x
-			trackid = track.id
+			trackid = `${track.id}`
 			ul
 				.uldiv
 					li.tunetext= `${track.track_name} - ${trackid} - ${userid}`

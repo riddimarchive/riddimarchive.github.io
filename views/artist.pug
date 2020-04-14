@@ -46,9 +46,9 @@ block content
 							img(border='0', alt='Download Tune', src='../Images/PageIMG/download.png', height='50')
 						form(method='POST' action='/#')
 							div.form-group
-								input(type='hidden', name='trackid', value=`${track.id}`)
+								input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
 							div.form-group
-								input(type='hidden', name='userid', value=`${userid}`)
+								input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
 							div
 								input(type='submit', value='Add Favorite')
 					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `

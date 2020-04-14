@@ -300,6 +300,10 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+//GET REQUEST - LOGOUT
+app.get('/artist/:name/#', function(req, res){
+  res.send("YO user id is: " + req.params.user_id + " And the Track id is: ");
+});
 
 //GET REQUEST - ARTIST PAGE
 app.get('/artist/:name', function(req,res){
@@ -363,6 +367,8 @@ app.get('/artist/:name', function(req,res){
   artistPageResponse(art_name);
 
 });
+
+
 
 //GET REQUEST - REQUEST HANDLER
 app.get('/req/:page', function(req,res){

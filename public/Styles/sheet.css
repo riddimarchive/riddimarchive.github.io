@@ -27,6 +27,14 @@ body {
   color: greenyellow;
 }
 
+.labelgcenter{
+  font-weight: bold;
+  font-size: x-large;
+  color: greenyellow;
+  display: flex;
+  justify-content: center;
+}
+
 .header{
 	display: flex;
 	justify-content: center;

@@ -340,7 +340,6 @@ app.get('/artist/:name', function(req,res){
               'artist_id': tresult[i].artist_id,
               'id': tresult[i].id
             }
-            console.log ("the Track ID is: " + row.id);
             tracks.push(row);
           }
 
@@ -979,7 +978,6 @@ app.post('/artist/:name', (req, res, next) => {
                 'artist_id': tresult[i].artist_id,
                 'id': tresult[i].id
               }
-              console.log ("the Track ID is: " + row.id);
               tracks.push(row);
             }
 
@@ -1031,7 +1029,6 @@ app.post('/artist/:name', (req, res, next) => {
                 'artist_id': tresult[i].artist_id,
                 'id': tresult[i].id
               }
-              console.log ("the Track ID is: " + row.id);
               tracks.push(row);
             }
             //confirm favorite isn't already there
@@ -1057,7 +1054,6 @@ app.post('/artist/:name', (req, res, next) => {
             }
             
             await conquerie.end(db);
-            console.log("rendering page");
             res.render('artist',{
               artist_name: name,
               info: info,

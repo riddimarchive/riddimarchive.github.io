@@ -33,7 +33,7 @@ block content
 
 	.ulcontain
 		each track in x
-			- var newid[track] = track.id;
+			newid.push(track.id);
 			ul
 				.uldiv
 					li.tunetext= `${track.track_name} - ${track.id} - ${userid}`

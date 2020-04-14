@@ -951,7 +951,7 @@ app.post('/artist/:name', (req, res, next) => {
 
   var { user_id, track_id, name } = req.body;
 
-  if(user_id === ""){
+  if(user_id === "" || req.user.id === undefined){
       //make queries, get all artist/track info and render artist page
       async function artistPageResponse(aname){
         try{

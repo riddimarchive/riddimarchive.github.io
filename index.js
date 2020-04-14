@@ -300,11 +300,6 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-//GET REQUEST - LOGOUT
-app.get('/artist/:name/#', function(req, res){
-  res.send("YO user id is: " + req.params.user_id + " And the Track id is: " + req.params.track_id + " artist: " + req.params.name);
-});
-
 //GET REQUEST - ARTIST PAGE
 app.get('/artist/:name', function(req,res){
 
@@ -947,6 +942,11 @@ app.post('/req/removal', (req, res, next) => {
         makeEmail(reason, info);
     }
           
+});
+
+//POST REQUEST - FAVORITES
+app.post('/#', function(req, res){
+  res.send("YO user id is: " + req.params.user_id + " And the Track id is: " + req.params.track_id + " artist: " + req.params.name);
 });
 
 //POST REQUEST - Tune Broken Report

@@ -44,7 +44,7 @@ block content
 					.downloadbutton
 						a(href=track.drive_url)
 							img(border='0', alt='Download Tune', src='../Images/PageIMG/download.png', height='50')
-						form(method='POST' action=`/artist/${artist_name}/#`)
+						form(method='POST' action=`/#`)
 							div.form-group
 								input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
 							div.form-group

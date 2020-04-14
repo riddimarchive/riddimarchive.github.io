@@ -321,6 +321,7 @@ app.get('/artist/:name', function(req,res){
           var artist = {};
           var tracks = [];
           var info = "";
+          var msg = "";
 
           var db = createConnection();
           await conquerie.connect(db);
@@ -349,7 +350,8 @@ app.get('/artist/:name', function(req,res){
             artist_name: name,
             info: info,
             tracks: tracks,
-            currentuserid: userid
+            currentuserid: userid,
+            msg: msg
           });
 
       }catch(err){
@@ -947,8 +949,116 @@ app.post('/req/removal', (req, res, next) => {
 //POST REQUEST - FAVORITES
 app.post('/artist/:name', (req, res, next) => {
 
-  var { user_id, track_id, name} = req.body;
-  res.send("YO user id is: " + user_id + " And the Track id is: " + track_id + " artist: " + name);
+  var { user_id, track_id, name } = req.body;
+  
+  if(user_id === ""){
+      //make queries, get all artist/track info and render artist page
+      async function artistPageResponse(aname){
+        try{
+
+            var name = aname;
+            var artist = {};
+            var tracks = [];
+            var info = "";
+            var msg = "Please log in to save Favorites!";
+
+            var db = createConnection();
+            await conquerie.connect(db);
+
+            let result = await artquerie.getArtistInfo(db, name);
+            info = `${result[0].info}`;
+
+            let tresult = await trackquerie.getAllTracksFromArtist(db, name);
+            for (var i = 0; i < tresult.length; i++) {
+              var row = {
+                'track_name':tresult[i].track_name,
+                'artist_name':tresult[i].artist_name,
+                'drive_url': tresult[i].drive_url,
+                'crew': tresult[i].crew,
+                'country': tresult[i].country,
+                'artist_id': tresult[i].artist_id,
+                'id': tresult[i].id
+              }
+              console.log ("the Track ID is: " + row.id);
+              tracks.push(row);
+            }
+
+            await conquerie.end(db);
+
+            res.render('artist',{
+              artist_name: name,
+              info: info,
+              tracks: tracks,
+              currentuserid: userid,
+              msg: msg
+            });
+
+        }catch(err){
+          console.log(err);
+          res.render('error');
+        }
+
+      }
+      console.log("doing fcn");
+      artistPageResponse(name);
+      //below else means user id is not blank
+  }else{
+      //make queries, get all artist/track info and render artist page
+      async function artistPageResponse(aname){
+        try{
+
+            var name = aname;
+            var artist = {};
+            var tracks = [];
+            var info = "";
+            var msg = "Favorite Added!";
+
+            var db = createConnection();
+            await conquerie.connect(db);
+
+            //store into favorites here, need user ID and track ID
+            let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
+
+            let result = await artquerie.getArtistInfo(db, name);
+            info = `${result[0].info}`;
+
+            let tresult = await trackquerie.getAllTracksFromArtist(db, name);
+            for (var i = 0; i < tresult.length; i++) {
+              var row = {
+                'track_name':tresult[i].track_name,
+                'artist_name':tresult[i].artist_name,
+                'drive_url': tresult[i].drive_url,
+                'crew': tresult[i].crew,
+                'country': tresult[i].country,
+                'artist_id': tresult[i].artist_id,
+                'id': tresult[i].id
+              }
+              console.log ("the Track ID is: " + row.id);
+              tracks.push(row);
+            }
+
+            await conquerie.end(db);
+
+            res.render('artist',{
+              artist_name: name,
+              info: info,
+              tracks: tracks,
+              currentuserid: userid,
+              msg: msg
+            });
+
+        }catch(err){
+          console.log(err);
+          res.render('error');
+        }
+
+      }
+      console.log("doing fcn");
+      artistPageResponse(name);
+      //below else means user id is not blank
+  }
+
+  //res.send("YO user id is: " + user_id + " And the Track id is: " + track_id + " artist: " + name);
 });
 
 //POST REQUEST - Tune Broken Report

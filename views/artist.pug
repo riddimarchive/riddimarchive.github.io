@@ -26,18 +26,14 @@ block content
 
 
 	- var x = tracks;
-	- var test = x[1].id;
 	- var userid = currentuserid;
 	- var newid = [];
-
-	h1 #{test}
-	h2 above is track 2 id
 
 	.ulcontain
 		each track in x
 			ul
 				.uldiv
-					li.tunetext= `${track.track_name} - ${track.id} - ${userid}`
+					li.tunetext= `${track.track_name}`
 					.regaudio
 						audio(src=track.drive_url, type='audio/mpeg', controls='') Sorry Bruv, Your Browser Can't Play dis chune!
 					li.tunetext= `       `

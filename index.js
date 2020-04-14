@@ -945,8 +945,10 @@ app.post('/req/removal', (req, res, next) => {
 });
 
 //POST REQUEST - FAVORITES
-app.post('/#', function(req, res){
-  res.send("YO user id is: " + req.params.user_id + " And the Track id is: " + req.params.track_id + " artist: " + req.params.name);
+app.post('/artist/:name', (req, res, next) => {
+
+  var { user_id, track_id, name} = req.body;
+  res.send("YO user id is: " + user_id + " And the Track id is: " + track_id + " artist: " + name);
 });
 
 //POST REQUEST - Tune Broken Report

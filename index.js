@@ -310,6 +310,7 @@ app.get('/artist/:name', function(req,res){
 
   if(req.user !== undefined){
     userid = req.user.id;
+    console.log("USER ID STORED: " + userid);
   }
 
   

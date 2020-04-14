@@ -1016,8 +1016,6 @@ app.post('/artist/:name', (req, res, next) => {
             var db = createConnection();
             await conquerie.connect(db);
             console.log("Connected to DB, making query");
-            //store into favorites here, need user ID and track ID
-            let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
 
             let result = await artquerie.getArtistInfo(db, name);
             info = `${result[0].info}`;
@@ -1036,7 +1034,28 @@ app.post('/artist/:name', (req, res, next) => {
               console.log ("the Track ID is: " + row.id);
               tracks.push(row);
             }
+            //confirm favorite isn't already there
+            let ckresult = await userquerie.checkUserFavorite(db, user_id, track_id);
+            if(ckresult.length == 0){
+              console.log("Favorite already added");
+              msg = `${favetrack_name} is already added!`;
+              await conquerie.end(db);
+              
 
+              res.render('artist',{
+                artist_name: name,
+                info: info,
+                tracks: tracks,
+                currentuserid: user_id,
+                msg: msg
+              });
+            }else{
+
+              //store into favorites here, need user ID and track ID
+              let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
+
+            }
+            
             await conquerie.end(db);
             console.log("rendering page");
             res.render('artist',{

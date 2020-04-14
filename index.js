@@ -305,7 +305,7 @@ app.get('/artist/:name', function(req,res){
 
   //store name from url
   var art_name = req.params.name;
-  var userid = "";
+  var user_id = "";
 
   if(req.user !== undefined){
     user_id = req.user.id;

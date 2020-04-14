@@ -1015,7 +1015,7 @@ app.post('/artist/:name', (req, res, next) => {
 
             var db = createConnection();
             await conquerie.connect(db);
-
+            console.log("Connected to DB, making query");
             //store into favorites here, need user ID and track ID
             let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
 
@@ -1038,7 +1038,7 @@ app.post('/artist/:name', (req, res, next) => {
             }
 
             await conquerie.end(db);
-
+            console.log("rendering page");
             res.render('artist',{
               artist_name: name,
               info: info,

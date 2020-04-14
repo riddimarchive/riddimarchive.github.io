@@ -53,6 +53,44 @@ function getUserByid(db, id){
 	return querypromise;
 }
 
+function getUserFavorites(db, id){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT * FROM userfavorites WHERE user_id = ?`, [id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
+function addUserFavorite(db, user_id, track_id){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`INSERT INTO userfavorites(user_id, track_id) VALUES (?, ?)`, [user_id, track_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+
+	});
+
+	return querypromise;
+}
+
+
 function getUserInfo(db, username){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -75,5 +113,7 @@ module.exports = {
 	addUser,
 	deleteUser,
 	getUserByid,
+	getUserFavorites,
+	addUserFavorite,
 	getUserInfo
 };

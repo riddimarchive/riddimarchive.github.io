@@ -36,6 +36,11 @@ block content
 					.downloadbutton
 						a(href=track.drive_url)
 							img(border='0', alt='Download Tune', src='../Images/PageIMG/download.png', height='50')
+						button(onclick='addFavorite()') Add Favorite
+							script.
+								function addFavorite() {
+									console.log("Bootun Clickyed");
+								}
 					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
 					a(href="")  
 	p TEST thing let's see if this works.

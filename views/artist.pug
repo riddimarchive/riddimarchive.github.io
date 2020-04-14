@@ -24,11 +24,13 @@ block content
 
 
 	- var x = tracks;
+	- var test = x[1].id;
 	- var userid = currentuserid;
-	h1 #{userid}
-	h2 above is userid
 	- var trackid = "";
 
+	h1 #{test}
+	h2 above is track 2 id
+	
 	.ulcontain
 		each track in x
 			trackid = track.id

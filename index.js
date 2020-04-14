@@ -1036,7 +1036,7 @@ app.post('/artist/:name', (req, res, next) => {
             }
             //confirm favorite isn't already there
             let ckresult = await userquerie.checkUserFavorite(db, user_id, track_id);
-            if(ckresult.length == 0){
+            if(ckresult.length > 0){
               console.log("Favorite already added");
               msg = `${favetrack_name} is already added!`;
               await conquerie.end(db);

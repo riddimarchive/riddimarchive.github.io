@@ -308,7 +308,7 @@ app.get('/artist/:name', function(req,res){
   var userid = "";
 
   if(req.user !== undefined){
-    userid = req.user.id;
+    user_id = req.user.id;
     console.log("USER ID STORED: " + userid);
   }
 
@@ -350,7 +350,7 @@ app.get('/artist/:name', function(req,res){
             artist_name: name,
             info: info,
             tracks: tracks,
-            currentuserid: userid,
+            currentuserid: user_id,
             msg: msg
           });
 
@@ -950,7 +950,7 @@ app.post('/req/removal', (req, res, next) => {
 app.post('/artist/:name', (req, res, next) => {
 
   var { user_id, track_id, name } = req.body;
-  
+
   if(user_id === ""){
       //make queries, get all artist/track info and render artist page
       async function artistPageResponse(aname){
@@ -989,7 +989,7 @@ app.post('/artist/:name', (req, res, next) => {
               artist_name: name,
               info: info,
               tracks: tracks,
-              currentuserid: userid,
+              currentuserid: user_id,
               msg: msg
             });
 
@@ -1043,7 +1043,7 @@ app.post('/artist/:name', (req, res, next) => {
               artist_name: name,
               info: info,
               tracks: tracks,
-              currentuserid: userid,
+              currentuserid: user_id,
               msg: msg
             });
 

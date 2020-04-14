@@ -24,12 +24,15 @@ block content
 
 
 	- var x = tracks;
+	- var userid = userid;
+	- var trackid = "";
 
 	.ulcontain
 		each track in x
+			trackid = track.id
 			ul
 				.uldiv
-					li.tunetext= `${track.track_name}`
+					li.tunetext= `${track.track_name} - ${trackid} - ${userid}`
 					.regaudio
 						audio(src=track.drive_url, type='audio/mpeg', controls='') Sorry Bruv, Your Browser Can't Play dis chune!
 					li.tunetext= `       `
@@ -38,10 +41,9 @@ block content
 							img(border='0', alt='Download Tune', src='../Images/PageIMG/download.png', height='50')
 						button(onclick='addFavorite()') Add Favorite
 							script.
-								function addFavorite() {
+								function addFavorite(userid, trackid) {
 									console.log("Bootun Clickyed");
 								}
 					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
 					a(href="")  
 	p TEST thing let's see if this works.
-			

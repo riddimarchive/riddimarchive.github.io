@@ -306,6 +306,12 @@ app.get('/artist/:name', function(req,res){
 
   //store name from url
   var art_name = req.params.name;
+  var userid = "";
+
+  if(req.user !== undefined){
+    userid = req.user.id;
+  }
+
   
   //make queries, get all artist/track info and render artist page
   async function artistPageResponse(aname){
@@ -330,7 +336,8 @@ app.get('/artist/:name', function(req,res){
               'drive_url': tresult[i].drive_url,
               'crew': tresult[i].crew,
               'country': tresult[i].country,
-              'artist_id': tresult[i].artist_id
+              'artist_id': tresult[i].artist_id,
+              'id': tresult[i].id
             }
             tracks.push(row);
           }
@@ -340,7 +347,8 @@ app.get('/artist/:name', function(req,res){
           res.render('artist',{
             artist_name: name,
             info: info,
-            tracks: tracks
+            tracks: tracks,
+            userid: userid
           });
 
       }catch(err){

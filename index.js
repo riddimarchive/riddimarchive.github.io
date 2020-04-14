@@ -340,7 +340,7 @@ app.get('/artist/:name', function(req,res){
               'artist_id': tresult[i].artist_id,
               'id': tresult[i].id
             }
-            console.log ("Track ID is: " + id);
+            console.log ("Track ID is: " + row.id);
             tracks.push(row);
           }
 

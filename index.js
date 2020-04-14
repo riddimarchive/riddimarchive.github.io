@@ -248,6 +248,29 @@ app.get('/usercrud', (req, res) => {
   }//end main else
 });
 
+//GET REQUEST - LOGIN PAGE
+app.get('/favorites', (req, res) => {
+
+  //handle non-login requests, go back to home
+  if(req.user === undefined){
+    res.render('login',{
+      title:'Riddim Archive Login',
+      username: '',
+      er: ''
+    });
+
+  }else{
+    var theusername = req.user.username;
+
+    //get user favorites query
+    //store query
+    res.render('favorites',{
+      username: theusername,
+    });
+
+  }//end else
+});
+
 //GET REQUEST - ARTIST CRUD PAGE
 app.get('/artcrud', (req, res) => {
 

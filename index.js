@@ -349,7 +349,7 @@ app.get('/artist/:name', function(req,res){
             artist_name: name,
             info: info,
             tracks: tracks,
-            userid: userid
+            currentuserid: userid
           });
 
       }catch(err){

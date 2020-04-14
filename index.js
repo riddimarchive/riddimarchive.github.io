@@ -302,7 +302,7 @@ app.get('/logout', function(req, res){
 
 //GET REQUEST - LOGOUT
 app.get('/artist/:name/#', function(req, res){
-  res.send("YO user id is: " + req.params.user_id + " And the Track id is: ");
+  res.send("YO user id is: " + req.params.user_id + " And the Track id is: " + req.params.track_id + " artist: " + req.params.name);
 });
 
 //GET REQUEST - ARTIST PAGE

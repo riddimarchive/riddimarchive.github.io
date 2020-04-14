@@ -26,13 +26,14 @@ block content
 	- var x = tracks;
 	- var test = x[1].id;
 	- var userid = currentuserid;
+	- var newid = [];
 
 	h1 #{test}
 	h2 above is track 2 id
 
 	.ulcontain
 		each track in x
-			- var newid = track.id;
+			- var newid[track] = track.id;
 			ul
 				.uldiv
 					li.tunetext= `${track.track_name} - ${track.id} - ${userid}`
@@ -44,7 +45,9 @@ block content
 							img(border='0', alt='Download Tune', src='../Images/PageIMG/download.png', height='50')
 						button(onclick='addFavorite()') Add Favorite
 							script.
-								function addFavorite(userid, trackid) {
+								function addFavorite(userid, newid) {
+									console.log(Track ID is newid);
+									console.log(userid);
 									console.log("Bootun Clickyed");
 								}
 					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `

@@ -949,7 +949,7 @@ app.post('/req/removal', (req, res, next) => {
 //POST REQUEST - FAVORITES
 app.post('/artist/:name', (req, res, next) => {
 
-  var { user_id, track_id, name } = req.body;
+  var { user_id, track_id, favetrack_name, name } = req.body;
 
   if(user_id === "" || req.user.id === undefined){
       //make queries, get all artist/track info and render artist page
@@ -1011,7 +1011,7 @@ app.post('/artist/:name', (req, res, next) => {
             var artist = {};
             var tracks = [];
             var info = "";
-            var msg = "Favorite Added!";
+            var msg = `${favetrack_name} Added to Favorites!`;
 
             var db = createConnection();
             await conquerie.connect(db);

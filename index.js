@@ -280,17 +280,6 @@ app.get('/favorites', (req, res) => {
           console.log("No Faves");
           msg = `You have no favorites, Add some in the Archive!`;
 
-          for (var i = 0; i < result.length; i++) {
-            var row = {
-              'track_name':result[i].track_name,
-              'artist_name':result[i].artist_name,
-              'drive_url': result[i].drive_url,
-              'id': result[i].id
-            }
-            console.log("ROW is: " + row[i].id + " " + row[i].track_name);
-            tracks.push(row);
-          }
-
           res.render('favorites',{
             tracks: "",
             currentuserid: user_id,
@@ -301,6 +290,16 @@ app.get('/favorites', (req, res) => {
 
         console.log("**user has favorites**");
         console.log("**storing track info**");
+        for (var i = 0; i < result.length; i++) {
+          var row = {
+            'track_name':result[i].track_name,
+            'artist_name':result[i].artist_name,
+            'drive_url': result[i].drive_url,
+            'id': result[i].id
+          }
+          console.log("ROW is: " + row[i].id + " " + row[i].track_name);
+          tracks.push(row);
+        }
         res.render('favorites',{
           thetracks: tracks,
           currentuserid: user_id,

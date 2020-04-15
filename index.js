@@ -275,16 +275,17 @@ app.get('/favorites', (req, res) => {
 
         let result = await userquerie.getUserFavorites(db, user_id);
 
-        if(result.length == 0 || result === undefined){
+        if(result.length === 0 || result === undefined){
           console.log("No Faves");
           msg = `You have no favorites, Add some in the Archive!`;
 
           await conquerie.end(db);
+          console.log("BEFORE RENDER: " + " tr " + tracks + " uesr id " + user_id + " name " + theusername + " msg " + msg)
 
           res.render('favorites',{
             tracks: tracks,
             currentuserid: user_id,
-            theusername: theusername,
+            username: theusername,
             msg:msg
           });
         }else{

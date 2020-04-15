@@ -11,7 +11,6 @@ function addUser(db, username, password, access_level){
 
 		});
 
-
 	});
 
 	return querypromise;
@@ -102,6 +101,23 @@ function addUserFavorite(db, user_id, track_id){
 
 		});
 
+	});
+
+	return querypromise;
+}
+
+function deleteUserFavorite(db, user_id, track_id){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`DELETE FROM userfavorites WHERE user_id = ? AND track_id = ? LIMIT 1`, [user_id, track_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
 
 	});
 
@@ -134,5 +150,6 @@ module.exports = {
 	getUserFavorites,
 	checkUserFavorite,
 	addUserFavorite,
+	deleteUserFavorite,
 	getUserInfo
 };

@@ -13,7 +13,7 @@ block content
 		each track in y
 			ul
 				.uldiv
-					li.tunetext= `${track.track_name}`
+					li.tunetexttotw= `${track.artist_name} - ${track.track_name}`
 					.regaudio
 						audio(src=track.drive_url, type='audio/mpeg', controls='')
 					li.tunetext= `       `

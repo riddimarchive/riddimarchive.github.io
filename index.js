@@ -1131,11 +1131,49 @@ app.post('/artist/:name', (req, res, next) => {
 app.post('/favorites', (req, res, next) => {
 
   var { user_id, track_id, favetrack_name, name } = req.body;
+  var theusername = req.user.username;
 
-  res.send("useid " + user_id + " track id " + track_id + " favetrack name " + favetrack_name + " art name " + name);
+  async function favoritesRemoveResponse(user_id, track_id, favetrack_name, theusername){
+    try{
 
+        var msg = `${favetrack_name} Removed to Favorites!`;
+        var tracks = [];
 
+        var db = createConnection();
+        await conquerie.connect(db);
 
+        let ufresult = await userquerie.deleteUserFavorite(db, user_id, track_id);
+
+        let result = await userquerie.getUserFavorites(db, user_id);
+
+        for (var i = 0; i < result.length; i++) {
+          var row = {
+            'track_name': result[i].track_name,
+            'artist_name': result[i].artist_name,
+            'drive_url': result[i].drive_url,
+            'id': result[i].id
+          }
+          tracks.push(row);
+        }
+
+        await conquerie.end(db);
+
+        res.render('favorites',{
+            thetracks: tracks,
+            currentuserid: user_id,
+            username: theusername,
+            msg: msg
+        });
+
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+
+    }
+    console.log("doing fcn");
+    favoritesRemoveResponse(user_id, track_id, favetrack_name, theusername);
+    //below else means user id is not blank
 
 
 });

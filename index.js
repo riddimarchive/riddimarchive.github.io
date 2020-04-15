@@ -959,7 +959,7 @@ app.post('/artist/:name', (req, res, next) => {
             var artist = {};
             var tracks = [];
             var info = "";
-            var msg = `a(href='') Please Login to save Favorites!`;
+            var msg = `"a(href='')" Please Login to save Favorites!`;
 
             var db = createConnection();
             await conquerie.connect(db);

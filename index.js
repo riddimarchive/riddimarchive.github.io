@@ -294,10 +294,10 @@ app.get('/favorites', (req, res) => {
           console.log("**storing track info**");
           for (var i = 0; i < result.length; i++) {
             var row = {
-              'track_name':result[i].track_name,
-              'artist_name':result[i].artist_name,
+              'track_name': result[i].track_name,
+              'artist_name': result[i].artist_name,
               'drive_url': result[i].drive_url,
-              'id': tresult[i].id
+              'id': result[i].id
             }
             tracks.push(row);
           }
@@ -311,7 +311,7 @@ app.get('/favorites', (req, res) => {
             msg: msg
           });
       }
-      
+
       }catch(err){
         console.log(err);
         res.render('error');

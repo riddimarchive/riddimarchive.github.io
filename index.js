@@ -288,7 +288,7 @@ app.get('/favorites', (req, res) => {
         }else{
             console.log("**user has favorites**");
             console.log("**storing track info**");
-            for (var i = 0; i < result.length; i++) {
+            for (var i = 0; i > result.length; i++) {
               var row = {
                 'track_name':result[i].track_name,
                 'artist_name':result[i].artist_name,

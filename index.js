@@ -275,8 +275,7 @@ app.get('/favorites', (req, res) => {
 
         let result = await userquerie.getUserFavorites(db, user_id);
 
-        console.log("result length: " + result.length);
-        if(result.length == 0){
+        if(result.length == 0 || result === undefined){
           console.log("No Faves");
           msg = `You have no favorites, Add some in the Archive!`;
 

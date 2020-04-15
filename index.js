@@ -283,7 +283,7 @@ app.get('/favorites', (req, res) => {
           console.log("BEFORE RENDER: " + " tr " + tracks + " uesr id " + user_id + " name " + theusername + " msg " + msg)
 
           res.render('favorites',{
-            tracks: tracks,
+            thetracks: tracks,
             currentuserid: user_id,
             username: theusername,
             msg:msg

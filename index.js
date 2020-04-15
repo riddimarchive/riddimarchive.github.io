@@ -262,6 +262,7 @@ app.get('/favorites', (req, res) => {
   }else{
     var theusername = req.user.username;
     var user_id = req.user.id;
+    var tracks = [];
 
     async function favoritesPageResponse(user_id, theusername){
       try{

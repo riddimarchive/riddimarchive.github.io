@@ -274,11 +274,13 @@ app.get('/favorites', (req, res) => {
         await conquerie.connect(db);
 
         let result = await userquerie.getUserFavorites(db, user_id);
-        await conquerie.end(db);
-        console.log(result.length);
+
+        console.log("result length: " + result.length);
         if(result.length == 0){
           console.log("No Faves");
           msg = `You have no favorites, Add some in the Archive!`;
+
+          await conquerie.end(db);
 
           res.render('favorites',{
             tracks: "",
@@ -286,27 +288,30 @@ app.get('/favorites', (req, res) => {
             theusername: theusername,
             msg:msg
           });
-        }
+        }else{
 
-        console.log("**user has favorites**");
-        console.log("**storing track info**");
-        for (var i = 0; i < result.length; i++) {
-          var row = {
-            'track_name':result[i].track_name,
-            'artist_name':result[i].artist_name,
-            'drive_url': result[i].drive_url,
-            'id': result[i].id
+          console.log("**user has favorites!**");
+          console.log("**storing track info**");
+          for (var i = 0; i < result.length; i++) {
+            var row = {
+              'track_name':result[i].track_name,
+              'artist_name':result[i].artist_name,
+              'drive_url': result[i].drive_url,
+              'id': tresult[i].id
+            }
+            tracks.push(row);
           }
-          console.log("ROW is: " + row[i].id + " " + row[i].track_name);
-          tracks.push(row);
-        }
-        res.render('favorites',{
-          thetracks: tracks,
-          currentuserid: user_id,
-          theusername: theusername,
-          msg: msg
-        });
 
+          await conquerie.end(db);
+
+          res.render('favorites',{
+            thetracks: tracks,
+            currentuserid: user_id,
+            theusername: theusername,
+            msg: msg
+          });
+      }
+      
       }catch(err){
         console.log(err);
         res.render('error');

@@ -307,7 +307,7 @@ app.get('/favorites', (req, res) => {
           res.render('favorites',{
             thetracks: tracks,
             currentuserid: user_id,
-            theusername: theusername,
+            username: theusername,
             msg: msg
           });
       }
@@ -1125,8 +1125,6 @@ app.post('/artist/:name', (req, res, next) => {
       artistPageResponse(name);
       //below else means user id is not blank
   }
-
-  //res.send("YO user id is: " + user_id + " And the Track id is: " + track_id + " artist: " + name);
 });
 
 //POST REQUEST - Tune Broken Report

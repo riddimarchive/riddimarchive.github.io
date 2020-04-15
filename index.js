@@ -273,22 +273,23 @@ app.get('/favorites', (req, res) => {
         var tracks = [];
         await conquerie.connect(db);
 
-        let result = userquerie.getUserFavorites(db, user_id);
-        for (var i = 0; i < result.length; i++) {
-          var row = {
-            'track_name':result[i].track_name,
-            'artist_name':result[i].artist_name,
-            'drive_url': result[i].drive_url,
-            'id': result[i].id
-          }
-          console.log("ROW is: " + row[i].id + " " + row[i].track_name);
-          tracks.push(row);
-        }
+        let result = await userquerie.getUserFavorites(db, user_id);
         await conquerie.end(db);
         console.log(result.length);
         if(result.length == 0){
           console.log("No Faves");
           msg = `You have no favorites, Add some in the Archive!`;
+
+          for (var i = 0; i < result.length; i++) {
+            var row = {
+              'track_name':result[i].track_name,
+              'artist_name':result[i].artist_name,
+              'drive_url': result[i].drive_url,
+              'id': result[i].id
+            }
+            console.log("ROW is: " + row[i].id + " " + row[i].track_name);
+            tracks.push(row);
+          }
 
           res.render('favorites',{
             tracks: "",

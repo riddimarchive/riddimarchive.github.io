@@ -260,15 +260,17 @@ app.get('/favorites', (req, res) => {
     });
 
   }else{
+    console.log("**user is logged in**");
     var theusername = req.user.username;
     var user_id = req.user.id;
-    var tracks = [];
+    console.log("**user id is: " + user_id);
 
     async function favoritesPageResponse(user_id, theusername){
       try{
 
         var msg = "";
         var db = createConnection();
+        var tracks = [];
         await conquerie.connect(db);
 
         let result = userquerie.getUserFavorites(db, user_id);
@@ -284,7 +286,8 @@ app.get('/favorites', (req, res) => {
             msg:msg
           });
         }else{
-
+            console.log("**user has favorites**");
+            console.log("**storing track info**");
             for (var i = 0; i < result.length; i++) {
               var row = {
                 'track_name':result[i].track_name,
@@ -292,11 +295,12 @@ app.get('/favorites', (req, res) => {
                 'drive_url': result[i].drive_url,
                 'id': result[i].id
               }
+              console.log(row[1]);
               tracks.push(row);
             }
 
             res.render('favorites',{
-              tracks: tracks,
+              thetracks: tracks,
               currentuserid: user_id,
               theusername: theusername,
               msg: msg

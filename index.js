@@ -295,7 +295,7 @@ app.get('/favorites', (req, res) => {
                 'drive_url': result[i].drive_url,
                 'id': result[i].id
               }
-              console.log(row[1]);
+              console.log(row[i].id + row[i].track_name);
               tracks.push(row);
             }
 

@@ -7,4 +7,31 @@ block content
 	- var theusername = username;
 	
 	.welcometxt
-		h1 Welcome #{theusername}! Here are your favorites:
+		h1 Welcome #{theusername}! Here are your favorite CHUNES:
+	- var x = tracks;
+	- var userid = currentuserid;
+
+	.ulcontain
+		each track in x
+			ul
+				.uldiv
+					li.tunetext= `${track.track_name}`
+					.regaudio
+						audio(src=track.drive_url, type='audio/mpeg', controls='')
+					li.tunetext= `       `
+					.downloadbutton
+						a(href=track.drive_url)
+							img(border='0', alt='Download Tune', src='../Images/PageIMG/download.png', height='50')
+						form(method='POST' action=`/artist/${artist_name}`)
+							div.form-group
+								input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
+							div.form-group
+								input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
+							div.form-group
+								input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
+							div.form-group
+								input#name.form-control(type='hidden', name='name', value=`${artist_name}`)
+							div
+								input(type='submit', value='Remove From Favorites')
+					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
+					a(href="")

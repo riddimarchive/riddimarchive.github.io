@@ -261,12 +261,55 @@ app.get('/favorites', (req, res) => {
 
   }else{
     var theusername = req.user.username;
+    var user_id = req.user.id;
 
-    //get user favorites query
-    //store query
-    res.render('favorites',{
-      username: theusername,
-    });
+    async function favoritesPageResponse(user_id, theusername){
+      try{
+
+        var msg = "";
+        var db = createConnection();
+        await conquerie.connect(db);
+
+        let result = userquerie.getUserFavorites(db, user_id);
+        await conquerie.end(db);
+        if(result.length == 0){
+          console.log("No Faves");
+          msg = `You have no favorites, Add some in the Archive!`;
+
+          res.render('favorites',{
+            tracks: "",
+            currentuserid: user_id,
+            theusername: theusername,
+            msg:msg
+          });
+        }else{
+
+            for (var i = 0; i < result.length; i++) {
+              var row = {
+                'track_name':result[i].track_name,
+                'artist_name':result[i].artist_name,
+                'drive_url': result[i].drive_url,
+                'id': result[i].id
+              }
+              tracks.push(row);
+            }
+
+            res.render('favorites',{
+              tracks: tracks,
+              currentuserid: user_id,
+              theusername: theusername,
+              msg: msg
+            });
+        }
+
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+
+  }
+  console.log("doing fcn");
+  favoritesPageResponse(user_id, theusername);
 
   }//end else
 });
@@ -959,7 +1002,7 @@ app.post('/artist/:name', (req, res, next) => {
             var artist = {};
             var tracks = [];
             var info = "";
-            var msg = `"a(href='')" Please Login to save Favorites!`;
+            var msg = "Please login to save Favorites!";
 
             var db = createConnection();
             await conquerie.connect(db);

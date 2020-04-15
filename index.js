@@ -248,7 +248,7 @@ app.get('/usercrud', (req, res) => {
   }//end main else
 });
 
-//GET REQUEST - LOGIN PAGE
+//GET REQUEST - FAVORITES PAGE
 app.get('/favorites', (req, res) => {
 
   //handle non-login requests, go back to home
@@ -998,14 +998,14 @@ app.post('/req/removal', (req, res, next) => {
           
 });
 
-//POST REQUEST - FAVORITES
+//POST REQUEST - FAVORITES ADD - Keeps current url
 app.post('/artist/:name', (req, res, next) => {
 
   var { user_id, track_id, favetrack_name, name } = req.body;
 
   if(user_id === "" || req.user.id === undefined){
       //make queries, get all artist/track info and render artist page
-      async function artistPageResponse(aname){
+      async function favoritesAddResponse(aname){
         try{
 
             var name = aname;
@@ -1051,11 +1051,11 @@ app.post('/artist/:name', (req, res, next) => {
 
       }
       console.log("doing fcn");
-      artistPageResponse(name);
+      favoritesAddResponse(name);
       //below else means user id is not blank
   }else{
       //make queries, get all artist/track info and render artist page
-      async function artistPageResponse(aname){
+      async function favoritesAddResponse(aname){
         try{
 
             var name = aname;
@@ -1122,9 +1122,22 @@ app.post('/artist/:name', (req, res, next) => {
 
       }
       console.log("doing fcn");
-      artistPageResponse(name);
+      favoritesAddResponse(name);
       //below else means user id is not blank
   }
+});
+
+//POST REQUEST - FAVORITES REMOVAL- Keeps current url
+app.post('/favorites', (req, res, next) => {
+
+  var { user_id, track_id, favetrack_name, name } = req.body;
+
+  res.send("useid " + user_id + " track id " + track_id + " favetrack name " + favetrack_name + " art name " + name);
+
+
+
+
+
 });
 
 //POST REQUEST - Tune Broken Report

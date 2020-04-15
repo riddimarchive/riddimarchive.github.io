@@ -282,7 +282,7 @@ app.get('/favorites', (req, res) => {
           await conquerie.end(db);
 
           res.render('favorites',{
-            tracks: "",
+            tracks: tracks,
             currentuserid: user_id,
             theusername: theusername,
             msg:msg

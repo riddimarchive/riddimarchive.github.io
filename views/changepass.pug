@@ -1,0 +1,27 @@
+extends index3
+
+block content
+	h1 Change Password
+	- var message = msg;
+	.labelg #{message}
+
+	.contactdiv
+		.contact
+			form(method='POST' action='/changepass')
+				.label Old Password:
+				br
+				div.form-group
+					input#oldpass.form-control(type='password', name='oldpass')
+				br
+				.label New Password:
+				br
+				div.form-group
+					input#newpass.form-control(type='password', name='newpass')
+				br
+                .label Re-Enter New Password:
+				br
+				div.form-group
+					input#newpass2.form-control(type='password', name='newpass2')
+				br
+				div
+					button.btn.btn-primary.btn-block(type='submit') Change Password

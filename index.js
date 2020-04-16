@@ -219,6 +219,28 @@ app.get('/create', (req, res, next) => {
 });
 
 
+//GET REQUEST - CHANGE PASSWORD PAGE
+app.get('/changepass', (req, res, next) => {
+
+  //handle non-login requests, go back to home
+  if(req.user === undefined){
+    res.render('login',{
+      title:'Riddim Archive Login',
+      username: '',
+      er: ''
+    });
+
+  }else{
+    var theusername = req.user.username;
+    
+    res.render('changepass',{
+      title:'Change Password',
+      msg: ""
+    });
+  }
+});
+
+
 //GET REQUEST - TRACK CRUD PAGE
 app.get('/trackcrud', (req, res) => {
 
@@ -538,7 +560,7 @@ app.post('/create', (req, res, next) => {
               await conquerie.end(db);
               res.render('create',{
                 title:'Create Account',
-                msg: "Account Created! Feel Free to Login!"
+                msg: "Account Created! Feel Free to Login at the link above!"
               });
           }//end else
         }catch(err){

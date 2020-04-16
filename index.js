@@ -512,7 +512,7 @@ app.post('/create', (req, res, next) => {
       msg: "Fill in all Fields!"
     });
   }else{
-    if(password === password2){
+    if(password == password2){
       res.render('create',{
         title:'Create Account',
         msg: "Passwords Don't Match, Please Re-Enter"
@@ -524,6 +524,8 @@ app.post('/create', (req, res, next) => {
           var db = createConnection();
           var hashpass = "";
           await conquerie.connect(db);
+
+          //check if username already exists here
           
           hashpass = await bcrypt.hashPass(password);
           console.log("hashy: " + hashpass);

@@ -505,7 +505,7 @@ app.post('/create', (req, res, next) => {
 
   var { username, password, password2 } = req.body;
   res.send(username+password+password2);
-  /*
+  
   if(!username || !password || !password2){
     res.render('create',{
       title:'Create Account',
@@ -526,6 +526,7 @@ app.post('/create', (req, res, next) => {
           await conquerie.connect(db);
           
           hashpass = await bcrypt.hashPass(password);
+          console.log("hashy: " + hashpass);
           let result = await userquerie.createAccount(db, username, hashpass);
 
           await conquerie.end(db);
@@ -545,7 +546,6 @@ app.post('/create', (req, res, next) => {
     }//end inner else
   }//end outer else
 
-*/
 
 });
 

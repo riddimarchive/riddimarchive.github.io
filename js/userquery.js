@@ -16,6 +16,24 @@ function addUser(db, username, password, access_level){
 	return querypromise;
 }
 
+function createAccount(db, username, password){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`INSERT INTO users(username, password, access_level) VALUES (?, ?, 1)`, [username, password], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
 function deleteUser(db, username){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -145,6 +163,7 @@ function getUserInfo(db, username){
 
 module.exports = {
 	addUser,
+	createAccount,
 	deleteUser,
 	getUserByid,
 	getUserFavorites,

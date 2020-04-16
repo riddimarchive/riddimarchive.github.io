@@ -6,6 +6,7 @@ const fileUpload = require('express-fileupload');
 const path = require('path');
 const createError = require('http-errors');
 const passport = require('passport');
+const bcrypt = require('bcryptjs');
 
 //file reqs: database connect, query functions, hash functions
 const createConnection = require('./js/dbconnect');
@@ -50,7 +51,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //GET REQUESTS
-
 //***********************
 
 //GET REQUEST - INIT
@@ -120,6 +120,7 @@ app.get('/', (req, res) => {
 
 });
 
+
 //GET REQUEST - FAQ PAGE
 app.get('/faq', (req, res) => {
   
@@ -128,6 +129,7 @@ app.get('/faq', (req, res) => {
   });
 
 });
+
 
 //GET REQUEST - LOGIN PAGE
 app.get('/login', (req, res) => {
@@ -206,13 +208,15 @@ app.get('/dashboard', (req, res) => {
   }//end else
 });
 
+
+//GET REQUEST - CREATE ACCOUNT PAGE
 app.get('/create', (req, res, next) => {
 
   res.render('create',{
     title:'Create Account',
     msg: ""
   });
-  
+
 });
 
 
@@ -236,6 +240,7 @@ app.get('/trackcrud', (req, res) => {
   }//end main else
 });
 
+
 //GET REQUEST - USER CRUD PAGE
 app.get('/usercrud', (req, res) => {
 
@@ -256,6 +261,7 @@ app.get('/usercrud', (req, res) => {
       }//end inner else
   }//end main else
 });
+
 
 //GET REQUEST - FAVORITES PAGE
 app.get('/favorites', (req, res) => {
@@ -333,6 +339,7 @@ app.get('/favorites', (req, res) => {
   }//end else
 });
 
+
 //GET REQUEST - ARTIST CRUD PAGE
 app.get('/artcrud', (req, res) => {
 
@@ -361,6 +368,7 @@ app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
 });
+
 
 //GET REQUEST - ARTIST PAGE
 app.get('/artist/:name', function(req,res){
@@ -427,7 +435,6 @@ app.get('/artist/:name', function(req,res){
 });
 
 
-
 //GET REQUEST - REQUEST HANDLER
 app.get('/req/:page', function(req,res){
 
@@ -468,8 +475,8 @@ app.get('/req/:page', function(req,res){
     }//end switch
 });
 
-//POST REQUESTS
 
+//POST REQUESTS
 //***********************
 
 //POST REQUEST - LOGIN FORM
@@ -490,6 +497,58 @@ app.post('/login', (req, res, next) => {
     })(req, res, next);
   }
 });
+
+
+//POST REQUEST - CREATE ACCOUNT FORM
+//check for field entry, add to database
+app.post('/create', (req, res, next) => {
+
+  var { username, password, password2 } = req.body;
+  res.send(username+password+password2);
+  /*
+  if(!username || !password || !password2){
+    res.render('create',{
+      title:'Create Account',
+      msg: "Fill in all Fields!"
+    });
+  }else{
+    if(password === password2){
+      res.render('create',{
+        title:'Create Account',
+        msg: "Passwords Don't Match, Please Re-Enter"
+      });
+    }else{
+      //perform hash and add query
+      async function createPageResponse(username, password){
+        try{
+          var db = createConnection();
+          var hashpass = "";
+          await conquerie.connect(db);
+          
+          hashpass = await bcrypt.hashPass(password);
+          let result = await userquerie.createAccount(db, username, hashpass);
+
+          await conquerie.end(db);
+          res.render('create',{
+            title:'Create Account',
+            msg: "Account Created! Feel Free to Login!"
+          });
+
+        }catch(err){
+          console.log(err);
+          res.render('error');
+        }
+    }//end async
+
+    createPageResponse(username, password);
+
+    }//end inner else
+  }//end outer else
+
+*/
+
+});
+
 
 //POST REQUEST - Track Create
 //check for field entry, authenticate and redirect with passport
@@ -588,6 +647,7 @@ app.post('/trackdelete', (req, res, next) => {
 
 });
 
+
 //POST REQUEST - User Create
 //check for field entry, authenticate and redirect with passport
 app.post('/usercreate', (req, res, next) => {
@@ -642,6 +702,7 @@ app.post('/usercreate', (req, res, next) => {
 
 });
 
+
 //POST REQUEST - User Delete
 //Make query, User track with that name
 app.post('/userdelete', (req, res, next) => {
@@ -694,6 +755,7 @@ app.post('/userdelete', (req, res, next) => {
     }
 
 });
+
 
 //POST REQUEST - Artist Create
 //check for field entry, make query to add artist
@@ -749,6 +811,7 @@ app.post('/artistcreate', (req, res, next) => {
 
 });
 
+
 //POST REQUEST - Artist Delete
 app.post('/artistdelete', (req, res, next) => {
 
@@ -800,6 +863,7 @@ app.post('/artistdelete', (req, res, next) => {
     }
 
 });
+
 
 //POST REQUEST - Artist Delete
 app.post('/search', (req, res, next) => {
@@ -932,6 +996,7 @@ app.post('/search', (req, res, next) => {
 
 });
 
+
 //POST REQUEST - Artist Submission
 app.post('/req/submission', (req, res, next) => {
   
@@ -976,6 +1041,7 @@ app.post('/req/submission', (req, res, next) => {
 
 });
 
+
 //POST REQUEST - Artist Removal
 app.post('/req/removal', (req, res, next) => {
   
@@ -1006,6 +1072,7 @@ app.post('/req/removal', (req, res, next) => {
     }
           
 });
+
 
 //POST REQUEST - FAVORITES ADD - Keeps current url
 app.post('/artist/:name', (req, res, next) => {
@@ -1136,6 +1203,7 @@ app.post('/artist/:name', (req, res, next) => {
   }
 });
 
+
 //POST REQUEST - FAVORITES REMOVAL- Keeps current url
 app.post('/favorites', (req, res, next) => {
 
@@ -1187,6 +1255,7 @@ app.post('/favorites', (req, res, next) => {
 
 });
 
+
 //POST REQUEST - Tune Broken Report
 app.post('/req/tunereport', (req, res, next) => {
   
@@ -1217,6 +1286,7 @@ app.post('/req/tunereport', (req, res, next) => {
     }
           
 });
+
 
 //POST REQUEST - Track Submission
 app.post('/req/tracksubmission', (req, res, next) => {
@@ -1256,6 +1326,7 @@ app.post('/req/tracksubmission', (req, res, next) => {
           
 });
 
+
 //POST REQUEST - Question
 app.post('/req/question', (req, res, next) => {
   
@@ -1286,6 +1357,7 @@ app.post('/req/question', (req, res, next) => {
     }
           
 });
+
 
 //Server Request Handler
 app.listen(port, () => {

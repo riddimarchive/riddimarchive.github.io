@@ -206,6 +206,15 @@ app.get('/dashboard', (req, res) => {
   }//end else
 });
 
+app.get('/create', (req, res, next) => {
+
+  res.render('create',{
+    title:'Create Account',
+    msg: ""
+  });
+  
+});
+
 
 //GET REQUEST - TRACK CRUD PAGE
 app.get('/trackcrud', (req, res) => {

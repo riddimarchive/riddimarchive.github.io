@@ -3,6 +3,7 @@ extends index3
 block content
 	h1 Change Password
 	- var message = msg;
+	- var user = username;
 	.labelg #{message}
 
 	.contactdiv
@@ -22,6 +23,8 @@ block content
 				br
 				div.form-group
 					input#newpass2.form-control(type='password', name='newpass2')
+				div.form-group
+					input#username.form-control(type='hidden', name='username', value=`${user}`)
 				br
 				div
 					button.btn.btn-primary.btn-block(type='submit') Change Password

@@ -232,10 +232,11 @@ app.get('/changepass', (req, res, next) => {
 
   }else{
     var theusername = req.user.username;
-    
+
     res.render('changepass',{
       title:'Change Password',
-      msg: ""
+      msg: "",
+      username: theusername
     });
   }
 });
@@ -575,6 +576,11 @@ app.post('/create', (req, res, next) => {
   }//end outer else
 
 
+});
+
+app.post('/changepass', (req, res, next) => {
+  var { oldpass, newpass, newpass2, username } = req.body;
+  res.send(oldpass + " " + newpass + " " + newpass2 + " " + username)
 });
 
 

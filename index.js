@@ -524,18 +524,23 @@ app.post('/create', (req, res, next) => {
           var hashpass = "";
           await conquerie.connect(db);
 
-          //check if username already exists here
-          
-          hashpass = await has.hashPass(password);
-          console.log("hashy: " + hashpass);
-          let result = await userquerie.createAccount(db, username, hashpass);
+          let uresult = await userquerie.getUserInfo(db, username);
+          if(uresult.length > 0){
+            res.render('create',{
+              title:'Create Account',
+              msg: "Username Taken! Please Try a Different Name"
+            });
+          }else{
+              hashpass = await has.hashPass(password);
+              console.log("hashy: " + hashpass);
+              let result = await userquerie.createAccount(db, username, hashpass);
 
-          await conquerie.end(db);
-          res.render('create',{
-            title:'Create Account',
-            msg: "Account Created! Feel Free to Login!"
-          });
-
+              await conquerie.end(db);
+              res.render('create',{
+                title:'Create Account',
+                msg: "Account Created! Feel Free to Login!"
+              });
+          }//end else
         }catch(err){
           console.log(err);
           res.render('error');
@@ -679,7 +684,6 @@ app.post('/usercreate', (req, res, next) => {
                         });
                     }else{
                         let hashedpass = await has.hashPass(password);
-                        console.log("BEFORE ENTRY: " + username + " " + hashedpass + " " + access_level);
                         let tresult = await userquerie.addUser(db, username, hashedpass, access_level);
 
                         res.render('usercrud', {

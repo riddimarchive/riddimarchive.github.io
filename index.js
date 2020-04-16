@@ -504,7 +504,7 @@ app.post('/login', (req, res, next) => {
 app.post('/create', (req, res, next) => {
 
   var { username, password, password2 } = req.body;
-  res.send(username+password+password2);
+  //res.send(username+password+password2);
   
   if(!username || !password || !password2){
     res.render('create',{

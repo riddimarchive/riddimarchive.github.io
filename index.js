@@ -6,7 +6,6 @@ const fileUpload = require('express-fileupload');
 const path = require('path');
 const createError = require('http-errors');
 const passport = require('passport');
-const bcrypt = require('bcryptjs');
 
 //file reqs: database connect, query functions, hash functions
 const createConnection = require('./js/dbconnect');
@@ -527,7 +526,7 @@ app.post('/create', (req, res, next) => {
 
           //check if username already exists here
           
-          hashpass = await bcrypt.hashPass(password);
+          hashpass = await has.hashPass(password);
           console.log("hashy: " + hashpass);
           let result = await userquerie.createAccount(db, username, hashpass);
 

@@ -512,7 +512,7 @@ app.post('/create', (req, res, next) => {
       msg: "Fill in all Fields!"
     });
   }else{
-    if(password == password2){
+    if(password !== password2){
       res.render('create',{
         title:'Create Account',
         msg: "Passwords Don't Match, Please Re-Enter"

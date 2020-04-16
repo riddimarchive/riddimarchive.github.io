@@ -5,28 +5,37 @@ block content
 	
 	- var message = msg;
 	- var message2 = msg2;
+	.labelg #{message}
+	.labelg #{message2}
 
 	h2 Add User
-	form(method='POST' action='/usercreate')
-		div.form-group
-			label(for='username')  Username:
-			input#username.form-control(type='text', name='username')
-		div.form-group
-			label(for='password') Password: 
-			input#password.form-control(type='password', name='password')
-		p User Access Level:
-		div.form-group
-			label(for='access_level') Admin
-			input#access_level.form-control(type='radio', name='access_level', value=3)
-			br
-			label(for='access_level') Mod
-			input#access_level.form-control(type='radio', name='access_level', value=2)
-			br
-			label(for='access_level') Standard
-			input#access_level.form-control(type='radio', name='access_level', value=1)
-		div
-			button.btn.btn-primary.btn-block(type='submit') Submit
-	p  #{message}
+	.contactdiv
+		.contact
+			form(method='POST' action='/usercreate')
+				.label Username:
+				br
+				div.form-group
+					input#username.form-control(type='text', name='username')
+				br
+
+				.label Password:
+				br
+				div.form-group 
+					input#password.form-control(type='password', name='password')
+				br
+
+				.label User Access Level:
+				.label Admin
+				div.form-group
+					input#access_level.form-control(type='radio', name='access_level', value=3)
+					br
+					.label Mod
+					input#access_level.form-control(type='radio', name='access_level', value=2)
+					br
+					.label
+					input#access_level.form-control(type='radio', name='access_level', value=1)
+				div
+					button.btn.btn-primary.btn-block(type='submit') Submit
 	
 	h2 Delete User
 	form(method='POST' action='/userdelete')
@@ -35,4 +44,3 @@ block content
 			input#username.form-control(type='text', name='username')
 		div
 			button.btn.btn-primary.btn-block(type='submit') Submit
-	p  #{message2}

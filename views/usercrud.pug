@@ -8,7 +8,7 @@ block content
 	.labelg #{message}
 	.labelg #{message2}
 
-	h2 Add User
+	h1 Add User
 	.contactdiv
 		.contact
 			form(method='POST' action='/usercreate')
@@ -34,13 +34,22 @@ block content
 					br
 					.label Standard
 					input#access_level.form-control(type='radio', name='access_level', value=1)
+					br
+
 				div
 					button.btn.btn-primary.btn-block(type='submit') Submit
+	br
+	br
 	
-	h2 Delete User
-	form(method='POST' action='/userdelete')
-		div.form-group
-			label(for='username')  Username:
-			input#username.form-control(type='text', name='username')
-		div
-			button.btn.btn-primary.btn-block(type='submit') Submit
+	h1 Delete User
+	.contactdiv
+		.contact
+			form(method='POST' action='/userdelete')
+				.label Username:
+				br
+				div.form-group
+					input#username.form-control(type='text', name='username')
+				br
+
+				div
+					button.btn.btn-primary.btn-block(type='submit') Submit

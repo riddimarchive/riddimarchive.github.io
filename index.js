@@ -607,6 +607,7 @@ app.post('/changepass', (req, res, next) => {
 
           hashpass = await has.hashPass(newpass);
           console.log("hashy: " + hashpass);
+          console.log("running quiery")
           let result = await userquerie.changePass(db, theusername, hashpass);
 
           await conquerie.end(db);

@@ -555,7 +555,6 @@ app.post('/create', (req, res, next) => {
             });
           }else{
               hashpass = await has.hashPass(password);
-              console.log("hashy: " + hashpass);
               let result = await userquerie.createAccount(db, username, hashpass);
 
               await conquerie.end(db);
@@ -606,8 +605,6 @@ app.post('/changepass', (req, res, next) => {
           await conquerie.connect(db);
 
           hashpass = await has.hashPass(newpass);
-          console.log("hashy: " + hashpass);
-          console.log("running quiery")
           let result = await userquerie.changePass(db, theusername, hashpass);
 
           await conquerie.end(db);

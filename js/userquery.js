@@ -55,6 +55,7 @@ function deleteUser(db, username){
 function changePass(db, username, password){
 
 	let querypromise = new Promise(function(resolve, reject){
+		console.log("YOOOO " + username + password);
 		db.query(`UPDATE users SET password = ? WHERE username = ? LIMIT 1`, [username, password], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');

@@ -599,7 +599,7 @@ app.post('/changepass', (req, res, next) => {
       });
     }else{
       //perform hash and add query
-      async function changePassResponse(theusername, password){
+      async function changePassResponse(theusername, newpass){
         try{
           var db = createConnection();
           var hashpass = "";
@@ -607,7 +607,7 @@ app.post('/changepass', (req, res, next) => {
 
           hashpass = await has.hashPass(newpass);
           console.log("hashy: " + hashpass);
-          let result = await userquerie.changePass(db, username, hashpass);
+          let result = await userquerie.changePass(db, theusername, hashpass);
 
           await conquerie.end(db);
           res.render('changepass',{
@@ -621,7 +621,7 @@ app.post('/changepass', (req, res, next) => {
         }
     }//end async
 
-    changePassResponse(theusername, password);
+    changePassResponse(theusername, newpass);
 
     }//end inner else
   }//end outer else

@@ -579,8 +579,53 @@ app.post('/create', (req, res, next) => {
 });
 
 app.post('/changepass', (req, res, next) => {
-  var { oldpass, newpass, newpass2, username } = req.body;
-  res.send(oldpass + " " + newpass + " " + newpass2 + " " + username)
+  var { newpass, newpass2, username } = req.body;
+  var theusername = username;
+  //confirm all fields are full
+  //confirm password1 and 2 match
+  //encrypt and replace password
+  if(!newpass || !newpass2){
+    res.render('changepass',{
+      title:'Change Password',
+      msg: "Fill in all Fields!",
+      username: theusername
+    });
+  }else{
+    if(newpass !== newpass2){
+      res.render('changepass',{
+        title:'Change Password',
+        msg: "Passwords Don't Match, Please Re-Enter",
+        username: theusername
+      });
+    }else{
+      //perform hash and add query
+      async function changePassResponse(theusername, password){
+        try{
+          var db = createConnection();
+          var hashpass = "";
+          await conquerie.connect(db);
+
+          hashpass = await has.hashPass(password);
+          console.log("hashy: " + hashpass);
+          let result = await userquerie.changePass(db, username, hashpass);
+
+          await conquerie.end(db);
+          res.render('changepass',{
+            title:'Change Password',
+            msg: "Password changed, please log in next time with new password",
+            username: theusername
+          });
+        }catch(err){
+          console.log(err);
+          res.render('error');
+        }
+    }//end async
+
+    changePassResponse(theusername, password);
+
+    }//end inner else
+  }//end outer else
+
 });
 
 

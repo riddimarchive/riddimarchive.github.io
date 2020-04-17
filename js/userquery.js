@@ -52,6 +52,26 @@ function deleteUser(db, username){
 	return querypromise;
 }
 
+function changePass(db, username, password){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`UPDATE users SET password = ? WHERE username = ? LIMIT 1`, [username, password], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
+
+
 function getUserByid(db, id){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -165,6 +185,7 @@ module.exports = {
 	addUser,
 	createAccount,
 	deleteUser,
+	changePass,
 	getUserByid,
 	getUserFavorites,
 	checkUserFavorite,

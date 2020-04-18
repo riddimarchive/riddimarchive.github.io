@@ -77,7 +77,7 @@ app.get('/', (req, res) => {
         var totw = [];
         var user_id = "";
         
-        if(req.user.id !== undefined){
+        if(req.user !== undefined){
           user_id = req.user.id;
         }
 
@@ -979,7 +979,7 @@ app.post('/search', (req, res, next) => {
             var db = createConnection();
             var user_id = "";
         
-            if(req.user.id !== undefined){
+            if(req.user !== undefined){
               user_id = req.user.id;
             }
 

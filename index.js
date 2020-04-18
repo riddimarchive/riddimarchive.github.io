@@ -611,7 +611,6 @@ app.post('/', (req, res, next) => {
           console.log("Favorite already added");
           msg = `${favetrack_name} is already added!`;
           await conquerie.end(db);
-          
 
           res.render('homepage',{
             title:'Riddim Archive Index',
@@ -623,11 +622,10 @@ app.post('/', (req, res, next) => {
         }else{
 
           //store into favorites here, need user ID and track ID
+          console.log("ADDING TO FAVORTIES");
           let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
-
+          await conquerie.end(db);
         }
-        
-        await conquerie.end(db);
 
         res.render('homepage',{
           title:'Riddim Archive Index',

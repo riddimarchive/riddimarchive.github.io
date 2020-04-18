@@ -46,16 +46,16 @@ block content
               a(href=track.drive_url)
                 img(border='0', alt='Download Tune', src='Images/PageIMG/download.png', height='35', width='160')
               form(method='POST' action=`/artist/${track.artist_name}`)
-							  div.form-group
-								  input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
-							  div.form-group
-								  input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
-							  div.form-group
-								  input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
-							  div.form-group
-								  input#name.form-control(type='hidden', name='name', value=`${track.artist_name}`)
-							  div
-								  input(type='submit', value='Add to Favorites')
+                div.form-group
+                  input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
+                div.form-group
+                  input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
+                div.form-group
+                  input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
+                div.form-group
+                  input#name.form-control(type='hidden', name='name', value=`${track.artist_name}`)
+                div
+                  input(type='submit', value='Add to Favorites')
             li.tunetexttotw= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
             a(href="")
 

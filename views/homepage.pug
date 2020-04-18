@@ -1,6 +1,7 @@
 extends index
 
 block content
+
   script.
     document.addEventListener('play', function(e){
     var audios = document.getElementsByTagName('audio');
@@ -31,8 +32,12 @@ block content
 
   .artisth1
     a#tuneslink(title='Totw', href='', onclick='toggleVisible();return false;') Click Here for Tunes of the Week!
+
+
   - var y = totw;
   - var userid = currentuserid;
+
+
   div#tunesoftheweek
     .ulcontaintotw
       each track in y
@@ -60,6 +65,7 @@ block content
             a(href="")
 
   - var message = msg;
+  
   .middlecontain
     .searchcontain
       .searchform
@@ -78,7 +84,7 @@ block content
             form
             input(type='button', value='Reload back to All Artists', onclick="self.location='https://riddim-archive.herokuapp.com/'")
     .shufflecontain
-      p this is a test
+      p this is a test, adding shuffle player here
 
   .labelgcenter #{message}
   - var x = artists;

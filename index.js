@@ -75,10 +75,6 @@ app.get('/', (req, res) => {
       try{
         var artists = [];
         var totw = [];
-        var user_id = "";
-        if(req.user.id !== undefined){
-          user_id = req.user.id;
-        }
 
         var db = createConnection();
         await conquerie.connect(db);
@@ -110,7 +106,6 @@ app.get('/', (req, res) => {
           title:'Riddim Archive Index',
           msg: "",
           artists: artists,
-          currentuserid: user_id,
           totw: totw
         });
 
@@ -528,6 +523,9 @@ app.post('/login', (req, res, next) => {
 
 //POST REQUEST - CREATE ACCOUNT FORM
 //check for field entry, add to database
+app.post('/create', (req, res, next) => {
+
+  var { username, password, password2 } = req.body;
   //res.send(username+password+password2);
   
   if(!username || !password || !password2){
@@ -972,12 +970,8 @@ app.post('/search', (req, res, next) => {
         try{
             var artists = [];
             var totw = [];
-            var user_id = "";
-            if(req.user.id !== undefined){
-              user_id = req.user.id;
-            }
-
             var db = createConnection();
+
             await conquerie.connect(db);
 
             if(search_style == 0){
@@ -1016,7 +1010,6 @@ app.post('/search', (req, res, next) => {
                     title:'Riddim Archive Index',
                     msg: "",
                     artists: artists,
-                    currentuserid: user_id,
                     totw: totw
                   });
               }//end else
@@ -1060,7 +1053,6 @@ app.post('/search', (req, res, next) => {
                     title:'Riddim Archive Index',
                     msg: "",
                     artists: artists,
-                    currentuserid: user_id,
                     totw: totw
                   });
               }//end else

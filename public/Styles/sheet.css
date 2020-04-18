@@ -96,7 +96,15 @@ a{
 
 .searchcontain{
   padding: 20px;
+  display: none;
+  border: black solid 3px;
 }
+
+.shufflecontain{
+  display: none;
+  border: black solid 3px;
+}
+
 .notfoundtext{
   display: flex;
   justify-content: center;
@@ -237,7 +245,7 @@ p{
 
 #tunesoftheweek{
   display: none;
-  border: black solid 1px;
+  border: black solid 3px;
 }
 
 li.tunetexttotw{

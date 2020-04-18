@@ -96,12 +96,11 @@ a{
 
 .searchcontain{
   padding: 20px;
-  display: none;
   border: black solid 3px;
 }
 
 .shufflecontain{
-  display: none;
+  padding: 20px;
   border: black solid 3px;
 }
 

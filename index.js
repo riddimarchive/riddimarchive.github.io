@@ -90,7 +90,8 @@ app.get('/', (req, res) => {
           var row = {
             'track_name':result[i].track_name,
             'artist_name':result[i].artist_name,
-            'drive_url': result[i].drive_url
+            'drive_url': result[i].drive_url,
+            'id': result[i].id
           }
           totw.push(row);
         }
@@ -533,7 +534,8 @@ app.post('/', (req, res, next) => {
           var row = {
             'track_name':result[i].track_name,
             'artist_name':result[i].artist_name,
-            'drive_url': result[i].drive_url
+            'drive_url': result[i].drive_url,
+            'id': result[i].id
           }
           totw.push(row);
         }
@@ -587,7 +589,8 @@ app.post('/', (req, res, next) => {
           var row = {
             'track_name':result[i].track_name,
             'artist_name':result[i].artist_name,
-            'drive_url': result[i].drive_url
+            'drive_url': result[i].drive_url,
+            'id': result[i].id
           }
           totw.push(row);
         }
@@ -1152,7 +1155,8 @@ app.post('/search', (req, res, next) => {
                     var row = {
                       'track_name':zresult[i].track_name,
                       'artist_name':zresult[i].artist_name,
-                      'drive_url': zresult[i].drive_url
+                      'drive_url': result[i].drive_url,
+                      'id': result[i].id
                     }
                     totw.push(row);
                   }
@@ -1196,7 +1200,8 @@ app.post('/search', (req, res, next) => {
                     var row = {
                       'track_name':gresult[i].track_name,
                       'artist_name':gresult[i].artist_name,
-                      'drive_url': gresult[i].drive_url
+                      'drive_url': result[i].drive_url,
+                      'id': result[i].id
                     }
                     totw.push(row);
                   }

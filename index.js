@@ -507,6 +507,148 @@ app.get('/req/:page', function(req,res){
 //POST REQUESTS
 //***********************
 
+//POST REQUEST - HOMEPAGE FAVORITES
+app.post('/', (req, res, next) => {
+
+  var { user_id, track_id, favetrack_name, name } = req.body;
+
+  if(user_id === "" || req.user.id === undefined){
+    //load homepage, make message to login
+    async function homeResponse(){
+      try{
+        var artists = [];
+        var totw = [];
+        var user_id = "";
+        
+        if(req.user !== undefined){
+          user_id = req.user.id;
+        }
+
+        var db = createConnection();
+        await conquerie.connect(db);
+
+        let result = await trackquerie.getTracksOfTheWeek(db);
+
+        for (var i = 0; i < result.length; i++) {
+          var row = {
+            'track_name':result[i].track_name,
+            'artist_name':result[i].artist_name,
+            'drive_url': result[i].drive_url
+          }
+          totw.push(row);
+        }
+
+        let tresult = await artquerie.getAllArtists(db);
+
+        //store results
+        for (var i = 0; i < tresult.length; i++) {
+          var row = {
+            'artist_name': tresult[i].artist_name
+          }
+          artists.push(row);
+        }
+
+        await conquerie.end(db);
+
+        res.render('homepage',{
+          title:'Riddim Archive Index',
+          msg: "Please login to save Favorites!",
+          artists: artists,
+          currentuserid: user_id,
+          totw: totw
+        });
+
+        }catch(err){
+          console.log(err);
+          res.render('error');
+        }
+  }
+
+  homeResponse();
+
+  }else{
+    //add favorites add query
+    async function homeResponse(){
+      try{
+        var artists = [];
+        var totw = [];
+        var user_id = "";
+        
+        if(req.user !== undefined){
+          user_id = req.user.id;
+        }
+
+        var db = createConnection();
+        await conquerie.connect(db);
+
+        let result = await trackquerie.getTracksOfTheWeek(db);
+
+        for (var i = 0; i < result.length; i++) {
+          var row = {
+            'track_name':result[i].track_name,
+            'artist_name':result[i].artist_name,
+            'drive_url': result[i].drive_url
+          }
+          totw.push(row);
+        }
+
+        let tresult = await artquerie.getAllArtists(db);
+
+        //store results
+        for (var i = 0; i < tresult.length; i++) {
+          var row = {
+            'artist_name': tresult[i].artist_name
+          }
+          artists.push(row);
+        }
+        
+        //confirm favorite isn't already there
+        let ckresult = await userquerie.checkUserFavorite(db, user_id, track_id);
+        if(ckresult.length > 0){
+          console.log("Favorite already added");
+          msg = `${favetrack_name} is already added!`;
+          await conquerie.end(db);
+          
+
+          res.render('homepage',{
+            title:'Riddim Archive Index',
+            msg: `${favetrack_name} is already added!`,
+            artists: artists,
+            currentuserid: user_id,
+            totw: totw
+          });
+        }else{
+
+          //store into favorites here, need user ID and track ID
+          let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
+
+        }
+        
+        await conquerie.end(db);
+
+        res.render('homepage',{
+          title:'Riddim Archive Index',
+          msg: `${favetrack_name} Added to Favorites!`,
+          artists: artists,
+          currentuserid: user_id,
+          totw: totw
+        });
+
+        }catch(err){
+          console.log(err);
+          res.render('error');
+        }
+  }
+
+  homeResponse();
+
+
+  
+  }
+
+
+});
+
 //POST REQUEST - LOGIN FORM
 //check for field entry, authenticate and redirect with passport
 app.post('/login', (req, res, next) => {

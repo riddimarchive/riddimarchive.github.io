@@ -75,6 +75,11 @@ app.get('/', (req, res) => {
       try{
         var artists = [];
         var totw = [];
+        var user_id = "";
+        
+        if(req.user.id !== undefined){
+          user_id = req.user.id;
+        }
 
         var db = createConnection();
         await conquerie.connect(db);
@@ -106,6 +111,7 @@ app.get('/', (req, res) => {
           title:'Riddim Archive Index',
           msg: "",
           artists: artists,
+          currentuserid: user_id,
           totw: totw
         });
 
@@ -971,6 +977,11 @@ app.post('/search', (req, res, next) => {
             var artists = [];
             var totw = [];
             var db = createConnection();
+            var user_id = "";
+        
+            if(req.user.id !== undefined){
+              user_id = req.user.id;
+            }
 
             await conquerie.connect(db);
 
@@ -1010,6 +1021,7 @@ app.post('/search', (req, res, next) => {
                     title:'Riddim Archive Index',
                     msg: "",
                     artists: artists,
+                    currentuserid: user_id,
                     totw: totw
                   });
               }//end else
@@ -1053,6 +1065,7 @@ app.post('/search', (req, res, next) => {
                     title:'Riddim Archive Index',
                     msg: "",
                     artists: artists,
+                    currentuserid: user_id,
                     totw: totw
                   });
               }//end else

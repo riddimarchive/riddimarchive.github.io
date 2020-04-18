@@ -32,6 +32,7 @@ block content
   .artisth1
     a#tuneslink(title='Totw', href='', onclick='toggleVisible();return false;') Click Here for Tunes of the Week!
   - var y = totw;
+  - var userid = currentuserid;
   div#tunesoftheweek
     .ulcontaintotw
       each track in y

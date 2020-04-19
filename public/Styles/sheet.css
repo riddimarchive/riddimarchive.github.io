@@ -12,6 +12,7 @@ body {
 .shufflecontain p{
   display: flex;
   justify-content: center;
+  padding-left: 85px;
 }
 
 .question{

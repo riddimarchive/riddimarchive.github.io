@@ -9,6 +9,11 @@ body {
   
 }
 
+.shufflecontain p{
+  display: flex;
+  justify-content: center;
+}
+
 .question{
   font-weight: bold;
   font-size: x-large;

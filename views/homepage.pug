@@ -86,12 +86,13 @@ block content
     .shufflecontain
       p SHUFFLE PLAYER
       .downloadbutton
-        a(href='/back')
-          img(border='0', alt='back', src='Images/PageIMG/back.png')
+        form
+            input(type='button', value='Reload back to All Artists', onclick="self.location='https://riddim-archive.herokuapp.com/'")
+              img(border='0', alt='back', src='Images/PageIMG/back.png', width = '32.3', height = '22.6')
           audio(src='https://www.mediafire.com/file/r5pu2kt1twd4edm/Critical_Error.mp3/file', type='audio/mpeg', controls='')
             .downloadbutton
               a(href='/forward')
-                img(border='0', alt='back', src='Images/PageIMG/forward.png')
+                img(border='0', alt='back', src='Images/PageIMG/forward.png', width = '32.3', height = '22.6')
   .labelgcenter #{message}
   - var x = artists;
 

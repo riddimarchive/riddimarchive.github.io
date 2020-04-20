@@ -89,10 +89,7 @@ block content
       .downloadbutton
         audio(src='https://www.mediafire.com/file/r5pu2kt1twd4edm/Critical_Error.mp3/file', type='audio/mpeg', controls='')
         #shuffleforward
-          #resmessage
-          form#shufform
-            input#thing.form-control(type='hidden', name='thing', value="thingy")
-            input(type='image', src='Images/PageIMG/forward.png', alt='Submit', height='45')
+          img(border='0', alt='back', src='Images/PageIMG/forward.png', height='45')
   .labelgcenter #{message}
   - var x = artists;
 
@@ -104,9 +101,8 @@ block content
             img(src=`Images/Logos/${artist.artist_name}.jpg` alt="ADD ARTIST IMG HERE" height='275' width='275')
 
   script.
-    $('shufform').on('submit',makeNextRequest);
+    document.getElementById('shuffleforward').addEventListener('click', makeNextRequest);
     function makeNextRequest(e){
-    e.preventDefault();
     console.log("CALLING FCN");
     $.ajax({
     url:'/forward',

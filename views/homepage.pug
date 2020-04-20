@@ -61,6 +61,7 @@ block content
                   input#name.form-control(type='hidden', name='name', value=`${track.artist_name}`)
                 div
                   input(type='submit', value='Add to Favorites')
+                br
             li.tunetexttotw= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
             a(href="")
 
@@ -87,11 +88,11 @@ block content
       p SHUFFLE PLAYER
       .downloadbutton
         a(href='/back')
-          img(border='0', alt='back', src='Images/PageIMG/back.png')
+          img(border='0', alt='back', src='Images/PageIMG/back.png', height=45px)
           audio(src='https://www.mediafire.com/file/r5pu2kt1twd4edm/Critical_Error.mp3/file', type='audio/mpeg', controls='')
             .downloadbutton
               a(href='/forward')
-                img(border='0', alt='back', src='Images/PageIMG/forward.png')
+                img(border='0', alt='back', src='Images/PageIMG/forward.png', height=45px)
   .labelgcenter #{message}
   - var x = artists;
 

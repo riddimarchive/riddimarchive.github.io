@@ -85,10 +85,10 @@ block content
             form
             input(type='button', value='Reload back to All Artists', onclick="self.location='https://riddim-archive.herokuapp.com/'")
     .shufflecontain
-      #resmessage
       p SHUFFLE PLAYER, work in progress lol
       .downloadbutton
-        audio(src='https://www.mediafire.com/file/r5pu2kt1twd4edm/Critical_Error.mp3/file', type='audio/mpeg', controls='')
+        #shufaudio
+          audio(src='https://www.mediafire.com/file/r5pu2kt1twd4edm/Critical_Error.mp3/file', type='audio/mpeg', controls='')
         #shuffleforward
           img(border='0', alt='back', src='Images/PageIMG/forward.png', height='45')
   .labelgcenter #{message}
@@ -109,10 +109,10 @@ block content
     url:'/forward',
     type : 'POST',
     success: function(data){
-    if(data.message){
-    document.getElementById('resmessage').innerHTML = data.message;
+    if(data.source){
+    document.getElementById('shufaudio').innerHTML = `audio(src='${data.source}', type='audio/mpeg', controls='')`;
     } else {
-    document.getElementById('resmessage').innerHTML = "Sorry error yo";
+    document.getElementById('shufaudio').innerHTML = `audio(src='${data.source}', type='audio/mpeg', controls='')`;
     }
     },
     error: function(){

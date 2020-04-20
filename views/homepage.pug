@@ -87,8 +87,6 @@ block content
     .shufflecontain
       p SHUFFLE PLAYER, work in progress lol
       .downloadbutton
-        #shuffleback
-          img(border='0', alt='back', src='Images/PageIMG/back.png', height='45')
         audio(src='https://www.mediafire.com/file/r5pu2kt1twd4edm/Critical_Error.mp3/file', type='audio/mpeg', controls='')
         #shuffleforward
           img(border='0', alt='back', src='Images/PageIMG/forward.png', height='45')
@@ -103,13 +101,18 @@ block content
             img(src=`Images/Logos/${artist.artist_name}.jpg` alt="ADD ARTIST IMG HERE" height='275' width='275')
 
   script.
-    document.getElementById('shuffleback').addEventListener('click', backButton);
     document.getElementById('shuffleforward').addEventListener('click', forwardButton);
-    function backButton(){
+    function backButton(e){
+    e.preventDefault();
     console.log("BACK IS CLICKEYED");
     var xhrback = new XMLHttpRequest();
     }
     function forwardButton(){
     console.log("FORWARD IS CLICKEYED");
     var xhrback = new XMLHttpRequest();
+    xhr.open('POST', '/forward', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onload = function(){
+    console.log("Request done");
+    }
     }

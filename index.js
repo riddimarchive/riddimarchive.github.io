@@ -775,6 +775,10 @@ app.post('/changepass', (req, res, next) => {
 
 });
 
+app.post('/forward', (req, res, next) => {
+  res.send("Request Recieveddddd");
+});
+
 
 //POST REQUEST - Track Create
 //check for field entry, authenticate and redirect with passport

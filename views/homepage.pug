@@ -85,15 +85,13 @@ block content
             form
             input(type='button', value='Reload back to All Artists', onclick="self.location='https://riddim-archive.herokuapp.com/'")
     .shufflecontain
-      p SHUFFLE PLAYER
+      p SHUFFLE PLAYER, work in progress lol
       .downloadbutton
-        .shuffleback
-          a(href='/back')
-            img(border='0', alt='back', src='Images/PageIMG/back.png', height='45')
+        #shuffleback
+          img(border='0', alt='back', src='Images/PageIMG/back.png', height='45')
         audio(src='https://www.mediafire.com/file/r5pu2kt1twd4edm/Critical_Error.mp3/file', type='audio/mpeg', controls='')
-        .shuffleforward
-          a(href='/forward')
-            img(border='0', alt='back', src='Images/PageIMG/forward.png', height='45')
+        #shuffleforward
+          img(border='0', alt='back', src='Images/PageIMG/forward.png', height='45')
   .labelgcenter #{message}
   - var x = artists;
 
@@ -103,3 +101,15 @@ block content
         each artist in x
           a(href=`artist/${artist.artist_name}`)
             img(src=`Images/Logos/${artist.artist_name}.jpg` alt="ADD ARTIST IMG HERE" height='275' width='275')
+
+  script.
+    document.getElementById('shuffleback').addEventListener('click', backButton);
+    document.getElementById('shuffleforward').addEventListener('click', forwardButton);
+    function backButton(){
+    console.log("BACK IS CLICKEYED");
+    var xhrback = new XMLHttpRequest();
+    }
+    function forwardButton(){
+    console.log("FORWARD IS CLICKEYED");
+    var xhrback = new XMLHttpRequest();
+    }

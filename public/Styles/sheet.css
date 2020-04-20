@@ -283,10 +283,10 @@ li.tunetexttotw{
   justify-content: center;
 }
 
-.shuffleback{
+#shuffleback{
   margin-top: 6px;
 }
 
-.shuffleforward{
+#shuffleforward{
   margin-top: 6px;
 }

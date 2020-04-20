@@ -779,8 +779,10 @@ app.post('/forward',(req,res)=>{
   //we check if the request is an AJAX one and if accepts JSON
     if(req.xhr){
       res.send({message:'Just wanted to tell you. It worked'});
+      console.log("***MESSAGE MADE***");
      } else {
-      res.send("Didn't Work")
+      res.send("Didn't Work");
+      console.log("***MESSAGE DIDNT WORK***");
      }
 });
 

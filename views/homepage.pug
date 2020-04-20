@@ -102,17 +102,22 @@ block content
 
   script.
     document.getElementById('shuffleforward').addEventListener('click', forwardButton);
-    function backButton(e){
-    e.preventDefault();
-    console.log("BACK IS CLICKEYED");
-    var xhrback = new XMLHttpRequest();
-    }
     function forwardButton(){
     console.log("FORWARD IS CLICKEYED");
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/forward', true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.onload = function(){
-    console.log("Request done");
+    $.ajax({
+    url: "/forward",
+    type: "POST",
+    dataType: "application/x-www-form-urlencoded",
+    success: function(response, status, http) {
+    if (response) {
+    console.log('AJAX worked!);
     }
+    }
+    });
+    //var xhr = new XMLHttpRequest();
+    //xhr.open('POST', '/forward', true);
+    //xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    //xhr.onload = function(){
+    //console.log("Request done");
+    //}
     }

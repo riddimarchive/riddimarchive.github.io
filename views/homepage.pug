@@ -110,9 +110,9 @@ block content
     type : 'POST',
     success: function(data){
     if(data.source){
-    document.getElementById('shufaudio').child.innerHTML = `audio(src='${data.source}', type='audio/mpeg', controls='')`;
+    document.getElementById('shufaudio').audio.src = `${data.source}`;
     } else {
-    document.getElementById('shufaudio').child.innerHTML = `audio(src='${data.source}', type='audio/mpeg', controls='')`;
+    document.getElementById('shufaudio').audio.src = `${data.source}`;
     }
     },
     error: function(){

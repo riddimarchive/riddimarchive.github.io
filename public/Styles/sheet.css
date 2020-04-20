@@ -282,3 +282,11 @@ li.tunetexttotw{
   display: flex;
   justify-content: center;
 }
+
+.shuffleback{
+  margin-bottom: 10px;
+}
+
+.shuffleforward{
+  margin-top: 10px;
+}

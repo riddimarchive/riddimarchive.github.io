@@ -89,7 +89,12 @@ block content
       .downloadbutton
         audio(src='https://www.mediafire.com/file/r5pu2kt1twd4edm/Critical_Error.mp3/file', type='audio/mpeg', controls='')
         #shuffleforward
-          img(border='0', alt='back', src='Images/PageIMG/forward.png', height='45')
+          #resmessage
+          form#shufform
+            div.form-group
+              input#thing.form-control(type='hidden', name='thing', value="thingy")
+            div.form-group
+              input(type='image', src='Images/PageIMG/forward.png', alt='Submit')
   .labelgcenter #{message}
   - var x = artists;
 
@@ -101,23 +106,21 @@ block content
             img(src=`Images/Logos/${artist.artist_name}.jpg` alt="ADD ARTIST IMG HERE" height='275' width='275')
 
   script.
-    document.getElementById('shuffleforward').addEventListener('click', forwardButton);
-    function forwardButton(){
-    console.log("FORWARD IS CLICKEYED");
+    $('form').on('submit',makeNextRequest);
+    function makeNextRequest(e){
+    e.preventDefault();
     $.ajax({
-    url: "/forward",
-    type: "POST",
-    dataType: "application/x-www-form-urlencoded",
-    success: function(response, status, http) {
-    if (response) {
-    console.log(response);
+    url:'/forward',
+    type : 'POST',
+    success: function(data){
+    if(data.message){
+    $('resmessage').html(data.message);
+    } else {
+    $('resmessage').html('Sorry, an error occured');
     }
+    },
+    error: function(){
+    $('resmessage').html('Sorry, an error occurred');
     }
     });
-    //var xhr = new XMLHttpRequest();
-    //xhr.open('POST', '/forward', true);
-    //xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    //xhr.onload = function(){
-    //console.log("Request done");
-    //}
     }

@@ -775,8 +775,13 @@ app.post('/changepass', (req, res, next) => {
 
 });
 
-app.post('/forward', (req, res, next) => {
-  res.send("Request Recieveddddd");
+app.post('/forward',(req,res)=>{
+  //we check if the request is an AJAX one and if accepts JSON
+    if(req.xhr){
+      res.send({message:'Just wanted to tell you. It worked'});
+     } else {
+      res.send("Didn't Work")
+     }
 });
 
 

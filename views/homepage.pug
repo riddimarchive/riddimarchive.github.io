@@ -109,7 +109,7 @@ block content
     }
     function forwardButton(){
     console.log("FORWARD IS CLICKEYED");
-    var xhrback = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     xhr.open('POST', '/forward', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onload = function(){

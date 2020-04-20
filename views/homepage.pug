@@ -110,13 +110,13 @@ block content
     type : 'POST',
     success: function(data){
     if(data.message){
-    $('resmessage').html(data.message);
+    document.getElementById('resmessage').innerHTML = data.message;
     } else {
-    $('resmessage').html('Sorry, an error occured');
+    document.getElementById('resmessage').innerHTML = "Sorry error yo";
     }
     },
     error: function(){
-    $('resmessage').html('Sorry, an error occurred');
+    document.getElementById('resmessage').innerHTML = "Sorry error yo";
     }
     });
     }

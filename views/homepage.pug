@@ -88,7 +88,8 @@ block content
       p SHUFFLE PLAYER, work in progress lol
       .downloadbutton
         #shufaudio
-          audio(src='https://www.mediafire.com/file/r5pu2kt1twd4edm/Critical_Error.mp3/file', type='audio/mpeg', controls='')
+          audio(type='audio/mpeg', controls='')
+            source(id='shufaudiosrc' src='https://www.mediafire.com/file/r5pu2kt1twd4edm/Critical_Error.mp3/file')
         #shuffleforward
           img(border='0', alt='back', src='Images/PageIMG/forward.png', height='45')
   .labelgcenter #{message}
@@ -110,9 +111,9 @@ block content
     type : 'POST',
     success: function(data){
     if(data.source){
-    document.getElementById('shufaudio').audio.src = `${data.source}`;
+    document.getElementById('shufaudiosrc').src = `${data.source}`;
     } else {
-    document.getElementById('shufaudio').audio.src = `${data.source}`;
+    document.getElementById('shufaudio.src')src = `${data.source}`;
     }
     },
     error: function(){

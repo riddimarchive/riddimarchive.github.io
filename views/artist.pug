@@ -61,26 +61,10 @@ block content
 					a(href="")
 	script.
 		//document.getElementById('shuffleforward').addEventListener('click', makeNextRequest);
+		$('searchy').on('submit', makeNextRequest);
+
 		function makeNextRequest(e){
-		document.getElementById('loadtext').innerHTML= "Loading..."
+		e.preventDefault();
 		console.log("CALLING FCN");
-		$.ajax({
-		url:'/forward',
-		type : 'POST',
-		success: function(data){
-		//var audiop = new Audio(src=`${data.source}`, type='audio/mpeg', controls='');
-		//document.getElementById('shufaudio').innerHTML = audiop;
-		var text = `${data.artist_name} - ${data.track_name}`;
-		console.log(text);
-		document.getElementById('shuftext').innerHTML = text;
-		document.getElementById('shufaudiosrc').src = `${data.source}`;
-		var audiop = document.getElementById('shufaudio');
-		audiop.load();
-		audiop.play();
-		document.getElementById('loadtext').innerHTML= "";
-		},
-		error: function(){
-		console.log("Didn't Work");
-		}
-		});
+		console.log("u r smelly");
 		}

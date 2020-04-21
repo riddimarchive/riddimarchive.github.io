@@ -66,6 +66,9 @@ block content
             a(href="")
 
   - var message = msg;
+  - var shuffleart = randartistname;
+  - var shuffletrack = randtrackname;
+  - var shuffleurl = randdriveurl;
   
   .middlecontain
     .searchcontain
@@ -87,9 +90,10 @@ block content
     .shufflecontain
       p SHUFFLE PLAYER
       #shuftext
+        text= `${shuffleart} - ${shuffletrack}`
       .downloadbutton
         audio(id='shufaudio', type='audio/mpeg', controls='')
-            source(id='shufaudiosrc' src='https://www.mediafire.com/file/r5pu2kt1twd4edm/Critical_Error.mp3/file')
+            source(id='shufaudiosrc' src=`${shuffleurl}`)
         #shuffleforward
           img(border='0', alt='back', src='Images/PageIMG/forward.png', height='45')
   .labelgcenter #{message}

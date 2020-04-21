@@ -76,6 +76,9 @@ app.get('/', (req, res) => {
         var artists = [];
         var totw = [];
         var user_id = "";
+        var randdriveurl = "";
+        var randartistname = "";
+        var randtrackname = "";
         
         if(req.user !== undefined){
           user_id = req.user.id;
@@ -106,6 +109,11 @@ app.get('/', (req, res) => {
           artists.push(row);
         }
 
+        let randresult = await trackquerie.getRandomTrack(db);
+        randdriveurl = randresult[0].drive_url;
+        randartistname = randresult[0].artist_name;
+        randtrackname = randresult[0].track_name;
+
         await conquerie.end(db);
 
         res.render('homepage',{
@@ -113,6 +121,9 @@ app.get('/', (req, res) => {
           msg: "",
           artists: artists,
           currentuserid: user_id,
+          randdriveurl: randdriveurl,
+          randartistname: randartistname,
+          randtrackname: randtrackname,
           totw: totw
         });
 
@@ -520,6 +531,9 @@ app.post('/', (req, res, next) => {
         var artists = [];
         var totw = [];
         var user_id = "";
+        var randdriveurl = "";
+        var randartistname = "";
+        var randtrackname = "";
         
         if(req.user !== undefined){
           user_id = req.user.id;
@@ -550,6 +564,11 @@ app.post('/', (req, res, next) => {
           artists.push(row);
         }
 
+        let randresult = await trackquerie.getRandomTrack(db);
+        randdriveurl = randresult[0].drive_url;
+        randartistname = randresult[0].artist_name;
+        randtrackname = randresult[0].track_name;
+
         await conquerie.end(db);
 
         res.render('homepage',{
@@ -557,6 +576,9 @@ app.post('/', (req, res, next) => {
           msg: "Please login to save Favorites!",
           artists: artists,
           currentuserid: user_id,
+          randdriveurl: randdriveurl,
+          randartistname: randartistname,
+          randtrackname: randtrackname,
           totw: totw
         });
 
@@ -575,6 +597,9 @@ app.post('/', (req, res, next) => {
         var artists = [];
         var totw = [];
         var user_id = "";
+        var randdriveurl = "";
+        var randartistname = "";
+        var randtrackname = "";
         
         if(req.user !== undefined){
           user_id = req.user.id;
@@ -604,12 +629,17 @@ app.post('/', (req, res, next) => {
           }
           artists.push(row);
         }
+
+        let randresult = await trackquerie.getRandomTrack(db);
+        randdriveurl = randresult[0].drive_url;
+        randartistname = randresult[0].artist_name;
+        randtrackname = randresult[0].track_name;
         
         //confirm favorite isn't already there
         let ckresult = await userquerie.checkUserFavorite(db, user_id, track_id);
         if(ckresult.length > 0){
           console.log("Favorite already added");
-          msg = `${favetrack_name} is already added!`;
+          msg = `${favetrack_name} is already added!`;        
           await conquerie.end(db);
 
           res.render('homepage',{
@@ -617,6 +647,9 @@ app.post('/', (req, res, next) => {
             msg: `${favetrack_name} is already added!`,
             artists: artists,
             currentuserid: user_id,
+            randdriveurl: randdriveurl,
+            randartistname: randartistname,
+            randtrackname: randtrackname,
             totw: totw
           });
         }else{
@@ -632,6 +665,9 @@ app.post('/', (req, res, next) => {
           msg: `${favetrack_name} Added to Favorites!`,
           artists: artists,
           currentuserid: user_id,
+          randdriveurl: randdriveurl,
+          randartistname: randartistname,
+          randtrackname: randtrackname,
           totw: totw
         });
 
@@ -1123,24 +1159,37 @@ app.post('/artistdelete', (req, res, next) => {
 app.post('/search', (req, res, next) => {
 
   var { search_results, search_style } = req.body;
-  //search_results = SqlString.escape(search_results);
-  //res.send(search_results);
+  if(!search_results){
+    async function getShuffle(){
+      try{
+        var randdriveurl = "";
+        var randartistname = "";
+        var randtrackname = "";
+        var db = createConnection();
+        await conquerie.connect(db);
 
-  if(!search_results || !search_style){
+        let randresult = await trackquerie.getRandomTrack(db);
+        randdriveurl = randresult[0].drive_url;
+        randartistname = randresult[0].artist_name;
+        randtrackname = randresult[0].track_name;
 
-      console.log("***a field is empty")
-      if(!search_style){
+        await conquerie.end(db);
 
-        console.log("***no search style");
         res.render('homepagenf', {
-          msg: "Enter Search Style!"
+          msg: "Enter a Search!",
+          randdriveurl: randdriveurl,
+          randartistname: randartistname,
+          randtrackname: randtrackname
         });
-      }else{
-        console.log("***no artist");
-        res.render('homepagenf', {
-          msg: "Enter a Search!"
-        });
+      
+      }catch(err){
+        console.log(err);
+        res.render('error');
       }
+
+    }//end getShuffle
+
+  getShuffle();
 
   }else{
     search_results = search_results + "%";
@@ -1150,6 +1199,9 @@ app.post('/search', (req, res, next) => {
             var totw = [];
             var db = createConnection();
             var user_id = "";
+            var randdriveurl = "";
+            var randartistname = "";
+            var randtrackname = "";
         
             if(req.user !== undefined){
               user_id = req.user.id;
@@ -1157,15 +1209,22 @@ app.post('/search', (req, res, next) => {
 
             await conquerie.connect(db);
 
-            if(search_style == 0){
+            let randresult = await trackquerie.getRandomTrack(db);
+            randdriveurl = randresult[0].drive_url;
+            randartistname = randresult[0].artist_name;
+            randtrackname = randresult[0].track_name;
 
+            if(search_style == 0){
               let result = await artquerie.searchArtists(db, search_results);
 
               if(result.length == 0){
                 await conquerie.end(db);
                 console.log("No items found");
                 res.render('homepagenf',{
-                  msg: ""
+                  msg: "",
+                  randdriveurl: randdriveurl,
+                  randartistname: randartistname,
+                  randtrackname: randtrackname
                 });
               }else{
 
@@ -1195,6 +1254,9 @@ app.post('/search', (req, res, next) => {
                     msg: "",
                     artists: artists,
                     currentuserid: user_id,
+                    randdriveurl: randdriveurl,
+                    randartistname: randartistname,
+                    randtrackname: randtrackname,
                     totw: totw
                   });
               }//end else
@@ -1210,7 +1272,10 @@ app.post('/search', (req, res, next) => {
                 await conquerie.end(db);
                 console.log("No items found");
                 res.render('homepagenf',{
-                  msg: ""
+                  msg: "",
+                  randdriveurl: randdriveurl,
+                  randartistname: randartistname,
+                  randtrackname: randtrackname
                 });
               }else{
 
@@ -1240,6 +1305,9 @@ app.post('/search', (req, res, next) => {
                     msg: "",
                     artists: artists,
                     currentuserid: user_id,
+                    randdriveurl: randdriveurl,
+                    randartistname: randartistname,
+                    randtrackname: randtrackname,
                     totw: totw
                   });
               }//end else

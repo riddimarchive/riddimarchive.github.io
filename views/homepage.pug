@@ -87,8 +87,7 @@ block content
     .shufflecontain
       p SHUFFLE PLAYER, work in progress lol
       .downloadbutton
-        #shufaudio
-          audio(type='audio/mpeg', controls='')
+        audio(id='shufaudio', type='audio/mpeg', controls='')
             source(id='shufaudiosrc' src='https://www.mediafire.com/file/r5pu2kt1twd4edm/Critical_Error.mp3/file')
         #shuffleforward
           img(border='0', alt='back', src='Images/PageIMG/forward.png', height='45')
@@ -114,7 +113,7 @@ block content
     //var audiop = new Audio(src=`${data.source}`, type='audio/mpeg', controls='');
     //document.getElementById('shufaudio').innerHTML = audiop;
     document.getElementById('shufaudiosrc').src = `${data.source}`;
-    var audiop = document.getElementById('shufaudio').audio;
+    var audiop = document.getElementById('shufaudio');
     audiop.load();
     audiop.play();
 

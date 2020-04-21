@@ -67,14 +67,10 @@ block content
 		e.preventDefault();
 		console.log("CALLING FCN");
 		console.log("u r smelly");
-		var formresults = $("search_results").val();
-		console.log(" before req: " + formresults);
 		$.ajax({
 		url:'/tunesearch',
 		type: 'POST',
-		data:{
-		result: formresults
-		},
+		data: JSON.stringify(data),
 		success: function(data){
 		console.log(data.response);
 		},

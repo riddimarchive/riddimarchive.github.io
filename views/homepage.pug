@@ -96,6 +96,7 @@ block content
             source(id='shufaudiosrc' src=`${shuffleurl}`)
         #shuffleforward
           img(border='0', alt='back', src='Images/PageIMG/forward.png', height='45')
+      #loadtext
   br
   .labelgcenter #{message}
   - var x = artists;
@@ -110,6 +111,7 @@ block content
   script.
     document.getElementById('shuffleforward').addEventListener('click', makeNextRequest);
     function makeNextRequest(e){
+    document.getElementById('loadtext').innerHTML= "Loading..."
     console.log("CALLING FCN");
     $.ajax({
     url:'/forward',
@@ -123,6 +125,7 @@ block content
     document.getElementById('shufaudiosrc').src = `${data.source}`;
     var audiop = document.getElementById('shufaudio');
     audiop.load();
+    document.getElementById('loadtext').innerHTML= ""
     audiop.play();
     },
     error: function(){

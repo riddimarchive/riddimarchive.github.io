@@ -776,14 +776,7 @@ app.post('/changepass', (req, res, next) => {
 });
 
 app.post('/forward',(req,res)=>{
-  //we check if the request is an AJAX one and if accepts JSON
-    if(req.xhr){
-      res.send({source:'https://www.mediafire.com/file/7qd0zd2l6ubwjcl/Blue_Screen_%28Aweminus_Remix%29.mp3/file'});
-      console.log("***MESSAGE MADE***");
-     } else {
-      res.send("Didn't Work");
-      console.log("***MESSAGE DIDNT WORK***");
-     }
+  res.send({source:'https://www.mediafire.com/file/7qd0zd2l6ubwjcl/Blue_Screen_%28Aweminus_Remix%29.mp3/file'});
 });
 
 

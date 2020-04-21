@@ -28,7 +28,7 @@ block content
 				.uldiv
 					li.tunetext= `${track.track_name}`
 					.regaudio
-						audio(src=track.drive_url, type='audio/mpeg', controls='', preload='metadata')
+						audio(src=track.drive_url, type='audio/mpeg', controls='', preload="none")
 					li.tunetext= `       `
 					.downloadbutton
 						a(href=track.drive_url)

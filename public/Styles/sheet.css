@@ -13,6 +13,7 @@ body {
   display: flex;
   justify-content: center;
   padding-left: 95px;
+  font-style: bold;
 }
 
 .question{

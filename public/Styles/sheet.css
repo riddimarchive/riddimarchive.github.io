@@ -70,6 +70,16 @@ body {
   box-sizing: border-box;
 }
 
+.searchformart input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 .fishchild img{
 	border: solid;
   border-width: 2px;
@@ -93,6 +103,12 @@ a{
   border-width: 1px;
 }
 
+.searchformart{
+  border: black solid 3px;
+  margin-top: 45px;
+  padding: 10px;
+}
+
 .middlecontain{
   display: flex;
   flex-direction: row;
@@ -104,6 +120,10 @@ a{
 .searchcontain{
   padding: 20px;
   border: black solid 3px;
+}
+
+.searchcontainart{
+  padding: 20px;
 }
 
 .shufflecontain{

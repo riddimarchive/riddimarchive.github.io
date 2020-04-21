@@ -14,8 +14,25 @@ block content
 		}, true);
 	.artisth1
 		h1 #{artist_name}
-	.artistpage
-		img(src=`../Images/Logos/${artist_name}.jpg`, alt="ADD ARTIST IMG HERE", height='275', width='275')
+	.middlecontain
+		.artistpage
+			img(src=`../Images/Logos/${artist_name}.jpg`, alt="ADD ARTIST IMG HERE", height='275', width='275')
+		.searchcontain
+			.searchform
+    		form(method='POST' action='/search')
+    			div.form-group
+    				label(for='search_results')       Search
+    		    	input#search_results.form-control(type='text', name='search_results' placeholder="Search for Artist/Crew...")
+    			div.form-group
+    		    	label(for='search_style') Artist
+    		    	input#search_style.form-control(type='radio', name='search_style', checked="checked", value=0)
+    		    	label(for='search_style') Crew
+    		    	input#search_style.form-control(type='radio', name='search_style', value=1)
+    			div
+    		    	button.btn.btn-primary.btn-block(type='submit') Submit
+    			div
+    		    	form
+    				input(type='button', value='Reload back to All Tunes', onclick=`self.location=https://riddim-archive.herokuapp.com/artist/${artist_name}`)
 	.artistinfo
 		h3 #{info}
 	.labelgcenter #{message}

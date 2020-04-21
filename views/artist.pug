@@ -21,9 +21,9 @@ block content
 		.searchcontainart
 			.searchformart
 				form#searchy(method='POST' action='/search')
-					div.form-group
+					div
 						label(for='search_results')       Search
-						input#search_results.form-control(type='text', name='search_results' placeholder="Search for a Tune...")
+						input#search_results(type='text', name='search_results' placeholder="Search for a Tune...")
 					div
 						input(type='submit')
 					div
@@ -67,4 +67,18 @@ block content
 		e.preventDefault();
 		console.log("CALLING FCN");
 		console.log("u r smelly");
+		var formresults = $("search_results").value();
+		$.ajax({
+		url:'/tunesearch',
+		type: 'POST',
+		data:{
+		result: formresults
+		},
+		success: function(data){
+		console.log(data.response);
+		},
+		error: function(){
+		console.log("Didn't Work");
+		}
+		});
 		}

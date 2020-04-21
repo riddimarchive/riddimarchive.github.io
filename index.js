@@ -1327,6 +1327,14 @@ app.post('/search', (req, res, next) => {
 
 });
 
+app.post('/tunesearch',(req,res)=>{
+
+  var { search_results} = req.body;
+  var string = "This is the response " + search_results;
+
+  res.send({response: string});
+
+});
 
 //POST REQUEST - Artist Submission
 app.post('/req/submission', (req, res, next) => {

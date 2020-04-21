@@ -42,6 +42,7 @@ block content
   script.
     document.getElementById('shuffleforward').addEventListener('click', makeNextRequest);
     function makeNextRequest(e){
+    document.getElementById('loadtext').innerHTML= "Loading..."
     console.log("CALLING FCN");
     $.ajax({
     url:'/forward',
@@ -56,6 +57,7 @@ block content
     var audiop = document.getElementById('shufaudio');
     audiop.load();
     audiop.play();
+    document.getElementById('loadtext').innerHTML= "";
     },
     error: function(){
     console.log("Didn't Work");

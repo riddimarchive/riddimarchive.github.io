@@ -87,6 +87,7 @@ block content
     .shufflecontain
       p SHUFFLE PLAYER
       br
+      #shuftext
       .downloadbutton
         audio(id='shufaudio', type='audio/mpeg', controls='')
             source(id='shufaudiosrc' src='https://www.mediafire.com/file/r5pu2kt1twd4edm/Critical_Error.mp3/file')
@@ -110,20 +111,22 @@ block content
     url:'/forward',
     type : 'POST',
     success: function(data){
-    if(data.source){
+    if(data.source && data.id && data.artist_name && data.track_name){
     //var audiop = new Audio(src=`${data.source}`, type='audio/mpeg', controls='');
     //document.getElementById('shufaudio').innerHTML = audiop;
+    var text = "data is: " + data.id + " " + data.artist_name + " " + data.track_name;
+    document.getElementById('shuftext').innerHTML = text;
     document.getElementById('shufaudiosrc').src = `${data.source}`;
     var audiop = document.getElementById('shufaudio');
     audiop.load();
     audiop.play();
 
     } else {
-    document.getElementById('shufaudio.src').src = `${data.source}`;
+    console.log("Didn't Work");
     }
     },
     error: function(){
-    document.getElementById('resmessage').innerHTML = "Sorry error yo";
+    console.log("Didn't Work");
     }
     });
     }

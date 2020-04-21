@@ -776,7 +776,33 @@ app.post('/changepass', (req, res, next) => {
 });
 
 app.post('/forward',(req,res)=>{
-  res.send({source:'https://www.mediafire.com/file/7qd0zd2l6ubwjcl/Blue_Screen_%28Aweminus_Remix%29.mp3/file'});
+  var theid = "";
+  var thedriveurl = "";
+  var theartistname = "";
+  var thetrackname = "";
+
+  async function forwardResponse(){
+    try{
+      var db = createConnection();
+      await conquerie.connect(db);
+      
+      let result = await trackquerie.getRandomTrack(db);
+      theid = result.id;
+      thedriveurl = result.drive_url;
+      theartistname = result.artist_name;
+      thetrackname = result.track_name;
+
+      console.log("BEFORE SEND: " + theid + " " + thedriveurl + " " + theartistname + " " + thetrackname);
+    
+    }catch(err){
+      console.log(err);
+      res.render('error');
+    }
+  }//end async
+
+forwardResponse();
+
+res.send({source: thedriveurl, id: theid, artist_name: theartistname, track_name: thetrackname});
 });
 
 

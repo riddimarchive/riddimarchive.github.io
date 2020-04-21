@@ -37,3 +37,27 @@ block content
   br
   .notfoundtext
     h1 ARTISTS NOT FOUND, PLEASE TRY AGAIN YO
+
+  script.
+    document.getElementById('shuffleforward').addEventListener('click', makeNextRequest);
+    function makeNextRequest(e){
+    console.log("CALLING FCN");
+    $.ajax({
+    url:'/forward',
+    type : 'POST',
+    success: function(data){
+    //var audiop = new Audio(src=`${data.source}`, type='audio/mpeg', controls='');
+    //document.getElementById('shufaudio').innerHTML = audiop;
+    var text = `${data.artist_name} - ${data.track_name}`;
+    console.log(text);
+    document.getElementById('shuftext').innerHTML = text;
+    document.getElementById('shufaudiosrc').src = `${data.source}`;
+    var audiop = document.getElementById('shufaudio');
+    audiop.load();
+    audiop.play();
+    },
+    error: function(){
+    console.log("Didn't Work");
+    }
+    });
+    }

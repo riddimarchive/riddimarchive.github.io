@@ -12,7 +12,7 @@ body {
 .shufflecontain p{
   display: flex;
   justify-content: center;
-  padding-left: 85px;
+  padding-left: 95px;
 }
 
 .question{
@@ -286,4 +286,9 @@ li.tunetexttotw{
 
 #shuffleforward{
   margin-top: 6px;
+}
+
+#shuftext{
+  display: flex;
+  justify-content: center;
 }

@@ -291,7 +291,7 @@ li.tunetexttotw{
 
 #shuffleforward img:hover{
   opacity: 0.3;
-  border: 2px visible black;
+  border: 1px solid visible black;
 }
 
 #shuftext{

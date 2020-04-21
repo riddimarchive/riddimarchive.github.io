@@ -289,6 +289,11 @@ li.tunetexttotw{
   margin-top: 6px;
 }
 
+#shuffleforward img:hover{
+  opacity: 0.3;
+  border: 2px visible black;
+}
+
 #shuftext{
   display: flex;
   justify-content: center;

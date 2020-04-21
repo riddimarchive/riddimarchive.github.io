@@ -111,7 +111,6 @@ block content
     url:'/forward',
     type : 'POST',
     success: function(data){
-    if(data.source){
     //var audiop = new Audio(src=`${data.source}`, type='audio/mpeg', controls='');
     //document.getElementById('shufaudio').innerHTML = audiop;
     var text = "data is: " + data.id + " " + data.artist_name + " " + data.track_name;
@@ -121,10 +120,6 @@ block content
     var audiop = document.getElementById('shufaudio');
     audiop.load();
     audiop.play();
-
-    } else {
-    console.log("Didn't Work");
-    }
     },
     error: function(){
     console.log("Didn't Work");

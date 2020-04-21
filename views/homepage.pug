@@ -125,8 +125,8 @@ block content
     document.getElementById('shufaudiosrc').src = `${data.source}`;
     var audiop = document.getElementById('shufaudio');
     audiop.load();
-    document.getElementById('loadtext').innerHTML= ""
     audiop.play();
+    document.getElementById('loadtext').innerHTML= "";
     },
     error: function(){
     console.log("Didn't Work");

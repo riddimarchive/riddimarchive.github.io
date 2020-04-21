@@ -787,10 +787,10 @@ app.post('/forward',(req,res)=>{
       await conquerie.connect(db);
       
       let result = await trackquerie.getRandomTrack(db);
-      theid = result.id;
-      thedriveurl = result.drive_url;
-      theartistname = result.artist_name;
-      thetrackname = result.track_name;
+      theid = result[0].id;
+      thedriveurl = result[0].drive_url;
+      theartistname = result[0].artist_name;
+      thetrackname = result[0].track_name;
 
       console.log("BEFORE SEND: " + theid + " " + thedriveurl + " " + theartistname + " " + thetrackname);
     

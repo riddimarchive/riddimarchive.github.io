@@ -793,6 +793,9 @@ app.post('/forward',(req,res)=>{
       thetrackname = result[0].track_name;
 
       console.log("BEFORE SEND: " + theid + " " + thedriveurl + " " + theartistname + " " + thetrackname);
+
+      await conquerie.end(db);
+      res.send({source: thedriveurl, id: theid, artist_name: theartistname, track_name: thetrackname});
     
     }catch(err){
       console.log(err);
@@ -801,8 +804,6 @@ app.post('/forward',(req,res)=>{
   }//end async
 
 forwardResponse();
-
-res.send({source: thedriveurl, id: theid, artist_name: theartistname, track_name: thetrackname});
 });
 
 

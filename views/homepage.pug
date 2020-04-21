@@ -112,8 +112,11 @@ block content
     success: function(data){
     if(data.source){
     document.getElementById('shufaudiosrc').src = `${data.source}`;
+    var player = document.getElementById('shufaudio');
+    player.play();
+
     } else {
-    document.getElementById('shufaudio.src')src = `${data.source}`;
+    document.getElementById('shufaudio.src').src = `${data.source}`;
     }
     },
     error: function(){

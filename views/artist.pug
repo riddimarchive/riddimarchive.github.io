@@ -67,7 +67,7 @@ block content
 		e.preventDefault();
 		console.log("CALLING FCN");
 		console.log("u r smelly");
-		var formresults = $("search_results").value();
+		var formresults = $("search_results").val();
 		$.ajax({
 		url:'/tunesearch',
 		type: 'POST',

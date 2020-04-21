@@ -111,9 +111,10 @@ block content
     type : 'POST',
     success: function(data){
     if(data.source){
-    document.getElementById('shufaudiosrc').src = `${data.source}`;
-    var player = document.getElementById('shufaudio');
-    player.play();
+    var audiop = new Audio(src=`${data.source}`, type='audio/mpeg', controls='');
+    document.getElementById('shufaudio').innerHTML = audiop;
+    audiop.load();
+    audiop.play();
 
     } else {
     document.getElementById('shufaudio.src').src = `${data.source}`;

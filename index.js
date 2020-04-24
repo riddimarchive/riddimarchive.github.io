@@ -1329,8 +1329,8 @@ app.post('/search', (req, res, next) => {
 
 app.post('/tunesearch',(req,res)=>{
 
-  var { search_results} = req.body;
-  var string = "This is the response " + search_results;
+  var { search_results, result } = req.body;
+  var string = "This is the response " + search_results + result;
 
   res.send({response: string});
 

@@ -27,7 +27,7 @@ block content
 					div
 						input(type='submit')
 					div
-						a(href=`../../artist/${artist_name}`) Click Here for Tunes of the Week!
+						a(href=`../../artist/${artist_name}`) Reload Back To All Tunes
 	.artistinfo
 		h3 #{info}
 	.labelgcenter #{message}
@@ -72,7 +72,7 @@ block content
 		url:'/tunesearch',
 		type: 'POST',
 		data:{
-		result: formresults
+		result: "this is my thing"
 		},
 		success: function(data){
 		console.log(data.response);

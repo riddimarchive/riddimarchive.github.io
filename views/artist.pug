@@ -66,17 +66,21 @@ block content
 		e.preventDefault();
 		console.log("CALLING FCN");
 		console.log("u r smelly");
-		var formresults = $("search_results").val();
-		console.log("before req: " + formresults);
 		$.ajax({
 		url:'/tunesearch',
 		type: 'POST',
 		data:{
 		$("#searchy").serialize(),
-		result "This is the thing!"
+		a_name: `${artist_name}`
 		},
 		success: function(data){
-		console.log(data.response);
+		console.log("SUccess");
+		console.log("MSG is: " + data.msg);
+		console.log("Reloadlist is: " + data.reloadlist);
+		console.log"Current USER ID is: " + (data.currentuserid);
+		console.log("Artist Name is: " + data.artist_name);
+		console.table(data.tracks);
+
 		},
 		error: function(){
 		console.log("Didn't Work");

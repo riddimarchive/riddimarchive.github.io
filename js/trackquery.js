@@ -54,6 +54,25 @@ function getAllTracksFromArtist(db, artist_name){
 	return querypromise;
 }
 
+function searchTunes(db, search_results, artist_name){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT track_name, artist_name, drive_url, id FROM tracks WHERE track_name LIKE ? AND artist_name = ?`, [search_results, artist_name], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+
+}
+
 function getRandomTrack(db){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -94,6 +113,7 @@ function addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_u
 	return querypromise;
 }
 
+
 function deleteTrack(db, track_name){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -116,6 +136,7 @@ module.exports = {
 	getTrackInfo,
 	getTracksOfTheWeek,
 	getAllTracksFromArtist,
+	searchTunes,
 	getRandomTrack,
 	addTrack,
 	deleteTrack

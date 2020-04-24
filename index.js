@@ -1329,11 +1329,70 @@ app.post('/search', (req, res, next) => {
 
 app.post('/tunesearch',(req,res)=>{
 
-  var { search_results, result } = req.body;
-  var string = "This is the response " + search_results + result;
+  var { search_results, a_name } = req.body;
+  
+  console.log("ART NAME IS: " + a_name);
+  console.log("SEARCH RESULSTS IS: " + search_results);
+  var user_id = "";
+  var msg = "";
+  var tracks = [];
+  var reloadlist = 0;
 
-  res.send({response: string});
+  if(req.user !== undefined){
+    user_id = req.user.id;
+    console.log("USER ID STORED: " + user_id);
+  }
 
+  if(!search_results){
+    msg = "Please Type in something to Search!";
+
+    res.send({msg: msg, reloadlist: reloadlist, currentuserid: user_id, artist_name: a_name, tracks: tracks});
+
+  }else{
+    //load artist page but with the new search
+    search_results = search_results + "%";
+
+    async function artistPageResponseWithTuneSearch(search_results, a_name){
+      try{
+          var db = createConnection();
+          await conquerie.connect(db);
+          //searching instead
+          let sresult = await trackquerie.searchTunes(db, search_results, a_name);
+
+          if(sresult.length == 0){
+            await conquerie.end(db);
+            msg = "No items found";
+            
+            res.send({msg: msg, reloadlist: reloadlist, currentuserid: user_id, artist_name: a_name, tracks: tracks});
+
+          }else{
+          //there was a result, loading that instead
+          for (var i = 0; i < sresult.length; i++) {
+           var row = {
+              'track_name':sresult[i].track_name,
+              'artist_name':sresult[i].artist_name,
+              'drive_url': sresult[i].drive_url,
+              'id': sresult[i].id
+           }
+           tracks.push(row);
+          }
+
+          await conquerie.end(db);
+          msg = "Results found";
+          reloadlist = 1;
+          
+          res.send({msg: msg, reloadlist: reloadlist, currentuserid: user_id, artist_name: a_name, tracks: tracks});
+        }
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+
+  }
+  console.log("doing fcn");
+  artistPageResponseWithTuneSearch(search_results, a_name);
+
+  }
 });
 
 //POST REQUEST - Artist Submission

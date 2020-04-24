@@ -72,7 +72,8 @@ block content
 		url:'/tunesearch',
 		type: 'POST',
 		data:{
-		result: "this is my thing"
+		$("#searchy").serialize(),
+		result "This is the thing!"
 		},
 		success: function(data){
 		console.log(data.response);

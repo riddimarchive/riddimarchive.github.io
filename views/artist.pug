@@ -33,6 +33,7 @@ block content
 	.labelgcenter #{message}
 	- var x = tracks;
 	- var userid = currentuserid;
+	- var test = `${artist_name}`;
 
 	.ulcontain
 		each track in x
@@ -71,7 +72,7 @@ block content
 		type: 'POST',
 		data:{
 		$("#searchy").serialize(),
-		a_name: `${artist_name}`
+		a_name: test
 		},
 		success: function(data){
 		console.log("SUccess");

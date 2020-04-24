@@ -62,7 +62,7 @@ block content
 					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
 					a(href="")
 	script.
-		document.getElementById('searchy').addEventListener('submit', makeNextRequest);
+		document.getElementById('searchy').addEventListener('submit', makeNextRequest(e));
 
 		function makeNextRequest(e){
 		e.preventDefault();

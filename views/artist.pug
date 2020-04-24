@@ -25,6 +25,8 @@ block content
 						label(for='search_results')       Search
 						input#search_results(type='text', name='search_results' placeholder="Search for a Tune...")
 					div
+						input#a_name(type='hidden', name='a_name', value=`${artist_name}`)
+					div
 						input(type='submit')
 					div
 						a(href=`../../artist/${artist_name}`) Reload Back To All Tunes
@@ -71,8 +73,7 @@ block content
 		url:'/tunesearch',
 		type: 'POST',
 		data:{
-		$("#searchy").serialize(),
-		a_name: test
+		$("#searchy").serialize()
 		},
 		success: function(data){
 		console.log("SUccess");

@@ -28,8 +28,6 @@ block content
 						input#a_name(type='hidden', name='a_name', value=`${artist_name}`)
 					div
 						input(type='submit')
-					#shuffleforward
-          				img(border='0', alt='back', src='Images/PageIMG/forward.png', height='45')
 					div
 						a(href=`../../artist/${artist_name}`) Reload Back To All Tunes
 	.artistinfo
@@ -64,7 +62,8 @@ block content
 					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
 					a(href="")
 	script.
-		document.getElementById('shuffleforward').addEventListener('click', makeNextRequest);
+		document.getElementById('searchy').addEventListener('submit', makeNextRequest(e));
+
 		function makeNextRequest(e){
 		e.preventDefault();
 		console.log("CALLING FCN");

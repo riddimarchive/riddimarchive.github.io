@@ -62,8 +62,7 @@ block content
 					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
 					a(href="")
 	script.
-		//document.getElementById('shuffleforward').addEventListener('click', makeNextRequest);
-		$('#searchy').on('submit', makeNextRequest);
+		document.getElementById('searchy').addEventListener('submit', makeNextRequest);
 
 		function makeNextRequest(e){
 		e.preventDefault();

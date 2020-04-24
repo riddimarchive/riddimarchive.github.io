@@ -1155,7 +1155,7 @@ app.post('/artistdelete', (req, res, next) => {
 });
 
 
-//POST REQUEST - Artist Delete
+//POST REQUEST - Artist Search
 app.post('/search', (req, res, next) => {
 
   var { search_results, search_style } = req.body;

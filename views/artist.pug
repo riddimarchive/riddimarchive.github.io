@@ -20,15 +20,14 @@ block content
 			img(src=`../Images/Logos/${artist_name}.jpg`, alt="ADD ARTIST IMG HERE", height='275', width='275')
 		.searchcontainart
 			.searchformart
-				form#searchy(method='POST' action='/search')
+				form#searchy(method='POST' action='/tunesearch')
 					div
 						label(for='search_results')       Search
 						input#search_results(type='text', name='search_results' placeholder="Search for a Tune...")
 					div
 						input(type='submit')
 					div
-						form
-						input(type='button', value='Reload back to All Tunes', onclick=`self.location=https://riddim-archive.herokuapp.com/artist/${artist_name}`)
+						a(href=`../../artist/${artist_name}`) Click Here for Tunes of the Week!
 	.artistinfo
 		h3 #{info}
 	.labelgcenter #{message}

@@ -62,7 +62,33 @@ block content
 					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
 					a(href="")
 	script.
-		document.getElementById('searchy').addEventListener('submit', makeNextRequest(e));
+		$("#searchy").submit(function(e){
+			e.preventDefault();
+			console.log("CALLING FCN");
+			console.log("u r smelly");
+			$.ajax({
+			url:"/tunesearch",
+			method: "POST",
+			data:{
+			$("#searchy").serialize()
+			},
+			success: function(data){
+			console.log("SUccess");
+			console.log("MSG is: " + data.msg);
+			console.log("Reloadlist is: " + data.reloadlist);
+			console.log"Current USER ID is: " + (data.currentuserid);
+			console.log("Artist Name is: " + data.artist_name);
+			console.table(data.tracks);
+
+			},
+			error: function(){
+			console.log("Didn't Work");
+			}
+			});
+
+		})
+
+
 
 		function makeNextRequest(e){
 		e.preventDefault();

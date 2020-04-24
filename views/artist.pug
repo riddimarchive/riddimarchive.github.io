@@ -20,7 +20,7 @@ block content
 			img(src=`../Images/Logos/${artist_name}.jpg`, alt="ADD ARTIST IMG HERE", height='275', width='275')
 		.searchcontainart
 			.searchformart
-				form#searchy(method='POST' action='/tunesearch')
+				form#searchy(method='POST' action=`/artist/${artist_name}`)
 					div
 						label(for='search_results')       Search
 						input#search_results(type='text', name='search_results' placeholder="Search for a Tune...")

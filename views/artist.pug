@@ -26,7 +26,7 @@ block content
 						input#search_results(type='text', name='search_results' placeholder="Search for a Tune...")
 					div
 						input#a_name(type='hidden', name='a_name', value=`${artist_name}`)
-					#shuffleforward
+					#test
 						img(border='0', alt='back', src='../../Images/PageIMG/forward.png', height='45')
 					div
 						input(type='submit')
@@ -64,10 +64,9 @@ block content
 					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
 					a(href="")
 	script.
-		document.getElementById('shuffleforward').addEventListener('click', makeNextRequest);
+		document.getElementById('test').addEventListener('click', makeNextRequest);
 
-		function makeNextRequest(e){
-		e.preventDefault();
+		function makeNextRequest(){
 		console.log("CALLING FCN");
 		console.log("u r smelly");
 		$.ajax({

@@ -20,7 +20,7 @@ block content
 			img(src=`../Images/Logos/${artist_name}.jpg`, alt="ADD ARTIST IMG HERE", height='275', width='275')
 		.searchcontainart
 			.searchformart
-				form#searchy()
+				form#searchy(method='POST')
 					div
 						label(for='search_results')       Search
 						input#search_results(type='text', name='search_results' placeholder="Search for a Tune...")
@@ -64,17 +64,18 @@ block content
 					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
 					a(href="")
 	script.
-		document.getElementById('test').addEventListener('click', makeNextRequest);
+	
+		$(document).ready(function() {
+    	var theform = $('#searchy');
+		theform.submit(function (ev) {
+		ev.preventDefault();
 
-		function makeNextRequest(){
 		console.log("CALLING FCN");
 		console.log("u r smelly");
 		$.ajax({
 		url:'/tunesearch',
 		type: 'POST',
-		data:{
-		$("#searchy").serialize()
-		},
+		data: theform.serialize(),
 		success: function(data){
 		console.log("SUccess");
 		console.log("MSG is: " + data.msg);
@@ -82,10 +83,13 @@ block content
 		console.log"Current USER ID is: " + (data.currentuserid);
 		console.log("Artist Name is: " + data.artist_name);
 		console.table(data.tracks);
-
 		},
 		error: function(){
 		console.log("Didn't Work");
 		}
-		});
-		}
+		});//ajax
+
+
+		});//submit
+		}//docready
+		

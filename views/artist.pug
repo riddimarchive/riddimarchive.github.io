@@ -3,7 +3,8 @@ extends index2
 block content
 	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
 	- var message = msg;
-	.labelgcenter #{message}
+	#responsemsg
+		.labelgcenter #{message}
 	script.
 		document.addEventListener('play', function(e){
 		var audios = document.getElementsByTagName('audio');
@@ -32,7 +33,8 @@ block content
 				img(border='0', alt='back', src='../../Images/PageIMG/forward.png', height='45')
 	.artistinfo
 		h3 #{info}
-	.labelgcenter #{message}
+	#responsemsg
+		.labelgcenter #{message}
 	- var x = tracks;
 	- var userid = currentuserid;
 	- var test = `${artist_name}`;
@@ -67,20 +69,24 @@ block content
 		var thebutton = $('#test');
 		thebutton.click(function (ev) {
 		ev.preventDefault();
-
-		console.log("CALLING FCN");
-		console.log("u r smelly");
 		$.ajax({
 		url:'/tunesearch',
 		type: 'POST',
 		data: theform.serialize(),
 		success: function(data){
-		console.log("SUccess");
+			
 		console.log("MSG is: " + data.msg);
 		console.log("Reloadlist is: " + data.reloadlist);
 		console.log("Current USER ID is: " + data.currentuserid);
 		console.log("Artist Name is: " + data.artist_name);
 		console.table(data.tracks);
+		var themsg = data.msg;
+		document.getElementById('responsemessage').innerHTML = `.labelgcenter ${themsg}`
+		var reloadlist = data.reloadlist;
+		if (reloadlist = 1){
+			console.log("Replace elements!!!")
+		}
+
 		},
 		error: function(){
 		console.log("Didn't Work");

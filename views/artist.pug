@@ -74,14 +74,15 @@ block content
 		type: 'POST',
 		data: theform.serialize(),
 		success: function(data){
-			
+
 		console.log("MSG is: " + data.msg);
 		console.log("Reloadlist is: " + data.reloadlist);
 		console.log("Current USER ID is: " + data.currentuserid);
 		console.log("Artist Name is: " + data.artist_name);
 		console.table(data.tracks);
 		var themsg = data.msg;
-		document.getElementById('responsemessage').innerHTML = `.labelgcenter ${themsg}`
+		var msgtobereplaced = document.getElementById('responsemessage');
+		msgtobereplaced.innerHTML = `.labelgcenter ${themsg}`;
 		var reloadlist = data.reloadlist;
 		if (reloadlist = 1){
 			console.log("Replace elements!!!")

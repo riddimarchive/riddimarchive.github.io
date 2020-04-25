@@ -3,8 +3,7 @@ extends index2
 block content
 	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
 	- var message = msg;
-	#responsemsg
-		.labelgcenter #{message}
+	#labelgcenter #{message}
 	script.
 		document.addEventListener('play', function(e){
 		var audios = document.getElementsByTagName('audio');
@@ -33,8 +32,7 @@ block content
 				img(border='0', alt='back', src='../../Images/PageIMG/forward.png', height='45')
 	.artistinfo
 		h3 #{info}
-	.labelgcenter
-		#responsemsg #{message}
+	#labelgcenter #{message}
 	- var x = tracks;
 	- var userid = currentuserid;
 	- var test = `${artist_name}`;
@@ -81,7 +79,7 @@ block content
 		console.log("Artist Name is: " + data.artist_name);
 		console.table(data.tracks);
 		var themsg = data.msg;
-		document.getElementById('responsemsg').innerHTML = ("	.labelgcenter " + themsg);
+		document.getElementById('labelgcenter').innerHTML = themsg;
 		var reloadlist = data.reloadlist;
 		if (reloadlist == 1){
 			console.log("Replace elements!!!")

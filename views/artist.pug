@@ -39,7 +39,7 @@ block content
 	- var test = `${artist_name}`;
 
 	.ulcontain
-		each track in x
+		- for ( i=0; i <= x.length() ; i++ )
 			ul
 				.uldiv
 					li.tunetext= `${track.track_name}`

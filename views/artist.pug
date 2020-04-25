@@ -27,11 +27,9 @@ block content
 					div
 						input#a_name(type='hidden', name='a_name', value=`${artist_name}`)
 					div
-						input(type='submit')
-					div
 						a(href=`../../artist/${artist_name}`) Reload Back To All Tunes
 			#test
-						img(border='0', alt='back', src='../../Images/PageIMG/forward.png', height='45')
+				img(border='0', alt='back', src='../../Images/PageIMG/forward.png', height='45')
 	.artistinfo
 		h3 #{info}
 	.labelgcenter #{message}
@@ -67,7 +65,8 @@ block content
 	
 		$(document).ready(function() {
 		var theform = $('#searchy');
-		theform.submit(function (ev) {
+		var thebutton = $('#test');
+		thebutton.click(function (ev) {
 		ev.preventDefault();
 
 		console.log("CALLING FCN");

@@ -33,8 +33,9 @@ block content
 				img(border='0', alt='back', src='../../Images/PageIMG/forward.png', height='45')
 	.artistinfo
 		h3 #{info}
-	#responsemsg
-		.labelgcenter #{message}
+	.labelgcenter
+		#responsemsg
+			#{message}
 	- var x = tracks;
 	- var userid = currentuserid;
 	- var test = `${artist_name}`;

@@ -80,7 +80,7 @@ block content
 		console.log("Artist Name is: " + data.artist_name);
 		console.table(data.tracks);
 		var themsg = data.msg;
-		$("#submit").val(themsg);
+		document.getElementById('labelgcenter').innerHTML = themsg;
 		var reloadlist = data.reloadlist;
 		if (reloadlist == 1){
 			console.log("Replace elements!!!")

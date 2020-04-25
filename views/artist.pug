@@ -33,7 +33,7 @@ block content
 				img(border='0', alt='back', src='../../Images/PageIMG/forward.png', height='45')
 	.artistinfo
 		h3 #{info}
-	#labelgcenter #{message}
+	#labelgcenter2 #{message}
 	- var x = tracks;
 	- var userid = currentuserid;
 	- var test = `${artist_name}`;
@@ -81,6 +81,7 @@ block content
 		console.table(data.tracks);
 		var themsg = data.msg;
 		document.getElementById('labelgcenter').innerHTML = themsg;
+		document.getElementById('labelgcenter2').innerHTML = themsg;
 		var reloadlist = data.reloadlist;
 		if (reloadlist == 1){
 			console.log("Replace elements!!!")

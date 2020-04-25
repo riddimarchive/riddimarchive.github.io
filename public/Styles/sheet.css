@@ -49,7 +49,13 @@ body {
   justify-content: center;
 }
 
-#responsemsg
+#labelgcenter2{
+  font-weight: bold;
+  font-size: x-large;
+  color: greenyellow;
+  display: flex;
+  justify-content: center;
+}
 
 .header{
 	display: flex;

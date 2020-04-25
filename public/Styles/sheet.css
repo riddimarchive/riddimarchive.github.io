@@ -41,16 +41,6 @@ body {
   justify-content: center;
 }
 
-#labelgcenter{
-  font-weight: bold;
-  font-size: x-large;
-  color: greenyellow;
-  display: flex;
-  justify-content: center;
-}
-
-#responsemsg
-
 .header{
 	display: flex;
 	justify-content: center;
@@ -328,6 +318,14 @@ li.tunetexttotw{
 }
 
 #shuftext{
+  display: flex;
+  justify-content: center;
+}
+
+#labelgcenter{
+  font-weight: bold;
+  font-size: x-large;
+  color: greenyellow;
   display: flex;
   justify-content: center;
 }

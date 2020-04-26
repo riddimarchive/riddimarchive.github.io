@@ -88,8 +88,8 @@ block content
 			var oldlist = document.getElementsByClassName("uldiv");
 			const len = oldlist.length;
 			for (var i = 0; i < len; i++){
-				var element = oldlist[oldlist.length].parentNode;
-				element.removeChild(oldlist[oldlist.length]);
+				var element = oldlist[(oldlist.length - 1)].parentNode;
+				element.removeChild(oldlist[(oldlist.length - 1)]);
 				console.log("i is " + i);
 				console.log("Length is now " + oldlist.length);
 				console.log("len = " + len);

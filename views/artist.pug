@@ -85,7 +85,8 @@ block content
 		var reloadlist = data.reloadlist;
 		if (reloadlist == 1){
 			console.log("Replace elements!!!");
-			var oldlist = document.getElementsByClassName("uldiv");
+			var oldlist = document.getElementsByClassName("ulcontain");
+			console.table(oldlist);
 			for (var i = 0; i < oldlist.length; i++){
 				oldlist[i].parentNode.removeChild(oldlist[i]);
 			}

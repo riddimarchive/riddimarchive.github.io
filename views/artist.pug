@@ -86,13 +86,13 @@ block content
 		if (reloadlist == 1){
 			console.log("Replace elements!!!");
 			var oldlist = document.getElementsByClassName("uldiv");
-			var len = oldlist.length;
+			const len = oldlist.length;
 			for (var i = 0; i < len; i++){
-				var element = oldlist[i].parentNode;
-				element.removeChild(oldlist[i]);
-				console.log("Removing ul " + i);
+				var element = oldlist[oldlist.length].parentNode;
+				element.removeChild(oldlist[oldlist.length]);
 				console.log("i is " + i);
 				console.log("Length is now " + oldlist.length);
+				console.log("len = " + len);
 			}
 			var tracks = data.tracks;
 			for (var i = 0; i < tracks.length; i++){

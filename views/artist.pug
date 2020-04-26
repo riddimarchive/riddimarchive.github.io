@@ -49,16 +49,15 @@ block content
 						a(href=track.drive_url)
 							img(border='0', alt='Download Tune', src='../Images/PageIMG/download.png', height='50')
 						form(method='POST' action=`/artist/${artist_name}`)
-							div.form-group
-								input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
-							div.form-group
-								input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
-							div.form-group
-								input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
-							div.form-group
-								input#name.form-control(type='hidden', name='name', value=`${artist_name}`)
-							div
-								input(type='submit', value='Add to Favorites')
+							input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
+							
+							input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
+							
+							input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
+							
+							input#name.form-control(type='hidden', name='name', value=`${artist_name}`)
+							
+							input(type='submit', value='Add to Favorites')
 					
 	#ulcontain2
 	script.
@@ -108,10 +107,25 @@ block content
 
 				var audiodiv = document.createElement('div');
 				audiodiv.setAttribute('class', 'regaudio');
-				
+
 				var newaudio = document.createElement('audio');
 				newaudio.setAttribute('src', `${tracks[i].drive_url}`);
 				newaudio.setAttribute('type', 'audio/mpeg');
+
+				var downloaddiv = document.createElement('div');
+				downloaddiv.setAttribute('class', 'downloadbutton');
+
+				var downlink = document.createElement('a');
+				downlink.setAttribute('href', `${tracks[i].drive_url}`);
+
+				var downimage = document.createElement('img');
+				downimage.setAttribute('border', '0');
+				downimage.setAttribute('alt', 'Download Tune');
+				downimage.setAttribute('src', '../Images/PageIMG/download.png');
+				downimage.setAttribute('height', '50');
+
+
+
 
 
 			}

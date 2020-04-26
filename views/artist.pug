@@ -40,8 +40,8 @@ block content
 
 	#ulcontain
 		each track in x
-			ul
-				.uldiv
+			.uldiv
+				ul
 					li.tunetext= `${track.track_name}`
 					.regaudio
 						audio(src=track.drive_url, type='audio/mpeg', controls='')
@@ -85,7 +85,7 @@ block content
 		var reloadlist = data.reloadlist;
 		if (reloadlist == 1){
 			console.log("Replace elements!!!");
-			var oldlist = document.getElementsByClassName("ulcontain");
+			var oldlist = document.getElementsByClassName("uldiv");
 			console.log(oldlist);
 			for (var i = 0; i < oldlist.length; i++){
 				oldlist[i].parentNode.removeChild(oldlist[i]);

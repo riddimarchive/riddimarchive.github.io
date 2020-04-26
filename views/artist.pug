@@ -103,6 +103,7 @@ block content
 				var newul = document.createElement('ul');
 
 				var textli = document.createElement('li');
+				textli.setAttribute('class', 'tunetext');
 				textli.innerHTML = tracks[i].track_name;
 
 				var audiodiv = document.createElement('div');
@@ -111,6 +112,7 @@ block content
 				var newaudio = document.createElement('audio');
 				newaudio.setAttribute('src', `${tracks[i].drive_url}`);
 				newaudio.setAttribute('type', 'audio/mpeg');
+				newaudio.setAttribute('controls', '');
 
 				var downloaddiv = document.createElement('div');
 				downloaddiv.setAttribute('class', 'downloadbutton');

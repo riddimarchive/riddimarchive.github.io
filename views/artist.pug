@@ -87,10 +87,11 @@ block content
 			console.log("Replace elements!!!");
 			var oldlist = document.getElementsByClassName("uldiv");
 			var last = oldlist.lastElementChild;  
-        	while (last) { 
-           		oldlist.removeChild(last); 
-            	last = oldlist.lastElementChild; 
-        	} 
+			while (last) {
+				last.innerHTML= "";
+				oldlist.removeChild(last); 
+				last = oldlist.lastElementChild; 
+			}
 			//var oldlist2 = document.getElementsByClassName("uldiv");
 			//for (var i = 0; i < (oldlist2.length + 1); i++){
 			//	oldlist2[i].parentNode.removeChild(oldlist2[i]);

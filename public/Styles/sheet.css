@@ -154,6 +154,11 @@ a{
   flex-wrap: wrap;
 }
 
+.boldtext{
+  font-size: large;
+  font-style: bold;
+}
+
 .ulcontain{
   display: flex;
 	flex-direction: row;

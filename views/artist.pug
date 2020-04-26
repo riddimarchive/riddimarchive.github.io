@@ -88,19 +88,14 @@ block content
 			var oldlist = document.getElementsByClassName("uldiv");
 			console.log(oldlist);
 			console.log(oldlist.length + "Length");
-			var last = oldlist.lastElementChild;
-			console.log(last);
-			while (last) {
-				last.innerHTML= "";
-				oldlist.removeChild(last); 
-				last = oldlist.lastElementChild; 
-				console.log(last);
+			var oldlist = document.getElementsByClassName("uldiv");
+			for (var i = 0; i < (oldlist.length + 1); i++){
+				var element = oldlist[i].parentNode;
+				element.removeChild(oldlist[i]);
+				console.log("Removing ul " + i);
+				console.log("i is " + i);
+				console.log("Length is now " + oldlist.length);
 			}
-			//var oldlist2 = document.getElementsByClassName("uldiv");
-			//for (var i = 0; i < (oldlist2.length + 1); i++){
-			//	oldlist2[i].parentNode.removeChild(oldlist2[i]);
-			//	console.log("Removing ul" + i);
-			//}
 			var tracks = data.tracks;
 			for (var i = 0; i < tracks.length; i++){
 				console.log(tracks[i].track_name);

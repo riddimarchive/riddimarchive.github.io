@@ -1378,7 +1378,7 @@ app.post('/tunesearch',(req,res)=>{
           }
 
           await conquerie.end(db);
-          msg = "Results found";
+          msg = "Search Results:";
           reloadlist = 1;
           
           res.send({msg: msg, reloadlist: reloadlist, currentuserid: user_id, artist_name: a_name, tracks: tracks});

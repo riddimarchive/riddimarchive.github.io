@@ -23,14 +23,14 @@ block content
 			.searchformart
 				form#searchy(method='POST')
 					div
-						label(for='search_results')       Search
+						label(for='search_results') Tune Search
 						input#search_results(type='text', name='search_results' placeholder="Search for a Tune...")
 					div
 						input#a_name(type='hidden', name='a_name', value=`${artist_name}`)
+					#test
+						img(border='0', alt='back', src='../../Images/PageIMG/forward.png', height='45')
 					div
 						a(href=`../../artist/${artist_name}`) Reload Back To All Tunes
-			#test
-				img(border='0', alt='back', src='../../Images/PageIMG/forward.png', height='45')
 	.artistinfo
 		h3 #{info}
 	#labelgcenter2 #{message}
@@ -72,120 +72,124 @@ block content
 		data: theform.serialize(),
 		success: function(data){
 
-		console.log("MSG is: " + data.msg);
-		console.log("Reloadlist is: " + data.reloadlist);
-		console.log("Current USER ID is: " + data.currentuserid);
-		console.log("Artist Name is: " + data.artist_name);
-		console.table(data.tracks);
-		var themsg = data.msg;
-		document.getElementById('labelgcenter').innerHTML = themsg;
-		document.getElementById('labelgcenter2').innerHTML = themsg;
-		var reloadlist = data.reloadlist;
-		if (reloadlist == 1){
+			var themsg = data.msg;
+			document.getElementById('labelgcenter').innerHTML = themsg;
+			document.getElementById('labelgcenter2').innerHTML = themsg;
+			var reloadlist = data.reloadlist;
 
-			console.log("Replace elements!!!");
-			var oldlist = document.getElementsByClassName("uldiv");
-			const len = oldlist.length;
-			for (var i = 0; i < len; i++){
-				var element = oldlist[(oldlist.length - 1)].parentNode;
-				element.removeChild(oldlist[(oldlist.length - 1)]);
-			}
-			var tracks = data.tracks;
-			for (var i = 0; i < tracks.length; i++){
-				console.log(tracks[i].track_name);
-				console.log(tracks[i].drive_url);
-				console.log(tracks[i].artist_name);
-				var thecontainer = document.getElementById('ulcontain2');
+			if (reloadlist == 1){
 
-				var newdiv = document.createElement('div');
-				newdiv.setAttribute('class', 'uldiv');
+				var oldlist = document.getElementsByClassName("uldiv");
+				const len = oldlist.length;
+				for (var i = 0; i < len; i++){
+					var element = oldlist[(oldlist.length - 1)].parentNode;
+					element.removeChild(oldlist[(oldlist.length - 1)]);
+				}
+				var tracks = data.tracks;
+				for (var i = 0; i < tracks.length; i++){
+					//set container, everything will added within
+					var thecontainer = document.getElementById('ulcontain2');
 
-				var newul = document.createElement('ul');
+					var newdiv = document.createElement('div');
+					newdiv.setAttribute('class', 'uldiv');
 
-				var textli = document.createElement('li');
-				textli.setAttribute('class', 'tunetext');
-				textli.innerHTML = tracks[i].track_name;
+					var newul = document.createElement('ul');
 
-				var audiodiv = document.createElement('div');
-				audiodiv.setAttribute('class', 'regaudio');
+					//Track Name Line
+					var textli = document.createElement('li');
+					textli.setAttribute('class', 'tunetext');
+					textli.innerHTML = tracks[i].track_name;
 
-				var newaudio = document.createElement('audio');
-				newaudio.setAttribute('src', `${tracks[i].drive_url}`);
-				newaudio.setAttribute('type', 'audio/mpeg');
-				newaudio.setAttribute('controls', '');
+					//audio div
+					var audiodiv = document.createElement('div');
+					audiodiv.setAttribute('class', 'regaudio');
 
-				var downloaddiv = document.createElement('div');
-				downloaddiv.setAttribute('class', 'downloadbutton');
+					//audio element
+					var newaudio = document.createElement('audio');
+					newaudio.setAttribute('src', `${tracks[i].drive_url}`);
+					newaudio.setAttribute('type', 'audio/mpeg');
+					newaudio.setAttribute('controls', '');
 
-				var downlink = document.createElement('a');
-				downlink.setAttribute('href', `${tracks[i].drive_url}`);
+					//download div
+					var downloaddiv = document.createElement('div');
+					downloaddiv.setAttribute('class', 'downloadbutton');
 
-				var downimage = document.createElement('img');
-				downimage.setAttribute('border', '0');
-				downimage.setAttribute('alt', 'Download Tune');
-				downimage.setAttribute('src', '../Images/PageIMG/download.png');
-				downimage.setAttribute('height', '50');
+					//download link
+					var downlink = document.createElement('a');
+					downlink.setAttribute('href', `${tracks[i].drive_url}`);
 
-				var zeform = document.createElement('form');
-				zeform.setAttribute('method', 'POST');
-				zeform.setAttribute('action', `/artist/${tracks[i].artist_name}`);
+					//download image
+					var downimage = document.createElement('img');
+					downimage.setAttribute('border', '0');
+					downimage.setAttribute('alt', 'Download Tune');
+					downimage.setAttribute('src', '../Images/PageIMG/download.png');
+					downimage.setAttribute('height', '50');
 
-				var trackidinput = document.createElement('input');
-				trackidinput.setAttribute('id', 'track_id');
-				trackidinput.setAttribute('class', 'form-control');
-				trackidinput.setAttribute('type', 'hidden');
-				trackidinput.setAttribute('name', 'track_id');
-				trackidinput.setAttribute('value', `${tracks[i].id}`);
+					//form
+					var zeform = document.createElement('form');
+					zeform.setAttribute('method', 'POST');
+					zeform.setAttribute('action', `/artist/${tracks[i].artist_name}`);
 
-				var tracknameinput = document.createElement('input');
-				tracknameinput.setAttribute('id', 'favetrack_name');
-				tracknameinput.setAttribute('class', 'form-control');
-				tracknameinput.setAttribute('type', 'hidden');
-				tracknameinput.setAttribute('name', 'favetrack_name');
-				tracknameinput.setAttribute('value', `${tracks[i].track_name}`);
+					//form inputs:
+					var trackidinput = document.createElement('input');
+					trackidinput.setAttribute('id', 'track_id');
+					trackidinput.setAttribute('class', 'form-control');
+					trackidinput.setAttribute('type', 'hidden');
+					trackidinput.setAttribute('name', 'track_id');
+					trackidinput.setAttribute('value', `${tracks[i].id}`);
 
-				var useridinput = document.createElement('input');
-				useridinput.setAttribute('id', 'user_id');
-				useridinput.setAttribute('class', 'form-control');
-				useridinput.setAttribute('type', 'hidden');
-				useridinput.setAttribute('name', 'user_id');
-				useridinput.setAttribute('value', `${data.currentuserid}`);
+					var tracknameinput = document.createElement('input');
+					tracknameinput.setAttribute('id', 'favetrack_name');
+					tracknameinput.setAttribute('class', 'form-control');
+					tracknameinput.setAttribute('type', 'hidden');
+					tracknameinput.setAttribute('name', 'favetrack_name');
+					tracknameinput.setAttribute('value', `${tracks[i].track_name}`);
 
-				var artistnameinput = document.createElement('input');
-				artistnameinput.setAttribute('id', 'name');
-				artistnameinput.setAttribute('class', 'form-control');
-				artistnameinput.setAttribute('type', 'hidden');
-				artistnameinput.setAttribute('name', 'name');
-				artistnameinput.setAttribute('value', `${tracks[i].artist_name}`);
+					var useridinput = document.createElement('input');
+					useridinput.setAttribute('id', 'user_id');
+					useridinput.setAttribute('class', 'form-control');
+					useridinput.setAttribute('type', 'hidden');
+					useridinput.setAttribute('name', 'user_id');
+					useridinput.setAttribute('value', `${data.currentuserid}`);
 
-				var submitinput = document.createElement('input');
-				submitinput.setAttribute('type', 'submit');
-				submitinput.setAttribute('value', `Add to Favorites`);
+					var artistnameinput = document.createElement('input');
+					artistnameinput.setAttribute('id', 'name');
+					artistnameinput.setAttribute('class', 'form-control');
+					artistnameinput.setAttribute('type', 'hidden');
+					artistnameinput.setAttribute('name', 'name');
+					artistnameinput.setAttribute('value', `${tracks[i].artist_name}`);
 
-				zeform.appendChild(trackidinput);
-				zeform.appendChild(tracknameinput);
-				zeform.appendChild(useridinput);
-				zeform.appendChild(artistnameinput);
-				zeform.appendChild(submitinput);
+					var submitinput = document.createElement('input');
+					submitinput.setAttribute('type', 'submit');
+					submitinput.setAttribute('value', `Add to Favorites`);
 
-				downlink.appendChild(downimage);
+					//finishing form
+					zeform.appendChild(trackidinput);
+					zeform.appendChild(tracknameinput);
+					zeform.appendChild(useridinput);
+					zeform.appendChild(artistnameinput);
+					zeform.appendChild(submitinput);
 
-				downloaddiv.appendChild(downlink);
-				downloaddiv.appendChild(zeform);
+					//finishing download
+					downlink.appendChild(downimage);
+					downloaddiv.appendChild(downlink);
+					downloaddiv.appendChild(zeform);
 
-				audiodiv.appendChild(newaudio);
+					//finishing audio
+					audiodiv.appendChild(newaudio);
 
-				newul.appendChild(textli);
-				newul.appendChild(audiodiv);
-				newul.appendChild(downloaddiv);
+					//final appends
+					newul.appendChild(textli);
+					newul.appendChild(audiodiv);
+					newul.appendChild(downloaddiv);
+					newdiv.appendChild(newul);
 
-				newdiv.appendChild(newul);
+					//insert into page
+					thecontainer.appendChild(newdiv);
 
-				thecontainer.appendChild(newdiv);
+				}
 
-			}
-
-		}
+			}//end if, reloading page elements within
 
 		},
 		error: function(){

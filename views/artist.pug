@@ -95,7 +95,7 @@ block content
 				console.log(tracks[i].track_name);
 				console.log(tracks[i].drive_url);
 				console.log(tracks[i].artist_name);
-				var p = document.getElementById('ulcontain2');
+				var thecontainer = document.getElementById('ulcontain2');
 
 				var newdiv = document.createElement('div');
 				newdiv.setAttribute('class', 'uldiv');
@@ -124,9 +124,62 @@ block content
 				downimage.setAttribute('src', '../Images/PageIMG/download.png');
 				downimage.setAttribute('height', '50');
 
+				var zeform = document.createElement('form');
+				zeform.setAttribute('method', 'POST');
+				zeform.setAttribute('action', `/artist/${artist_name}`);
 
+				var trackidinput = document.createElement('input');
+				trackidinput.setAttribute('id', 'track_id');
+				trackidinput.setAttribute('class', 'form-control');
+				trackidinput.setAttribute('type', 'hidden');
+				trackidinput.setAttribute('name', 'track_id');
+				trackidinput.setAttribute('value', `${tracks[i].id}`);
 
+				var tracknameinput = document.createElement('input');
+				tracknameinput.setAttribute('id', 'favetrack_name');
+				tracknameinput.setAttribute('class', 'form-control');
+				tracknameinput.setAttribute('type', 'hidden');
+				tracknameinput.setAttribute('name', 'favetrack_name');
+				tracknameinput.setAttribute('value', `${tracks[i].track_name}`);
 
+				var useridinput = document.createElement('input');
+				useridinput.setAttribute('id', 'user_id');
+				useridinput.setAttribute('class', 'form-control');
+				useridinput.setAttribute('type', 'hidden');
+				useridinput.setAttribute('name', 'user_id');
+				useridinput.setAttribute('value', `${data.currentuserid}`);
+
+				var artistnameinput = document.createElement('input');
+				artistnameinput.setAttribute('id', 'name');
+				artistnameinput.setAttribute('class', 'form-control');
+				artistnameinput.setAttribute('type', 'hidden');
+				artistnameinput.setAttribute('name', 'name');
+				artistnameinput.setAttribute('value', `${tracks[i].artist_name}`);
+
+				var submitinput = document.createElement('input');
+				submitinput.setAttribute('type', 'submit');
+				submitinput.setAttribute('value', `Add to Favorites`);
+
+				zeform.appendChild(trackidinput);
+				zeform.appendChild(tracknameinput);
+				zeform.appendChild(useridinput);
+				zeform.appendChild(artistnameinput);
+				zeform.appendChild(submitinput);
+
+				downlink.appendChild(downimage);
+
+				downloaddiv.appendChild(downlink);
+				downloaddiv.appendChild(zeform);
+
+				audiodiv.appendChild(newaudio);
+
+				newul.appendChild(textli);
+				newul.appendChild(audiodiv);
+				newul.appendChild(downloaddiv);
+
+				newdiv.appendChild(newul);
+
+				thecontainer.appendChild(newdiv);
 
 			}
 

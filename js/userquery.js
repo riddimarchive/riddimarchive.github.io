@@ -93,7 +93,7 @@ function getUserByid(db, id){
 function getUserFavorites(db, id){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url FROM tracks INNER JOIN userfavorites ON tracks.id = userfavorites.track_id WHERE userfavorites.user_id = ? ORDER BY tracks.track_name`, [id], (error, result, fields) => {
+		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url FROM tracks INNER JOIN userfavorites ON tracks.id = userfavorites.track_id WHERE userfavorites.user_id = ? ORDER BY tracks.artist_name`, [id], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

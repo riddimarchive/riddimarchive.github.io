@@ -98,14 +98,14 @@ block content
 				console.log(tracks[i].artist_name);
 				var p = document.getElementById('ulcontain2');
 				var newdiv = document.createElement('div');
-				newdiv = setAttribute('class', uldiv);
+				newdiv = setAttribute('class', 'uldiv');
 				var newul = document.createElement('ul');
 				var textli = document.createElement('li');
 				textli.innerHTML = tracks[i].track_name;
 				var audiodiv = document.createElement('div');
-				audiodiv = setAttribute('class', regaudio);
+				audiodiv = setAttribute('class', 'regaudio');
 				var newaudio = document.createElement('audio');
-				newaudio = setAttribute('src', tracks[i].drive_url);
+				newaudio = setAttribute('src', `${tracks[i].drive_url}`);
 				newaudio = setAttribute('type', 'audio/mpeg');
 
 

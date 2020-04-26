@@ -38,7 +38,7 @@ function getTracksOfTheWeek(db){
 function getAllTracksFromArtist(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, artists.crew, artists.country, artists.artist_name FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name WHERE tracks.artist_name = ?`, [artist_name], (error, result, fields) => {
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, artists.crew, artists.country, artists.artist_name FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name WHERE tracks.artist_name = ? ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -57,7 +57,7 @@ function getAllTracksFromArtist(db, artist_name){
 function searchTunes(db, search_results, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT track_name, artist_name, drive_url, id FROM tracks WHERE track_name LIKE ? AND artist_name = ?`, [search_results, artist_name], (error, result, fields) => {
+		db.query(`SELECT track_name, artist_name, drive_url, id FROM tracks WHERE track_name LIKE ? AND artist_name = ? ORDER BY track_name`, [search_results, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

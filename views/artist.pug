@@ -200,11 +200,16 @@ block content
 	
 	script.
 		$(document).ready(function() {
-		var theN = document.querySelectorAll("favebuttonclass:last-child").id;
-		console.log("the n is " + theN);
-		thebutton.click(function (ev) {
-		ev.preventDefault();
-		console.log("CLicked");
-		console.log(theform.elements[3].value);
-		});//submit
+		
+			document.querySelectorAll('favebuttonclass').forEach(item => {
+				item.addEventListener('click', function (ev) {
+				ev.preventDefault();
+				console.log("CLicked");
+				console.log("ITEM ID is: " + item.id);
+
+
+
+
+				});
+			});
 		});

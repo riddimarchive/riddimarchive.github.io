@@ -202,8 +202,7 @@ block content
 		$(document).ready(function() {
 		
 			document.querySelectorAll('favebuttonclass').forEach(item => {
-				item.addEventListener('click', function (ev) {
-				ev.preventDefault();
+				item.addEventListener('click', event => {
 				console.log("CLicked");
 				console.log("ITEM ID is: " + item.id);
 

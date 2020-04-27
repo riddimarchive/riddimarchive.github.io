@@ -1404,7 +1404,7 @@ app.post('/favtunesearch',(req,res)=>{
           var db = createConnection();
           await conquerie.connect(db);
           //searching instead
-          let sresult = await trackquerie.searchFavorites(db, search_results, a_name);
+          let sresult = await trackquerie.searchFavorites(db, user_id, search_results);
 
           if(sresult.length == 0){
             await conquerie.end(db);

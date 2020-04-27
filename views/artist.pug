@@ -206,13 +206,13 @@ block content
 				console.log("CLicked");
 				console.log("ITEM ID is: " + item.id);
 				var theform = document.getElementById(`form ${item.id}`);
-				console.log(theform);
-				var artist_name = theform.elements["name"].value;
+				var theform2 = $(`#form ${item.id}`);
+				var artist_name = theform2.elements["name"].value;
 
 				$.ajax({
 					url:`/artist/${artist_name}`,
 					type: 'POST',
-					data: theform.serialize(),
+					data: theform2.serialize(),
 					success: function(data){
 						console.log("Sucess");
 					},

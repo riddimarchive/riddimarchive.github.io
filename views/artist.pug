@@ -47,7 +47,9 @@ block content
 						audio(src=track.drive_url, type='audio/mpeg', controls='')
 					.downloadbutton
 						a(href=track.drive_url)
-							img(border='0', alt='Download Tune', src='../Images/PageIMG/download.png', height='50')
+							img(border='0', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
+						#test2
+							img(border='0', alt='back', src='../Images/PageIMG/addfave.png', height='50')
 						form(method='POST' action=`/artist/${artist_name}`)
 							input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
 							

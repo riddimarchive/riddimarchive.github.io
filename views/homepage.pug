@@ -75,12 +75,12 @@ block content
       .searchform
         form(method='POST' action='/search')
           div.form-group
-            label.boldtext(for='search_results')       Search
+            label.boldtext(for='search_results') Artist Search
             input#search_results.form-control(type='text', name='search_results' placeholder="Search for Artist/Crew...")
           div.form-group
-            label(for='search_style') Artist
+            label.boldtext(for='search_style') Artist
             input#search_style.form-control(type='radio', name='search_style', checked="checked", value=0)
-            label(for='search_style') Crew
+            label.boldtext(for='search_style') Crew
             input#search_style.form-control(type='radio', name='search_style', value=1)
           div
             button.btn.btn-primary.btn-block(type='submit') Submit
@@ -88,7 +88,7 @@ block content
             form
             input(type='button', value='Reload back to All Artists', onclick="self.location='https://riddim-archive.herokuapp.com/'")
     .shufflecontain
-      p SHUFFLE PLAYER
+      p.boldtext SHUFFLE PLAYER
       #shuftext
         text.boldtext= `${shuffleart} - ${shuffletrack}`
       .downloadbutton

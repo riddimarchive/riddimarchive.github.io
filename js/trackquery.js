@@ -92,6 +92,25 @@ function searchFavorites(db, user_id, search_results){
 
 }
 
+function searchFavoritesByArtist(db, user_id, search_results){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url FROM tracks INNER JOIN userfavorites ON tracks.id = userfavorites.track_id WHERE userfavorites.user_id = ? AND tracks.artist_name LIKE ? ORDER BY tracks.artist_name`, [user_id, search_results], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+
+}
+
 function getRandomTrack(db){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -157,6 +176,7 @@ module.exports = {
 	getAllTracksFromArtist,
 	searchTunes,
 	searchFavorites,
+	searchFavoritesByArtist,
 	getRandomTrack,
 	addTrack,
 	deleteTrack

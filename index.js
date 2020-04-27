@@ -1550,8 +1550,12 @@ app.post('/req/removal', (req, res, next) => {
 
 //POST REQUEST - FAVORITES ADD - Keeps current url
 app.post('/artist/:name', (req, res, next) => {
-
+  console.log("RUN DA TING");
   var { user_id, track_id, favetrack_name, name } = req.body;
+  console.log(user_id);
+  console.log(track_id);
+  console.log(favetrack_name);
+  console.log(name);
 
   if(user_id === "" || req.user.id === undefined){
       //make queries, get all artist/track info and render artist page

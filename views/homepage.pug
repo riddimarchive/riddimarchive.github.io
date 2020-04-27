@@ -120,7 +120,9 @@ block content
     var thetext = document.createElement('text');
     thetext.setAttribute('class', 'boldtext');
     thetext.innerHTML = `${data.artist_name} - ${data.track_name}`;
-    document.getElementById('shuftext').innerHTML = thetext;
+    var shuffy = document.getElementById('shuftext');
+    shuffy.innerHTML= "";
+    shuffy.appendChild(thetext);
 
     document.getElementById('shufaudiosrc').src = `${data.source}`;
     var audiop = document.getElementById('shufaudio');

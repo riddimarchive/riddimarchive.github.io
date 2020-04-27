@@ -97,6 +97,10 @@ body {
   box-sizing: border-box;
 }
 
+#searchy{
+  padding:20px;
+}
+
 .fishchild img{
 	border: solid;
   border-width: 2px;

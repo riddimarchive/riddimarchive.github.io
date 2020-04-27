@@ -17,7 +17,16 @@ block content
 		}
 		}
 		}, true);
-
+	.searchcontainart
+			.searchformart
+				form#searchy(method='POST')
+					div
+						label.boldtext(for='search_results') Tune Search
+						input#search_results(type='text', name='search_results' placeholder="Search for a Tune...")
+					#test
+						img(border='0', alt='back', src='../Images/PageIMG/tunesearch.png', height='45')
+					div
+						a(href=`../favorites`) Reload Back To All Tunes
 	.ulcontain
 		each track in y
 			ul

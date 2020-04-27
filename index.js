@@ -315,10 +315,8 @@ app.get('/favorites', (req, res) => {
     });
 
   }else{
-    console.log("**user is logged in**");
     var theusername = req.user.username;
     var user_id = req.user.id;
-    console.log("**user id is: " + user_id);
 
     async function favoritesPageResponse(user_id, theusername){
       try{
@@ -335,8 +333,7 @@ app.get('/favorites', (req, res) => {
           msg = `You have no favorites, Add some in the Archive!`;
 
           await conquerie.end(db);
-          console.log("BEFORE RENDER: " + " tr " + tracks + " uesr id " + user_id + " name " + theusername + " msg " + msg)
-
+          
           res.render('favorites',{
             thetracks: tracks,
             currentuserid: user_id,
@@ -345,8 +342,6 @@ app.get('/favorites', (req, res) => {
           });
         }else{
 
-          console.log("**user has favorites!**");
-          console.log("**storing track info**");
           for (var i = 0; i < result.length; i++) {
             var row = {
               'track_name': result[i].track_name,
@@ -373,7 +368,6 @@ app.get('/favorites', (req, res) => {
       }
 
   }
-  console.log("doing fcn");
   favoritesPageResponse(user_id, theusername);
 
   }//end else
@@ -419,7 +413,6 @@ app.get('/artist/:name', function(req,res){
 
   if(req.user !== undefined){
     user_id = req.user.id;
-    console.log("USER ID STORED: " + user_id);
   }
 
   
@@ -469,7 +462,6 @@ app.get('/artist/:name', function(req,res){
       }
 
   }
-  console.log("doing fcn");
   artistPageResponse(art_name);
 
 });
@@ -638,7 +630,6 @@ app.post('/', (req, res, next) => {
         //confirm favorite isn't already there
         let ckresult = await userquerie.checkUserFavorite(db, user_id, track_id);
         if(ckresult.length > 0){
-          console.log("Favorite already added");
           msg = `${favetrack_name} is already added!`;        
           await conquerie.end(db);
 
@@ -868,7 +859,6 @@ app.post('/trackcreate', (req, res, next) => {
             let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_url);
 
             await conquerie.end(db);
-            console.log(tresult);
 
             res.render('trackcrud', {
               msg: "Track Created!",
@@ -959,7 +949,6 @@ app.post('/usercreate', (req, res, next) => {
 
                     await conquerie.connect(db);
                     let result = await userquerie.getUserInfo(db, username);
-                    console.log(result.length);
 
                     if(result.length > 0){
                         console.log("USER ALREADY EXISTY");
@@ -1013,7 +1002,6 @@ app.post('/userdelete', (req, res, next) => {
 
                     await conquerie.connect(db);
                     let result = await userquerie.getUserInfo(db, username);
-                    console.log(result.length);
 
                     if(result.length == 0){
                         console.log("cant find user");
@@ -1121,7 +1109,6 @@ app.post('/artistdelete', (req, res, next) => {
 
                     await conquerie.connect(db);
                     let result = await artquerie.getArtistInfo(db, artist_name);
-                    console.log(result.length);
 
                     if(result.length == 0){
                         console.log("cant find artist");
@@ -1320,7 +1307,6 @@ app.post('/search', (req, res, next) => {
         }
 
     }
-    console.log("running function");
     searchArtist(search_results, search_style);
 
   }
@@ -1331,8 +1317,6 @@ app.post('/tunesearch',(req,res)=>{
 
   var { search_results, a_name } = req.body;
   
-  console.log("ART NAME IS: " + a_name);
-  console.log("SEARCH RESULSTS IS: " + search_results);
   var user_id = "";
   var msg = "";
   var tracks = [];
@@ -1340,7 +1324,6 @@ app.post('/tunesearch',(req,res)=>{
 
   if(req.user !== undefined){
     user_id = req.user.id;
-    console.log("USER ID STORED: " + user_id);
   }
 
   if(!search_results){
@@ -1389,7 +1372,6 @@ app.post('/tunesearch',(req,res)=>{
       }
 
   }
-  console.log("doing fcn");
   artistPageResponseWithTuneSearch(search_results, a_name);
 
   }
@@ -1431,7 +1413,6 @@ app.post('/req/submission', (req, res, next) => {
                 }
             }
               
-            console.log("running function");
             makeEmail(artist_name, crew, country, info, link, artist_img);
         }
           
@@ -1465,7 +1446,6 @@ app.post('/req/removal', (req, res, next) => {
             }
         }
           
-        console.log("running function");
         makeEmail(reason, info);
     }
           
@@ -1524,7 +1504,6 @@ app.post('/artist/:name', (req, res, next) => {
         }
 
       }
-      console.log("doing fcn");
       favoritesAddResponse(name);
       //below else means user id is not blank
   }else{
@@ -1540,7 +1519,6 @@ app.post('/artist/:name', (req, res, next) => {
 
             var db = createConnection();
             await conquerie.connect(db);
-            console.log("Connected to DB, making query");
 
             let result = await artquerie.getArtistInfo(db, name);
             info = `${result[0].info}`;
@@ -1595,7 +1573,6 @@ app.post('/artist/:name', (req, res, next) => {
         }
 
       }
-      console.log("doing fcn");
       favoritesAddResponse(name);
       //below else means user id is not blank
   }
@@ -1646,7 +1623,6 @@ app.post('/favorites', (req, res, next) => {
       }
 
     }
-    console.log("doing fcn");
     favoritesRemoveResponse(user_id, track_id, favetrack_name, theusername);
     //below else means user id is not blank
 
@@ -1678,8 +1654,6 @@ app.post('/req/tunereport', (req, res, next) => {
               res.render('error');
             }
         }
-          
-        console.log("running function");
         makeEmail(reason, info);
     }
           
@@ -1717,8 +1691,6 @@ app.post('/req/tracksubmission', (req, res, next) => {
               res.render('error');
             }
         }
-          
-        console.log("running function");
         makeEmail(reason, info);
     }
           
@@ -1749,8 +1721,6 @@ app.post('/req/question', (req, res, next) => {
               res.render('error');
             }
         }
-          
-        console.log("running function");
         makeEmail(reason, info);
     }
           

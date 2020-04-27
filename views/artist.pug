@@ -202,10 +202,11 @@ block content
 	script.
 		$(document).ready(function() {
 		var theform = $('#addfaveform');
+		console.log(theform[4].value);
 		var thebutton = $('#test2');
 		thebutton.click(function (ev) {
 		ev.preventDefault();
-
+		console.log("CLicked");
 		console.log(theform[4].value);
 		});//submit
 		});

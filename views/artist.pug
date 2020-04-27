@@ -205,7 +205,8 @@ block content
 				item.addEventListener('click', event => {
 				console.log("CLicked");
 				console.log("ITEM ID is: " + item.id);
-				var theform = $(`#form ${item.id}`);
+				var theform = document.getElementById(`form ${item.id}`);
+				console.log(theform);
 				console.log("artist name is: " + theform.elements["name"].value);
 
 

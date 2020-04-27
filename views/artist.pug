@@ -39,10 +39,10 @@ block content
 	- var test = `${artist_name}`;
 
 	#ulcontain
-		each track in x
+		each track, index in x
 			.uldiv
 				ul
-					li.tunetext= `${track.track_name}`
+					li.tunetext= `${track.track_name} + ${index}`
 					.regaudio
 						audio(src=track.drive_url, type='audio/mpeg', controls='')
 					.downloadbutton

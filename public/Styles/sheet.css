@@ -79,7 +79,7 @@ body {
 
 .searchform input[type=text], select {
   width: 100%;
-  padding: 12px 20px;
+  padding: 20px 35px;
   margin: 8px 0;
   display: flex;
   border: 1px solid #ccc;
@@ -89,7 +89,7 @@ body {
 
 .searchformart input[type=text], select {
   width: 100%;
-  padding: 12px 20px;
+  padding: 20px 35px;
   margin: 8px 0;
   display: flex;
   border: 1px solid #ccc;

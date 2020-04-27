@@ -206,13 +206,21 @@ block content
 				console.log("CLicked");
 				console.log("ITEM ID is: " + item.id);
 				var theform = document.getElementById(`form ${item.id}`);
-				var theform2 = $(`#form ${item.id}`);
-				var artist_name = theform2.elements["name"].value;
+				console.log(theform);
+				var tid = theform.elements["track_id"].value;
+				var t_name = theform.elements["favetrack_name"].value;
+				var uid = theform.elements["user_id"].value;
+				var a_name = theform.elements["name"].value;
 
 				$.ajax({
 					url:`/artist/${artist_name}`,
 					type: 'POST',
-					data: theform2.serialize(),
+					data: {
+						track_id: tid,
+						favetrack_name: t_name,
+						user_id: uid,
+						name: a_name
+					},
 					success: function(data){
 						console.log("Sucess");
 					},

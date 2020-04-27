@@ -7,7 +7,7 @@ block content
 	- var y = thetracks;
 	- var userid = currentuserid;
 	- var message = msg;
-	.labelgcenter #{message}
+	#labelgcenter #{message}
 	script.
 		document.addEventListener('play', function(e){
 		var audios = document.getElementsByTagName('audio');
@@ -17,17 +17,18 @@ block content
 		}
 		}
 		}, true);
-	.searchcontainart
-			.searchformart
-				form#searchy(method='POST')
-					div
-						label.boldtext(for='search_results') Tune Search
-						input#search_results(type='text', name='search_results' placeholder="Search for a Tune...")
-					#test
-						img(border='0', alt='back', src='../Images/PageIMG/tunesearch.png', height='45')
-					div
-						a(href=`../favorites`) Reload Back To All Tunes
-	.ulcontain
+	.middlecontain	
+		.searchcontainart
+				.searchformart
+					form#searchy(method='POST')
+						div
+							label.boldtext(for='search_results') Tune Search
+							input#search_results(type='text', name='search_results' placeholder="Search for a Tune...")
+						#test
+							img(border='0', alt='back', src='../Images/PageIMG/tunesearch.png', height='45')
+						div
+							a(href=`../favorites`) Reload Back To All Tunes
+	#ulcontain
 		each track in y
 			ul
 				.uldiv
@@ -51,3 +52,40 @@ block content
 								input(type='submit', value='Remove From Favorites')
 					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
 					a(href="")
+	#ulcontain2
+	script.
+		$(document).ready(function() {
+		var theform = $('#searchy');
+		var thebutton = $('#test');
+		thebutton.click(function (ev) {
+		ev.preventDefault();
+		$.ajax({
+		url:'/favtunesearch',
+		type: 'POST',
+		data: theform.serialize(),
+		success: function(data){
+
+			var themsg = data.msg;
+			document.getElementById('labelgcenter').innerHTML = themsg;
+			var reloadlist = data.reloadlist;
+
+			console.log(themsg);
+			console.log(reloadlist);
+			console.log(data.tracks);
+			console.log(data.currentuserid);
+
+
+			if (reloadlist == 1){
+				console.log("reload list!")
+				
+				
+
+			}//end if, reloading page elements within
+
+		},
+		error: function(){
+		console.log("Didn't Work");
+		}
+		});//ajax
+		});//submit
+		});

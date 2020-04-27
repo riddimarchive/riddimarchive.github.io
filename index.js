@@ -1377,6 +1377,71 @@ app.post('/tunesearch',(req,res)=>{
   }
 });
 
+app.post('/favtunesearch',(req,res)=>{
+
+  var { search_results } = req.body;
+  
+  var user_id = "";
+  var msg = "";
+  var tracks = [];
+  var reloadlist = 0;
+
+  if(req.user !== undefined){
+    user_id = req.user.id;
+  }
+
+  if(!search_results){
+    msg = "Please Type in something to Search!";
+
+    res.send({msg: msg, reloadlist: reloadlist, currentuserid: user_id, tracks: tracks});
+
+  }else{
+    //load artist page but with the new search
+    search_results = search_results + "%";
+
+    async function favoritePageResponseWithTuneSearch(user_id, search_results){
+      try{
+          var db = createConnection();
+          await conquerie.connect(db);
+          //searching instead
+          let sresult = await trackquerie.searchFavorites(db, search_results, a_name);
+
+          if(sresult.length == 0){
+            await conquerie.end(db);
+            msg = "No items found";
+            
+            res.send({msg: msg, reloadlist: reloadlist, currentuserid: user_id, tracks: tracks});
+
+          }else{
+          //there was a result, loading that instead
+          for (var i = 0; i < sresult.length; i++) {
+           var row = {
+              'track_name':sresult[i].track_name,
+              'artist_name':sresult[i].artist_name,
+              'drive_url': sresult[i].drive_url,
+              'id': sresult[i].id
+           }
+           tracks.push(row);
+          }
+
+          await conquerie.end(db);
+          msg = "Search Results:";
+          reloadlist = 1;
+          
+          res.send({msg: msg, reloadlist: reloadlist, currentuserid: user_id, tracks: tracks});
+        }
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+
+  }
+  favoritePageResponseWithTuneSearch(user_id, search_results);
+
+  }
+});
+
+
 //POST REQUEST - Artist Submission
 app.post('/req/submission', (req, res, next) => {
   

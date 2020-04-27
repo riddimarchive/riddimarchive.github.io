@@ -207,10 +207,24 @@ block content
 				console.log("ITEM ID is: " + item.id);
 				var theform = document.getElementById(`form ${item.id}`);
 				console.log(theform);
-				console.log("artist name is: " + theform.elements["name"].value);
+				var artist_name = theform.elements["name"].value;
+
+				$.ajax({
+					url:`/artist/${artist_name}`,
+					type: 'POST',
+					data: theform.serialize(),
+					success: function(data){
+						console.log("Sucess");
+					},
+					error: function(){
+						console.log("Didn't Work");
+					}
+				});//ajax
+
+				
 
 
 
-				});
-			});
-		});
+				});//click event
+			});//class selector
+		});//doc ready

@@ -47,19 +47,14 @@ block content
 						audio(src=track.drive_url, type='audio/mpeg', controls='')
 					.downloadbutton
 						a(href=track.drive_url)
-							img(border='0', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
+							img(border='2', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
 						#test2
-							img(border='0', alt='back', src='../Images/PageIMG/addfave.png', height='50')
-						form(method='POST' action=`/artist/${artist_name}`)
+							img(border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
+						form#addfaveform(method='POST')
 							input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
-							
 							input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
-							
 							input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
-							
 							input#name.form-control(type='hidden', name='name', value=`${artist_name}`)
-							
-							input(type='submit', value='Add to Favorites')
 					
 	#ulcontain2
 	script.
@@ -198,5 +193,16 @@ block content
 		console.log("Didn't Work");
 		}
 		});//ajax
+		});//submit
+		});
+
+script.
+		$(document).ready(function() {
+		var theform = $('#addfaveform');
+		var thebutton = $('#test2');
+		thebutton.click(function (ev) {
+		ev.preventDefault();
+
+		console.log(theform[4].value);
 		});//submit
 		});

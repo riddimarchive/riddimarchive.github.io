@@ -56,7 +56,7 @@ block content
 							input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
 							
 							input#name.form-control(type='hidden', name='name', value=`${artist_name}`)
-							img(id=`button ${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
+							img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
 					
 	#ulcontain2
 	script.
@@ -200,9 +200,8 @@ block content
 	
 	script.
 		$(document).ready(function() {
-		var theform = $('#addfaveform');
-		console.log(theform.elements[3].value);
-		var thebutton = $('#test2');
+		var theN = document.querySelectorAll("favebuttonclass:last-child").id;
+		console.log("the n is " + theN);
 		thebutton.click(function (ev) {
 		ev.preventDefault();
 		console.log("CLicked");

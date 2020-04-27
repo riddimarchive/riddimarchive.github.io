@@ -90,13 +90,13 @@ block content
     .shufflecontain
       p SHUFFLE PLAYER
       #shuftext
-        text= `${shuffleart} - ${shuffletrack}`
+        text.boldtext= `${shuffleart} - ${shuffletrack}`
       .downloadbutton
         audio(id='shufaudio', type='audio/mpeg', controls='')
             source(id='shufaudiosrc' src=`${shuffleurl}`)
         #shuffleforward
           img(border='0', alt='back', src='Images/PageIMG/forward.png', height='45')
-      #loadtext
+      #loadtext.boldtext
   br
   .labelgcenter #{message}
   - var x = artists;

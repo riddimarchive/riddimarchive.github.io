@@ -48,7 +48,7 @@ block content
 					.downloadbutton
 						a(href=track.drive_url)
 							img(border='2', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
-						form(method='POST' action=`/artist/${artist_name}`)
+						form(id=`form ${index}`, method='POST')
 							input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
 							
 							input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
@@ -56,8 +56,7 @@ block content
 							input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
 							
 							input#name.form-control(type='hidden', name='name', value=`${artist_name}`)
-							#test2
-								img(border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
+							img(id=`button ${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
 					
 	#ulcontain2
 	script.

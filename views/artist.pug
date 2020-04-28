@@ -127,6 +127,7 @@ block content
 					//form
 					var zeform = document.createElement('form');
 					zeform.setAttribute('method', 'POST');
+					zeform.setAttribute('id', `form ${i}`);
 					zeform.setAttribute('action', `/artist/${tracks[i].artist_name}`);
 
 					//form inputs:

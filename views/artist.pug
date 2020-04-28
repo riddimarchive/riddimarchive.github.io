@@ -78,6 +78,7 @@ block content
 			var thebutton = $('#test');
 			thebutton.click(function (ev) {
 			ev.preventDefault();
+			console.log("Button CLicked");
 			$.ajax({
 			url:'/tunesearch',
 			type: 'POST',

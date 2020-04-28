@@ -36,7 +36,7 @@ block content
 							a(href=`../favorites`) Reload Back To All Tunes
 	#labelgcenter #{message}
 	#ulcontain
-		each track in y
+		each track, index in y
 			.uldiv
 				ul
 					li.tunetexttotw= `${track.artist_name} - ${track.track_name}`
@@ -45,8 +45,8 @@ block content
 					li.tunetext= `       `
 					.downloadbutton
 						a(href=track.drive_url)
-							img(border='0', alt='Download Tune', src='../Images/PageIMG/download.png', height='50')
-						form(method='POST' action=`/favorites`)
+							img(border='0', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
+						form(id=`form ${index}`, method='POST' action=`/favorites`)
 							div.form-group
 								input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
 							div.form-group

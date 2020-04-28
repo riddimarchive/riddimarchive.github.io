@@ -121,7 +121,7 @@ block content
 					var downimage = document.createElement('img');
 					downimage.setAttribute('border', '0');
 					downimage.setAttribute('alt', 'Download Tune');
-					downimage.setAttribute('src', '../Images/PageIMG/download.png');
+					downimage.setAttribute('src', '../Images/PageIMG/download2.png');
 					downimage.setAttribute('height', '50');
 
 					//form
@@ -158,16 +158,21 @@ block content
 					artistnameinput.setAttribute('name', 'name');
 					artistnameinput.setAttribute('value', `${tracks[i].artist_name}`);
 
-					var submitinput = document.createElement('input');
-					submitinput.setAttribute('type', 'submit');
-					submitinput.setAttribute('value', `Add to Favorites`);
+					var submitimage = document.createElement('img');
+					submitimage.setAttribute('id', `${i}`);
+					submitimage.setAttribute('class', 'favebuttonclass');
+					submitimage.setAttribute('border', '2');
+					submitimage.setAttribute('alt', 'back');
+					submitimage.setAttribute('height', '50');
+					submitimage.setAttribute('src', '../Images/PageIMG/addfave.png');
+
 
 					//finishing form
 					zeform.appendChild(trackidinput);
 					zeform.appendChild(tracknameinput);
 					zeform.appendChild(useridinput);
 					zeform.appendChild(artistnameinput);
-					zeform.appendChild(submitinput);
+					zeform.appendChild(submitimage);
 
 					//finishing download
 					downlink.appendChild(downimage);

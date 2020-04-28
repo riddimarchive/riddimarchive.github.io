@@ -1552,120 +1552,38 @@ app.post('/req/removal', (req, res, next) => {
 app.post('/artist/:name', (req, res, next) => {
   console.log("RUN DA TING");
   var { user_id, track_id, favetrack_name, name } = req.body;
-  console.log(user_id);
-  console.log(track_id);
-  console.log(favetrack_name);
-  console.log(name);
 
   if(user_id === "" || req.user.id === undefined){
-      //make queries, get all artist/track info and render artist page
-      async function favoritesAddResponse(aname){
-        try{
-
-            var name = aname;
-            var artist = {};
-            var tracks = [];
-            var info = "";
             var msg = "Please login to save Favorites!";
+            res.send({msg: msg});
 
-            var db = createConnection();
-            await conquerie.connect(db);
-
-            let result = await artquerie.getArtistInfo(db, name);
-            info = `${result[0].info}`;
-
-            let tresult = await trackquerie.getAllTracksFromArtist(db, name);
-            for (var i = 0; i < tresult.length; i++) {
-              var row = {
-                'track_name':tresult[i].track_name,
-                'artist_name':tresult[i].artist_name,
-                'drive_url': tresult[i].drive_url,
-                'crew': tresult[i].crew,
-                'country': tresult[i].country,
-                'artist_id': tresult[i].artist_id,
-                'id': tresult[i].id
-              }
-              tracks.push(row);
-            }
-
-            await conquerie.end(db);
-
-            res.render('artist',{
-              artist_name: name,
-              info: info,
-              tracks: tracks,
-              currentuserid: user_id,
-              msg: msg
-            });
-
-        }catch(err){
-          console.log(err);
-          res.render('error');
-        }
-
-      }
-      favoritesAddResponse(name);
       //below else means user id is not blank
   }else{
       //make queries, get all artist/track info and render artist page
-      async function favoritesAddResponse(aname){
+      async function favoritesAddResponse(){
         try{
-
-            var name = aname;
-            var artist = {};
-            var tracks = [];
-            var info = "";
             var msg = `${favetrack_name} Added to Favorites!`;
 
             var db = createConnection();
             await conquerie.connect(db);
 
-            let result = await artquerie.getArtistInfo(db, name);
-            info = `${result[0].info}`;
-
-            let tresult = await trackquerie.getAllTracksFromArtist(db, name);
-            for (var i = 0; i < tresult.length; i++) {
-              var row = {
-                'track_name':tresult[i].track_name,
-                'artist_name':tresult[i].artist_name,
-                'drive_url': tresult[i].drive_url,
-                'crew': tresult[i].crew,
-                'country': tresult[i].country,
-                'artist_id': tresult[i].artist_id,
-                'id': tresult[i].id
-              }
-              tracks.push(row);
-            }
             //confirm favorite isn't already there
             let ckresult = await userquerie.checkUserFavorite(db, user_id, track_id);
             if(ckresult.length > 0){
-              console.log("Favorite already added");
-              msg = `${favetrack_name} is already added!`;
-              await conquerie.end(db);
+                msg = `${favetrack_name} is already added!`;
+                await conquerie.end(db);
               
-
-              res.render('artist',{
-                artist_name: name,
-                info: info,
-                tracks: tracks,
-                currentuserid: user_id,
-                msg: msg
-              });
+                res.send({msg: msg});
+                //below means user is present and this is a new favorite
             }else{
 
-              //store into favorites here, need user ID and track ID
-              let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
-
+                //store into favorites here, need user ID and track ID
+                let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
+              
             }
             
             await conquerie.end(db);
-            res.render('artist',{
-              artist_name: name,
-              info: info,
-              tracks: tracks,
-              currentuserid: user_id,
-              msg: msg
-            });
+            res.send({msg: msg});
 
         }catch(err){
           console.log(err);
@@ -1673,8 +1591,7 @@ app.post('/artist/:name', (req, res, next) => {
         }
 
       }
-      favoritesAddResponse(name);
-      //below else means user id is not blank
+      favoritesAddResponse();
   }
 });
 

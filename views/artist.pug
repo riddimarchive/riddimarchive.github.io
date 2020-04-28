@@ -222,7 +222,9 @@ block content
 						name: a_name
 					},
 					success: function(data){
-						console.log("Sucess");
+						var themsg = data.msg;
+						document.getElementById('labelgcenter').innerHTML = themsg;
+						document.getElementById('labelgcenter2').innerHTML = themsg;
 					},
 					error: function(){
 						console.log("Didn't Work");

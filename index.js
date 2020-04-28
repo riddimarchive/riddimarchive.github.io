@@ -1579,10 +1579,8 @@ app.post('/artist/:name', (req, res, next) => {
 
                 //store into favorites here, need user ID and track ID
                 let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
-              
+                await conquerie.end(db);
             }
-            
-            await conquerie.end(db);
             res.send({msg: msg});
 
         }catch(err){

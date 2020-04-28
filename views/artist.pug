@@ -61,148 +61,156 @@ block content
 	#ulcontain2
 	script.
 		$(document).ready(function() {
-		var theform = $('#searchy');
-		var thebutton = $('#test');
-		thebutton.click(function (ev) {
-		ev.preventDefault();
-		$.ajax({
-		url:'/tunesearch',
-		type: 'POST',
-		data: theform.serialize(),
-		success: function(data){
-
-			var themsg = data.msg;
-			document.getElementById('labelgcenter').innerHTML = themsg;
-			document.getElementById('labelgcenter2').innerHTML = themsg;
-			var reloadlist = data.reloadlist;
-
-			if (reloadlist == 1){
-
-				var oldlist = document.getElementsByClassName("uldiv");
-				const len = oldlist.length;
-				for (var i = 0; i < len; i++){
-					var element = oldlist[(oldlist.length - 1)].parentNode;
-					element.removeChild(oldlist[(oldlist.length - 1)]);
-				}
-				var tracks = data.tracks;
-				for (var i = 0; i < tracks.length; i++){
-					//set container, everything will added within
-					var thecontainer = document.getElementById('ulcontain2');
-
-					var newdiv = document.createElement('div');
-					newdiv.setAttribute('class', 'uldiv');
-
-					var newul = document.createElement('ul');
-
-					//Track Name Line
-					var textli = document.createElement('li');
-					textli.setAttribute('class', 'tunetext');
-					textli.innerHTML = tracks[i].track_name;
-
-					//audio div
-					var audiodiv = document.createElement('div');
-					audiodiv.setAttribute('class', 'regaudio');
-
-					//audio element
-					var newaudio = document.createElement('audio');
-					newaudio.setAttribute('src', `${tracks[i].drive_url}`);
-					newaudio.setAttribute('type', 'audio/mpeg');
-					newaudio.setAttribute('controls', '');
-
-					//download div
-					var downloaddiv = document.createElement('div');
-					downloaddiv.setAttribute('class', 'downloadbutton');
-
-					//download link
-					var downlink = document.createElement('a');
-					downlink.setAttribute('href', `${tracks[i].drive_url}`);
-
-					//download image
-					var downimage = document.createElement('img');
-					downimage.setAttribute('border', '2');
-					downimage.setAttribute('alt', 'Download Tune');
-					downimage.setAttribute('src', '../Images/PageIMG/download2.png');
-					downimage.setAttribute('height', '50');
-
-					//form
-					var zeform = document.createElement('form');
-					zeform.setAttribute('method', 'POST');
-					zeform.setAttribute('id', `form ${i}`);
-					zeform.setAttribute('action', `/artist/${tracks[i].artist_name}`);
-
-					//form inputs:
-					var trackidinput = document.createElement('input');
-					trackidinput.setAttribute('id', 'track_id');
-					trackidinput.setAttribute('class', 'form-control');
-					trackidinput.setAttribute('type', 'hidden');
-					trackidinput.setAttribute('name', 'track_id');
-					trackidinput.setAttribute('value', `${tracks[i].id}`);
-
-					var tracknameinput = document.createElement('input');
-					tracknameinput.setAttribute('id', 'favetrack_name');
-					tracknameinput.setAttribute('class', 'form-control');
-					tracknameinput.setAttribute('type', 'hidden');
-					tracknameinput.setAttribute('name', 'favetrack_name');
-					tracknameinput.setAttribute('value', `${tracks[i].track_name}`);
-
-					var useridinput = document.createElement('input');
-					useridinput.setAttribute('id', 'user_id');
-					useridinput.setAttribute('class', 'form-control');
-					useridinput.setAttribute('type', 'hidden');
-					useridinput.setAttribute('name', 'user_id');
-					useridinput.setAttribute('value', `${data.currentuserid}`);
-
-					var artistnameinput = document.createElement('input');
-					artistnameinput.setAttribute('id', 'name');
-					artistnameinput.setAttribute('class', 'form-control');
-					artistnameinput.setAttribute('type', 'hidden');
-					artistnameinput.setAttribute('name', 'name');
-					artistnameinput.setAttribute('value', `${tracks[i].artist_name}`);
-
-					var submitimage = document.createElement('img');
-					submitimage.setAttribute('id', `${i}`);
-					submitimage.setAttribute('class', 'favebuttonclass');
-					submitimage.setAttribute('border', '2');
-					submitimage.setAttribute('alt', 'back');
-					submitimage.setAttribute('height', '50');
-					submitimage.setAttribute('src', '../Images/PageIMG/addfave.png');
-
-
-					//finishing form
-					zeform.appendChild(trackidinput);
-					zeform.appendChild(tracknameinput);
-					zeform.appendChild(useridinput);
-					zeform.appendChild(artistnameinput);
-					zeform.appendChild(submitimage);
-
-					//finishing download
-					downlink.appendChild(downimage);
-					downloaddiv.appendChild(downlink);
-					downloaddiv.appendChild(zeform);
-
-					//finishing audio
-					audiodiv.appendChild(newaudio);
-
-					//final appends
-					newul.appendChild(textli);
-					newul.appendChild(audiodiv);
-					newul.appendChild(downloaddiv);
-					newdiv.appendChild(newul);
-
-					//insert into page
-					thecontainer.appendChild(newdiv);
-
-				}
-
-			}//end if, reloading page elements within
-
-		},
-		error: function(){
-		console.log("Didn't Work");
-		}
-		});//ajax
-		});//submit
+			AjaxInit();
 		});
+
+		$(document).ajaxComplete(function () {
+    		AjaxInit();
+		});
+
+		function AjaxInit() {
+			var theform = $('#searchy');
+			var thebutton = $('#test');
+			thebutton.click(function (ev) {
+			ev.preventDefault();
+			$.ajax({
+			url:'/tunesearch',
+			type: 'POST',
+			data: theform.serialize(),
+			success: function(data){
+
+				var themsg = data.msg;
+				document.getElementById('labelgcenter').innerHTML = themsg;
+				document.getElementById('labelgcenter2').innerHTML = themsg;
+				var reloadlist = data.reloadlist;
+
+				if (reloadlist == 1){
+
+					var oldlist = document.getElementsByClassName("uldiv");
+					const len = oldlist.length;
+					for (var i = 0; i < len; i++){
+						var element = oldlist[(oldlist.length - 1)].parentNode;
+						element.removeChild(oldlist[(oldlist.length - 1)]);
+					}
+					var tracks = data.tracks;
+					for (var i = 0; i < tracks.length; i++){
+						//set container, everything will added within
+						var thecontainer = document.getElementById('ulcontain2');
+
+						var newdiv = document.createElement('div');
+						newdiv.setAttribute('class', 'uldiv');
+
+						var newul = document.createElement('ul');
+
+						//Track Name Line
+						var textli = document.createElement('li');
+						textli.setAttribute('class', 'tunetext');
+						textli.innerHTML = tracks[i].track_name;
+
+						//audio div
+						var audiodiv = document.createElement('div');
+						audiodiv.setAttribute('class', 'regaudio');
+
+						//audio element
+						var newaudio = document.createElement('audio');
+						newaudio.setAttribute('src', `${tracks[i].drive_url}`);
+						newaudio.setAttribute('type', 'audio/mpeg');
+						newaudio.setAttribute('controls', '');
+
+						//download div
+						var downloaddiv = document.createElement('div');
+						downloaddiv.setAttribute('class', 'downloadbutton');
+
+						//download link
+						var downlink = document.createElement('a');
+						downlink.setAttribute('href', `${tracks[i].drive_url}`);
+
+						//download image
+						var downimage = document.createElement('img');
+						downimage.setAttribute('border', '2');
+						downimage.setAttribute('alt', 'Download Tune');
+						downimage.setAttribute('src', '../Images/PageIMG/download2.png');
+						downimage.setAttribute('height', '50');
+
+						//form
+						var zeform = document.createElement('form');
+						zeform.setAttribute('method', 'POST');
+						zeform.setAttribute('id', `form ${i}`);
+						zeform.setAttribute('action', `/artist/${tracks[i].artist_name}`);
+
+						//form inputs:
+						var trackidinput = document.createElement('input');
+						trackidinput.setAttribute('id', 'track_id');
+						trackidinput.setAttribute('class', 'form-control');
+						trackidinput.setAttribute('type', 'hidden');
+						trackidinput.setAttribute('name', 'track_id');
+						trackidinput.setAttribute('value', `${tracks[i].id}`);
+
+						var tracknameinput = document.createElement('input');
+						tracknameinput.setAttribute('id', 'favetrack_name');
+						tracknameinput.setAttribute('class', 'form-control');
+						tracknameinput.setAttribute('type', 'hidden');
+						tracknameinput.setAttribute('name', 'favetrack_name');
+						tracknameinput.setAttribute('value', `${tracks[i].track_name}`);
+
+						var useridinput = document.createElement('input');
+						useridinput.setAttribute('id', 'user_id');
+						useridinput.setAttribute('class', 'form-control');
+						useridinput.setAttribute('type', 'hidden');
+						useridinput.setAttribute('name', 'user_id');
+						useridinput.setAttribute('value', `${data.currentuserid}`);
+
+						var artistnameinput = document.createElement('input');
+						artistnameinput.setAttribute('id', 'name');
+						artistnameinput.setAttribute('class', 'form-control');
+						artistnameinput.setAttribute('type', 'hidden');
+						artistnameinput.setAttribute('name', 'name');
+						artistnameinput.setAttribute('value', `${tracks[i].artist_name}`);
+
+						var submitimage = document.createElement('img');
+						submitimage.setAttribute('id', `${i}`);
+						submitimage.setAttribute('class', 'favebuttonclass');
+						submitimage.setAttribute('border', '2');
+						submitimage.setAttribute('alt', 'back');
+						submitimage.setAttribute('height', '50');
+						submitimage.setAttribute('src', '../Images/PageIMG/addfave.png');
+
+
+						//finishing form
+						zeform.appendChild(trackidinput);
+						zeform.appendChild(tracknameinput);
+						zeform.appendChild(useridinput);
+						zeform.appendChild(artistnameinput);
+						zeform.appendChild(submitimage);
+
+						//finishing download
+						downlink.appendChild(downimage);
+						downloaddiv.appendChild(downlink);
+						downloaddiv.appendChild(zeform);
+
+						//finishing audio
+						audiodiv.appendChild(newaudio);
+
+						//final appends
+						newul.appendChild(textli);
+						newul.appendChild(audiodiv);
+						newul.appendChild(downloaddiv);
+						newdiv.appendChild(newul);
+
+						//insert into page
+						thecontainer.appendChild(newdiv);
+
+					}
+
+				}//end if, reloading page elements within
+
+			},
+			error: function(){
+			console.log("Didn't Work");
+			}
+			});//ajax
+			});//submit
+		}//ajaxinit
 	
 	script.
 		$(document).ready(function() {

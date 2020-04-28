@@ -77,7 +77,6 @@ block content
 			var thebutton = $('#test');
 			thebutton.click(function (ev) {
 			ev.preventDefault();
-			console.log("Button CLicked");
 			$.ajax({
 			url:'/tunesearch',
 			type: 'POST',
@@ -225,8 +224,6 @@ block content
 			console.log("fave Ajax Init");
 			document.querySelectorAll('.favebuttonclass').forEach(item => {
 				item.addEventListener('click', event => {
-				console.log("CLicked");
-				console.log("ITEM ID is: " + item.id);
 				var theform = document.getElementById(`form ${item.id}`);
 				console.log(theform);
 				var tid = theform.elements["track_id"].value;
@@ -252,10 +249,6 @@ block content
 						console.log("Didn't Work");
 					}
 				});//ajax
-
-				
-
-
 
 				});//click event
 			});//class selector

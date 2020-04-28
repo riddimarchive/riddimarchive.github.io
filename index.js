@@ -1361,7 +1361,7 @@ app.post('/tunesearch',(req,res)=>{
           }
 
           await conquerie.end(db);
-          msg = "Search Results:";
+          msg = "Results Found!:";
           reloadlist = 1;
           
           res.send({msg: msg, reloadlist: reloadlist, currentuserid: user_id, artist_name: a_name, tracks: tracks});
@@ -1426,7 +1426,7 @@ app.post('/favtunesearch',(req,res)=>{
                 }
 
                 await conquerie.end(db);
-                msg = "Search Results:";
+                msg = "Results Found!:";
                 reloadlist = 1;
           
                 res.send({msg: msg, reloadlist: reloadlist, currentuserid: user_id, tracks: tracks});
@@ -1454,7 +1454,7 @@ app.post('/favtunesearch',(req,res)=>{
                 }
 
                 await conquerie.end(db);
-                msg = "Search Results:";
+                msg = "Results Found!:";
                 reloadlist = 1;
           
                 res.send({msg: msg, reloadlist: reloadlist, currentuserid: user_id, tracks: tracks});
@@ -1550,7 +1550,6 @@ app.post('/req/removal', (req, res, next) => {
 
 //POST REQUEST - FAVORITES ADD - Keeps current url
 app.post('/artist/:name', (req, res, next) => {
-  console.log("FAVORITES ADD CLICK");
   var { user_id, track_id, favetrack_name, name } = req.body;
 
   if(user_id === "" || req.user.id === undefined){

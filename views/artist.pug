@@ -61,16 +61,19 @@ block content
 	#ulcontain2
 	script.
 		$(document).ready(function() {
+			console.log("Doc ready");
 			searchAjaxInit();
 			faveAjaxInit();
 		});
 
 		$(document).ajaxComplete(function () {
+			console.log("Ajax Complete");
 			searchAjaxInit();
 			faveAjaxInit();
 		});
 
 		function searchAjaxInit() {
+			console.log("Search Ajax Init");
 			var theform = $('#searchy');
 			var thebutton = $('#test');
 			thebutton.click(function (ev) {
@@ -209,13 +212,16 @@ block content
 			},
 			error: function(){
 			console.log("Didn't Work");
+			var msg = "Something went Wrong, Please Refresh Page and try Again";
+			document.getElementById('labelgcenter').innerHTML = themsg;
+			
 			}
 			});//ajax
 			});//submit
 		}//searchajaxinit
 		
 		function faveAjaxInit() {
-		
+			console.log("fave Ajax Init");
 			document.querySelectorAll('.favebuttonclass').forEach(item => {
 				item.addEventListener('click', event => {
 				console.log("CLicked");

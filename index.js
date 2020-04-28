@@ -1550,7 +1550,7 @@ app.post('/req/removal', (req, res, next) => {
 
 //POST REQUEST - FAVORITES ADD - Keeps current url
 app.post('/artist/:name', (req, res, next) => {
-  console.log("RUN DA TING");
+  console.log("FAVORITES ADD CLICK");
   var { user_id, track_id, favetrack_name, name } = req.body;
 
   if(user_id === "" || req.user.id === undefined){
@@ -1580,9 +1580,8 @@ app.post('/artist/:name', (req, res, next) => {
                 //store into favorites here, need user ID and track ID
                 let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
                 await conquerie.end(db);
+                res.send({msg: msg});
             }
-            res.send({msg: msg});
-
         }catch(err){
           console.log(err);
           res.render('error');

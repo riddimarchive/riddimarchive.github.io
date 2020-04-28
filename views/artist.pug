@@ -61,14 +61,16 @@ block content
 	#ulcontain2
 	script.
 		$(document).ready(function() {
-			AjaxInit();
+			searchAjaxInit();
+			faveAjaxInit();
 		});
 
 		$(document).ajaxComplete(function () {
-			AjaxInit();
+			searchAjaxInit();
+			faveAjaxInit();
 		});
 
-		function AjaxInit() {
+		function searchAjaxInit() {
 			var theform = $('#searchy');
 			var thebutton = $('#test');
 			thebutton.click(function (ev) {
@@ -210,10 +212,9 @@ block content
 			}
 			});//ajax
 			});//submit
-		}//ajaxinit
-	
-	script.
-		$(document).ready(function() {
+		}//searchajaxinit
+		
+		function faveAjaxInit() {
 		
 			document.querySelectorAll('.favebuttonclass').forEach(item => {
 				item.addEventListener('click', event => {
@@ -251,4 +252,4 @@ block content
 
 				});//click event
 			});//class selector
-		});//doc ready
+		}//fave ajax init

@@ -44,7 +44,7 @@ block content
 				ul
 					li.tunetext= `${track.track_name}`
 					.regaudio
-						audio(src=track.drive_url, type='audio/mpeg', controls='', preload='metadata')
+						audio(src=track.drive_url, type='audio/mpeg', controls='', preload='none')
 					.downloadbutton
 						a(href=track.drive_url)
 							img(border='2', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
@@ -121,7 +121,7 @@ block content
 						newaudio.setAttribute('src', `${tracks[i].drive_url}`);
 						newaudio.setAttribute('type', 'audio/mpeg');
 						newaudio.setAttribute('controls', '');
-						newaudio.setAttribute('preload', 'metadata');
+						newaudio.setAttribute('preload', 'none');
 
 						//download div
 						var downloaddiv = document.createElement('div');
@@ -251,8 +251,6 @@ block content
 					success: function(data){
 						var themsg = data.msg;
 						var theindex = data.index;
-						document.getElementById('labelgcenter').innerHTML = themsg;
-						document.getElementById('labelgcenter2').innerHTML = themsg;
 						document.getElementById(`result${theindex}`).innerHTML = themsg;
 
 					},

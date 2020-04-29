@@ -1550,11 +1550,11 @@ app.post('/req/removal', (req, res, next) => {
 
 //POST REQUEST - FAVORITES ADD - Keeps current url
 app.post('/artist/:name', (req, res, next) => {
-  var { user_id, track_id, favetrack_name, name } = req.body;
+  var { user_id, track_id, favetrack_name, name, index} = req.body;
 
   if(user_id === "" || req.user.id === undefined){
             var msg = "Please login to save Favorites!";
-            res.send({msg: msg});
+            res.send({msg: msg, index: index});
 
       //below else means user id is not blank
   }else{
@@ -1572,14 +1572,14 @@ app.post('/artist/:name', (req, res, next) => {
                 msg = `${favetrack_name} is already added!`;
                 await conquerie.end(db);
               
-                res.send({msg: msg});
+                res.send({msg: msg, index: index});
                 //below means user is present and this is a new favorite
             }else{
 
                 //store into favorites here, need user ID and track ID
                 let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
                 await conquerie.end(db);
-                res.send({msg: msg});
+                res.send({msg: msg, index: index});
             }
         }catch(err){
           console.log(err);

@@ -7,6 +7,7 @@ block content
 	#labelgcenter #{message}
 	script.
 		document.addEventListener('play', function(e){
+		e.target.currentTime = 0;
 		var audios = document.getElementsByTagName('audio');
 		var curindex = e.target.id;
 
@@ -14,6 +15,7 @@ block content
 		loadmsg.innerHTML = "Loading...";
 		for(var i = 0, len = audios.length; i < len;i++){
 		if(audios[i] != e.target){
+		audios[i].currentTime = audios[i].duration;
 		audios[i].pause();
 		var theid = (audios[i].id-10000);
 		var loadmsg = document.getElementById(`result${theid}`);

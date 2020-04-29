@@ -8,11 +8,17 @@ block content
 	script.
 		document.addEventListener('play', function(e){
 		var audios = document.getElementsByTagName('audio');
-		console.log(e.target.currentSrc);
-		console.log(e.target.id);
+		var curindex = e.target.id;
+
+		var loadmsg = document.getElementById(`result${curindex-10000}`);
+		loadmsg.innerHTML = "Loading...";
 		for(var i = 0, len = audios.length; i < len;i++){
 		if(audios[i] != e.target){
 		audios[i].pause();
+		var theid = (audios[i].id-10000);
+		var loadmsg = document.getElementById(`${theid}`);
+		loadmsg.innerHTML = "";
+		
 		}
 		}
 		}, true);
@@ -46,7 +52,7 @@ block content
 				ul
 					li.tunetext= `${track.track_name}`
 					.regaudio
-						audio(id=`${index+1000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none')
+						audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none')
 					.downloadbutton
 						a(href=track.drive_url)
 							img(border='2', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
@@ -124,7 +130,7 @@ block content
 						newaudio.setAttribute('type', 'audio/mpeg');
 						newaudio.setAttribute('controls', '');
 						newaudio.setAttribute('preload', 'none');
-						newaudio.setAttribute('id', `${i+1000}`);
+						newaudio.setAttribute('id', `${i+10000}`);
 
 						//download div
 						var downloaddiv = document.createElement('div');

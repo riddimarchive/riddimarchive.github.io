@@ -15,7 +15,8 @@ block content
 		loadmsg.innerHTML = "Loading...";
 		for(var i = 0, len = audios.length; i < len;i++){
 		if(audios[i] != e.target){
-		audios[i].currentTime = audios[i].duration;
+		var slength = audios[i].duration;
+		audios[i].currentTime = slength;
 		audios[i].pause();
 		var theid = (audios[i].id-10000);
 		var loadmsg = document.getElementById(`result${theid}`);

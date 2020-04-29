@@ -8,9 +8,10 @@ block content
 	script.
 		document.addEventListener('play', function(e){
 		var audios = document.getElementsByTagName('audio');
+		console.log(e.target.currentSrc);
+		console.log(e.target.id);
 		for(var i = 0, len = audios.length; i < len;i++){
 		if(audios[i] != e.target){
-			console.log(e.target.currentSrc);
 		audios[i].pause();
 		}
 		}
@@ -45,7 +46,7 @@ block content
 				ul
 					li.tunetext= `${track.track_name}`
 					.regaudio
-						audio(src=track.drive_url, type='audio/mpeg', controls='', preload='none')
+						audio(id=`${index+1000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none')
 					.downloadbutton
 						a(href=track.drive_url)
 							img(border='2', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
@@ -123,6 +124,7 @@ block content
 						newaudio.setAttribute('type', 'audio/mpeg');
 						newaudio.setAttribute('controls', '');
 						newaudio.setAttribute('preload', 'none');
+						newaudio.setAttribute('id', `${i+1000}`);
 
 						//download div
 						var downloaddiv = document.createElement('div');

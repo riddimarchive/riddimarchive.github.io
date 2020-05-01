@@ -108,8 +108,10 @@ block content
 
 					var newdiv = document.createElement('div');
 					newdiv.setAttribute('class', 'uldiv');
+					newdiv.setAttribute('id', `uldiv ${i}`);
 
 					var newul = document.createElement('ul');
+					newul.setAttribute('id', `ul ${theindex}`);
 
 					//Track Name Line
 					var textli = document.createElement('li');

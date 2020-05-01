@@ -1601,7 +1601,7 @@ app.post('/favorites', (req, res, next) => {
   async function favoritesRemoveResponse(user_id, track_id, favetrack_name, theusername){
     try{
 
-        var msg = `${favetrack_name} Removed to Favorites!`;
+        var msg = `${favetrack_name} Removed from Favorites!`;
 
         var db = createConnection();
         await conquerie.connect(db);
@@ -1655,20 +1655,18 @@ app.post('/req/tunereport', (req, res, next) => {
 //POST REQUEST - Track Submission
 app.post('/req/tracksubmission', (req, res, next) => {
   
-  var { artist_name, link } = req.body;
+  var { link } = req.body;
 
   var reason = "Track Submission (Non Artist)";
   var info = "";
 
-  if (!artist_name || !link){
+  if (!link){
     res.render('tracksubmission',{
-      msg: "Please include artist name and link!"
+      msg: "Please include link!"
     });
   }else{
         info = `
         
-        Artist Name: ${artist_name} 
-
         Link: ${link}`;
 
         async function makeEmail(reason, info){

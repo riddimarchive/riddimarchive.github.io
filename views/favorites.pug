@@ -11,9 +11,17 @@ block content
 	script.
 		document.addEventListener('play', function(e){
 		var audios = document.getElementsByTagName('audio');
+		var curindex = e.target.id;
+
+		var loadmsg = document.getElementById(`result${curindex-10000}`);
+		loadmsg.innerHTML = "Loading...";
 		for(var i = 0, len = audios.length; i < len;i++){
 		if(audios[i] != e.target){
 		audios[i].pause();
+		var theid = (audios[i].id-10000);
+		var loadmsg = document.getElementById(`result${theid}`);
+		loadmsg.innerHTML = "";
+		
 		}
 		}
 		}, true);
@@ -37,47 +45,57 @@ block content
 	#labelgcenter #{message}
 	#ulcontain
 		each track, index in y
-			.uldiv
-				ul
+			.uldiv(id=`uldiv ${index}`)
+				ul(id=`ul ${index}`)
 					li.tunetexttotw= `${track.artist_name} - ${track.track_name}`
 					.regaudio
-						audio(src=track.drive_url, type='audio/mpeg', controls='')
+						audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none')
 					li.tunetext= `       `
 					.downloadbutton
 						a(href=track.drive_url)
-							img(border='0', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
-						form(id=`form ${index}`, method='POST' action=`/favorites`)
-							div.form-group
-								input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
-							div.form-group
-								input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
-							div.form-group
-								input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
-							div.form-group
-								input#name.form-control(type='hidden', name='name', value=`${track.artist_name}`)
-							div
-								input(type='submit', value='Remove From Favorites')
-					li.tunetext= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
-					a(href="")
+							img(border='2', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
+						form(id=`form ${index}`, method='POST')
+							input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
+							
+							input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
+							
+							input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
+							
+							input#name.form-control(type='hidden', name='name', value=`${track.artist_name}`)
+							img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/removefave.png', height='50')
+					div(id=`result${index}`)
 	#ulcontain2
 	script.
 		$(document).ready(function() {
-		var theform = $('#searchy');
-		var thebutton = $('#test');
-		thebutton.click(function (ev) {
-		ev.preventDefault();
-		$.ajax({
-		url:'/favtunesearch',
-		type: 'POST',
-		data: theform.serialize(),
-		success: function(data){
+			console.log("Doc ready");
+			searchAjaxInit();
+			faveAjaxInit();
+		});
+
+		$(document).ajaxComplete(function () {
+			console.log("Ajax Complete");
+			//faveAjaxInit();
+		});
+
+		function searchAjaxInit() {
+			console.log("Search Ajax Init");
+			var theform = $('#searchy');
+			var thebutton = $('#test');
+			thebutton.click(function (ev) {
+			ev.preventDefault();
+			$.ajax({
+			url:'/favtunesearch',
+			type: 'POST',
+			data: theform.serialize(),
+			success: function(data){
 
 			var themsg = data.msg;
 			document.getElementById('labelgcenter').innerHTML = themsg;
+			document.getElementById('labelgcenter2').innerHTML = themsg;
 			var reloadlist = data.reloadlist;
 
 			if (reloadlist == 1){
-				console.log("reload list!")
+
 				var oldlist = document.getElementsByClassName("uldiv");
 				const len = oldlist.length;
 				for (var i = 0; i < len; i++){
@@ -108,6 +126,8 @@ block content
 					newaudio.setAttribute('src', `${tracks[i].drive_url}`);
 					newaudio.setAttribute('type', 'audio/mpeg');
 					newaudio.setAttribute('controls', '');
+					newaudio.setAttribute('preload', 'none');
+					newaudio.setAttribute('id', `${i+10000}`);
 
 					//download div
 					var downloaddiv = document.createElement('div');
@@ -121,12 +141,13 @@ block content
 					var downimage = document.createElement('img');
 					downimage.setAttribute('border', '0');
 					downimage.setAttribute('alt', 'Download Tune');
-					downimage.setAttribute('src', '../Images/PageIMG/download.png');
+					downimage.setAttribute('src', '../Images/PageIMG/download2.png');
 					downimage.setAttribute('height', '50');
 
 					//form
 					var zeform = document.createElement('form');
 					zeform.setAttribute('method', 'POST');
+					zeform.setAttribute('id', `form ${i}`);
 					zeform.setAttribute('action', `/favorites`);
 
 					//form inputs:
@@ -158,16 +179,21 @@ block content
 					artistnameinput.setAttribute('name', 'name');
 					artistnameinput.setAttribute('value', `${tracks[i].artist_name}`);
 
-					var submitinput = document.createElement('input');
-					submitinput.setAttribute('type', 'submit');
-					submitinput.setAttribute('value', `Remove From Favorites`);
+					var submitimage = document.createElement('img');
+					submitimage.setAttribute('id', `${i}`);
+					submitimage.setAttribute('class', 'favebuttonclass');
+					submitimage.setAttribute('border', '2');
+					submitimage.setAttribute('alt', 'back');
+					submitimage.setAttribute('height', '50');
+					submitimage.setAttribute('src', '../Images/PageIMG/removefave.png');
+
 
 					//finishing form
 					zeform.appendChild(trackidinput);
 					zeform.appendChild(tracknameinput);
 					zeform.appendChild(useridinput);
 					zeform.appendChild(artistnameinput);
-					zeform.appendChild(submitinput);
+					zeform.appendChild(submitimage);
 
 					//finishing download
 					downlink.appendChild(downimage);
@@ -177,25 +203,72 @@ block content
 					//finishing audio
 					audiodiv.appendChild(newaudio);
 
+					//added label
+					var labeldiv = document.createElement('div');
+					labeldiv.setAttribute('id', `result${i}`);
+
 					//final appends
 					newul.appendChild(textli);
 					newul.appendChild(audiodiv);
 					newul.appendChild(downloaddiv);
+					newul.appendChild(labeldiv);
 					newdiv.appendChild(newul);
 
 					//insert into page
 					thecontainer.appendChild(newdiv);
 
 
-				}//end for loop
+				}
+				faveAjaxInit();
+				}//end if, reloading page elements within
+			
+			},
+			error: function(){
+			console.log("Didn't Work");
+			var msg = "Something went Wrong, Please Refresh Page and try Again";
+			document.getElementById('labelgcenter').innerHTML = themsg;
+			
+			}
+			});//ajax
+			});//submit
+		}//searchajaxinit
 
+		function faveAjaxInit() {
+			console.log("fave Ajax Init");
+			document.querySelectorAll('.favebuttonclass').forEach(item => {
+				item.addEventListener('click', event => {
+				var theform = document.getElementById(`form ${item.id}`);
+				console.log(theform);
+				var tid = theform.elements["track_id"].value;
+				var t_name = theform.elements["favetrack_name"].value;
+				var uid = theform.elements["user_id"].value;
+				var a_name = theform.elements["name"].value;
+				var index = item.id;
 
-			}//end if, reloading page elements within
+				$.ajax({
+					url:`/favorites`,
+					type: 'POST',
+					data: {
+						track_id: tid,
+						favetrack_name: t_name,
+						user_id: uid,
+						name: a_name,
+						index: index
+					},
+					success: function(data){
+						var themsg = data.msg;
+						var theindex = data.index;
+						document.getElementById('labelgcenter').innerHTML = themsg;
+						var thediv = document.getElementById(`uldiv ${theindex}`);
+						var theul = document.getElementById(`ul ${theindex}`);
+						theul.remove();
+						thediv.remove();
+					},
+					error: function(){
+						console.log("Didn't Work");
+					}
+				});//ajax
 
-		},
-		error: function(){
-		console.log("Didn't Work");
-		}
-		});//ajax
-		});//submit
-		});
+				});//click event
+			});//class selector
+		}//fave ajax init

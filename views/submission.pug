@@ -5,12 +5,12 @@ block content
 	.artisth1 
 		h1 Artist Submission (Please only submit yourself!) 
 	- var message = msg;
-	.labelg #{message}
 	.artisth1
 		h2 Note: You can submit released tunes, or even old exclusives if you wish to do so. I will only be uploading these kinds of tunes with the artist's permission.
+	.labelgcenter #{message}
 	.contactdiv
 		.contact
-			form(method='POST', action='/req/submission', enctype='multipart/form-data')
+			form(id='searchy', method='POST')
 				.label Artist Name:
 				br
 				div.form-group
@@ -54,7 +54,39 @@ block content
 				div.form-group
 					input#link.form-control(type='text', name='link')
 				br
+				img(id='thesubmitbtn', class='buttonclass', border='2', alt='back', src='../Images/PageIMG/submit.png', height='200', width='325')
 
-				div
-					button.btn.btn-primary.btn-block(type='submit') Submit
-	br
+	script.
+		$(document).ready(function() {
+			console.log("Doc ready");
+			AjaxInit();
+		});
+
+		$(document).ajaxComplete(function () {
+			console.log("Ajax Complete");
+		});
+
+		function AjaxInit() {
+			console.log("Ajax Init");
+			var theform = $('#searchy');
+			var thebutton = $('#thesubmitbtn');
+			thebutton.click(function (ev) {
+			ev.preventDefault();
+			$.ajax({
+			url: '/req/submission',
+			type: 'POST',
+			data: theform.serialize(),
+			success: function(data){
+
+				var themsg = data.msg;
+				document.getElementById('labelgcenter').innerHTML = themsg;
+			},
+			error: function(){
+			console.log("Didn't Work");
+			var msg = "Something went Wrong, Please Refresh Page and try Again";
+			document.getElementById('labelgcenter').innerHTML = themsg;
+			
+			}
+			});//ajax
+			});//submit
+		}//ajaxinit

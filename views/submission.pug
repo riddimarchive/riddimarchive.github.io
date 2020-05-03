@@ -1,17 +1,16 @@
 extends index2
 
 block content
-	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
 	txt  
 	.artisth1 
 		h1 Artist Submission (Please only submit yourself!) 
 	- var message = msg;
+	.labelg #{message}
 	.artisth1
 		h2 Note: You can submit released tunes, or even old exclusives if you wish to do so. I will only be uploading these kinds of tunes with the artist's permission.
-	#labelgcenter #{message}
 	.contactdiv
 		.contact
-			form(id='searchy', method='POST', enctype="multipart/form-data")
+			form(method='POST', action='/req/submission', enctype='multipart/form-data')
 				.label Artist Name:
 				br
 				div.form-group
@@ -55,59 +54,7 @@ block content
 				div.form-group
 					input#link.form-control(type='text', name='link')
 				br
-				input(type='image', id='thesubmitbtn', class='buttonclass', src='../Images/PageIMG/submit.png', border='2', alt='Submit', height='200', width='325')
-	#labelgcenter #{message}
-	script.
-		$(document).ready(function() {
-			console.log("Doc ready");
-			AjaxInit();
-		});
 
-		$(document).ajaxComplete(function () {
-			console.log("Ajax Complete");
-		});
-
-		function AjaxInit() {
-			console.log("Ajax Init");
-
-			$("#searchy").on('submit',(function(e) {
-				e.preventDefault();
-				$.ajax({
-					url: "upload.php",
-					type: "POST",
-					data:  new FormData(this),
-					success: function(data)
-					{
-						var themsg = data.msg;
-						document.getElementById('labelgcenter').innerHTML = themsg;
-					},
-					error: function() 
-					{
-					}
-				});
-			}));
-			/*
-			var theform = $('#searchy');
-			var thebutton = $('#thesubmitbtn');
-			thebutton.click(function (ev) {
-			ev.preventDefault();
-			$.ajax({
-			url: '/req/submission',
-			type: 'POST',
-			data: theform.serialize(),
-			success: function(data){
-
-				var themsg = data.msg;
-				document.getElementById('labelgcenter').innerHTML = themsg;
-			},
-			error: function(){
-			console.log("Didn't Work");
-			var msg = "Something went Wrong, Please Refresh Page and try Again";
-			document.getElementById('labelgcenter').innerHTML = themsg;
-			
-			}
-			});//ajax
-			});//submit
-
-			*/
-		}//ajaxinit
+				div
+					button.btn.btn-primary.btn-block(type='submit') Submit
+	br

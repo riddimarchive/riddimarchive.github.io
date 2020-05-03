@@ -1481,10 +1481,16 @@ app.post('/req/submission', (req, res, next) => {
 
   if (!req.files || Object.keys(req.files).length === 0) {
     console.log('No image was uploaded.');
-    res.send({msg: "Please Include Image"});
+    res.render('submission',{
+      msg: "Please include Image!",
+      msg2: ""
+    });
   }else{
       if (!artist_name || !link){
-        res.send({msg: "Please include Artist Name and Download Link!"});
+        res.render('submission',{
+          msg: "Please include Artist Name and Download Link!",
+          msg2: ""
+        });
       }else{
             let artist_img = req.files.img;
             
@@ -1492,7 +1498,11 @@ app.post('/req/submission', (req, res, next) => {
                 try{
                   await emailer.storeArtistImage(artist_img, artist_name);
                   await emailer.emailArtistForm(artist_name, crew, country, info, link, artist_img);
-                  res.send({msg: "Form Submitted! Admins will begin adding your page!"});
+                  res.render('submission',{
+                    msg: "Form Submitted! Admins will begin adding your page!",
+                    msg2: ""
+                  });
+                    
                 }catch(err){
                   console.log(err);
                   res.render('error');
@@ -1500,9 +1510,9 @@ app.post('/req/submission', (req, res, next) => {
             }
               
             makeEmail(artist_name, crew, country, info, link, artist_img);
-        }//artist name and link included
+        }
           
-  }//image included
+  }
 
 });
 

@@ -255,6 +255,8 @@ li.tunetext{
 .contact{
   display: flex;
   justify-content: center;
+  padding-left: 3em;
+  flex-wrap: wrap;
 }
 
 .contact form{

@@ -235,7 +235,7 @@ list-style-type: none;
 	margin-bottom: 17px
 }
 .fish div{
-  padding-left: 3.5em;
+  padding-left: 0.5em;
 }
 
 li.tunetext{
@@ -246,7 +246,6 @@ li.tunetext{
 .contactdiv{
   align-items: center;
   align-self: center;
-  padding-left: 3.5em;
 }
 
 .contact form{
@@ -268,7 +267,7 @@ li.tunetext{
 
 .contact form button, .contact form input, .contact form textarea{
   width:75%;
-  padding-left: 300px;
+  padding:1em;
   border:1px solid #c9e6ff;
 }
 

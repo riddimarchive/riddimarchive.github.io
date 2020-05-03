@@ -55,8 +55,8 @@ block content
 				div.form-group
 					input#link.form-control(type='text', name='link')
 				br
-				img(id='thesubmitbtn', class='buttonclass', border='2', alt='back', src='../Images/PageIMG/submit.png', height='200', width='325')
-
+				input(type='image', id='thesubmitbtn', class='buttonclass', src='../Images/PageIMG/submit.png', border='2', alt='Submit', height='200', width='325')
+	#labelgcenter #{message}
 	script.
 		$(document).ready(function() {
 			console.log("Doc ready");
@@ -69,6 +69,24 @@ block content
 
 		function AjaxInit() {
 			console.log("Ajax Init");
+
+			$("#searchy").on('submit',(function(e) {
+				e.preventDefault();
+				$.ajax({
+					url: "upload.php",
+					type: "POST",
+					data:  new FormData(this),
+					success: function(data)
+					{
+						var themsg = data.msg;
+						document.getElementById('labelgcenter').innerHTML = themsg;
+					},
+					error: function() 
+					{
+					}
+				});
+			}));
+			/*
 			var theform = $('#searchy');
 			var thebutton = $('#thesubmitbtn');
 			thebutton.click(function (ev) {
@@ -90,4 +108,6 @@ block content
 			}
 			});//ajax
 			});//submit
+
+			*/
 		}//ajaxinit

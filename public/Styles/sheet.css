@@ -303,6 +303,9 @@ li.tunetext{
 }
 .faqcontact form input, .contact form textarea{
   width:75%;
+  padding: 1.5em;
+  font-size: 48px;
+  margin-left: 200px;
   border:1px solid #c9e6ff;
 }
 

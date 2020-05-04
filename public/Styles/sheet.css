@@ -310,13 +310,19 @@ li.tunetext{
   font-size: 48px;
   margin-left: 200px;
 }
+
+.faqcontact form{
+  display: flex;
+  justify-content: center;
+  justify-self: center;
+}
+
 .faqcontact form button{
   background:#c9e6ff;
   border:0;
   text-transform: uppercase;
   padding: 1.5em;
   font-size: 48px;
-  margin-left: 200px;
 }
 
 .button{

@@ -301,6 +301,10 @@ li.tunetext{
   padding-right: 10em;
   border:1px solid #c9e6ff;
 }
+.faqcontact form input, .contact form textarea{
+  width:75%;
+  border:1px solid #c9e6ff;
+}
 
 .contact form button{
   background:#c9e6ff;
@@ -318,11 +322,12 @@ li.tunetext{
 }
 
 .faqcontact form button{
-  background:#c9e6ff;
-  border:0;
+  background: #c9e6ff;
+  border: 0;
   text-transform: uppercase;
   padding: 1.5em;
   font-size: 48px;
+  margin-left: 200px;
 }
 
 .button{

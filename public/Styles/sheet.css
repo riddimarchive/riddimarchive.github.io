@@ -26,6 +26,12 @@ body {
   justify-self: center;
 }
 
+.faqtext{
+  display: flex;
+  justify-content: center;
+  justify-self: center;
+}
+
 .label{
   font-weight: bold;
   font-size: x-large;

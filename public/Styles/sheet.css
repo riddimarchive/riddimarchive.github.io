@@ -31,6 +31,12 @@ body {
   justify-content: center;
   justify-self: center;
 }
+.ftxt{
+  display: flex;
+  justify-content: center;
+  width: 400px;
+  margin: 0.7em;
+}
 
 .label{
   font-weight: bold;

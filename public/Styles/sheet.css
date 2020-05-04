@@ -34,8 +34,9 @@ body {
 .ftxt{
   display: flex;
   justify-content: center;
-  width: 400px;
+  width: 700px;
   margin: 0.7em;
+  font-size: large;
 }
 
 .label{

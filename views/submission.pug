@@ -5,9 +5,9 @@ block content
 	.artisth1 
 		h1 Artist Submission (Please only submit yourself!) 
 	- var message = msg;
-	.labelg #{message}
 	.artisth1
 		h2 Note: You can submit released tunes, or even old exclusives if you wish to do so. I will only be uploading these kinds of tunes with the artist's permission.
+	.labelgcenter #{message}
 	.contactdiv
 		.contact
 			form(method='POST', action='/req/submission', enctype='multipart/form-data')
@@ -57,4 +57,4 @@ block content
 
 				div
 					button.btn.btn-primary.btn-block(type='submit') Submit
-	br
+	.labelgcenter #{message}

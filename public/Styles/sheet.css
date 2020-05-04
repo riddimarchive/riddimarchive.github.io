@@ -307,6 +307,10 @@ li.tunetext{
   border:1px solid #c9e6ff;
 }
 
+#paypal{
+  margin-top: 0.5em;
+}
+
 .contact form button{
   background:#c9e6ff;
   border:0;

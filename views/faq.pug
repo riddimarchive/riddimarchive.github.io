@@ -40,7 +40,7 @@ block content
       .faqtext
             .ftxt Much love, sharing this site with anyone new or old to the genre is much appreciated! If you'd like to donate to help recoop the site costs, you can here. In NO way is this required. To be honest, site costs are really low so far, so I'm not trippin. I made this site for the love of RIDDIMMMM (and to get webdesign practice lol).
             br
-            form(action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
+            form(id='paypal', action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
                   input(type='hidden', name='cmd', value='_donations')
                   input(type='hidden', name='business', value='4RCMFJAVJJCL4')
                   input(type='hidden', name='currency_code', value='USD')

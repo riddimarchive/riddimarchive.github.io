@@ -441,7 +441,9 @@ app.get('/artist/:name', function(req,res){
               'crew': tresult[i].crew,
               'country': tresult[i].country,
               'artist_id': tresult[i].artist_id,
-              'id': tresult[i].id
+              'id': tresult[i].id,
+              'collab_artist': tresult[i].collab_artist,
+              'original_artist': tresult[i].original_artist
             }
             tracks.push(row);
           }

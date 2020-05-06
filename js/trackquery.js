@@ -57,7 +57,7 @@ function getAllTracksFromArtist(db, artist_name){
 function searchTunes(db, search_results, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT track_name, artist_name, drive_url, id FROM tracks WHERE track_name LIKE ? AND artist_name = ? ORDER BY track_name`, [search_results, artist_name], (error, result, fields) => {
+		db.query(`SELECT track_name, artist_name, drive_url, collab_artist, original_artist, is_remix, is_collab, id FROM tracks WHERE track_name LIKE ? AND artist_name = ? ORDER BY track_name`, [search_results, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

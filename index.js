@@ -445,6 +445,7 @@ app.get('/artist/:name', function(req,res){
               'collab_artist': tresult[i].collab_artist,
               'original_artist': tresult[i].original_artist,
               'is_remix': tresult[i].is_remix,
+              'is_collab': tresult[i].is_collab,
               'blank': ""
             }
             tracks.push(row);
@@ -453,6 +454,12 @@ app.get('/artist/:name', function(req,res){
           for (var i = 0; i < tracks.length; i++) {
             if(tracks[i].is_remix != 1){
               tracks[i].blank = ` - ${tracks[i].artist_name}`;
+            }
+            if(tracks[i].is_collab != 1){
+              tracks[i].blank = ``;
+            }
+            if(tracks[i].is_collab == 1 && tracks[i].is_remix == 1){
+              tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`;
             }
           }
 

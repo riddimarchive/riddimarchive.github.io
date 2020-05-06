@@ -50,7 +50,7 @@ block content
 		each track, index in x
 			.uldiv
 				ul
-					li.tunetext= `${track.original_artist}${track.track_name}${track.blank}${track.collab_artist}`
+					li.tunetext= `${track.original_artist}${track.track_name}${track.blank}`
 					.regaudio
 						audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none')
 					.downloadbutton

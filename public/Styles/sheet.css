@@ -304,7 +304,7 @@ li.tunetext{
   text-transform: uppercase;
   padding: 1.5em;
   font-size: 48px;
-  margin-left: 2.5em;
+  margin-left: 5em;
 }
 
 
@@ -313,10 +313,10 @@ li.tunetext{
   padding-top:1.5em;
   padding-bottom:1.5em;
   padding-left:1em;
-  padding-right: 10em;
+  padding-right: 20em;
 }
 .faqform form .label{
-  width: 300px;
+  width: 800px;
 }
 
 #paypal img{

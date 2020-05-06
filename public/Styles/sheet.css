@@ -315,6 +315,9 @@ li.tunetext{
   padding-left:1em;
   padding-right: 10em;
 }
+.faqform form .label{
+  width: 300px;
+}
 
 #paypal img{
   margin-top: 30px;

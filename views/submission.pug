@@ -8,7 +8,7 @@ block content
 	.artisth1
 		h2 Note: You can submit released tunes, or even old exclusives if you wish to do so. I will only be uploading these kinds of tunes with the artist's permission.
 	.labelgcenter #{message}
-	
+
 	.faqform
 		form(method='POST', action='/req/submission', enctype='multipart/form-data')
 			.label Artist Name:
@@ -45,11 +45,11 @@ block content
 			br
 			div Recommended Upload Sites:
 				txt  
-				a(href='http://we.tl/') We Transfer
+				a(href='http://we.tl/', style="text-decoration: underline") We Transfer
 				txt  
-				a(href='https://drive.google.com/') Google Drive
+				a(href='https://drive.google.com/', style="text-decoration: underline") Google Drive
 				txt  
-				a(href='https://www.mediafire.com/') Mediafire
+				a(href='https://www.mediafire.com/', style="text-decoration: underline") Mediafire
 			br
 			div.form-group
 				input#link.form-control(type='text', name='link')

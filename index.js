@@ -348,10 +348,10 @@ app.get('/favorites', (req, res) => {
               'artist_name': result[i].artist_name,
               'drive_url': result[i].drive_url,
               'id': result[i].id,
-              'collab_artist': tresult[i].collab_artist,
-              'original_artist': tresult[i].original_artist,
-              'is_remix': tresult[i].is_remix,
-              'is_collab': tresult[i].is_collab,
+              'collab_artist': result[i].collab_artist,
+              'original_artist': result[i].original_artist,
+              'is_remix': result[i].is_remix,
+              'is_collab': result[i].is_collab,
               'blank': ""
             }
             tracks.push(row);
@@ -1529,10 +1529,10 @@ app.post('/favtunesearch',(req,res)=>{
                     'artist_name':sresult[i].artist_name,
                     'drive_url': sresult[i].drive_url,
                     'id': sresult[i].id,
-                    'collab_artist': tresult[i].collab_artist,
-                    'original_artist': tresult[i].original_artist,
-                    'is_remix': tresult[i].is_remix,
-                    'is_collab': tresult[i].is_collab,
+                    'collab_artist': sresult[i].collab_artist,
+                    'original_artist': sresult[i].original_artist,
+                    'is_remix': sresult[i].is_remix,
+                    'is_collab': sresult[i].is_collab,
                     'blank': ""
                  }
                  tracks.push(row);

@@ -6,6 +6,7 @@ const fileUpload = require('express-fileupload');
 const path = require('path');
 const createError = require('http-errors');
 const passport = require('passport');
+const flash = require('connect-flash');
 
 //file reqs: database connect, query functions, hash functions
 const createConnection = require('./js/dbconnect');
@@ -37,10 +38,12 @@ app.use(fileUpload());
 
 //express-session
 app.use(session({
-  secret: 'secret',
+  secret: 'secret fish',
   resave: true,
   saveUninitialized: true
 }));
+
+app.use(flash());
 
 // create public folders in express
 app.use(express.static('public'));
@@ -156,7 +159,8 @@ app.get('/login', (req, res) => {
     res.render('login',{
       title:'Riddim Archive Login',
       username: '',
-      er: ''
+      er: '',
+      message: req.flash('error')
     });
 
   }else{
@@ -734,7 +738,8 @@ app.post('/login', (req, res, next) => {
   }else{
     passport.authenticate('local', {
       successRedirect: '/dashboard',
-      failureRedirect: '/login'
+      failureRedirect: '/login',
+      failureFlash : true
     })(req, res, next);
   }
 });

@@ -316,8 +316,8 @@ li.tunetext{
   padding-right: 10em;
 }
 
-#paypal{
-  margin-top: 0.5em;
+#paypal img{
+  margin-top: 30px;
 }
 
 .faqtext{
@@ -344,9 +344,9 @@ li.tunetext{
     background: #c9e6ff;
     border: 0;
     text-transform: uppercase;
-    padding: 1.5em;
-    font-size: 48px;
-    margin-left: 200px;
+    padding: 1em;
+    font-size: 36px;
+    margin-bottom: 0.3em;
  }
 
 .navbar{

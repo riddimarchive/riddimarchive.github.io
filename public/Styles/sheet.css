@@ -235,7 +235,7 @@ list-style-type: none;
 	margin-bottom: 17px
 }
 .fish div{
-  padding-left: 0.5em;
+  padding-left: 3.5em;
 }
 
 li.tunetext{
@@ -288,10 +288,50 @@ li.tunetext{
   transition: background-color 2s ease-out;
 }
 
+.faqform{
+  display: flex;
+  justify-content: center;
+  padding-left: 3em;
+  flex-wrap: wrap;
+}
+
+.faqform form button{
+  background:#c9e6ff;
+  border:0;
+  text-transform: uppercase;
+  padding: 1.5em;
+  font-size: 48px;
+  margin-left: 200px;
+  display: flex;
+  justify-content: center;
+  justify-self: center;
+}
+
+.faqform form{
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+  
+}
+
+.faqform form input, .faqform form textarea{
+  padding: 1em;
+  font-size: 48px;
+  border:1px solid #c9e6ff;
+  padding-top:1.5em;
+  padding-bottom:1.5em;
+  padding-left:1em;
+  padding-right: 10em;
+}
+
+#paypal{
+  margin-top: 0.5em;
+}
+
 .navbar{
   background-color:#3b5998;
   overflow:hidden;
-  height:45px;
+  height: 60px;
   margin: 0px 0px 0px 0px;
 }
 

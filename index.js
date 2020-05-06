@@ -367,6 +367,9 @@ app.get('/favorites', (req, res) => {
             if(tracks[i].is_collab != 1){
               tracks[i].blank = ` - ${tracks[i].artist_name}`;
             }
+            if(tracks[i].is_remix == 1){
+              tracks[i].blank = ``;
+            }
             if(tracks[i].is_collab == 1 && tracks[i].is_remix == 1){
               tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`;
             }
@@ -1500,6 +1503,9 @@ app.post('/favtunesearch',(req,res)=>{
                   if(tracks[i].is_collab != 1){
                     tracks[i].blank = ` - ${tracks[i].artist_name}`;
                   }
+                  if(tracks[i].is_remix == 1){
+                    tracks[i].blank = ``;
+                  }
                   if(tracks[i].is_collab == 1 && tracks[i].is_remix == 1){
                     tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`;
                   }
@@ -1547,6 +1553,9 @@ app.post('/favtunesearch',(req,res)=>{
                   }
                   if(tracks[i].is_collab != 1){
                     tracks[i].blank = ` - ${tracks[i].artist_name}`;
+                  }
+                  if(tracks[i].is_remix == 1){
+                    tracks[i].blank = ``;
                   }
                   if(tracks[i].is_collab == 1 && tracks[i].is_remix == 1){
                     tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`;

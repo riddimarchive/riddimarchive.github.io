@@ -307,8 +307,6 @@ li.tunetext{
   margin-left: 2.5em;
 }
 
-.faqform form{
-}
 
 .faqform form input, .faqform form textarea{
   font-size: 24px;
@@ -334,7 +332,21 @@ li.tunetext{
     width: 750px;
     margin: 0.7em;
     font-size: x-large;
-    text-decoration: underline;
+ }
+
+ .faqmainbtn form{
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+}
+
+ .faqmainbtn form button{
+    background: #c9e6ff;
+    border: 0;
+    text-transform: uppercase;
+    padding: 1.5em;
+    font-size: 48px;
+    margin-left: 200px;
  }
 
 .navbar{
@@ -351,7 +363,7 @@ li.tunetext{
   text-align:center;
   padding:14px 16px;
   text-decoration:none;
-  font-size:17px;
+  font-size: 30px;
 }
 
 .navbar ul{

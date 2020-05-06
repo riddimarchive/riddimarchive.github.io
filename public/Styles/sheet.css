@@ -19,25 +19,8 @@ body {
 
 .question{
   font-weight: bold;
-  font-size: xx-large;
-  text-decoration: underline;
-  display: flex;
-  justify-content: center;
-  justify-self: center;
-}
-
-.faqtext{
-  display: flex;
-  justify-content: center;
-  justify-self: center;
-}
-
-.ftxt{
-  display: flex;
-  justify-content: center;
-  width: 750px;
-  margin: 0.7em;
   font-size: x-large;
+  text-decoration: underline;
 }
 
 .label{
@@ -221,10 +204,6 @@ a{
   display: flex;
   justify-content: center;
 }
-.artisth1{
-  display: flex;
-  justify-content: center;
-}
 
 .artistinfo{
   display: flex;
@@ -256,7 +235,7 @@ list-style-type: none;
 	margin-bottom: 17px
 }
 .fish div{
-  padding-left: 3.5em;
+  padding-left: 0.5em;
 }
 
 li.tunetext{
@@ -267,13 +246,6 @@ li.tunetext{
 .contactdiv{
   align-items: center;
   align-self: center;
-}
-
-.contact{
-  display: flex;
-  justify-content: center;
-  padding-left: 3em;
-  flex-wrap: wrap;
 }
 
 .contact form{
@@ -293,48 +265,18 @@ li.tunetext{
   grid-column: 1 / 3;
 }
 
-.contact form input, .contact form textarea{
+.contact form button, .contact form input, .contact form textarea{
   width:75%;
-  padding-top:1.5em;
-  padding-bottom:1.5em;
-  padding-left:1em;
-  padding-right: 10em;
+  padding:1em;
   border:1px solid #c9e6ff;
-}
-.faqcontact form input, .contact form textarea{
-  padding: 1em;
-  font-size: 48px;
-  border:1px solid #c9e6ff;
-}
-
-#paypal{
-  margin-top: 0.5em;
 }
 
 .contact form button{
   background:#c9e6ff;
   border:0;
   text-transform: uppercase;
-  padding: 1.5em;
-  font-size: 48px;
-  margin-left: 200px;
+  font-size: 24px;
 }
-
-.faqcontact form{
-  display: flex;
-  justify-content: center;
-  justify-self: center;
-}
-
-.faqcontact form button{
-  background: #c9e6ff;
-  border: 0;
-  text-transform: uppercase;
-  padding: 1.5em;
-  font-size: 48px;
-  margin-left: 200px;
-}
-
 .button{
   font-size: 24px;
 }
@@ -349,7 +291,7 @@ li.tunetext{
 .navbar{
   background-color:#3b5998;
   overflow:hidden;
-  height: 60px;
+  height:45px;
   margin: 0px 0px 0px 0px;
 }
 
@@ -360,7 +302,7 @@ li.tunetext{
   text-align:center;
   padding:14px 16px;
   text-decoration:none;
-  font-size: 30px;
+  font-size:17px;
 }
 
 .navbar ul{

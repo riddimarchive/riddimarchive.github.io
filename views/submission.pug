@@ -8,53 +8,53 @@ block content
 	.artisth1
 		h2 Note: You can submit released tunes, or even old exclusives if you wish to do so. I will only be uploading these kinds of tunes with the artist's permission.
 	.labelgcenter #{message}
-	.faqformdiv
-		.faqform
-			form(method='POST', action='/req/submission', enctype='multipart/form-data')
-				.label Artist Name:
-				br
-				div.form-group
-					input#artist_name.form-control(type='text', name='artist_name')
-				br
+	
+	.faqform
+		form(method='POST', action='/req/submission', enctype='multipart/form-data')
+			.label Artist Name:
+			br
+			div.form-group
+				input#artist_name.form-control(type='text', name='artist_name')
+			br
 
-				.label Crew:
-				br
-				div.form-group 
-					input#crew.form-control(type='text', name='crew')
-				br
+			.label Crew:
+			br
+			div.form-group 
+				input#crew.form-control(type='text', name='crew')
+			br
 
-				.label Country:
-				br
-				div.form-group  
-					input#country.form-control(type='text', name='country')
-				br
+			.label Country:
+			br
+			div.form-group  
+				input#country.form-control(type='text', name='country')
+			br
 
-				.label Info (Short sentence or two about you and your style, Be creative!):
-				br
-				div.form-group  
-					textarea#info.form-control(type='text', name='info' rows='5')
-				br
+			.label Info (Short sentence or two about you and your style, Be creative!):
+			br
+			div.form-group  
+				textarea#info.form-control(type='text', name='info' rows='5')
+			br
 
-				.label Upload Artist Logo/Image (min size: 275px x 275px):
-				br
-				div.form-group
-					input#img.form-control(type='file', name='img')
-				br
+			.label Upload Artist Logo/Image (min size: 275px x 275px):
+			br
+			div.form-group
+				input#img.form-control(type='file', name='img')
+			br
 
-				.label Please submit private download link to the tune(s) you would like to add:
-				br
-				div Recommended Upload Sites:
-					txt  
-					a(href='http://we.tl/') We Transfer
-					txt  
-					a(href='https://drive.google.com/') Google Drive
-					txt  
-					a(href='https://www.mediafire.com/') Mediafire
-				br
-				div.form-group
-					input#link.form-control(type='text', name='link')
-				br
+			.label Please submit private download link to the tune(s) you would like to add:
+			br
+			div Recommended Upload Sites:
+				txt  
+				a(href='http://we.tl/') We Transfer
+				txt  
+				a(href='https://drive.google.com/') Google Drive
+				txt  
+				a(href='https://www.mediafire.com/') Mediafire
+			br
+			div.form-group
+				input#link.form-control(type='text', name='link')
+			br
 
-				div
-					button.btn.btn-primary.btn-block(type='submit') Submit
+			div
+				button.btn.btn-primary.btn-block(type='submit') Submit
 	.labelgcenter #{message}

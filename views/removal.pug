@@ -2,19 +2,20 @@ extends index2
 
 block content
 	txt  
-	h1 REMOVAL
+	.artisth1 
+		h1 REMOVAL
 	- var message = msg;
-	.labelg #{message}
+	.labelgcenter #{message}
 
-	.contactdiv
-		.contact
-			form(method='POST', action='/req/removal')
-				.label Please let us know which tune/artist page you would like removed.
-				.label It will be removed ASAP.
-				br
-				div.form-group  
-					textarea#info.form-control(type='text', name='info' rows='5')
-				br
+	.faqform
+		form(method='POST', action='/req/removal')
+			.label Please let us know which tune/artist page you would like removed.
+			.label It will be removed ASAP.
+			br
+			div.form-group  
+				textarea#info.form-control(type='text', name='info' rows='5')
+			br
 
-				div
-					button.btn.btn-primary.btn-block(type='submit') Submit
+			div
+				button.btn.btn-primary.btn-block(type='submit') Submit
+	.labelgcenter #{message}

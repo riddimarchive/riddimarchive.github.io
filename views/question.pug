@@ -2,18 +2,19 @@ extends index2
 
 block content
 	txt  
-	h1 QUESTION/COMMENT
+	.artisth1 
+		h1 QUESTION/COMMENT
 	- var message = msg;
-	.labelg #{message}
+	.labelgcenter #{message}
 
-	.contactdiv
-		.contact
-			form(method='POST', action='/req/question')
-				.label What is your comment/question?
-				br
-				div.form-group  
-					textarea#info.form-control(type='text', name='info' rows='5')
-				br
+	.faqform
+		form(method='POST', action='/req/question')
+			.label What is your comment/question?
+			br
+			div.form-group  
+				textarea#info.form-control(type='text', name='info' rows='5')
+			br
 
-				div
-					button.btn.btn-primary.btn-block(type='submit') Submit
+			div
+				button.btn.btn-primary.btn-block(type='submit') Submit
+	.labelgcenter #{message}

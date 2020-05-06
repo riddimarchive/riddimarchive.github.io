@@ -2,11 +2,14 @@ extends index2
 
 block content
 	txt  
-	h1 Add Track (Non-Artist Submission)
+	.artisth1 
+		h1 Add Tracks (Non-Artist Submission)
 	- var message = msg;
-	.labelg #{message}
-	p Note: This is only to submit free tunes from artists that the library is missing. NO PLATES or Released tunes will be posted without Artist/Label Permission. I will verify.
-	.contact
+	.artisth1
+		h2 Note: This is only to submit free tunes from artists that the library is missing. NO PLATES or Released tunes will be posted without Artist/Label Permission. I will verify.
+	.labelgcenter #{message}
+	
+	.faqform
 		form(method='POST' action='/req/tracksubmission')
 			.label Please submit private download link to the tune(s) you would like to add:
 			br
@@ -24,3 +27,4 @@ block content
 
 			div
 				button.btn.btn-primary.btn-block(type='submit') Submit
+	.labelgcenter #{message}

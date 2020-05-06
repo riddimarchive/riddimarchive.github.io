@@ -443,9 +443,17 @@ app.get('/artist/:name', function(req,res){
               'artist_id': tresult[i].artist_id,
               'id': tresult[i].id,
               'collab_artist': tresult[i].collab_artist,
-              'original_artist': tresult[i].original_artist
+              'original_artist': tresult[i].original_artist,
+              'is_remix': tresult[i].is_remix,
+              'blank': ""
             }
             tracks.push(row);
+          }
+
+          for (var i = 0; i < tracks.length; i++) {
+            if(tracks[i].is_remix != 1){
+              tracks[i].blank = tracks[i].artist_name;
+            }
           }
 
           await conquerie.end(db);

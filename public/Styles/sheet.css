@@ -340,7 +340,7 @@ li.tunetext{
     justify-self: center;
 }
 
- .faqmainbtn form button{
+ .faqmainbtn form input{
     background: #c9e6ff;
     border: 0;
     text-transform: uppercase;

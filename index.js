@@ -452,7 +452,7 @@ app.get('/artist/:name', function(req,res){
 
           for (var i = 0; i < tracks.length; i++) {
             if(tracks[i].is_remix != 1){
-              tracks[i].blank = tracks[i].artist_name;
+              tracks[i].blank = ` - ${tracks[i].artist_name}`;
             }
           }
 

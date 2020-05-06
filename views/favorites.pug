@@ -47,7 +47,7 @@ block content
 		each track, index in y
 			.uldiv(id=`uldiv ${index}`)
 				ul(id=`ul ${index}`)
-					li.tunetexttotw= `${track.artist_name} - ${track.track_name}`
+					li.tunetexttotw= `${track.original_artist}${track.track_name}${track.blank}`
 					.regaudio
 						audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none')
 					li.tunetext= `       `
@@ -116,7 +116,7 @@ block content
 					//Track Name Line
 					var textli = document.createElement('li');
 					textli.setAttribute('class', 'tunetexttotw');
-					textli.innerHTML = `${tracks[i].artist_name} - ${tracks[i].track_name}`;
+					textli.innerHTML = `${tracks[i].original_artist}${tracks[i].track_name}${tracks[i].blank}`;
 
 					//audio div
 					var audiodiv = document.createElement('div');

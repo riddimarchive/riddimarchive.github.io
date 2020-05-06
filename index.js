@@ -347,10 +347,30 @@ app.get('/favorites', (req, res) => {
               'track_name': result[i].track_name,
               'artist_name': result[i].artist_name,
               'drive_url': result[i].drive_url,
-              'id': result[i].id
+              'id': result[i].id,
+              'collab_artist': tresult[i].collab_artist,
+              'original_artist': tresult[i].original_artist,
+              'is_remix': tresult[i].is_remix,
+              'is_collab': tresult[i].is_collab,
+              'blank': ""
             }
             tracks.push(row);
           }
+
+          for (var i = 0; i < tracks.length; i++) {
+            if(tracks[i].is_remix != 1){
+              tracks[i].blank = ` - ${tracks[i].artist_name}`;
+            }
+            if(tracks[i].is_collab == 1){
+              tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`
+            }
+            if(tracks[i].is_collab != 1){
+              tracks[i].blank = ` - ${tracks[i].artist_name}`;
+            }
+            if(tracks[i].is_collab == 1 && tracks[i].is_remix == 1){
+              tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`;
+            }
+        }
 
           await conquerie.end(db);
 
@@ -1460,10 +1480,30 @@ app.post('/favtunesearch',(req,res)=>{
                     'track_name':sresult[i].track_name,
                     'artist_name':sresult[i].artist_name,
                     'drive_url': sresult[i].drive_url,
-                    'id': sresult[i].id
+                    'id': sresult[i].id,
+                    'collab_artist': sresult[i].collab_artist,
+                    'original_artist': sresult[i].original_artist,
+                    'is_remix': sresult[i].is_remix,
+                    'is_collab': sresult[i].is_collab,
+                    'blank': ""
                  }
                  tracks.push(row);
                 }
+
+                for (var i = 0; i < tracks.length; i++) {
+                  if(tracks[i].is_remix != 1){
+                    tracks[i].blank = ` - ${tracks[i].artist_name}`;
+                  }
+                  if(tracks[i].is_collab == 1){
+                    tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`
+                  }
+                  if(tracks[i].is_collab != 1){
+                    tracks[i].blank = ` - ${tracks[i].artist_name}`;
+                  }
+                  if(tracks[i].is_collab == 1 && tracks[i].is_remix == 1){
+                    tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`;
+                  }
+              }
 
                 await conquerie.end(db);
                 msg = "Results Found!:";
@@ -1488,10 +1528,30 @@ app.post('/favtunesearch',(req,res)=>{
                     'track_name':sresult[i].track_name,
                     'artist_name':sresult[i].artist_name,
                     'drive_url': sresult[i].drive_url,
-                    'id': sresult[i].id
+                    'id': sresult[i].id,
+                    'collab_artist': tresult[i].collab_artist,
+                    'original_artist': tresult[i].original_artist,
+                    'is_remix': tresult[i].is_remix,
+                    'is_collab': tresult[i].is_collab,
+                    'blank': ""
                  }
                  tracks.push(row);
                 }
+
+                for (var i = 0; i < tracks.length; i++) {
+                  if(tracks[i].is_remix != 1){
+                    tracks[i].blank = ` - ${tracks[i].artist_name}`;
+                  }
+                  if(tracks[i].is_collab == 1){
+                    tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`
+                  }
+                  if(tracks[i].is_collab != 1){
+                    tracks[i].blank = ` - ${tracks[i].artist_name}`;
+                  }
+                  if(tracks[i].is_collab == 1 && tracks[i].is_remix == 1){
+                    tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`;
+                  }
+              }
 
                 await conquerie.end(db);
                 msg = "Results Found!:";

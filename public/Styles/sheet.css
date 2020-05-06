@@ -291,7 +291,7 @@ li.tunetext{
 .faqform{
   display: flex;
   justify-content: center;
-  padding-left: 3em;
+  padding-left: 15em;
   flex-wrap: wrap;
 }
 
@@ -301,23 +301,14 @@ li.tunetext{
   text-transform: uppercase;
   padding: 1.5em;
   font-size: 48px;
-  margin-left: 200px;
-  display: flex;
-  justify-content: center;
-  justify-self: center;
+  margin-left: 2.5em;
 }
 
 .faqform form{
-    display: flex;
-    justify-content: center;
-    justify-self: center;
-  
 }
 
 .faqform form input, .faqform form textarea{
-  padding: 1em;
-  font-size: 48px;
-  border:1px solid #c9e6ff;
+  font-size: 24px;
   padding-top:1.5em;
   padding-bottom:1.5em;
   padding-left:1em;

@@ -294,7 +294,7 @@ li.tunetext{
 .faqform{
   display: flex;
   justify-content: center;
-  padding-left: 15em;
+  padding-left: 7em;
   flex-wrap: wrap;
 }
 

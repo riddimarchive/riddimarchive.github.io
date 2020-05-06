@@ -455,6 +455,9 @@ app.get('/artist/:name', function(req,res){
             if(tracks[i].is_remix != 1){
               tracks[i].blank = ` - ${tracks[i].artist_name}`;
             }
+            if(tracks[i].is_collab == 1){
+              tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`
+            }
             if(tracks[i].is_collab != 1){
               tracks[i].blank = ``;
             }

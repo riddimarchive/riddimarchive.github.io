@@ -45,12 +45,11 @@ block content
           .uldivtotw
             li.tunetexttotw= `${track.original_artist}${track.track_name}${track.blank}`
             .totw
-              audio(src=track.drive_url, type='audio/mpeg', controls='') Sorry Bruv, Your Browser Can't Play dis chune!
-            li.tunetexttotw= `       `
+              audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='') Sorry Bruv, Your Browser Can't Play dis chune!
             .downloadbutton
               a(href=track.drive_url)
                 img(border='0', alt='Download Tune', src='Images/PageIMG/download.png', height='35', width='160')
-              form(method='POST' action=`/`)
+              form(id=`form ${index}`, method='POST' action=`/`)
                 div.form-group
                   input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
                 div.form-group
@@ -60,10 +59,8 @@ block content
                 div.form-group
                   input#name.form-control(type='hidden', name='name', value=`${track.artist_name}`)
                 div
-                  input(type='submit', value='Add to Favorites')
-                br
-            li.tunetexttotw= `  ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­   ­ `
-            a(href="")
+                  input(id=`${index}`, type='submit', value='Add to Favorites')
+            div(id=`result${index}`)
   br
   - var message = msg;
   - var shuffleart = randartistname;

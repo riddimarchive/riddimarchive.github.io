@@ -6,7 +6,9 @@ const fileUpload = require('express-fileupload');
 const path = require('path');
 const createError = require('http-errors');
 const passport = require('passport');
-const flash = require('connect-flash');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+flash = require('connect-flash');
 
 //file reqs: database connect, query functions, hash functions
 const createConnection = require('./js/dbconnect');
@@ -35,6 +37,10 @@ app.use(express.urlencoded({ extended: false }));
 
 //express file-upload
 app.use(fileUpload());
+
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 
 //express-session
 app.use(session({
@@ -153,7 +159,7 @@ app.get('/faq', (req, res) => {
 
 //GET REQUEST - LOGIN PAGE
 app.get('/login', (req, res) => {
-
+  console.log(req.flash('error'));
   //handle non-login requests, go back to home
   if(req.user === undefined){
     res.render('login',{
@@ -199,7 +205,8 @@ app.get('/dashboard', (req, res) => {
     res.render('login',{
       title:'Riddim Archive Login',
       username: '',
-      er: ''
+      er: '',
+      message: ''
     });
 
   }else{
@@ -249,7 +256,8 @@ app.get('/changepass', (req, res, next) => {
     res.render('login',{
       title:'Riddim Archive Login',
       username: '',
-      er: ''
+      er: '',
+      message: ''
     });
 
   }else{
@@ -315,7 +323,8 @@ app.get('/favorites', (req, res) => {
     res.render('login',{
       title:'Riddim Archive Login',
       username: '',
-      er: ''
+      er: '',
+      message: ''
     });
 
   }else{
@@ -733,7 +742,8 @@ app.post('/login', (req, res, next) => {
   if(!username || !password){
     res.render('login', {
       username: username,
-      er: "Fill in all Fields!"
+      er: "Fill in all Fields!",
+      message: ''
     });
   }else{
     passport.authenticate('local', {

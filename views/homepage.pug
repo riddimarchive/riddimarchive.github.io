@@ -43,7 +43,7 @@ block content
       each track in y
         ul
           .uldivtotw
-            li.tunetexttotw= `${track.artist_name} - ${track.track_name}`
+            li.tunetexttotw= `${track.original_artist}${track.track_name}${track.blank}`
             .totw
               audio(src=track.drive_url, type='audio/mpeg', controls='') Sorry Bruv, Your Browser Can't Play dis chune!
             li.tunetexttotw= `       `
@@ -69,6 +69,7 @@ block content
   - var shuffleart = randartistname;
   - var shuffletrack = randtrackname;
   - var shuffleurl = randdriveurl;
+  - var shuf = shuftext;
   
   .middlecontain
     .searchcontain
@@ -91,7 +92,7 @@ block content
     .shufflecontain
       p.boldtext SHUFFLE PLAYER
       #shuftext
-        text.boldtext= `${shuffleart} - ${shuffletrack}`
+        text.boldtext= `${shuf}`
       .downloadbutton
         audio(id='shufaudio', type='audio/mpeg', controls='')
             source(id='shufaudiosrc' src=`${shuffleurl}`)
@@ -120,7 +121,7 @@ block content
     success: function(data){
     var thetext = document.createElement('text');
     thetext.setAttribute('class', 'boldtext');
-    thetext.innerHTML = `${data.artist_name} - ${data.track_name}`;
+    thetext.innerHTML = `${data.shuftext}`;
     var shuffy = document.getElementById('shuftext');
     shuffy.innerHTML= "";
     shuffy.appendChild(thetext);

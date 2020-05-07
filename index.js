@@ -103,9 +103,32 @@ app.get('/', (req, res) => {
             'track_name':result[i].track_name,
             'artist_name':result[i].artist_name,
             'drive_url': result[i].drive_url,
-            'id': result[i].id
+            'id': result[i].id,
+            'collab_artist': result[i].collab_artist,
+            'original_artist': result[i].original_artist,
+            'is_remix': result[i].is_remix,
+            'is_collab': result[i].is_collab,
+            'blank': ""
           }
           totw.push(row);
+        }
+
+        for (var i = 0; i < totw.length; i++) {
+          if(totw[i].is_remix != 1){
+            totw[i].blank = ` - ${totw[i].artist_name}`;
+          }
+          if(totw[i].is_collab == 1){
+            totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`
+          }
+          if(totw[i].is_collab != 1){
+            totw[i].blank = ` - ${totw[i].artist_name}`;
+          }
+          if(totw[i].is_remix == 1){
+            totw[i].blank = ``;
+          }
+          if(totw[i].is_collab == 1 && totw[i].is_remix == 1){
+            totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`;
+          }
         }
 
         let tresult = await artquerie.getAllArtists(db);
@@ -117,11 +140,18 @@ app.get('/', (req, res) => {
           }
           artists.push(row);
         }
-
         let randresult = await trackquerie.getRandomTrack(db);
         randdriveurl = randresult[0].drive_url;
         randartistname = randresult[0].artist_name;
         randtrackname = randresult[0].track_name;
+        var shuffletext = `${randartistname} - ${randtrackname}`;
+
+        if(randresult[0].is_collab == 1){
+          shuffletext = `${randartistname}${randresult[0].collab_artist} - ${randtrackname}`
+        }
+        if(randresult[0].is_remix == 1){
+          shuffletext = `${randresult[0].original_artist}${randtrackname}`;
+        }
 
         await conquerie.end(db);
 
@@ -133,6 +163,7 @@ app.get('/', (req, res) => {
           randdriveurl: randdriveurl,
           randartistname: randartistname,
           randtrackname: randtrackname,
+          shuftext: shuffletext,
           totw: totw
         });
 
@@ -386,7 +417,7 @@ app.get('/favorites', (req, res) => {
             if(tracks[i].is_collab == 1 && tracks[i].is_remix == 1){
               tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`;
             }
-        }
+          }
 
           await conquerie.end(db);
 
@@ -597,9 +628,32 @@ app.post('/', (req, res, next) => {
             'track_name':result[i].track_name,
             'artist_name':result[i].artist_name,
             'drive_url': result[i].drive_url,
-            'id': result[i].id
+            'id': result[i].id,
+            'collab_artist': result[i].collab_artist,
+            'original_artist': result[i].original_artist,
+            'is_remix': result[i].is_remix,
+            'is_collab': result[i].is_collab,
+            'blank': ""
           }
           totw.push(row);
+        }
+
+        for (var i = 0; i < totw.length; i++) {
+          if(totw[i].is_remix != 1){
+            totw[i].blank = ` - ${totw[i].artist_name}`;
+          }
+          if(totw[i].is_collab == 1){
+            totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`
+          }
+          if(totw[i].is_collab != 1){
+            totw[i].blank = ` - ${totw[i].artist_name}`;
+          }
+          if(totw[i].is_remix == 1){
+            totw[i].blank = ``;
+          }
+          if(totw[i].is_collab == 1 && totw[i].is_remix == 1){
+            totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`;
+          }
         }
 
         let tresult = await artquerie.getAllArtists(db);
@@ -616,6 +670,15 @@ app.post('/', (req, res, next) => {
         randdriveurl = randresult[0].drive_url;
         randartistname = randresult[0].artist_name;
         randtrackname = randresult[0].track_name;
+        var shuffletext = `${randartistname} - ${randtrackname}`;
+
+        if(randresult[0].is_collab == 1){
+          shuffletext = `${randartistname}${randresult[0].collab_artist} - ${randtrackname}`
+        }
+        if(randresult[0].is_remix == 1){
+          shuffletext = `${randresult[0].original_artist}${randtrackname}`;
+        }
+
 
         await conquerie.end(db);
 
@@ -627,6 +690,7 @@ app.post('/', (req, res, next) => {
           randdriveurl: randdriveurl,
           randartistname: randartistname,
           randtrackname: randtrackname,
+          shuftext: shuffletext,
           totw: totw
         });
 
@@ -663,9 +727,32 @@ app.post('/', (req, res, next) => {
             'track_name':result[i].track_name,
             'artist_name':result[i].artist_name,
             'drive_url': result[i].drive_url,
-            'id': result[i].id
+            'id': result[i].id,
+            'collab_artist': result[i].collab_artist,
+            'original_artist': result[i].original_artist,
+            'is_remix': result[i].is_remix,
+            'is_collab': result[i].is_collab,
+            'blank': ""
           }
           totw.push(row);
+        }
+
+        for (var i = 0; i < totw.length; i++) {
+          if(totw[i].is_remix != 1){
+            totw[i].blank = ` - ${totw[i].artist_name}`;
+          }
+          if(totw[i].is_collab == 1){
+            totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`
+          }
+          if(totw[i].is_collab != 1){
+            totw[i].blank = ` - ${totw[i].artist_name}`;
+          }
+          if(totw[i].is_remix == 1){
+            totw[i].blank = ``;
+          }
+          if(totw[i].is_collab == 1 && totw[i].is_remix == 1){
+            totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`;
+          }
         }
 
         let tresult = await artquerie.getAllArtists(db);
@@ -682,6 +769,15 @@ app.post('/', (req, res, next) => {
         randdriveurl = randresult[0].drive_url;
         randartistname = randresult[0].artist_name;
         randtrackname = randresult[0].track_name;
+        var shuffletext = `${randartistname} - ${randtrackname}`;
+
+        if(randresult[0].is_collab == 1){
+          shuffletext = `${randartistname}${randresult[0].collab_artist} - ${randtrackname}`
+        }
+        if(randresult[0].is_remix == 1){
+          shuffletext = `${randresult[0].original_artist}${randtrackname}`;
+        }
+
         
         //confirm favorite isn't already there
         let ckresult = await userquerie.checkUserFavorite(db, user_id, track_id);
@@ -697,6 +793,7 @@ app.post('/', (req, res, next) => {
             randdriveurl: randdriveurl,
             randartistname: randartistname,
             randtrackname: randtrackname,
+            shuftext: shuffletext,
             totw: totw
           });
         }else{
@@ -715,6 +812,7 @@ app.post('/', (req, res, next) => {
           randdriveurl: randdriveurl,
           randartistname: randartistname,
           randtrackname: randtrackname,
+          shuftext: shuffletext,
           totw: totw
         });
 
@@ -876,9 +974,17 @@ app.post('/forward',(req,res)=>{
       thedriveurl = result[0].drive_url;
       theartistname = result[0].artist_name;
       thetrackname = result[0].track_name;
+      var shuffletext = `${theartistname} - ${thetrackname}`;
+
+      if(result[0].is_collab == 1){
+        shuffletext = `${theartistname}${result[0].collab_artist} - ${thetrackname}`
+      }
+      if(result[0].is_remix == 1){
+        shuffletext = `${result[0].original_artist}${thetrackname}`;
+      }
 
       await conquerie.end(db);
-      res.send({source: thedriveurl, id: theid, artist_name: theartistname, track_name: thetrackname});
+      res.send({source: thedriveurl, id: theid, artist_name: theartistname, track_name: thetrackname, shuftext: shuffletext});
     
     }catch(err){
       console.log(err);
@@ -1217,14 +1323,21 @@ app.post('/search', (req, res, next) => {
         randdriveurl = randresult[0].drive_url;
         randartistname = randresult[0].artist_name;
         randtrackname = randresult[0].track_name;
+        var shuffletext = `${randartistname} - ${randtrackname}`;
 
-        await conquerie.end(db);
+        if(randresult[0].is_collab == 1){
+          shuffletext = `${randartistname}${randresult[0].collab_artist} - ${randtrackname}`
+        }
+        if(randresult[0].is_remix == 1){
+          shuffletext = `${randresult[0].original_artist}${randtrackname}`;
+        }
 
         res.render('homepagenf', {
           msg: "Enter a Search!",
           randdriveurl: randdriveurl,
           randartistname: randartistname,
-          randtrackname: randtrackname
+          randtrackname: randtrackname,
+          shuftext: shuffletext
         });
       
       }catch(err){
@@ -1258,6 +1371,14 @@ app.post('/search', (req, res, next) => {
             randdriveurl = randresult[0].drive_url;
             randartistname = randresult[0].artist_name;
             randtrackname = randresult[0].track_name;
+            var shuffletext = `${randartistname} - ${randtrackname}`;
+    
+            if(randresult[0].is_collab == 1){
+              shuffletext = `${randartistname}${randresult[0].collab_artist} - ${randtrackname}`
+            }
+            if(randresult[0].is_remix == 1){
+              shuffletext = `${randresult[0].original_artist}${randtrackname}`;
+            }
 
             if(search_style == 0){
               let result = await artquerie.searchArtists(db, search_results);
@@ -1269,7 +1390,8 @@ app.post('/search', (req, res, next) => {
                   msg: "",
                   randdriveurl: randdriveurl,
                   randartistname: randartistname,
-                  randtrackname: randtrackname
+                  randtrackname: randtrackname,
+                  shuftext: shuffletext
                 });
               }else{
 
@@ -1287,9 +1409,32 @@ app.post('/search', (req, res, next) => {
                       'track_name':zresult[i].track_name,
                       'artist_name':zresult[i].artist_name,
                       'drive_url': zresult[i].drive_url,
-                      'id': zresult[i].id
+                      'id': zresult[i].id,
+                      'collab_artist': zresult[i].collab_artist,
+                      'original_artist': zresult[i].original_artist,
+                      'is_remix': zresult[i].is_remix,
+                      'is_collab': zresult[i].is_collab,
+                      'blank': ""
                     }
                     totw.push(row);
+                  }
+          
+                  for (var i = 0; i < totw.length; i++) {
+                    if(totw[i].is_remix != 1){
+                      totw[i].blank = ` - ${totw[i].artist_name}`;
+                    }
+                    if(totw[i].is_collab == 1){
+                      totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`
+                    }
+                    if(totw[i].is_collab != 1){
+                      totw[i].blank = ` - ${totw[i].artist_name}`;
+                    }
+                    if(totw[i].is_remix == 1){
+                      totw[i].blank = ``;
+                    }
+                    if(totw[i].is_collab == 1 && totw[i].is_remix == 1){
+                      totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`;
+                    }
                   }
 
                   //end query and render
@@ -1302,6 +1447,7 @@ app.post('/search', (req, res, next) => {
                     randdriveurl: randdriveurl,
                     randartistname: randartistname,
                     randtrackname: randtrackname,
+                    shuftext: shuffletext,
                     totw: totw
                   });
               }//end else
@@ -1320,7 +1466,8 @@ app.post('/search', (req, res, next) => {
                   msg: "",
                   randdriveurl: randdriveurl,
                   randartistname: randartistname,
-                  randtrackname: randtrackname
+                  randtrackname: randtrackname,
+                  shuftext: shuffletext
                 });
               }else{
 
@@ -1338,9 +1485,32 @@ app.post('/search', (req, res, next) => {
                       'track_name':gresult[i].track_name,
                       'artist_name':gresult[i].artist_name,
                       'drive_url': gresult[i].drive_url,
-                      'id': gresult[i].id
+                      'id': gresult[i].id,
+                      'collab_artist': gresult[i].collab_artist,
+                      'original_artist': gresult[i].original_artist,
+                      'is_remix': gresult[i].is_remix,
+                      'is_collab': gresult[i].is_collab,
+                      'blank': ""
                     }
                     totw.push(row);
+                  }
+          
+                  for (var i = 0; i < totw.length; i++) {
+                    if(totw[i].is_remix != 1){
+                      totw[i].blank = ` - ${totw[i].artist_name}`;
+                    }
+                    if(totw[i].is_collab == 1){
+                      totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`
+                    }
+                    if(totw[i].is_collab != 1){
+                      totw[i].blank = ` - ${totw[i].artist_name}`;
+                    }
+                    if(totw[i].is_remix == 1){
+                      totw[i].blank = ``;
+                    }
+                    if(totw[i].is_collab == 1 && totw[i].is_remix == 1){
+                      totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`;
+                    }
                   }
 
                   //end query and render
@@ -1353,6 +1523,7 @@ app.post('/search', (req, res, next) => {
                     randdriveurl: randdriveurl,
                     randartistname: randartistname,
                     randtrackname: randtrackname,
+                    shuftext: shuffletext,
                     totw: totw
                   });
               }//end else

@@ -114,7 +114,7 @@ function searchFavoritesByArtist(db, user_id, search_results){
 function getRandomTrack(db){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT id, artist_name, track_name, drive_url from tracks ORDER BY RAND() LIMIT 1`, (error, result, fields) => {
+		db.query(`SELECT id, artist_name, track_name, drive_url, collab_artist, original_artist, is_remix, is_collab from tracks ORDER BY RAND() LIMIT 1`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

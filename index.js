@@ -742,8 +742,8 @@ app.post('/login', (req, res, next) => {
   if(!username || !password){
     res.render('login', {
       username: username,
-      er: "Fill in all Fields!",
-      message: ''
+      er: "",
+      message: 'Fill in all Fields!'
     });
   }else{
     passport.authenticate('local', {

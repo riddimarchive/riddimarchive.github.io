@@ -40,7 +40,7 @@ block content
 
   div#tunesoftheweek
     .ulcontaintotw
-      each track in y
+      each track, index in y
         ul
           .uldivtotw
             li.tunetexttotw= `${track.original_artist}${track.track_name}${track.blank}`

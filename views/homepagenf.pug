@@ -7,6 +7,8 @@ block content
   - var shuffleart = randartistname;
   - var shuffletrack = randtrackname;
   - var shuffleurl = randdriveurl;
+  - var shuf = shuftext;
+
   .middlecontain
     .searchcontain
       .searchform
@@ -30,7 +32,7 @@ block content
     .shufflecontain
       p.boldtext SHUFFLE PLAYER
       #shuftext
-        text.boldtext= `${shuffleart} - ${shuffletrack}`
+        text.boldtext= `${shuf}`
       .downloadbutton
         audio(id='shufaudio', type='audio/mpeg', controls='')
             source(id='shufaudiosrc' src=`${shuffleurl}`)
@@ -52,7 +54,7 @@ block content
     success: function(data){
     //var audiop = new Audio(src=`${data.source}`, type='audio/mpeg', controls='');
     //document.getElementById('shufaudio').innerHTML = audiop;
-    var text = `${data.artist_name} - ${data.track_name}`;
+    var text = `${data.shuftext}`;
     console.log(text);
     document.getElementById('shuftext').innerHTML = text;
     document.getElementById('shufaudiosrc').src = `${data.source}`;

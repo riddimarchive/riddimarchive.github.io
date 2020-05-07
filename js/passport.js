@@ -31,7 +31,7 @@ module.exports = function(passport){
 						    return done(null, result[0]);
 						}else{
 							//note - this message will not display yet
-						    return done(null, false, {message: 'Password incorrect'});
+						    return done(null, false, {message: 'Username or Password is incorrect'});
 						}
 	
           			}//result length else

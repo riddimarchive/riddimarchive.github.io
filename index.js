@@ -159,14 +159,14 @@ app.get('/faq', (req, res) => {
 
 //GET REQUEST - LOGIN PAGE
 app.get('/login', (req, res) => {
-  console.log(req.flash('error'));
+  var test = req.flash('error');
   //handle non-login requests, go back to home
   if(req.user === undefined){
     res.render('login',{
       title:'Riddim Archive Login',
       username: '',
       er: '',
-      message: req.flash('error')
+      message: test
     });
 
   }else{

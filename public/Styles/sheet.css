@@ -321,6 +321,34 @@ li.tunetext{
   width: 800px;
 }
 
+.loginform{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.loginform form button{
+  background:#c9e6ff;
+  border:0;
+  text-transform: uppercase;
+  padding: 1.5em;
+  font-size: 48px;
+  margin-left: 5em;
+}
+
+
+.loginform form input, .loginform form textarea{
+  font-size: 24px;
+  padding-top:1.5em;
+  padding-bottom:1.5em;
+  padding-left:1em;
+  padding-right: 20em;
+}
+.loginform form .label{
+  width: 800px;
+}
+
+
 #paypal img{
   margin-top: 30px;
 }

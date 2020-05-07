@@ -1,25 +1,25 @@
 extends index3
 
 block content
-	h1 Login
+	.artisth1 
+		h1 Login
 	- var msg = message;
 	.labelgcenter #{msg}
 
-	.contactdiv
-		.contact
-			form(method='POST' action='/login')
-				.label Username:
-				br
-				div.form-group
-					input#username.form-control(type='text', name='username', value=`${username}`)
-				br
+	.faqform
+		form(method='POST' action='/login')
+			.label Username:
+			br
+			div.form-group
+				input#username.form-control(type='text', name='username', value=`${username}`)
+			br
 
-				.label Password: 
-				br
-				div.form-group
-					input#password.form-control(type='password', name='password')
-				br
-				div
-					button.btn.btn-primary.btn-block(type='submit') Login
+			.label Password: 
+			br
+			div.form-group
+				input#password.form-control(type='password', name='password')
+			br
+			div
+				button.btn.btn-primary.btn-block(type='submit') Login
 	br
 

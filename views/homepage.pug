@@ -197,7 +197,6 @@ block content
 
                 document.getElementById('shufaudiosrc').src = `${data.source}`;
                 var audiop = document.getElementById('shufaudio');
-                audiop.addEventListener('playing', function() { document.getElementById('loadtext').innerHTML= ""; },false);
                 audiop.load();
                 var playPromise = audiop.play();
                 if (playPromise !== undefined) {
@@ -206,7 +205,9 @@ block content
                 .catch(error => {
                 });
                 }
-              
+              if(audiop.duration > 0 && !audiop.paused){
+                document.getElementById('loadtext').innerHTML= "";
+              }
               },
               error: function(){
               console.log("Didn't Work");

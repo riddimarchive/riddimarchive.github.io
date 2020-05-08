@@ -188,24 +188,25 @@ block content
               url:'/forward',
               type : 'POST',
               success: function(data){
-              var thetext = document.createElement('text');
-              thetext.setAttribute('class', 'boldtext');
-              thetext.innerHTML = `${data.shuftext}`;
-              var shuffy = document.getElementById('shuftext');
-              shuffy.innerHTML= "";
-              shuffy.appendChild(thetext);
+                var thetext = document.createElement('text');
+                thetext.setAttribute('class', 'boldtext');
+                thetext.innerHTML = `${data.shuftext}`;
+                var shuffy = document.getElementById('shuftext');
+                shuffy.innerHTML= "";
+                shuffy.appendChild(thetext);
 
-              document.getElementById('shufaudiosrc').src = `${data.source}`;
-              var audiop = document.getElementById('shufaudio');
-              audiop.load();
-              var playPromise = audiop.play();
-              if (playPromise !== undefined) {
-                playPromise.then(_ => {
-              })
-              .catch(error => {
-              });
-              }
-              document.getElementById('loadtext').innerHTML= "";
+                document.getElementById('shufaudiosrc').src = `${data.source}`;
+                var audiop = document.getElementById('shufaudio');
+                audiop.addEventListener('playing', function() { document.getElementById('loadtext').innerHTML= ""; },false);
+                audiop.load();
+                var playPromise = audiop.play();
+                if (playPromise !== undefined) {
+                  playPromise.then(_ => {
+                })
+                .catch(error => {
+                });
+                }
+              
               },
               error: function(){
               console.log("Didn't Work");

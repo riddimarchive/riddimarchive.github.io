@@ -259,10 +259,10 @@ block content
         var curindex = e.target.id;
         var loadmsg = document.getElementById(`result${curindex-10000}`);
         loadmsg.innerHTML = "Loading...";
-        for(var i = 0, len = audios.length; i < len;i++){
+        for(var i = 0, leng = audios.length; i < leng;i++){
           if(audios[i] != e.target){
             audios[i].pause();
-            var theid = (audios[i].id);
+            var theid = (audios[i].id-10000);
             var loadmsg = document.getElementById(`result${theid}`);
             loadmsg.innerHTML = "";
             totwaudioFinishedCheck(theid);

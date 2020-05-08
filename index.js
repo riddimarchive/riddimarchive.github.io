@@ -1310,45 +1310,12 @@ app.post('/artistdelete', (req, res, next) => {
 app.post('/search', (req, res, next) => {
 
   var { search_results, search_style } = req.body;
+  var msg = "";
+  var reloadlist = 0;
   if(!search_results){
-    async function getShuffle(){
-      try{
-        var randdriveurl = "";
-        var randartistname = "";
-        var randtrackname = "";
-        var db = createConnection();
-        await conquerie.connect(db);
-
-        let randresult = await trackquerie.getRandomTrack(db);
-        randdriveurl = randresult[0].drive_url;
-        randartistname = randresult[0].artist_name;
-        randtrackname = randresult[0].track_name;
-        var shuffletext = `${randartistname} - ${randtrackname}`;
-
-        if(randresult[0].is_collab == 1){
-          shuffletext = `${randartistname}${randresult[0].collab_artist} - ${randtrackname}`
-        }
-        if(randresult[0].is_remix == 1){
-          shuffletext = `${randresult[0].original_artist}${randtrackname}`;
-        }
-
-        res.render('homepagenf', {
-          msg: "Enter a Search!",
-          randdriveurl: randdriveurl,
-          randartistname: randartistname,
-          randtrackname: randtrackname,
-          shuftext: shuffletext
-        });
-      
-      }catch(err){
-        console.log(err);
-        res.render('error');
-      }
-
-    }//end getShuffle
-
-  getShuffle();
-
+  msg = "No Search Entered";
+  res.send({msg: msg, reloadlist: reloadlist, artists: ""});
+  
   }else{
     search_results = search_results + "%";
     async function searchArtist(search_results, search_style){

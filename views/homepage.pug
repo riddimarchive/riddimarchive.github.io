@@ -71,7 +71,7 @@ block content
   .middlecontain
     .searchcontain
       .searchform
-        form(method='POST' action='/search')
+        form#searchy(method='POST')
           div.form-group
             label.boldtext(for='search_results') Artist Search
             input#search_results.form-control(type='text', name='search_results' placeholder="Search for Artist/Crew...")
@@ -81,8 +81,8 @@ block content
           div.form-group
             label.boldtext(for='search_style') Search By Crew
             input#search_style.form-control(type='radio', name='search_style', value=1)
-          div
-            button.btn.btn-primary.btn-block(type='submit') Submit
+          #test
+            img(border='0', alt='back', src='Images/PageIMG/tunesearch.png', height='45')
           div
             form
             input(type='button', value='Reload back to All Artists', onclick="self.location='https://riddim-archive.herokuapp.com/'")
@@ -108,29 +108,72 @@ block content
             img(src=`Images/Logos/${artist.artist_name}.jpg` alt="ADD ARTIST IMG HERE" height='275' width='275')
 
   script.
-    document.getElementById('shuffleforward').addEventListener('click', makeNextRequest);
-    function makeNextRequest(e){
-    document.getElementById('loadtext').innerHTML= "Loading..."
-    console.log("CALLING FCN");
-    $.ajax({
-    url:'/forward',
-    type : 'POST',
-    success: function(data){
-    var thetext = document.createElement('text');
-    thetext.setAttribute('class', 'boldtext');
-    thetext.innerHTML = `${data.shuftext}`;
-    var shuffy = document.getElementById('shuftext');
-    shuffy.innerHTML= "";
-    shuffy.appendChild(thetext);
-
-    document.getElementById('shufaudiosrc').src = `${data.source}`;
-    var audiop = document.getElementById('shufaudio');
-    audiop.load();
-    audiop.play();
-    document.getElementById('loadtext').innerHTML= "";
-    },
-    error: function(){
-    console.log("Didn't Work");
-    }
+    $(document).ready(function() {
+      console.log("Doc ready");
+      searchAjaxInit();
+      forwardAjaxInit();
     });
+
+    function searchAjaxInit() {
+        console.log("Search Ajax Init");
+        var theform = $('#searchy');
+        var thebutton = $('#test');
+        thebutton.click(function (ev) {
+          ev.preventDefault();
+          $.ajax({
+          url:'/search',
+          type: 'POST',
+          data: theform.serialize(),
+          success: function(data){
+            var themsg = data.msg;
+            document.getElementById('labelgcenter').innerHTML = themsg;
+            var reloadlist = data.reloadlist;
+
+            if (reloadlist == 1){
+              console.log("Replace Artist List!");
+              var oldlist = document.getElementsByClassName("fishchild");
+              const len = oldlist.length;
+              for (var i = 0; i < len; i++){
+                var element = oldlist[(oldlist.length - 1)].parentNode;
+                element.removeChild(oldlist[(oldlist.length - 1)]);
+              }
+            }
+          },
+          error: function(){
+            console.log("Didn't Work");
+            var msg = "Something went Wrong, Please Refresh Page and try Again";
+            document.getElementById('labelgcenter').innerHTML = themsg;
+          }
+          });//ajax
+        });//submit
+    }//searchajaxinit
+
+    function forwardAjaxInit() {
+        console.log("Forward Ajax Init");
+        document.getElementById('shuffleforward').addEventListener('click', makeNextRequest);
+          function makeNextRequest(e){
+              document.getElementById('loadtext').innerHTML= "Loading..."
+              console.log("CALLING FCN");
+              $.ajax({
+              url:'/forward',
+              type : 'POST',
+              success: function(data){
+              var thetext = document.createElement('text');
+              thetext.setAttribute('class', 'boldtext');
+              thetext.innerHTML = `${data.shuftext}`;
+              var shuffy = document.getElementById('shuftext');
+              shuffy.innerHTML= "";
+              shuffy.appendChild(thetext);
+
+              document.getElementById('shufaudiosrc').src = `${data.source}`;
+              var audiop = document.getElementById('shufaudio');
+              audiop.load();
+              audiop.play();
+              document.getElementById('loadtext').innerHTML= "";
+              },
+              error: function(){
+              console.log("Didn't Work");
+              }
+              });
+          }
     }

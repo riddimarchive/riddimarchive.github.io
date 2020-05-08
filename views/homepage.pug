@@ -102,8 +102,8 @@ block content
 
   .fishcontain
     #fish
-      .fishchild
-        each artist in x
+      each artist in x
+        .fishchild
           a(href=`artist/${artist.artist_name}`)
             img(src=`Images/Logos/${artist.artist_name}.jpg` alt="ADD ARTIST IMG HERE" height='275' width='275')
   #fishcontain2

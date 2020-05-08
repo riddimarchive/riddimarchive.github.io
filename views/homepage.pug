@@ -198,13 +198,7 @@ block content
               document.getElementById('shufaudiosrc').src = `${data.source}`;
               var audiop = document.getElementById('shufaudio');
               audiop.load();
-              var playPromise = audiop.play();
-              if (playPromise !== undefined) {
-                playPromise.then(_ => {
-              })
-              .catch(error => {
-              });
-              }
+              audiop.play();
               document.getElementById('loadtext').innerHTML= "";
               },
               error: function(){

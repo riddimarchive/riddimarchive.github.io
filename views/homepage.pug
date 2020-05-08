@@ -101,7 +101,7 @@ block content
   - var x = artists;
 
   .fishcontain
-    .fish
+    #fish
       .fishchild
         each artist in x
           a(href=`artist/${artist.artist_name}`)
@@ -128,8 +128,6 @@ block content
             var themsg = data.msg;
             document.getElementById('labelgcenter').innerHTML = themsg;
             var reloadlist = data.reloadlist;
-            var list = data.artists;
-            console.log(list);
 
             if (reloadlist == 1){
               console.log("Replace Artist List!");
@@ -139,6 +137,30 @@ block content
                 var element = oldlist[(oldlist.length - 1)].parentNode;
                 element.removeChild(oldlist[(oldlist.length - 1)]);
               }
+
+              var list = data.artists;
+              for (var i = 0; i < list.length; i++){
+                //set container, everything will added within
+                var thecontainer = document.getElementById('fish');
+
+                var fishdiv = document.createElement('div');
+                fishdiv.setAttribute('class', 'fishchild');
+
+                //page link
+                var artistlink = document.createElement('a');
+                artistlink.setAttribute('href', `artist/${list[i].artist_name}`);
+
+                //artist image
+                var artistimage = document.createElement('img');
+                artistimage.setAttribute('alt', 'ADD ARTIST IMG HERE');
+                artistimage.setAttribute('src', `Images/Logos/${list[i].artist_name}.jpg`);
+                artistimage.setAttribute('height', '275');
+                artistimage.setAttribute('width', '275');
+
+                artistlink.appendChild(artistimage);
+                thecontainer.appendChild(artistlink);
+
+
             }
           },
           error: function(){

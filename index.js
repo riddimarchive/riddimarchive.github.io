@@ -1348,6 +1348,7 @@ app.post('/search', (req, res, next) => {
                   }
                   await conquerie.end(db);
                   msg = "Results Found:";
+                  reloadlist = 1;
                   res.send({msg: msg, reloadlist: reloadlist, artists: artists});
               }//end else
 
@@ -1372,6 +1373,7 @@ app.post('/search', (req, res, next) => {
                   //end query and render
                   await conquerie.end(db);
                   msg = "Results Found:";
+                  reloadlist = 1;
                   res.send({msg: msg, reloadlist: reloadlist, artists: artists});
               }//end else
 

@@ -1324,9 +1324,6 @@ app.post('/search', (req, res, next) => {
             var totw = [];
             var db = createConnection();
             var user_id = "";
-            var randdriveurl = "";
-            var randartistname = "";
-            var randtrackname = "";
         
             if(req.user !== undefined){
               user_id = req.user.id;
@@ -1334,32 +1331,13 @@ app.post('/search', (req, res, next) => {
 
             await conquerie.connect(db);
 
-            let randresult = await trackquerie.getRandomTrack(db);
-            randdriveurl = randresult[0].drive_url;
-            randartistname = randresult[0].artist_name;
-            randtrackname = randresult[0].track_name;
-            var shuffletext = `${randartistname} - ${randtrackname}`;
-    
-            if(randresult[0].is_collab == 1){
-              shuffletext = `${randartistname}${randresult[0].collab_artist} - ${randtrackname}`
-            }
-            if(randresult[0].is_remix == 1){
-              shuffletext = `${randresult[0].original_artist}${randtrackname}`;
-            }
-
             if(search_style == 0){
               let result = await artquerie.searchArtists(db, search_results);
 
               if(result.length == 0){
                 await conquerie.end(db);
-                console.log("No items found");
-                res.render('homepagenf',{
-                  msg: "",
-                  randdriveurl: randdriveurl,
-                  randartistname: randartistname,
-                  randtrackname: randtrackname,
-                  shuftext: shuffletext
-                });
+                msg = "No Items Found!!!";
+                res.send({msg: msg, reloadlist: reloadlist, artists: ""});
               }else{
 
                   for (var i = 0; i < result.length; i++) {
@@ -1367,59 +1345,11 @@ app.post('/search', (req, res, next) => {
                       'artist_name': result[i].artist_name
                     }
                     artists.push(row);
-                  }//end for
-
-                  let zresult = await trackquerie.getTracksOfTheWeek(db);
-
-                  for (var i = 0; i < zresult.length; i++) {
-                    var row = {
-                      'track_name':zresult[i].track_name,
-                      'artist_name':zresult[i].artist_name,
-                      'drive_url': zresult[i].drive_url,
-                      'id': zresult[i].id,
-                      'collab_artist': zresult[i].collab_artist,
-                      'original_artist': zresult[i].original_artist,
-                      'is_remix': zresult[i].is_remix,
-                      'is_collab': zresult[i].is_collab,
-                      'blank': ""
-                    }
-                    totw.push(row);
                   }
-          
-                  for (var i = 0; i < totw.length; i++) {
-                    if(totw[i].is_remix != 1){
-                      totw[i].blank = ` - ${totw[i].artist_name}`;
-                    }
-                    if(totw[i].is_collab == 1){
-                      totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`
-                    }
-                    if(totw[i].is_collab != 1){
-                      totw[i].blank = ` - ${totw[i].artist_name}`;
-                    }
-                    if(totw[i].is_remix == 1){
-                      totw[i].blank = ``;
-                    }
-                    if(totw[i].is_collab == 1 && totw[i].is_remix == 1){
-                      totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`;
-                    }
-                  }
-
-                  //end query and render
                   await conquerie.end(db);
-                  res.render('homepage',{
-                    title:'Riddim Archive Index',
-                    msg: "",
-                    artists: artists,
-                    currentuserid: user_id,
-                    randdriveurl: randdriveurl,
-                    randartistname: randartistname,
-                    randtrackname: randtrackname,
-                    shuftext: shuffletext,
-                    totw: totw
-                  });
+                  msg = "Results Found:";
+                  res.send({msg: msg, reloadlist: reloadlist, artists: artists});
               }//end else
-
-
 
             }//end if, search style is 1, do crew search
             else{
@@ -1428,14 +1358,8 @@ app.post('/search', (req, res, next) => {
               
               if(cresult.length == 0){
                 await conquerie.end(db);
-                console.log("No items found");
-                res.render('homepagenf',{
-                  msg: "",
-                  randdriveurl: randdriveurl,
-                  randartistname: randartistname,
-                  randtrackname: randtrackname,
-                  shuftext: shuffletext
-                });
+                msg = "No Items Found!!!";
+                res.send({msg: msg, reloadlist: reloadlist, artists: ""});
               }else{
 
                   for (var i = 0; i < cresult.length; i++) {
@@ -1445,54 +1369,10 @@ app.post('/search', (req, res, next) => {
                     artists.push(row);
                   }//end for
 
-                  let gresult = await trackquerie.getTracksOfTheWeek(db);
-
-                  for (var i = 0; i < gresult.length; i++) {
-                    var row = {
-                      'track_name':gresult[i].track_name,
-                      'artist_name':gresult[i].artist_name,
-                      'drive_url': gresult[i].drive_url,
-                      'id': gresult[i].id,
-                      'collab_artist': gresult[i].collab_artist,
-                      'original_artist': gresult[i].original_artist,
-                      'is_remix': gresult[i].is_remix,
-                      'is_collab': gresult[i].is_collab,
-                      'blank': ""
-                    }
-                    totw.push(row);
-                  }
-          
-                  for (var i = 0; i < totw.length; i++) {
-                    if(totw[i].is_remix != 1){
-                      totw[i].blank = ` - ${totw[i].artist_name}`;
-                    }
-                    if(totw[i].is_collab == 1){
-                      totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`
-                    }
-                    if(totw[i].is_collab != 1){
-                      totw[i].blank = ` - ${totw[i].artist_name}`;
-                    }
-                    if(totw[i].is_remix == 1){
-                      totw[i].blank = ``;
-                    }
-                    if(totw[i].is_collab == 1 && totw[i].is_remix == 1){
-                      totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`;
-                    }
-                  }
-
                   //end query and render
                   await conquerie.end(db);
-                  res.render('homepage',{
-                    title:'Riddim Archive Index',
-                    msg: "",
-                    artists: artists,
-                    currentuserid: user_id,
-                    randdriveurl: randdriveurl,
-                    randartistname: randartistname,
-                    randtrackname: randtrackname,
-                    shuftext: shuffletext,
-                    totw: totw
-                  });
+                  msg = "Results Found:";
+                  res.send({msg: msg, reloadlist: reloadlist, artists: artists});
               }//end else
 
             }//end else

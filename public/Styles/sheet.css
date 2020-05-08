@@ -461,6 +461,11 @@ li.tunetexttotw{
   justify-content: center;
 }
 
+#shuftext{
+  display: flex;
+  justify-content: center;
+  margin-top: 45px;
+}
 
 #shuffleforward{
   margin-top: 6px;
@@ -469,9 +474,4 @@ li.tunetexttotw{
 #shuffleforward img:hover{
   opacity: 0.3;
   border: 2px visible black;
-}
-
-#shuftext{
-  display: flex;
-  justify-content: center;
 }

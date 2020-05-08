@@ -45,7 +45,7 @@ block content
           .uldivtotw
             li.tunetexttotw= `${track.original_artist}${track.track_name}${track.blank}`
             .totw
-              audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='') Sorry Bruv, Your Browser Can't Play dis chune!
+              audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none') Sorry Bruv, Your Browser Can't Play dis chune!
             .downloadbutton
               a(href=track.drive_url)
                 img(border='0', alt='Download Tune', src='Images/PageIMG/download.png', height='35', width='160')

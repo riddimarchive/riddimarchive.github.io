@@ -831,6 +831,53 @@ app.post('/', (req, res, next) => {
 
 });
 
+//POST REQUEST - Homepagefave
+//save fave on homepage
+app.post('/homepagefave', (req, res, next) => {
+  var { user_id, track_id, favetrack_name, name, index} = req.body;
+
+  if(user_id === "" || req.user.id === undefined){
+    var msg = "Please login to save Favorites!";
+    res.send({msg: msg, index: index});
+
+  //below else means user id is not blank
+  }else{
+      //make queries, get all artist/track info and render artist page
+      async function favoritesAddResponse(){
+        try{
+            var msg = `${favetrack_name} Added to Favorites!`;
+        
+            var db = createConnection();
+            await conquerie.connect(db);
+        
+            //confirm favorite isn't already there
+            let ckresult = await userquerie.checkUserFavorite(db, user_id, track_id);
+            if(ckresult.length > 0){
+                msg = `${favetrack_name} is already added!`;
+                await conquerie.end(db);
+
+                res.send({msg: msg, index: index});
+                //below means user is present and this is a new favorite
+            }else{
+            
+                //store into favorites here, need user ID and track ID
+                let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
+                await conquerie.end(db);
+                res.send({msg: msg, index: index});
+            }
+        }catch(err){
+          console.log(err);
+          res.render('error');
+        }
+
+      }
+    favoritesAddResponse();
+  }
+
+});
+
+
+
 //POST REQUEST - LOGIN FORM
 //check for field entry, authenticate and redirect with passport
 app.post('/login', (req, res, next) => {

@@ -48,8 +48,8 @@ block content
               audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none') Sorry Bruv, Your Browser Can't Play dis chune!
             .downloadbutton
               a(href=track.drive_url)
-                img(border='0', alt='Download Tune', src='Images/PageIMG/download.png', height='35', width='160')
-              form(id=`form ${index}`, method='POST' action=`/`)
+                img(border='2', alt='Download Tune', src='Images/PageIMG/download2.png', height='50')
+              form(id=`form ${index}`, method='POST')
                 div.form-group
                   input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
                 div.form-group
@@ -58,8 +58,7 @@ block content
                   input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
                 div.form-group
                   input#name.form-control(type='hidden', name='name', value=`${track.artist_name}`)
-                div
-                  input(id=`${index}`, type='submit', value='Add to Favorites')
+                img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='Images/PageIMG/addfave.png', height='50')
             div(id=`result${index}`)
   br
   - var message = msg;
@@ -116,6 +115,7 @@ block content
       console.log("Doc ready");
       searchAjaxInit();
       forwardAjaxInit();
+      faveAjaxInit();
     });
 
     function searchAjaxInit() {
@@ -218,3 +218,40 @@ block content
       var audiop = document.getElementById('shufaudio');
       audiop.addEventListener('playing',function() { document.getElementById('loadtext').innerHTML= ""; });
     }
+
+    function faveAjaxInit() {
+      console.log("fave Ajax Init");
+      document.querySelectorAll('.favebuttonclass').forEach(item => {
+        item.addEventListener('click', event => {
+        var theform = document.getElementById(`form ${item.id}`);
+        console.log(theform);
+        var tid = theform.elements["track_id"].value;
+        var t_name = theform.elements["favetrack_name"].value;
+        var uid = theform.elements["user_id"].value;
+        var a_name = theform.elements["name"].value;
+        var index = item.id;
+
+        $.ajax({
+          url:'/homepagefave',
+          type: 'POST',
+          data: {
+            track_id: tid,
+            favetrack_name: t_name,
+            user_id: uid,
+            name: a_name,
+            index: index
+          },
+          success: function(data){
+            var themsg = data.msg;
+            var theindex = data.index;
+            document.getElementById(`result${theindex}`).innerHTML = themsg;
+
+          },
+          error: function(){
+            console.log("Didn't Work");
+          }
+        });//ajax
+
+        });//click event
+      });//class selector
+    }//fave ajax init

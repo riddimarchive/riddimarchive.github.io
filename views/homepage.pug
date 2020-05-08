@@ -107,6 +107,7 @@ block content
           a(href=`artist/${artist.artist_name}`)
             img(src=`Images/Logos/${artist.artist_name}.jpg` alt="ADD ARTIST IMG HERE" height='275' width='275')
   #fishcontain2
+    #fish2
 
   script.
     $(document).ready(function() {
@@ -142,10 +143,7 @@ block content
               var list = data.artists;
               for (var i = 0; i < list.length; i++){
                 //set container, everything will added within
-                var thecontainer = document.getElementById('fishcontain2');
-
-                var fishdiv = document.createElement('div');
-                fishdiv.setAttribute('id', 'fish');
+                var thecontainer = document.getElementById('fish2');
 
                 var fishchilddiv = document.createElement('div');
                 fishchilddiv.setAttribute('class', 'fishchild');
@@ -163,8 +161,7 @@ block content
 
                 artistlink.appendChild(artistimage);
                 fishchilddiv.appendChild(artistlink);
-                fishdiv.appendChild(fishchilddiv);
-                thecontainer.appendChild(fishdiv);
+                thecontainer.appendChild(fishchilddiv);
 
 
               }//forloop list iterate

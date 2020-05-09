@@ -126,9 +126,6 @@ app.get('/', (req, res) => {
           if(totw[i].is_remix == 1){
             totw[i].blank = ``;
           }
-          if(totw[i].is_collab == 1 && totw[i].is_remix == 1){
-            totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`;
-          }
         }
 
         let tresult = await artquerie.getAllArtists(db);
@@ -417,9 +414,6 @@ app.get('/favorites', (req, res) => {
             if(tracks[i].is_remix == 1){
               tracks[i].blank = ``;
             }
-            if(tracks[i].is_collab == 1 && tracks[i].is_remix == 1){
-              tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`;
-            }
           }
 
           await conquerie.end(db);
@@ -573,8 +567,8 @@ app.get('/artist/:name', function(req,res){
             if(tracks[i].is_collab != 1){
               tracks[i].blank = ``;
             }
-            if(tracks[i].is_collab == 1 && tracks[i].is_remix == 1){
-              tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`;
+            if(tracks[i].is_remix == 1){
+              tracks[i].blank = ``;
             }
           }
 
@@ -696,9 +690,6 @@ app.post('/', (req, res, next) => {
           if(totw[i].is_remix == 1){
             totw[i].blank = ``;
           }
-          if(totw[i].is_collab == 1 && totw[i].is_remix == 1){
-            totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`;
-          }
         }
 
         let tresult = await artquerie.getAllArtists(db);
@@ -796,9 +787,6 @@ app.post('/', (req, res, next) => {
           }
           if(totw[i].is_remix == 1){
             totw[i].blank = ``;
-          }
-          if(totw[i].is_collab == 1 && totw[i].is_remix == 1){
-            totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`;
           }
         }
 
@@ -1579,8 +1567,8 @@ app.post('/tunesearch',(req,res)=>{
             if(tracks[i].is_collab != 1){
               tracks[i].blank = ``;
             }
-            if(tracks[i].is_collab == 1 && tracks[i].is_remix == 1){
-              tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`;
+            if(tracks[i].is_remix == 1){
+              tracks[i].blank = ``;
             }
           }
 
@@ -1667,9 +1655,6 @@ app.post('/favtunesearch',(req,res)=>{
                   if(tracks[i].is_remix == 1){
                     tracks[i].blank = ``;
                   }
-                  if(tracks[i].is_collab == 1 && tracks[i].is_remix == 1){
-                    tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`;
-                  }
               }
 
                 await conquerie.end(db);
@@ -1717,9 +1702,6 @@ app.post('/favtunesearch',(req,res)=>{
                   }
                   if(tracks[i].is_remix == 1){
                     tracks[i].blank = ``;
-                  }
-                  if(tracks[i].is_collab == 1 && tracks[i].is_remix == 1){
-                    tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`;
                   }
               }
 

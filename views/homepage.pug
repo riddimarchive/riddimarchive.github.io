@@ -62,20 +62,23 @@ block content
   .middlecontain
     .searchcontain
       .searchform
+        .downloadbutton
+            .bigboldtext Artist Search
         form#searchy(method='POST')
           div.form-group
-            .bigboldtext Artist Search
             input#search_results.form-control(type='text', name='search_results' placeholder="Search for Artist/Crew...")
-          div.form-group
+          .downloadbutton
             label.boldtext(for='search_style') Search By Artist
             input#search_style.form-control(type='radio', name='search_style', checked="checked", value=0)
-          div.form-group
+          .downloadbutton
             label.boldtext(for='search_style') Search By Crew
             input#search_style.form-control(type='radio', name='search_style', value=1)
-          #test
-            img(border='2', alt='back', src='Images/PageIMG/tunesearch.png', height='50')
-          a(id='reload', href="https://riddim-archive.herokuapp.com")
-            img(border='2', alt='Reload', src='Images/PageIMG/reload.png', height='50')
+          .downloadbutton
+            #test
+              img(border='2', alt='back', src='Images/PageIMG/tunesearch.png', height='50')
+          .downloadbutton
+            a(id='reload', href="https://riddim-archive.herokuapp.com")
+              img(border='2', alt='Reload', src='Images/PageIMG/reload.png', height='50')
           #labelgcenter #{message}
 
     .shufflecontain

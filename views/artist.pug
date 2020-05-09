@@ -4,7 +4,6 @@ block content
 	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
 	- var message = msg;
 	br
-	#labelgcenter #{message}
 	script.
 		document.addEventListener('play', function(e){
 		var audios = document.getElementsByTagName('audio');
@@ -37,6 +36,7 @@ block content
 						img(border='0', alt='back', src='../../Images/PageIMG/tunesearch.png', height='45')
 					div
 						a(href=`../../artist/${artist_name}`) Reload Back To All Tunes
+					#labelgcenter #{message}
 		.artistpage
 			img(src=`../Images/Logos/${artist_name}.jpg`, alt="ADD ARTIST IMG HERE", height='275', width='275')
 	.artistinfo

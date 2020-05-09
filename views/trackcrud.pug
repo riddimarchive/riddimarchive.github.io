@@ -30,6 +30,16 @@ block content
 				div.form-group
 					input#drive_url.form-control(type='text', name='drive_url')
 				br
+
+				.label Is Tune of the Week?:
+				.label Yes
+				div.form-group
+					input#tune_of_week.form-control(type='radio', name='tune_of_week', value=1)
+					br
+				.label No
+					input#tune_of_week.form-control(type='radio', name='tune_of_week', checked="checked", value=0)
+				br
+
 				.label Is Collab?:
 				.label Yes
 				div.form-group

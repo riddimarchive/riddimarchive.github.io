@@ -1097,7 +1097,7 @@ forwardResponse();
 //check for field entry, authenticate and redirect with passport
 app.post('/trackcreate', (req, res, next) => {
 
-  var { track_name, artist_name, drive_url, is_collab, collab1, collab2, collab3, collab4, is_remix, og1, og2 } = req.body;
+  var { track_name, artist_name, drive_url, tune_of_week, is_collab, collab1, collab2, collab3, collab4, is_remix, og1, og2 } = req.body;
 
   //res.send(track_name + " " + artist_name + " " + drive_url + " " + is_collab + " " + collab1 + " " + collab2 + " " + collab3 + " " + collab4 + " " + is_remix + " " + og1 + " " + og2);
   
@@ -1126,9 +1126,6 @@ app.post('/trackcreate', (req, res, next) => {
                 }
             }
 
-            res.send(collab_artist);
-
-            /*
             var db = createConnection();
             var artist_id;
 
@@ -1137,7 +1134,7 @@ app.post('/trackcreate', (req, res, next) => {
 
             //store artist query result
             artist_id = result[0].id;
-            let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_url);
+            let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, collab_artist, drive_url, collab1, collab2, collab3, collab4, is_collab, og1, og2, is_remix, tune_of_week);
 
             await conquerie.end(db);
 
@@ -1145,7 +1142,7 @@ app.post('/trackcreate', (req, res, next) => {
               msg: "Track Created!",
               msg2: ""
             });
-          */
+            
           }catch(err){
             console.log(err);
             res.render('error');

@@ -473,11 +473,6 @@ li.tunetexttotw{
 #shufaudio{
   display: flex;
   justify-content: center;
-  margin-left: 53px;
-}
-
-#shuffleforward{
-  margin-left: 49px;
 }
 
 #shuffleforward img:hover{

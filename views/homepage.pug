@@ -259,16 +259,19 @@ block content
     function playInit() {
       document.addEventListener('play', function(e){
         var audios = document.getElementsByTagName('audio');
-        var curindex = e.target.id;
-        var loadmsg = document.getElementById(`result${curindex-10000}`);
-        loadmsg.innerHTML = "Loading...";
-        for(var i = 0, leng = audios.length; i < leng;i++){
-          if(audios[i] != e.target){
-            audios[i].pause();
-            var theid = (audios[i].id-10000);
-            var loadmsg = document.getElementById(`result${theid}`);
-            loadmsg.innerHTML = "";
-            totwaudioFinishedCheck(theid);
+        if(e.target.id != 'shufaudio'){
+          var curindex = e.target.id;
+          var loadmsg = document.getElementById(`result${curindex-10000}`);
+          loadmsg.innerHTML = "Loading...";
+
+          for(var i = 0, leng = audios.length; i < leng;i++){
+            if(audios[i] != e.target){
+              audios[i].pause();
+              var theid = (audios[i].id-10000);
+              var loadmsg = document.getElementById(`result${theid}`);
+              loadmsg.innerHTML = "";
+              totwaudioFinishedCheck(theid);
+            }
           }
         }
       }, true);

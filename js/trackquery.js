@@ -113,7 +113,7 @@ function searchTunes(db, search_results, artist_name){
 function searchTunesCollabRemix(db, search_results, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT track_name, artist_name, drive_url, collab_artist, original_artist, is_remix, is_collab, id FROM tracks WHERE (track_name LIKE ? AND c1 =  ?) OR (track_name LIKE ? AND c2 = ?) OR (track_name LIKE ? AND c3 = ?) OR (track_name LIKE ? AND c4 = ?) OR (track_name LIKE ? AND o1 = ?) OR (track_name LIKE ? AND o2 = ?) ORDER BY track_name`, [search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name], (error, result, fields) => {
+		db.query(`SELECT track_name, artist_name, drive_url, collab_artist, original_artist, is_remix, is_collab, id FROM tracks WHERE (track_name LIKE ? AND c1 = ?) OR (track_name LIKE ? AND c2 = ?) OR (track_name LIKE ? AND c3 = ?) OR (track_name LIKE ? AND c4 = ?) OR (track_name LIKE ? AND o1 = ?) OR (track_name LIKE ? AND o2 = ?) ORDER BY track_name`, [search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -151,6 +151,25 @@ function searchFavoritesByArtist(db, user_id, search_results){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab FROM tracks INNER JOIN userfavorites ON tracks.id = userfavorites.track_id WHERE userfavorites.user_id = ? AND tracks.artist_name LIKE ? ORDER BY tracks.artist_name`, [user_id, search_results], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+
+}
+
+function searchFavoritesByArtistCollabRemix(db, user_id, search_results){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab FROM tracks INNER JOIN userfavorites ON tracks.id = userfavorites.track_id WHERE (userfavorites.user_id = ? AND c1 LIKE ?) OR (userfavorites.user_id = ? AND c2 LIKE ?) OR (userfavorites.user_id = ? AND c3 LIKE ?) OR (userfavorites.user_id = ? AND c4 LIKE ?) OR (userfavorites.user_id = ? AND o1 LIKE ?) OR (userfavorites.user_id = ? AND o2 LIKE ?) ORDER BY track_name`, [user_id, search_results, user_id, search_results, user_id, search_results, user_id, search_results, user_id, search_results, user_id, search_results], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -235,6 +254,7 @@ module.exports = {
 	searchTunesCollabRemix,
 	searchFavorites,
 	searchFavoritesByArtist,
+	searchFavoritesByArtistCollabRemix,
 	getRandomTrack,
 	addTrack,
 	deleteTrack

@@ -267,11 +267,9 @@ block content
           for(var i = 0, leng = audios.length; i < leng;i++){
             if(audios[i] != e.target){
               audios[i].pause();
-              if(audios[i]id != 'shufaudio'){
               var theid = (audios[i].id-10000);
               var loadmsg = document.getElementById(`result${theid}`);
               loadmsg.innerHTML = "";
-              }
               totwaudioFinishedCheck(theid);
             }
           }

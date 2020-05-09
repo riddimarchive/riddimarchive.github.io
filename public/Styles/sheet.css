@@ -469,6 +469,11 @@ li.tunetexttotw{
   margin-top: 55px;
 }
 
+#shufaudio{
+  display: flex;
+  justify-content: center;
+}
+
 #shuffleforward{
   margin-top: 6px;
 }

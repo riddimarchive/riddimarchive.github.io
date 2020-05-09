@@ -521,6 +521,48 @@ app.get('/artist/:name', function(req,res){
             tracks.push(row);
           }
 
+          let collabresult = await trackquerie.getCollabsIncludingArtist(db, name);
+          if(collabresult.length > 0){
+            for (var i = 0; i < collabresult.length; i++) {
+              var row = {
+                'track_name':collabresult[i].track_name,
+                'artist_name':collabresult[i].artist_name,
+                'drive_url': collabresult[i].drive_url,
+                'crew': collabresult[i].crew,
+                'country': collabresult[i].country,
+                'artist_id': collabresult[i].artist_id,
+                'id': collabresult[i].id,
+                'collab_artist': collabresult[i].collab_artist,
+                'original_artist': collabresult[i].original_artist,
+                'is_remix': collabresult[i].is_remix,
+                'is_collab': collabresult[i].is_collab,
+                'blank': ""
+              }
+              tracks.push(row);
+            }
+          }
+
+          let remixresult = await trackquerie.getTracksThatOthersRemixed(db, name);
+          if(remixresult.length > 0){
+            for (var i = 0; i < remixresult.length; i++) {
+              var row = {
+                'track_name':remixresult[i].track_name,
+                'artist_name':remixresult[i].artist_name,
+                'drive_url': remixresult[i].drive_url,
+                'crew': remixresult[i].crew,
+                'country': remixresult[i].country,
+                'artist_id': remixresult[i].artist_id,
+                'id': remixresult[i].id,
+                'collab_artist': remixresult[i].collab_artist,
+                'original_artist': remixresult[i].original_artist,
+                'is_remix': remixresult[i].is_remix,
+                'is_collab': remixresult[i].is_collab,
+                'blank': ""
+              }
+              tracks.push(row);
+            }
+          }
+
           for (var i = 0; i < tracks.length; i++) {
             if(tracks[i].is_remix != 1){
               tracks[i].blank = ` - ${tracks[i].artist_name}`;

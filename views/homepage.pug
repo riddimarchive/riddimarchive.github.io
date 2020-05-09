@@ -64,7 +64,7 @@ block content
       .searchform
         form#searchy(method='POST')
           div.form-group
-            p.bigboldtext Artist Search
+            .bigboldtext Artist Search
             input#search_results.form-control(type='text', name='search_results' placeholder="Search for Artist/Crew...")
           div.form-group
             label.boldtext(for='search_style') Search By Artist
@@ -80,7 +80,7 @@ block content
           #labelgcenter #{message}
 
     .shufflecontain
-      p.bigboldtext SHUFFLE PLAYER
+      .bigboldtext SHUFFLE PLAYER
       #shuftext
         text.boldtext= `${shuf}`
       .downloadbutton

@@ -175,6 +175,12 @@ a{
   margin-bottom: 7px;
 }
 
+.bigboldtext{
+  font-size: xx-large;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
 #tuneslink{
   font-size: x-large;
   font-weight: bold;

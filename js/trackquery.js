@@ -54,6 +54,44 @@ function getAllTracksFromArtist(db, artist_name){
 	return querypromise;
 }
 
+function getCollabsIncludingArtist(db, artist_name){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name WHERE tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ? ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+
+	});
+
+	return querypromise;
+}
+
+function getTracksThatOthersRemixed(db, artist_name){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name WHERE tracks.o1 = ? OR tracks.o2 = ? ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+
+	});
+
+	return querypromise;
+}
+
 function searchTunes(db, search_results, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -174,6 +212,8 @@ module.exports = {
 	getTrackInfo,
 	getTracksOfTheWeek,
 	getAllTracksFromArtist,
+	getCollabsIncludingArtist,
+	getTracksThatOthersRemixed,
 	searchTunes,
 	searchFavorites,
 	searchFavoritesByArtist,

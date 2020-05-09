@@ -30,6 +30,53 @@ block content
 				div.form-group
 					input#drive_url.form-control(type='text', name='drive_url')
 				br
+				.label Is Collab?:
+				.label Yes
+				div.form-group
+					input#is_collab.form-control(type='radio', name='is_collab', value=1)
+					br
+				.label No
+					input#is_collab.form-control(type='radio', name='is_collab', checked="checked", value=0)
+				br
+
+				.label Collab Artist 1:
+				div.form-group
+					input#collab1.form-control(type='text', name='collab1')
+				br
+
+				.label Collab Artist 2:
+				div.form-group
+					input#collab2.form-control(type='text', name='collab2')
+				br
+
+				.label Collab Artist 3:
+				div.form-group
+					input#collab3.form-control(type='text', name='collab3')
+				br
+
+				.label Collab Artist 4:
+				div.form-group
+					input#collab4.form-control(type='text', name='collab4')
+				br
+
+				.label Is Remix?:
+				.label Yes
+				div.form-group
+					input#is_remix.form-control(type='radio', name='is_remix', value=1)
+					br
+				.label No
+					input#is_remix.form-control(type='radio', name='is_remix', checked="checked", value=0)
+				br
+
+				.label Original Artist 1:
+				div.form-group
+					input#og1.form-control(type='text', name='og1')
+				br
+
+				.label Original Artist 2:
+				div.form-group
+					input#og2.form-control(type='text', name='og2')
+				br
 
 				div
 					button.btn.btn-primary.btn-block(type='submit') Submit

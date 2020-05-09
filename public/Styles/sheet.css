@@ -375,6 +375,7 @@ li.tunetext{
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  margin-left: 0.5em;
 }
 
 .changepassform form button{
@@ -383,7 +384,7 @@ li.tunetext{
   text-transform: uppercase;
   padding: 1.5em;
   font-size: 48px;
-  margin-left: 5.4em;
+  margin-left: 1.9em;
 }
 
 
@@ -402,6 +403,7 @@ li.tunetext{
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  margin-left: 1.7em;
 }
 
 .createacctform form button{
@@ -410,7 +412,7 @@ li.tunetext{
   text-transform: uppercase;
   padding: 1.5em;
   font-size: 48px;
-  margin-left: 5.4em;
+  margin-left: 2.2em;
 }
 
 

@@ -74,9 +74,8 @@ block content
             input#search_style.form-control(type='radio', name='search_style', value=1)
           #test
             img(border='0', alt='back', src='Images/PageIMG/tunesearch.png', height='45')
-          div
-            form
-            input(type='button', value='Reload back to All Artists', onclick="self.location='https://riddim-archive.herokuapp.com/'")
+          a(id='reload', href="https://riddim-archive.herokuapp.com")
+            img(border='2', alt='Reload', src='Images/PageIMG/reload.png', height='50')
           #labelgcenter #{message}
 
     .shufflecontain

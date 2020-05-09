@@ -1099,19 +1099,37 @@ app.post('/trackcreate', (req, res, next) => {
 
   var { track_name, artist_name, drive_url, is_collab, collab1, collab2, collab3, collab4, is_remix, og1, og2 } = req.body;
 
-  res.send(track_name + " " + artist_name + " " + drive_url + " " + is_collab + " " + collab1 + " " + collab2 + " " + collab3 + " " + collab4 + " " + is_remix + " " + og1 + " " + og2);
-  /*
+  //res.send(track_name + " " + artist_name + " " + drive_url + " " + is_collab + " " + collab1 + " " + collab2 + " " + collab3 + " " + collab4 + " " + is_remix + " " + og1 + " " + og2);
+  
   if(!track_name || !artist_name || !drive_url){
       res.render('trackcrud', {
-        msg: "Fill in all Fields!",
+        msg: "Need Artist Name, Track Name, and URL!",
         msg2: ""
       });
     }else{
       //make queries, get all artist/track info and render artist page
       async function storeFormResults(track_name, artist_name, drive_url){
           try{
+            var collab_artist = "";
+            if(is_collab == 1){
+                if(collab1 != "" && collab2 != "" && collab3 != "" && collab4 != ""){
+                  collab_artist = `, ${collab1}, ${collab2}, ${collab3}, & ${collab4}`;
+                }
+                if(collab1 != "" && collab2 != "" && collab3 != "" && collab4 == ""){
+                  collab_artist = `, ${collab1}, ${collab2}, & ${collab3}`;
+                }
+                if(collab1 != "" && collab2 != "" && collab3 == "" && collab4 == ""){
+                  collab_artist = `, ${collab1}, & ${collab2}`;
+                }
+                if(collab1 != "" && collab2 == "" && collab3 == "" && collab4 == ""){
+                  collab_artist = ` & ${collab1}`;
+                }
+            }
+
+            res.send(collab_artist);
+
+            /*
             var db = createConnection();
-            var collab_artist = " ";
             var artist_id;
 
             await conquerie.connect(db);
@@ -1127,6 +1145,7 @@ app.post('/trackcreate', (req, res, next) => {
               msg: "Track Created!",
               msg2: ""
             });
+          */
           }catch(err){
             console.log(err);
             res.render('error');
@@ -1135,7 +1154,7 @@ app.post('/trackcreate', (req, res, next) => {
 
       storeFormResults(track_name, artist_name, drive_url);
     }//end else
-  */
+  
 });
 
 

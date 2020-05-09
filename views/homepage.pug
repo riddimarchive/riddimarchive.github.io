@@ -89,14 +89,10 @@ block content
         #shuffleforward
           img(border='0', alt='back', src='Images/PageIMG/forward.png', height='45')
       form(id='shuffaveform', method='POST')
-        div.form-group
-          input#track_id.form-control(type='hidden', name='track_id', value=`${shuffleid}`)
-        div.form-group
-          input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${shuffletrack}`)
-        div.form-group
-          input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
-        div.form-group
-          input#name.form-control(type='hidden', name='name', value=`${shuffleart}`)
+        input#shuftrack_id.form-control(type='hidden', name='track_id', value=`${shuffleid}`)
+        input#shuffavetrack_name.form-control(type='hidden', name='favetrack_name', value=`${shuffletrack}`)
+        input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
+        input#shufname.form-control(type='hidden', name='name', value=`${shuffleart}`)
         img(id='shuffave', class='favebuttonclass', border='2', alt='back', src='Images/PageIMG/addfave.png', height='50')
       a(id='shufdownloadbutton', href=shuffleurl)
         img(border='2', alt='Download Tune', src='Images/PageIMG/download2.png', height='50')
@@ -236,16 +232,24 @@ block content
       console.log("fave Ajax Init");
       document.querySelectorAll('.favebuttonclass').forEach(item => {
         item.addEventListener('click', event => {
+        var tid = "";
+        var t_name = "";
+        var a_name = "";
+
         if(item.id = 'shuffave'){
           var theform = document.getElementById('shuffaveform');
+          tid = theform.elements["shuftrack_id"].value;
+          t_name = theform.elements["shuffavetrack_name"].value;
+          a_name = theform.elements["shufname"].value;
+
         }else{
-        var theform = document.getElementById(`form ${item.id}`);
+          var theform = document.getElementById(`form ${item.id}`);
+          tid = theform.elements["track_id"].value;
+          t_name = theform.elements["favetrack_name"].value;
+          a_name = theform.elements["name"].value;
         }
         console.log(theform);
-        var tid = theform.elements["track_id"].value;
-        var t_name = theform.elements["favetrack_name"].value;
         var uid = theform.elements["user_id"].value;
-        var a_name = theform.elements["name"].value;
         var index = item.id;
 
         $.ajax({

@@ -108,7 +108,11 @@ body {
 }
 
 #searchy{
-  padding:20px;
+  padding: 20px;
+}
+
+#searchy2{
+  padding: 0px;
 }
 
 .fishchild img{

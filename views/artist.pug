@@ -26,10 +26,10 @@ block content
 	.middlecontain
 		.searchcontainart
 			.searchformart
-				form#searchy(method='POST')
+				form#searchy2(method='POST')
 					div
 						label.boldtext(for='search_results') Tune Search
-						input#search_results(type='text', name='search_results' placeholder="Search for a Tune...")
+						input#search_results(type='text', name='search_results' placeholder="Enter Track Name...")
 					div
 						input#a_name(type='hidden', name='a_name', value=`${artist_name}`)
 					#test
@@ -81,7 +81,7 @@ block content
 
 		function searchAjaxInit() {
 			console.log("Search Ajax Init");
-			var theform = $('#searchy');
+			var theform = $('#searchy2');
 			var thebutton = $('#test');
 			thebutton.click(function (ev) {
 			ev.preventDefault();

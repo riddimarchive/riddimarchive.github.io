@@ -95,7 +95,7 @@ function getTracksThatOthersRemixed(db, artist_name){
 function searchTunes(db, search_results, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT track_name, artist_name, drive_url, collab_artist, original_artist, is_remix, is_collab, id FROM tracks WHERE track_name LIKE ? AND artist_name = ? OR c1 = ? OR c2 = ? OR c3 = ? OR c4 = ? OR o1 = ? OR o2 = ? ORDER BY track_name`, [search_results, artist_name, artist_name, artist_name, artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
+		db.query(`SELECT track_name, artist_name, drive_url, collab_artist, original_artist, is_remix, is_collab, id FROM tracks WHERE track_name LIKE ? AND artist_name = ? OR c1 = LIKE ? OR c2 = LIKE ? OR c3 = LIKE ? OR c4 = LIKE ? OR o1 = LIKE ? OR o2 = LIKE ? ORDER BY track_name`, [search_results, artist_name, artist_name, artist_name, artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

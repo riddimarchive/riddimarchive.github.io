@@ -144,6 +144,8 @@ app.get('/', (req, res) => {
         randdriveurl = randresult[0].drive_url;
         randartistname = randresult[0].artist_name;
         randtrackname = randresult[0].track_name;
+        randtrackid = randresult[0].id;
+
         var shuffletext = `${randartistname} - ${randtrackname}`;
 
         if(randresult[0].is_collab == 1){
@@ -163,6 +165,7 @@ app.get('/', (req, res) => {
           randdriveurl: randdriveurl,
           randartistname: randartistname,
           randtrackname: randtrackname,
+          randtrackid: randtrackid,
           shuftext: shuffletext,
           totw: totw
         });
@@ -670,6 +673,7 @@ app.post('/', (req, res, next) => {
         randdriveurl = randresult[0].drive_url;
         randartistname = randresult[0].artist_name;
         randtrackname = randresult[0].track_name;
+        randtrackid = randresult[0].id;
         var shuffletext = `${randartistname} - ${randtrackname}`;
 
         if(randresult[0].is_collab == 1){
@@ -690,6 +694,7 @@ app.post('/', (req, res, next) => {
           randdriveurl: randdriveurl,
           randartistname: randartistname,
           randtrackname: randtrackname,
+          randtrackid: randtrackid,
           shuftext: shuffletext,
           totw: totw
         });
@@ -769,6 +774,7 @@ app.post('/', (req, res, next) => {
         randdriveurl = randresult[0].drive_url;
         randartistname = randresult[0].artist_name;
         randtrackname = randresult[0].track_name;
+        randtrackid = randresult[0].id;
         var shuffletext = `${randartistname} - ${randtrackname}`;
 
         if(randresult[0].is_collab == 1){
@@ -793,6 +799,7 @@ app.post('/', (req, res, next) => {
             randdriveurl: randdriveurl,
             randartistname: randartistname,
             randtrackname: randtrackname,
+            randtrackid: randtrackid,
             shuftext: shuffletext,
             totw: totw
           });
@@ -812,6 +819,7 @@ app.post('/', (req, res, next) => {
           randdriveurl: randdriveurl,
           randartistname: randartistname,
           randtrackname: randtrackname,
+          randtrackid: randtrackid,
           shuftext: shuffletext,
           totw: totw
         });

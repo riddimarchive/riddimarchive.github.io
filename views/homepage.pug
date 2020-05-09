@@ -83,8 +83,9 @@ block content
       p.boldtext SHUFFLE PLAYER
       #shuftext
         text.boldtext= `${shuf}`
-      audio(id='shufaudio', type='audio/mpeg', controls='')
-        source(id='shufaudiosrc' src=`${shuffleurl}`)
+      .downloadbutton
+        audio(id='shufaudio', type='audio/mpeg', controls='')
+          source(id='shufaudiosrc' src=`${shuffleurl}`)
       .downloadbutton
         a(id='shufdownloadbutton', href=shuffleurl)
           img(border='2', alt='Download Tune', src='Images/PageIMG/download2.png', height='50')
@@ -94,8 +95,9 @@ block content
           input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
           input#shufname.form-control(type='hidden', name='name', value=`${shuffleart}`)
           img(id='shuffave', class='favebuttonclass', border='2', alt='back', src='Images/PageIMG/addfave.png', height='50')
-      #shuffleforward
-        img(border='2', alt='back', src='Images/PageIMG/forward2.png', height='50')
+      .downloadbutton
+        #shuffleforward
+          img(border='2', alt='back', src='Images/PageIMG/forward2.png', height='50')
       #loadtext.boldtext
   br
   #labelgcenter #{message}

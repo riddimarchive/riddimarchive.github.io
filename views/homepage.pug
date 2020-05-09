@@ -196,9 +196,19 @@ block content
                 var shuffy = document.getElementById('shuftext');
                 shuffy.innerHTML= "";
                 shuffy.appendChild(thetext);
+
+                var idfield = document.getElementById('shuftrack_id');
+                var tracknamefield = document.getElementById('shuffavetrack_name');
+                var artistnamefield = document.getElementById('shufname');
+                idfield.setAttribute('value', `${data.id}`);
+                tracknamefield.setAttribute('value', `${data.track_name}`);
+                artistnamefield.setAttribute('value', `${data.artist_name}`);
+
+
                 var downbutton = document.getElementById('shufdownloadbutton');
                 downbutton.setAttribute('href', `${data.source}`);
                 document.getElementById('shufaudiosrc').src = `${data.source}`;
+
                 var audiop = document.getElementById('shufaudio');
                 audiop.load();
                 var playPromise = audiop.play();

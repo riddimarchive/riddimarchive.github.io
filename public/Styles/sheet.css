@@ -172,6 +172,7 @@ a{
 .boldtext{
   font-size: x-large;
   font-weight: bold;
+  margin-bottom: 7px;
 }
 
 #tuneslink{
@@ -466,12 +467,13 @@ li.tunetexttotw{
 #shuftext{
   display: flex;
   justify-content: center;
-  margin-top: 55px;
+  margin-bottom: 7px;
 }
 
 #shufaudio{
   display: flex;
   justify-content: center;
+  margin-left: 53px;
 }
 
 #shuffleforward{

@@ -1,25 +1,25 @@
 extends index3
 
 block content
-	h1 Change Password
+	.artisth1 
+		h1 Change Password
 	- var message = msg;
 	- var user = username;
-	.labelg #{message}
+	.labelgcenter #{message}
 
-	.contactdiv
-		.contact
-			form(method='POST' action='/changepass')
-				.label New Password:
-				br
-				div.form-group
-					input#newpass.form-control(type='password', name='newpass')
-				br
-				.label Re-Enter New Password:
-				br
-				div.form-group
-					input#newpass2.form-control(type='password', name='newpass2')
-				div.form-group
-					input#username.form-control(type='hidden', name='username', value=`${user}`)
-				br
-				div
-					button.btn.btn-primary.btn-block(type='submit') Change Password
+	.changepassform
+		form(method='POST' action='/changepass')
+			.label New Password:
+			br
+			div.form-group
+				input#newpass.form-control(type='password', name='newpass')
+			br
+			.label Re-Enter New Password:
+			br
+			div.form-group
+				input#newpass2.form-control(type='password', name='newpass2')
+			div.form-group
+				input#username.form-control(type='hidden', name='username', value=`${user}`)
+			br
+			div
+				button.btn.btn-primary.btn-block(type='submit') Change Password

@@ -1,27 +1,27 @@
 extends index3
 
 block content
-	h1 Create Account - *No Email or Personal Info Required*
+	.artisth1 
+		h1 Create Account - *No Email or Personal Info Required*
 	- var message = msg;
-	.labelg #{message}
+	.labelgcenter #{message}
 
-	.contactdiv
-		.contact
-			form(method='POST' action='/create')
-				.label Username:
-				br
-				div.form-group
-					input#username.form-control(type='text', name='username')
-				br
-				.label Password:
-				br
-				div.form-group
-					input#password.form-control(type='password', name='password')
-				br
-				.label Re-Enter Password:
-				br
-				div.form-group
-					input#password2.form-control(type='password', name='password2')
-				br
-				div
-					button.btn.btn-primary.btn-block(type='submit') Create Account
+	.createacctform
+		form(method='POST' action='/create')
+			.label Username:
+			br
+			div.form-group
+				input#username.form-control(type='text', name='username')
+			br
+			.label Password:
+			br
+			div.form-group
+				input#password.form-control(type='password', name='password')
+			br
+			.label Re-Enter Password:
+			br
+			div.form-group
+				input#password2.form-control(type='password', name='password2')
+			br
+			div
+				button.btn.btn-primary.btn-block(type='submit') Create Account

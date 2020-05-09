@@ -1533,8 +1533,9 @@ app.post('/tunesearch',(req,res)=>{
           await conquerie.connect(db);
           //searching instead
           let sresult = await trackquerie.searchTunes(db, search_results, a_name);
+          let collabsresult = await trackquerie.searchTunesCollabRemix(db, search_results, a_name);
 
-          if(sresult.length == 0){
+          if(sresult.length == 0 && collabsresult.length == 0){
             await conquerie.end(db);
             msg = "No items found";
             
@@ -1555,6 +1556,23 @@ app.post('/tunesearch',(req,res)=>{
               'blank': ""
            }
            tracks.push(row);
+          }
+
+          if(collabsresult.length > 0){
+            for (var i = 0; i < collabsresult.length; i++) {
+              var row = {
+                 'track_name':collabsresult[i].track_name,
+                 'artist_name':collabsresult[i].artist_name,
+                 'drive_url': collabsresult[i].drive_url,
+                 'id': collabsresult[i].id,
+                 'collab_artist': collabsresult[i].collab_artist,
+                 'original_artist': collabsresult[i].original_artist,
+                 'is_remix': collabsresult[i].is_remix,
+                 'is_collab': collabsresult[i].is_collab,
+                 'blank': ""
+              }
+              tracks.push(row);
+             }
           }
 
           for (var i = 0; i < tracks.length; i++) {

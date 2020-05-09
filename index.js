@@ -1684,7 +1684,7 @@ app.post('/favtunesearch',(req,res)=>{
 
           }else{
               let sresult = await trackquerie.searchFavoritesByArtist(db, user_id, search_results);
-              let collabsresult = await trackquerie.searchFavoritesByArtistCollabRemix(db, search_results, a_name);
+              let collabsresult = await trackquerie.searchFavoritesByArtistCollabRemix(db, user_id, search_results);
 
               if(sresult.length == 0 && collabsresult.length == 0){
                   await conquerie.end(db);

@@ -64,7 +64,7 @@ block content
       .searchform
         .downloadbutton
             .bigboldtext Artist Search
-        form#searchy(method='POST')
+        form#searchy2(method='POST')
           div.form-group
             input#search_results.form-control(type='text', name='search_results' placeholder="Search for Artist/Crew...")
           .downloadbutton
@@ -126,7 +126,7 @@ block content
 
     function searchAjaxInit() {
         console.log("Search Ajax Init");
-        var theform = $('#searchy');
+        var theform = $('#searchy2');
         var thebutton = $('#test');
         thebutton.click(function (ev) {
           ev.preventDefault();

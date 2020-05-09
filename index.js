@@ -1097,8 +1097,10 @@ forwardResponse();
 //check for field entry, authenticate and redirect with passport
 app.post('/trackcreate', (req, res, next) => {
 
-  var { track_name, artist_name, drive_url } = req.body;
+  var { track_name, artist_name, drive_url, is_collab, collab1, collab2, collab3, collab4, is_remix, og1, og2 } = req.body;
 
+  res.send(track_name + " " + artist_name + " " + drive_url + " " + is_collab + " " + collab1 + " " + collab2 + " " + collab3 + " " + collab4 + " " + is_remix + " " + og1 + " " + og2);
+  /*
   if(!track_name || !artist_name || !drive_url){
       res.render('trackcrud', {
         msg: "Fill in all Fields!",
@@ -1133,6 +1135,7 @@ app.post('/trackcreate', (req, res, next) => {
 
       storeFormResults(track_name, artist_name, drive_url);
     }//end else
+  */
 });
 
 

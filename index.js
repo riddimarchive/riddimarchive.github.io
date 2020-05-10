@@ -515,6 +515,8 @@ app.get('/artist/:name', function(req,res){
             beat = `https://www.beatport.com/${result[0].beat}`;
           }
 
+          console.log("Links" + fb + sc + bc + beat);
+
           let tresult = await trackquerie.getAllTracksFromArtist(db, name);
           for (var i = 0; i < tresult.length; i++) {
             var row = {

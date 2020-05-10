@@ -51,13 +51,13 @@ block content
 				.bigboldtext2 Support The Artist!
 				.downloadbutton
 					.links
-						a#fb(href=`https://facebook.com/${fblink}`)
+						a#fb(href=`${fblink}`)
 							img(border='2', alt='fb', src='../../Images/PageIMG/fb.png', height='100', width='100')
-						a#sc(href=`https://soundcloud.com/${sclink}`)
+						a#sc(href=`${sclink}`)
 							img(border='2', alt='sc', src='../../Images/PageIMG/sound.png', height='100', width='100')
 						a#bc(href=`${bclink}`)
 							img(border='2', alt='sc', src='../../Images/PageIMG/band.png', height='100', width='100')
-						a#beat(href=`https://beatport.com/${beatlink}`)
+						a#beat(href=`${beatlink}`)
 							img(border='2', alt='sc', src='../../Images/PageIMG/beat.png', height='100', width='100')
 
 	.artistinfo
@@ -313,16 +313,16 @@ block content
 			var thebclink = document.getElementById('bc');
 			var thebeatlink = document.getElementById('beat');
 
-			if(thefblink.href == "https://facebook.com/"){
+			if(thefblink.href == ""){
 				thefblink.style.display = 'none';
 			}
-			if(thesclink.href == "https://soundcloud.com/"){
+			if(thesclink.href == ""){
 				thesclink.style.display = 'none';
 			}
 			if(thebclink.href == ""){
 				thebclink.style.display = 'none';
 			}
-			if(thebeatlink.href == "https://beatport.com/"){
+			if(thebeatlink.href == ""){
 				thebeatlink.style.display = 'none';
 			}
 

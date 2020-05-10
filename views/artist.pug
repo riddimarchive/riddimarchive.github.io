@@ -28,7 +28,7 @@ block content
 			.searchformart
 				.downloadbutton
 					.bigboldtext Tune Search
-				form#searchy(method='POST')
+				form#searchy3(method='POST')
 					.downloadbutton
 						input#search_results(type='text', name='search_results' placeholder="Enter Track Name...")
 					div
@@ -90,7 +90,7 @@ block content
 
 		function searchAjaxInit() {
 			console.log("Search Ajax Init");
-			var theform = $('#searchy');
+			var theform = $('#searchy3');
 			var thebutton = $('#test');
 			thebutton.click(function (ev) {
 			ev.preventDefault();

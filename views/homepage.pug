@@ -189,8 +189,8 @@ block content
         console.log("Forward Ajax Init");
         document.getElementById('shuffleforward').addEventListener('click', makeNextRequest);
           function makeNextRequest(e){
-              document.getElementById('loadtext').innerHTML= "Loading..."
-              console.log("CALLING FCN");
+              document.getElementById('loadtext').innerHTML= "Loading...";
+              
               $.ajax({
               url:'/forward',
               type : 'POST',

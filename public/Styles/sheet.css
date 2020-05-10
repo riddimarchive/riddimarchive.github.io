@@ -274,6 +274,10 @@ li.tunetext{
   font-size: x-large;
   text-align: center;
 }
+li.tunetextsmaller{
+  font-size: large;
+  text-align: center;
+}
 
 .contactdiv{
   align-items: center;

@@ -68,8 +68,15 @@ block content
 					
 	#ulcontain2
 	script.
+
+		//- $(document).loading(function() {
+		//- 	console.log("Doc ready");
+		//- 	fixLargeText();
+		//- });
+
 		$(document).ready(function() {
 			console.log("Doc ready");
+			fixLargeText();
 			searchAjaxInit();
 			faveAjaxInit();
 		});
@@ -220,6 +227,7 @@ block content
 
 					}
 				faveAjaxInit();
+				fixLargeText();
 				}//end if, reloading page elements within
 			
 			},
@@ -269,3 +277,12 @@ block content
 				});//click event
 			});//class selector
 		}//fave ajax init
+
+		function fixLargeText() {
+			console.log("fix Large Init");
+			document.querySelectorAll('.tunetext').forEach(item => {
+					if(item.length > 30){
+						item.setAttribute('class', tunetextsmaller);
+					}
+			}
+		}

@@ -308,21 +308,26 @@ block content
 		}
 
 		function removeUnusedLinks() {
+			console.log("unused links");
 			var thefblink = document.getElementById('fb');
 			var thesclink = document.getElementById('sc');
 			var thebclink = document.getElementById('bc');
 			var thebeatlink = document.getElementById('beat');
 
-			if(thefblink.href == ""){
+			if(thefblink.href = ""){
+				console.log("no fb");
 				thefblink.style.display = 'none';
 			}
-			if(thesclink.href == ""){
+			if(thesclink.href = ""){
+				console.log("no sc");
 				thesclink.style.display = 'none';
 			}
-			if(thebclink.href == ""){
+			if(thebclink.href = ""){
+				console.log("no bandcamp");
 				thebclink.style.display = 'none';
 			}
-			if(thebeatlink.href == ""){
+			if(thebeatlink.href = ""){
+				console.log("no beatport");
 				thebeatlink.style.display = 'none';
 			}
 

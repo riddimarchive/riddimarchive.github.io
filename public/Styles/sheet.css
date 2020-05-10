@@ -567,7 +567,7 @@ li.tunetexttotwsmaller{
 .links{
   display: flex;
   justify-content: center;
-  width: 310px;
+  width: 225px;
   flex-wrap: wrap;
 }
 

@@ -273,10 +273,14 @@ list-style-type: none;
 li.tunetext{
   font-size: x-large;
   text-align: center;
+  width: 330px;
 }
+
 li.tunetextsmaller{
   font-size: large;
   text-align: center;
+  word-wrap: normal;
+  width: 330px;
 }
 
 .contactdiv{
@@ -507,6 +511,14 @@ p{
 li.tunetexttotw{
   font-size: large;
   text-align: center;
+  width: 330px;
+}
+
+li.tunetexttotwsmaller{
+  font-size: large;
+  text-align: center;
+  word-wrap: normal;
+  width: 330px;
 }
 
 .ulcontaintotw{

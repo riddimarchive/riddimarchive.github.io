@@ -118,6 +118,7 @@ block content
   script.
     $(document).ready(function() {
       console.log("Doc ready");
+      fixLargeText();
       searchAjaxInit();
       forwardAjaxInit();
       faveAjaxInit();
@@ -313,5 +314,13 @@ block content
           }
         }
       }, true);
+    }
 
+    function fixLargeText() {
+      console.log("fix Large Init");
+      document.querySelectorAll('.tunetexttotw').forEach(item => {
+        if(item.innerHTML.length > 30){
+          item.setAttribute('class', 'tunetexttotwsmaller');
+        }
+      });
     }

@@ -194,6 +194,14 @@ a{
   margin-bottom: 7px;
 }
 
+.bigboldtext2{
+  font-size: xx-large;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 7px;
+  height: 30px;
+}
+
 #tuneslink{
   font-size: x-large;
   font-weight: bold;

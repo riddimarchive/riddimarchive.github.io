@@ -28,21 +28,24 @@ block content
 	.middlecontain
 		.searchcontainart
 				.searchformart
-					form#searchy(method='POST')
-						div
-							label.boldtext(for='search_results') Tune Search
+					.downloadbutton
+						.bigboldtext Tune Search
+					form#searchy3(method='POST')
+						div.form-group
 							input#search_results(type='text', name='search_results' placeholder="Type Search here...")
-						div
+						.downloadbutton
 							label.boldtext(for='search_style') Search by Track
 							input#search_style.form-control(type='radio', name='search_style', checked="checked", value=0)
-						div
+						.downloadbutton
 							label.boldtext(for='search_style') Search by Artist
 							input#search_style.form-control(type='radio', name='search_style', value=1)
-						#test
-							img(border='0', alt='back', src='../Images/PageIMG/tunesearch.png', height='45')
-						div
-							a(href=`../favorites`) Reload Back To All Tunes
-	#labelgcenter #{message}
+						.downloadbutton
+							#test
+								img(border='0', alt='back', src='../Images/PageIMG/tunesearch.png', height='45')
+						.downloadbutton
+							a(id='reload', href="https://riddim-archive.herokuapp.com/favorites")
+								img(border='2', alt='Reload', src='../Images/PageIMG/reload.png', height='50')
+						#labelgcenter #{message}
 	#ulcontain
 		each track, index in y
 			.uldiv(id=`uldiv ${index}`)
@@ -80,7 +83,7 @@ block content
 
 		function searchAjaxInit() {
 			console.log("Search Ajax Init");
-			var theform = $('#searchy');
+			var theform = $('#searchy3');
 			var thebutton = $('#test');
 			thebutton.click(function (ev) {
 			ev.preventDefault();

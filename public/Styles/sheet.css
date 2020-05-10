@@ -198,8 +198,9 @@ a{
   font-size: xx-large;
   font-weight: bold;
   margin-top: 20px;
-  margin-bottom: 7px;
-  height: 30px;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 #tuneslink{
@@ -567,7 +568,7 @@ li.tunetexttotwsmaller{
 .links{
   display: flex;
   justify-content: center;
-  width: 225px;
+  width: 330px;
   flex-wrap: wrap;
 }
 

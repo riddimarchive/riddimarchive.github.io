@@ -283,6 +283,8 @@ li.tunetextsmaller{
   width: 330px;
 }
 
+
+
 .contactdiv{
   align-items: center;
   align-self: center;
@@ -544,6 +546,11 @@ li.tunetexttotwsmaller{
 }
 
 .downloadbutton{
+  display: flex;
+  justify-content: center;
+}
+
+#test{
   display: flex;
   justify-content: center;
 }

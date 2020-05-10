@@ -26,9 +26,10 @@ block content
 	.middlecontain
 		.searchcontainart
 			.searchformart
+				.downloadbutton
+					.bigboldtext Tune Search
 				form#searchy(method='POST')
 					.downloadbutton
-						label.boldtext(for='search_results') Tune Search
 						input#search_results(type='text', name='search_results' placeholder="Enter Track Name...")
 					div
 						input#a_name(type='hidden', name='a_name', value=`${artist_name}`)

@@ -48,13 +48,13 @@ block content
 				.downloadbutton
 					.links
 						a(id='thefb', href=`${fb}`)
-							img(border='0', alt='fb', src='../../Images/PageIMG/fb.png', height='100', width='100')
+							img(id='thefbimg', border='0', alt='fb', src='../../Images/PageIMG/trans.png', height='100', width='100')
 						a(id='thesc', href=`${sc}`)
-							img(border='0', alt='sc', src='../../Images/PageIMG/sound.png', height='100', width='100')
+							img(id='thescimg', border='0', alt='sc', src='../../Images/PageIMG/trans.png', height='100', width='100')
 						a(id='thebc', href=`${bc}`)
-							img(border='0', alt='sc', src='../../Images/PageIMG/band.png', height='100', width='100')
+							img(id='thebcimg', border='0', alt='sc', src='../../Images/PageIMG/trans.png', height='100', width='100')
 						a(id='thebeat', href=`${beat}`)
-							img(border='0', alt='sc', src='../../Images/PageIMG/beat.png', height='100', width='100')
+							img(id='thebeatimg', border='0', alt='sc', src='../../Images/PageIMG/trans.png', height='100', width='100')
 
 	.artistinfo
 		h3 #{info}
@@ -309,6 +309,10 @@ block content
 			var thesclink = document.getElementById('thesc');
 			var thebclink = document.getElementById('thebc');
 			var thebeatlink = document.getElementById('thebeat');
+			var thefbimage = document.getElementById('thefbimg');
+			var thescimage = document.getElementById('thescimg');
+			var thebcimage = document.getElementById('thebcimg');
+			var thebeatimage = document.getElementById('thebeatimg');
 			console.log(thefblink);
 			console.log(thesclink);
 			console.log(thebclink);
@@ -322,21 +326,32 @@ block content
 				console.log("no fb");
 				bool1 = 1;
 				thefblink.setAttribute('class', 'linksformclear');
+			}else{
+				thefbimage.setAttribute('src', '../../Images/PageIMG/fb.png')
 			}
+
 			if(thesclink.href == "https://riddim-archive.herokuapp.com/artist/0" || thesclink.href == "0"){
 				console.log("no sc");
 				bool2 = 1;
 				thesclink.setAttribute('class', 'linksformclear');
+			}else{
+				thescimage.setAttribute('src', '../../Images/PageIMG/sound.png')
 			}
+
 			if(thebclink.href == "https://riddim-archive.herokuapp.com/artist/0" || thebclink.href == "0"){
 				console.log("no bandcamp");
 				bool3 = 1;
 				thebclink.setAttribute('class', 'linksformclear');
+			}else{
+				thebcimage.setAttribute('src', '../../Images/PageIMG/band.png')
 			}
+
 			if(thebeatlink.href == "https://riddim-archive.herokuapp.com/artist/0" || thebeatlink.href == "0"){
 				console.log("no beatport");
 				bool4 = 1;
 				thebeatlink.setAttribute('class', 'linksformclear');
+			}else{
+				thebeatimage.setAttribute('src', '../../Images/PageIMG/beat.png')
 			}
 
 			if(bool1 == 1 && bool2 == 1 && bool3 == 1 && bool4 == 1){

@@ -560,6 +560,7 @@ li.tunetexttotwsmaller{
   display: flex;
   justify-content: center;
   width: 310px;
+  flex-wrap: wrap;
 }
 
 #test{

@@ -8,6 +8,7 @@ const createError = require('http-errors');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const favicon = require('serve-favicon');
 flash = require('connect-flash');
 
 //file reqs: database connect, query functions, hash functions
@@ -50,6 +51,7 @@ app.use(session({
 }));
 
 app.use(flash());
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 // create public folders in express
 app.use(express.static('public'));

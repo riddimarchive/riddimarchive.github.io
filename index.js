@@ -502,16 +502,16 @@ app.get('/artist/:name', function(req,res){
 
           let result = await artquerie.getArtistInfo(db, name);
           info = `${result[0].info}`;
-          if(result[0].fb != ""){
+          if(result[0].fb.length > 1){
             fb = `https://www.facebook.com/${result[0].fb}`;
           }
-          if(result[0].sc != ""){
+          if(result[0].sc.length > 1){
             sc = `https://soundcloud.com/${result[0].sc}`;
           }
-          if(result[0].bc != ""){
+          if(result[0].bc.length > 1){
             bc = result[0].bc;
           }
-          if(result[0].beat != ""){
+          if(result[0].beat.length > 1){
             beat = `https://www.beatport.com/${result[0].beat}`;
           }
 

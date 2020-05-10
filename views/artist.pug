@@ -70,11 +70,9 @@ block content
 					
 	#ulcontain2
 	script.
-
-		//- $(document).loading(function() {
-		//- 	console.log("Doc ready");
-		//- 	fixLargeText();
-		//- });
+		$(document).on("keydown", "form", function(event) { 
+			return event.key != "Enter";
+		});
 
 		$(document).ready(function() {
 			console.log("Doc ready");

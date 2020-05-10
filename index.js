@@ -494,6 +494,7 @@ app.get('/artist/:name', function(req,res){
           var sc = "0";
           var bc = "0";
           var beat = "0";
+          var insta = "0"
 
           var msg = "";
 
@@ -522,8 +523,13 @@ app.get('/artist/:name', function(req,res){
             beat = `https://www.beatport.com/${result[0].beat}`;
             console.log(beat);
           }
+          if(result[0].insta.length > 1){
+            console.log("the link changed");
+            insta = `https://www.instagram.com/${result[0].insta}`;
+            console.log(insta);
+          }
 
-          console.log("Links" + fb + sc + bc + beat);
+          console.log("Links" + fb + sc + bc + beat + insta);
 
           let tresult = await trackquerie.getAllTracksFromArtist(db, name);
           for (var i = 0; i < tresult.length; i++) {
@@ -610,6 +616,7 @@ app.get('/artist/:name', function(req,res){
             sc: sc,
             bc: bc,
             beat: beat,
+            insta: insta,
             tracks: tracks,
             currentuserid: user_id,
             msg: msg

@@ -55,6 +55,8 @@ block content
 							img(id='thebcimg', border='0', alt='sc', src='../../Images/PageIMG/trans.png', height='100', width='100')
 						a(id='thebeat', href=`${beat}`)
 							img(id='thebeatimg', border='0', alt='sc', src='../../Images/PageIMG/trans.png', height='100', width='100')
+						a(id='theinsta', href=`${insta}`)
+							img(id='theinstaimg', border='0', alt='sc', src='../../Images/PageIMG/trans.png', height='100', width='100')
 
 	.artistinfo
 		h3 #{info}
@@ -309,18 +311,18 @@ block content
 			var thesclink = document.getElementById('thesc');
 			var thebclink = document.getElementById('thebc');
 			var thebeatlink = document.getElementById('thebeat');
+			var theinstalink = document.getElementById('theinsta');
 			var thefbimage = document.getElementById('thefbimg');
 			var thescimage = document.getElementById('thescimg');
 			var thebcimage = document.getElementById('thebcimg');
 			var thebeatimage = document.getElementById('thebeatimg');
-			console.log(thefblink);
-			console.log(thesclink);
-			console.log(thebclink);
-			console.log(thebeatlink);
+			var theinstaimage = document.getElementById('theinstaimg');
+
 			var bool1 = 0;
 			var bool2 = 0;
 			var bool3 = 0;
 			var bool4 = 0;
+			var bool5 = 0;
 
 			if(thefblink.href == "https://riddim-archive.herokuapp.com/artist/0" || thefblink.href == "0"){
 				console.log("no fb");
@@ -354,13 +356,18 @@ block content
 				thebeatimage.setAttribute('src', '../../Images/PageIMG/beat.png')
 			}
 
-			if(bool1 == 1 && bool2 == 1 && bool3 == 1 && bool4 == 1){
+			if(theinstalink.href == "https://riddim-archive.herokuapp.com/artist/0" || theinstalink.href == "0"){
+				console.log("no insta");
+				bool5 = 1;
+				theinstalink.setAttribute('class', 'linksformclear');
+			}else{
+				theinstaimage.setAttribute('src', '../../Images/PageIMG/insta.png')
+			}
+
+			if(bool1 == 1 && bool2 == 1 && bool3 == 1 && bool4 == 1 && bool5 == 1){
 				var test = document.getElementById('linksformart');
 				var test2 = document.getElementById('linkscontainart');
 				test.setAttribute('class', 'linksformclear');
 				test2.setAttribute('class', 'linksformclear');
 			}
-
-
-			
 		}

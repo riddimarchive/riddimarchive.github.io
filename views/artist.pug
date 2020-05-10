@@ -41,6 +41,21 @@ block content
 					#labelgcenter #{message}
 		.artistpage
 			img(src=`../Images/Logos/${artist_name}.jpg`, alt="ADD ARTIST IMG HERE", height='275', width='275')
+		.searchcontainart
+			.searchformart
+				.downloadbutton
+					.bigboldtext Support The Artist!
+					a(id='fb', href=`https://facebook.com`)
+						img(border='2', alt='fb', src='../../Images/PageIMG/fb.png', height='150', width='150')
+					a(id='sc', href=`https://soundcloud.com`)
+						img(border='2', alt='sc', src='../../Images/PageIMG/sound.png', height='150', width='150')
+					a(id='bc', href=`https://bandcamp.com`)
+						img(border='2', alt='sc', src='../../Images/PageIMG/band.png', height='150', width='150')
+					a(id='insta', href=`https://instagram.com`)
+						img(border='2', alt='sc', src='../../Images/PageIMG/insta.png', height='150', width='150')
+					
+
+		
 	.artistinfo
 		h3 #{info}
 	- var x = tracks;

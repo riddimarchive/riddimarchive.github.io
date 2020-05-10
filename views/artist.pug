@@ -281,10 +281,7 @@ block content
 		function fixLargeText() {
 			console.log("fix Large Init");
 			document.querySelectorAll('.tunetext').forEach(item => {
-					console.log(item.innerHTML);
-					console.log(item.length);
-					console.log(item.innerHTML.length)
-					if(item.length > 30){
+					if(item.innerHTML.length > 30){
 						item.setAttribute('class', tunetextsmaller);
 					}
 			});

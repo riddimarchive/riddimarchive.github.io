@@ -556,6 +556,12 @@ li.tunetexttotwsmaller{
   justify-content: center;
 }
 
+.links{
+  display: flex;
+  justify-content: center;
+  width: 310px;
+}
+
 #test{
   display: flex;
   justify-content: center;

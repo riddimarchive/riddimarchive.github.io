@@ -490,6 +490,11 @@ app.get('/artist/:name', function(req,res){
           var artist = {};
           var tracks = [];
           var info = "";
+          var fb = "";
+          var sc = "";
+          var bc = "";
+          var beat = "";
+
           var msg = "";
 
           var db = createConnection();
@@ -497,6 +502,18 @@ app.get('/artist/:name', function(req,res){
 
           let result = await artquerie.getArtistInfo(db, name);
           info = `${result[0].info}`;
+          if(result[0].fb != ""){
+            fb = `https://www.facebook.com/${result[0].fb}`;
+          }
+          if(result[0].sc != ""){
+            sc = `https://soundcloud.com/${result[0].sc}`;
+          }
+          if(result[0].bc != ""){
+            bc = result[0].bc;
+          }
+          if(result[0].beat != ""){
+            beat = `https://www.beatport.com/${result[0].beat}`;
+          }
 
           let tresult = await trackquerie.getAllTracksFromArtist(db, name);
           for (var i = 0; i < tresult.length; i++) {
@@ -579,6 +596,10 @@ app.get('/artist/:name', function(req,res){
           res.render('artist',{
             artist_name: name,
             info: info,
+            fb: fb,
+            sc: sc,
+            bc: bc,
+            beat: beat,
             tracks: tracks,
             currentuserid: user_id,
             msg: msg

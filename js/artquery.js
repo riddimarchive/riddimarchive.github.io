@@ -1,7 +1,7 @@
 function getArtistInfo(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT * FROM artists WHERE artist_name = ?`, [artist_name], (error, result, fields) => {
+		db.query(`SELECT info, fb, sc, bc, beat FROM artists WHERE artist_name = ?`, [artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

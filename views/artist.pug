@@ -310,11 +310,6 @@ block content
 		}
 
 		function removeUnusedLinks() {
-			var thefblink = document.getElementById('thefb');
-			var thesclink = document.getElementById('thesc');
-			var thebclink = document.getElementById('thebc');
-			var thebeatlink = document.getElementById('thebeat');
-			var theinstalink = document.getElementById('theinsta');
 			var thefbimage = document.getElementById('thefbimg');
 			var thescimage = document.getElementById('thescimg');
 			var thebcimage = document.getElementById('thebcimg');
@@ -326,77 +321,32 @@ block content
 			var bool3 = 0;
 			var bool4 = 0;
 			var bool5 = 0;
+			
 			document.querySelectorAll('.none').forEach(item => {
 				console.log(item.href);
 				console.log(item.id);
 				item.setAttribute('class', 'linksformclear');
 				if (item.id == 'thefb'){
-					console.log("NO FB");
 					bool1 = 1;
 					thefbimage.setAttribute('src', '../../Images/PageIMG/trans.png');
 				}
 				if (item.id == 'thesc'){
-					console.log("NO SC");
 					bool2 = 1;
 					thescimage.setAttribute('src', '../../Images/PageIMG/trans.png');
 				}
 				if (item.id == 'thebc'){
-					console.log("NO BC");
 					bool3 = 1;
 					thebcimage.setAttribute('src', '../../Images/PageIMG/trans.png');
 				}
 				if (item.id == 'thebeat'){
-					console.log("NO BEAT");
 					bool4 = 1;
 					thebeatimage.setAttribute('src', '../../Images/PageIMG/trans.png');
 				}
 				if (item.id == 'theinsta'){
-					console.log("NO INSTA");
 					bool5 = 1;
 					theinstaimage.setAttribute('src', '../../Images/PageIMG/trans.png');
 				}
 			});
-			/*
-			if(thefblink.href == "https://riddim-archive.herokuapp.com/artist/0" || thefblink.href == "0"){
-				bool1 = 1;
-				thefblink.setAttribute('class', 'linksformclear');
-				thefbimage.setAttribute('class', 'linksformclear');
-			}else{
-				thefbimage.setAttribute('src', '../../Images/PageIMG/fb.png')
-			}
-
-			if(thesclink.href == "https://riddim-archive.herokuapp.com/artist/0" || thesclink.href == "0"){
-				bool2 = 1;
-				thesclink.setAttribute('class', 'linksformclear');
-				thescimage.setAttribute('class', 'linksformclear');
-			}else{
-				thescimage.setAttribute('src', '../../Images/PageIMG/sound.png')
-			}
-
-			if(thebclink.href == "https://riddim-archive.herokuapp.com/artist/0" || thebclink.href == "0"){
-				bool3 = 1;
-				thebclink.setAttribute('class', 'linksformclear');
-				thebcimage.setAttribute('class', 'linksformclear');
-			}else{
-				thebcimage.setAttribute('src', '../../Images/PageIMG/band.png')
-			}
-
-			if(thebeatlink.href == "https://riddim-archive.herokuapp.com/artist/0" || thebeatlink.href == "0"){
-				bool4 = 1;
-				thebeatlink.setAttribute('class', 'linksformclear');
-				thebeatimage.setAttribute('class', 'linksformclear');
-			}else{
-				thebeatimage.setAttribute('src', '../../Images/PageIMG/beat.png')
-			}
-
-			if(theinstalink.href == "https://riddim-archive.herokuapp.com/artist/0" || theinstalink.href == "0"){
-				bool5 = 1;
-				theinstalink.setAttribute('class', 'linksformclear');
-				theinstaimage.setAttribute('class', 'linksformclear');
-			}else{
-				theinstaimage.setAttribute('src', '../../Images/PageIMG/insta.png')
-			}
-			*/
 
 			if(bool1 == 1 && bool2 == 1 && bool3 == 1 && bool4 == 1 && bool5 == 1){
 				var test = document.getElementById('linksformart');

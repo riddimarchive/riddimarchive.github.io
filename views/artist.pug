@@ -99,6 +99,10 @@ block content
 			removeUnusedLinks();
 		});
 
+		window.onload = function(){
+			removeUnusedLinks();
+		};
+
 		$(document).ajaxComplete(function () {
 			console.log("Ajax Complete");
 			//faveAjaxInit();

@@ -74,10 +74,10 @@ function searchArtistsByCrew(db, search_results){
 
 }
 
-function addArtist(db, artist_name, crew, country, info){
+function addArtist(db, artist_name, crew, country, info, face, sound, band, beat, insta){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`INSERT INTO artists (artist_name, crew, country, info) VALUES (?, ?, ?, ?)`, [artist_name, crew, country, info], (error, result, fields) => {
+		db.query(`INSERT INTO artists (artist_name, crew, country, info, face, sound, band, beat, insta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, [artist_name, crew, country, info, face, sound, band, beat, insta], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

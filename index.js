@@ -1357,7 +1357,7 @@ app.post('/userdelete', (req, res, next) => {
 //check for field entry, make query to add artist
 app.post('/artistcreate', (req, res, next) => {
 
-  var { artist_name, crew, country, info } = req.body;
+  var { artist_name, crew, country, info, face, sound, band, beat, insta } = req.body;
 
   if(!artist_name){
             res.render('artcrud', {
@@ -1384,7 +1384,7 @@ app.post('/artistcreate', (req, res, next) => {
                         });
                     }else{
 
-                        let tresult = await artquerie.addArtist(db, artist_name, crew, country, info);
+                        let tresult = await artquerie.addArtist(db, artist_name, crew, country, info, face, sound, band, beat, insta);
                         res.render('artcrud', {
                           msg: "Artist Added!",
                           msg2: ""

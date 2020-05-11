@@ -306,7 +306,6 @@ block content
 		}
 
 		function removeUnusedLinks() {
-			console.log("unused links");
 			var thefblink = document.getElementById('thefb');
 			var thesclink = document.getElementById('thesc');
 			var thebclink = document.getElementById('thebc');
@@ -325,7 +324,6 @@ block content
 			var bool5 = 0;
 
 			if(thefblink.href == "https://riddim-archive.herokuapp.com/artist/0" || thefblink.href == "0"){
-				console.log("no fb");
 				bool1 = 1;
 				thefblink.setAttribute('class', 'linksformclear');
 			}else{
@@ -333,7 +331,6 @@ block content
 			}
 
 			if(thesclink.href == "https://riddim-archive.herokuapp.com/artist/0" || thesclink.href == "0"){
-				console.log("no sc");
 				bool2 = 1;
 				thesclink.setAttribute('class', 'linksformclear');
 			}else{
@@ -341,7 +338,6 @@ block content
 			}
 
 			if(thebclink.href == "https://riddim-archive.herokuapp.com/artist/0" || thebclink.href == "0"){
-				console.log("no bandcamp");
 				bool3 = 1;
 				thebclink.setAttribute('class', 'linksformclear');
 			}else{
@@ -349,7 +345,6 @@ block content
 			}
 
 			if(thebeatlink.href == "https://riddim-archive.herokuapp.com/artist/0" || thebeatlink.href == "0"){
-				console.log("no beatport");
 				bool4 = 1;
 				thebeatlink.setAttribute('class', 'linksformclear');
 			}else{
@@ -357,7 +352,6 @@ block content
 			}
 
 			if(theinstalink.href == "https://riddim-archive.herokuapp.com/artist/0" || theinstalink.href == "0"){
-				console.log("no insta");
 				bool5 = 1;
 				theinstalink.setAttribute('class', 'linksformclear');
 			}else{

@@ -504,32 +504,20 @@ app.get('/artist/:name', function(req,res){
           let result = await artquerie.getArtistInfo(db, name);
           info = `${result[0].info}`;
           if(result[0].fb.length > 1){
-            console.log("the link changed");
             fb = `https://www.facebook.com/${result[0].fb}`;
-            console.log(fb);
           }
           if(result[0].sc.length > 1){
-            console.log("the link changed");
             sc = `https://soundcloud.com/${result[0].sc}`;
-            console.log(sc);
           }
           if(result[0].bc.length > 1){
-            console.log("the link changed");
             bc = result[0].bc;
-            console.log(bc);
           }
           if(result[0].beat.length > 1){
-            console.log("the link changed");
             beat = `https://www.beatport.com/${result[0].beat}`;
-            console.log(beat);
           }
           if(result[0].insta.length > 1){
-            console.log("the link changed");
             insta = `https://www.instagram.com/${result[0].insta}`;
-            console.log(insta);
           }
-
-          console.log("Links" + fb + sc + bc + beat + insta);
 
           let tresult = await trackquerie.getAllTracksFromArtist(db, name);
           for (var i = 0; i < tresult.length; i++) {

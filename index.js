@@ -490,11 +490,11 @@ app.get('/artist/:name', function(req,res){
           var artist = {};
           var tracks = [];
           var info = "";
-          var fb = "0";
-          var sc = "0";
-          var bc = "0";
-          var beat = "0";
-          var insta = "0"
+          var fb = 'none';
+          var sc = 'none';
+          var bc = 'none';
+          var beat = 'none';
+          var insta = 'none';
 
           var msg = "";
 

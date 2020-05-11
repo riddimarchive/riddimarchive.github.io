@@ -47,16 +47,16 @@ block content
 				.bigboldtext2 Support The Artist!
 				.downloadbutton
 					.links
-						a(id='thefb', href=`${fb}`)
-							img(id='thefbimg', border='0', alt='fb', src='../../Images/PageIMG/trans.png', height='100', width='100')
-						a(id='thesc', href=`${sc}`)
-							img(id='thescimg', border='0', alt='sc', src='../../Images/PageIMG/trans.png', height='100', width='100')
-						a(id='thebc', href=`${bc}`)
-							img(id='thebcimg', border='0', alt='sc', src='../../Images/PageIMG/trans.png', height='100', width='100')
-						a(id='thebeat', href=`${beat}`)
-							img(id='thebeatimg', border='0', alt='sc', src='../../Images/PageIMG/trans.png', height='100', width='100')
-						a(id='theinsta', href=`${insta}`)
-							img(id='theinstaimg', border='0', alt='sc', src='../../Images/PageIMG/trans.png', height='100', width='100')
+						a(id='thefb', class=`${fb}`, href=`${fb}`)
+							img(id='thefbimg', border='0', alt='fb', src='../../Images/PageIMG/fb.png', height='100', width='100')
+						a(id='thesc',  class=`${sc}`, href=`${sc}`)
+							img(id='thescimg', border='0', alt='sc', src='../../Images/PageIMG/sound.png', height='100', width='100')
+						a(id='thebc',  class=`${bc}`, href=`${bc}`)
+							img(id='thebcimg', border='0', alt='sc', src='../../Images/PageIMG/band.png', height='100', width='100')
+						a(id='thebeat',  class=`${beat}`, href=`${beat}`)
+							img(id='thebeatimg', border='0', alt='sc', src='../../Images/PageIMG/beat.png', height='100', width='100')
+						a(id='theinsta',  class=`${insta}`, href=`${insta}`)
+							img(id='theinstaimg', border='0', alt='sc', src='../../Images/PageIMG/insta.png', height='100', width='100')
 
 	.artistinfo
 		h3 #{info}
@@ -326,7 +326,35 @@ block content
 			var bool3 = 0;
 			var bool4 = 0;
 			var bool5 = 0;
-
+			document.querySelectorAll('.0').forEach(item => {
+				item.setAttribute('class', 'linksformclear');
+				if (item.id = 'thefb'){
+					console.log("NO FB");
+					bool1 = 1;
+					thefbimage.setAttribute('src', '../../Images/PageIMG/trans.png');
+				}
+				if (item.id = 'thesc'){
+					console.log("NO SC");
+					bool2 = 1;
+					thescimage.setAttribute('src', '../../Images/PageIMG/trans.png');
+				}
+				if (item.id = 'thebc'){
+					console.log("NO BC");
+					bool3 = 1;
+					thebcimage.setAttribute('src', '../../Images/PageIMG/trans.png');
+				}
+				if (item.id = 'thebeat'){
+					console.log("NO BEAT");
+					bool4 = 1;
+					thebeatimage.setAttribute('src', '../../Images/PageIMG/trans.png');
+				}
+				if (item.id = 'theinsta'){
+					console.log("NO INSTA");
+					bool5 = 1;
+					theinstaimage.setAttribute('src', '../../Images/PageIMG/trans.png');
+				}
+			});
+			/*
 			if(thefblink.href == "https://riddim-archive.herokuapp.com/artist/0" || thefblink.href == "0"){
 				bool1 = 1;
 				thefblink.setAttribute('class', 'linksformclear');
@@ -366,6 +394,7 @@ block content
 			}else{
 				theinstaimage.setAttribute('src', '../../Images/PageIMG/insta.png')
 			}
+			*/
 
 			if(bool1 == 1 && bool2 == 1 && bool3 == 1 && bool4 == 1 && bool5 == 1){
 				var test = document.getElementById('linksformart');

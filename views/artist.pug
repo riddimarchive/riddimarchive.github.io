@@ -100,7 +100,7 @@ block content
 		});
 
 		window.onload = function(){
-			removeUnusedLinks();
+			//removeUnusedLinks();
 		};
 
 		$(document).ajaxComplete(function () {
@@ -327,6 +327,7 @@ block content
 			var bool4 = 0;
 			var bool5 = 0;
 			document.querySelectorAll('.none').forEach(item => {
+				console.log(item.href);
 				item.setAttribute('class', 'linksformclear');
 				if (item.id = 'thefb'){
 					console.log("NO FB");

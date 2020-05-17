@@ -109,7 +109,6 @@ block content
 		});
 
 		function searchAjaxInit() {
-			console.log("Search Ajax Init");
 			var theform = $('#searchy3');
 			var thebutton = $('#test');
 			thebutton.click(function (ev) {
@@ -264,11 +263,9 @@ block content
 		}//searchajaxinit
 		
 		function faveAjaxInit() {
-			console.log("fave Ajax Init");
 			document.querySelectorAll('.favebuttonclass').forEach(item => {
 				item.addEventListener('click', event => {
 				var theform = document.getElementById(`form ${item.id}`);
-				console.log(theform);
 				var tid = theform.elements["track_id"].value;
 				var t_name = theform.elements["favetrack_name"].value;
 				var uid = theform.elements["user_id"].value;
@@ -301,7 +298,6 @@ block content
 		}//fave ajax init
 
 		function fixLargeText() {
-			console.log("fix Large Init");
 			document.querySelectorAll('.tunetext').forEach(item => {
 					if(item.innerHTML.length > 55){
 						item.setAttribute('class', 'tunetextsmaller');
@@ -323,8 +319,6 @@ block content
 			var bool5 = 0;
 			
 			document.querySelectorAll('.none').forEach(item => {
-				console.log(item.href);
-				console.log(item.id);
 				item.setAttribute('class', 'linksformclear');
 				if (item.id == 'thefb'){
 					bool1 = 1;

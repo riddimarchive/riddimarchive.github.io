@@ -281,6 +281,16 @@ a{
   display: block;
   font-size: 2em;
   font-weight: bold;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+#theh3{
+  display: block;
+  font-size: 1.17em;
+  font-weight: bold;
+  margin-top: 0px;
+  margin-bottom: 5px;
 }
 
 .artistinfo{

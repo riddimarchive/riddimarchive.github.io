@@ -556,6 +556,11 @@ p{
   border: black solid 5px;
 }
 
+#toplogo{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 li.tunetexttotw{
   font-size: large;
   text-align: center;

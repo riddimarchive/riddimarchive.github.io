@@ -277,6 +277,12 @@ a{
   margin-right: 5em;
 }
 
+h1{
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+}
+
 .artistinfo{
   display: flex;
   justify-content: center;

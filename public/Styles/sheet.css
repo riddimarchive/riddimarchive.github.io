@@ -277,6 +277,12 @@ a{
   margin-right: 5em;
 }
 
+.pageclass{
+  margin-top: 0.7em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+}
+
 #theh1{
   display: block;
   font-size: 2em;

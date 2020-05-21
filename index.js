@@ -130,7 +130,7 @@ app.get('/', (req, res) => {
           }
         }
 
-        let tresult = await artquerie.getAllArtists(db);
+        let tresult = await artquerie.getAllArtistsAthroughD(db);
 
         //store results
         for (var i = 0; i < tresult.length; i++) {
@@ -139,6 +139,7 @@ app.get('/', (req, res) => {
           }
           artists.push(row);
         }
+
         let randresult = await trackquerie.getRandomTrack(db);
         randdriveurl = randresult[0].drive_url;
         randartistname = randresult[0].artist_name;

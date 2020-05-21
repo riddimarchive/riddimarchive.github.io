@@ -93,7 +93,7 @@ block content
               .uldivtotw
                 li.tunetexttotw= `${track.original_artist}${track.track_name}${track.blank}`
                 .totw
-                  audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none', width='100%') Sorry Bruv, Your Browser Can't Play dis chune!
+                  audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none', style='width:100%;') Sorry Bruv, Your Browser Can't Play dis chune!
                 .downloadbutton
                   a(href=track.drive_url)
                     img(border='2', alt='Download Tune', src='Images/PageIMG/download2.png', height='50')

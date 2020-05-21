@@ -246,12 +246,6 @@ block content
       audiop.addEventListener('playing',function() { document.getElementById('loadtext').innerHTML= ""; });
     }
 
-    function totwaudioFinishedCheck(index) {
-      var loadmsg = document.getElementById(`${index}`);
-      var audiop = document.getElementById('shufaudio');
-      audiop.addEventListener('playing',function() { loadmsg.innerHTML = ""; });
-    }
-
     function faveAjaxInit() {
       console.log("fave Ajax Init");
       document.querySelectorAll('.favebuttonclass').forEach(item => {
@@ -390,9 +384,10 @@ block content
             if(audios[i] != e.target){
               console.log("pausing");
               audios[i].pause();
-              var theid = (audios[i].id-10000);
-              console.log(theid);
-              totwaudioFinishedCheck(theid);
+              if(audios[i].id !== 'shufaudio'){
+                var theid = (audios[i].id-10000);
+                console.log(`The ID is: ${theid}`);
+              }
             }
           }
         }

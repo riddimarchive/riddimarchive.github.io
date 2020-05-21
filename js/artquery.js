@@ -55,6 +55,25 @@ function getAllArtistsAthroughD(db){
 
 }
 
+function getAllArtistsEthroughI(db){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT artist_name FROM artists WHERE artist_name >= "E" and artist_name < "J" ORDER BY artist_name`, (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+
+}
+
 function searchArtists(db, search_results){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -134,6 +153,7 @@ module.exports = {
 	getArtistInfo,
 	getAllArtists,
 	getAllArtistsAthroughD,
+	getAllArtistsEthroughI,
 	searchArtists,
 	searchArtistsByCrew,
 	addArtist,

@@ -130,7 +130,7 @@ app.get('/', (req, res) => {
           }
         }
 
-        let tresult = await artquerie.getAllArtistsJthroughO(db);
+        let tresult = await artquerie.getAllArtistsPthroughT(db);
 
         //store results
         for (var i = 0; i < tresult.length; i++) {

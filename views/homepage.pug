@@ -20,10 +20,6 @@ block content
     }
     }
 
-  .artisth1
-    a#tuneslink(title='Totw', href='', onclick='toggleVisible();return false;') Click Here for Tunes of the Week!
-
-
   - var y = totw;
   - var userid = currentuserid;
   - var message = msg;
@@ -86,6 +82,7 @@ block content
         img(id=`atod`, class='pageclass', border='2', alt='back', src='Images/PageIMG/athroughd.png', height='50')
         img(id=`etoi`, class='pageclass', border='2', alt='back', src='Images/PageIMG/ethroughi.png', height='50')
         img(id=`jtoo`, class='pageclass', border='2', alt='back', src='Images/PageIMG/jthrougho.png', height='50')
+        img(id=`ptot`, class='pageclass', border='2', alt='back', src='Images/PageIMG/pthrought.png', height='50')
         img(id=`utoz`, class='pageclass', border='2', alt='back', src='Images/PageIMG/uthroughz.png', height='50')
       .artisth1
         a#tuneslink(title='Totw', href='', onclick='toggleVisible();return false;') Click Here for Tunes of the Week!
@@ -133,6 +130,7 @@ block content
       searchAjaxInit();
       forwardAjaxInit();
       faveAjaxInit();
+      pageAjaxInit();
       playInit();
     });
 
@@ -305,6 +303,80 @@ block content
         });//click event
       });//class selector
     }//fave ajax init
+
+    function pageAjaxInit() {
+      console.log("page Ajax Init");
+      document.querySelectorAll('.favebuttonclass').forEach(item => {
+        item.addEventListener('click', event => {
+          var page = 6;
+          if (item.id == 'atod'){
+            page = 0;
+          }
+          if (item.id == 'etoi'){
+            page = 1;
+          }
+          if (item.id == 'jtoo'){
+            page = 2;
+          }
+          if (item.id == 'ptot'){
+            page = 3;
+          }
+          if (item.id == 'utoz'){
+            page = 4;
+          }
+            $.ajax({
+            url:'/page',
+            type: 'POST',
+            data: {
+            pagey: page
+            },
+            success: function(data){
+                if(data.donothing == 1){
+                  console.log("Doing NOthing lol");
+                }else{
+                    console.log("Replacing Artist List!");
+                    var oldlist = document.getElementsByClassName("fishchild");
+                    const len = oldlist.length;
+                    for (var i = 0; i < len; i++){
+                      var element = oldlist[(oldlist.length - 1)].parentNode;
+                      element.removeChild(oldlist[(oldlist.length - 1)]);
+                    }
+
+                    var list = data.artists;
+                    for (var i = 0; i < list.length; i++){
+                      //set container, everything will added within
+                      var thecontainer = document.getElementById('fish2');
+
+                      var fishchilddiv = document.createElement('div');
+                      fishchilddiv.setAttribute('class', 'fishchild');
+
+                      //page link
+                      var artistlink = document.createElement('a');
+                      artistlink.setAttribute('href', `artist/${list[i].artist_name}`);
+
+                      //artist image
+                      var artistimage = document.createElement('img');
+                      artistimage.setAttribute('alt', 'ADD ARTIST IMG HERE');
+                      artistimage.setAttribute('src', `Images/Logos/${list[i].artist_name}.jpg`);
+                      artistimage.setAttribute('height', '275');
+                      artistimage.setAttribute('width', '275');
+
+                      artistlink.appendChild(artistimage);
+                      fishchilddiv.appendChild(artistlink);
+                      thecontainer.appendChild(fishchilddiv);
+                    }//forloop list iterate
+                }
+                
+            },
+            error: function(){
+              console.log("Didn't Work");
+              var msg = "Something went Wrong, Please Refresh Page and try Again";
+              document.getElementById('labelgcenter').innerHTML = themsg;
+            }
+            });//ajax
+        });//click event
+      });//class selector
+    }//pageinit
 
     function playInit() {
       document.addEventListener('play', function(e){

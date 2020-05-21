@@ -1534,6 +1534,77 @@ app.post('/search', (req, res, next) => {
 
 });
 
+//POST REQUEST - Homepage change
+app.post('/page', (req, res, next) => {
+  var { pagey } = req.body;
+  if (pagey == 6){
+    res.send({donothing: 1, artists: ""});
+  }else{
+
+    async function pageChange(pagey){
+      try{
+        var artists = [];
+        var db = createConnection();
+        await conquerie.connect(db);
+      if(pagey == 0){
+        let result = await artquerie.getAllArtistsAthroughD(db);
+        for (var i = 0; i < result.length; i++) {
+          var row = {
+            'artist_name': result[i].artist_name
+          }
+          artists.push(row);
+        }//end for
+      }
+      if(pagey == 1){
+        let result = await artquerie.getAllArtistsEthroughI(db);
+        for (var i = 0; i < result.length; i++) {
+          var row = {
+            'artist_name': result[i].artist_name
+          }
+          artists.push(row);
+        }//end for
+      }
+      if(pagey == 2){
+        let result = await artquerie.getAllArtistsJthroughO(db);
+        for (var i = 0; i < result.length; i++) {
+          var row = {
+            'artist_name': result[i].artist_name
+          }
+          artists.push(row);
+        }//end for
+      }
+      if(pagey == 3){
+        let result = await artquerie.getAllArtistsPthroughT(db);
+        for (var i = 0; i < result.length; i++) {
+          var row = {
+            'artist_name': result[i].artist_name
+          }
+          artists.push(row);
+        }//end for
+      }
+      if(pagey == 4){
+        let result = await artquerie.getAllArtistsUthroughZ(db);
+        for (var i = 0; i < result.length; i++) {
+          var row = {
+            'artist_name': result[i].artist_name
+          }
+          artists.push(row);
+        }//end for
+      }
+
+      await conquerie.end(db);
+      res.send({donothing: 0, artists: artists});
+
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+    }//end async
+  pageChange(pagey);
+  }
+
+});
+
 app.post('/tunesearch',(req,res)=>{
 
   var { search_results, a_name } = req.body;

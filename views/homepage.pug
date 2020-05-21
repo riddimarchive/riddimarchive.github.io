@@ -387,7 +387,8 @@ block content
           loadmsg.innerHTML = "Loading...";
 
           for(var i = 0, leng = audios.length; i < leng;i++){
-            if(audios[i] != e.target){
+            if(audios[i].id-10000 !== e.target.id){
+              console.log("pausing");
               audios[i].pause();
               var theid = (audios[i].id-10000);
               var loadmsg = document.getElementById(`result${theid}`);

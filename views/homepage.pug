@@ -386,11 +386,11 @@ block content
           var loadmsg = document.getElementById(`result${curindex-10000}`);
           loadmsg.innerHTML = "Loading...";
 
-          for(var i = 0, leng = audios.length; i < leng;i++){
+          for(var i = 0, leng = audios.length; i < (leng+1);i++){
             if(audios[i] != e.target){
               console.log("pausing");
               audios[i].pause();
-              var theid = `${audios[i].id-10000}`;
+              var theid = `${audios[i+1].id-10000}`;
               console.log(theid);
               totwaudioFinishedCheck(theid);
             }

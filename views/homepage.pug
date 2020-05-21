@@ -292,7 +292,7 @@ block content
           success: function(data){
             var themsg = data.msg;
             var theindex = data.index;
-            if (theindex = 'shuffave'){
+            if (theindex == 'shuffave'){
               document.getElementById('loadtext').innerHTML= themsg;
             }else{
               document.getElementById(`result${theindex}`).innerHTML = themsg;

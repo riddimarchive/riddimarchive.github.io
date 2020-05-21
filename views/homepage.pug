@@ -20,37 +20,8 @@ block content
     }
     }
 
-  .artisth1
-    a#tuneslink(title='Totw', href='', onclick='toggleVisible();return false;') Click Here for Tunes of the Week!
-
-
   - var y = totw;
   - var userid = currentuserid;
-
-
-  div#tunesoftheweek
-    .ulcontaintotw
-      each track, index in y
-        ul
-          .uldivtotw
-            li.tunetexttotw= `${track.original_artist}${track.track_name}${track.blank}`
-            .totw
-              audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none') Sorry Bruv, Your Browser Can't Play dis chune!
-            .downloadbutton
-              a(href=track.drive_url)
-                img(border='2', alt='Download Tune', src='Images/PageIMG/download2.png', height='50')
-              form(id=`form ${index}`, method='POST')
-                div.form-group
-                  input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
-                div.form-group
-                  input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
-                div.form-group
-                  input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
-                div.form-group
-                  input#name.form-control(type='hidden', name='name', value=`${track.artist_name}`)
-                img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='Images/PageIMG/addfave.png', height='50')
-            div(id=`result${index}`)
-  br
   - var message = msg;
   - var shuffleart = randartistname;
   - var shuffletrack = randtrackname;
@@ -113,6 +84,30 @@ block content
         img(id=`etoi`, class='pageclass', border='2', alt='back', src='Images/PageIMG/ethroughi.png', height='50')
         img(id=`jtoo`, class='pageclass', border='2', alt='back', src='Images/PageIMG/jthrougho.png', height='50')
         img(id=`utoz`, class='pageclass', border='2', alt='back', src='Images/PageIMG/uthroughz.png', height='50')
+      div#tunesoftheweek
+        .ulcontaintotw
+          each track, index in y
+            ul
+              .uldivtotw
+                li.tunetexttotw= `${track.original_artist}${track.track_name}${track.blank}`
+                .totw
+                  audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none') Sorry Bruv, Your Browser Can't Play dis chune!
+                .downloadbutton
+                  a(href=track.drive_url)
+                    img(border='2', alt='Download Tune', src='Images/PageIMG/download2.png', height='50')
+                  form(id=`form ${index}`, method='POST')
+                    div.form-group
+                      input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
+                    div.form-group
+                      input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
+                    div.form-group
+                      input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
+                    div.form-group
+                      input#name.form-control(type='hidden', name='name', value=`${track.artist_name}`)
+                    img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='Images/PageIMG/addfave.png', height='50')
+                div(id=`result${index}`)
+      .artisth1
+        a#tuneslink(title='Totw', href='', onclick='toggleVisible();return false;') Click Here for Tunes of the Week!
       
   .fishcontain
     #fish

@@ -381,7 +381,7 @@ block content
     function playInit() {
       document.addEventListener('play', function(e){
         var audios = document.getElementsByTagName('audio');
-        if(e.target.id != 'shufaudio'){
+        if(e.target.id !== 'shufaudio'){
           var curindex = e.target.id;
           var loadmsg = document.getElementById(`result${curindex-10000}`);
           loadmsg.innerHTML = "Loading...";

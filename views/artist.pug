@@ -83,6 +83,7 @@ block content
 							input#name.form-control(type='hidden', name='name', value=`${artist_name}`)
 							img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
 					div(id=`result${index}`)
+					li.tunetext(id=`comments${index}`)= `${track.alltrackcomments}`
 					
 	#ulcontain2
 	script.

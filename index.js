@@ -526,14 +526,14 @@ app.get('/artist/:name', function(req,res){
           }
 
           let tresult = await trackquerie.getAllTracksFromArtist(db, name);
-          let commresult = await commquerie.getAllCommentsByArtistName(db, name);
+          let commresult = await commquerie.getAllCommentsByTrack(db, name);
           if(commresult.length > 0){
-            console.log("we have comments");
             for (var i = 0; i < commresult.length; i++) {
               var row = {
                 'track_id': commresult[i].track_id,
                 'user_id': commresult[i].user_id,
-                'comment': commresult[i].comment
+                'comment': commresult[i].comment,
+                'username': commresult[i].username
               }
               comments.push(row);
             }
@@ -603,30 +603,12 @@ app.get('/artist/:name', function(req,res){
           }
 
           for (var i = 0; i < tracks.length; i++) {
-            tracksfound.push(tracks[i].id);
-          }
-          console.log(tracksfound);
-          if(comments.length > 0){
-            for (var i = 0; i < comments.length; i++) {
-              trackswithcomments.push(comments[i].track_id);
+            for (var z = 0; z < comments.length; z++) {
+              if(tracks[i].id == comments[z].track_id){
+                tracks[i].alltrackcomments = tracks[i].alltrackcomments + `${comments[z].username}/${comments[z].comment}>`;
+              }
             }
-            console.log(trackswithcomments);
-          }
 
-          for (var i = 0; i < tracksfound.length; i++) {
-            if(trackswithcomments.includes(tracksfound[i])){
-              const hascomment = (element) => element.id == tracksfound[i];
-              var trackindex = tracks.findIndex(hascomment);
-              const isrightcomment = (element) => element.track_id == tracksfound[i];
-              var commentindex = comments.findIndex(isrightcomment);
-
-              tracks[trackindex].alltrackcomments.concat(`${comments[commentindex].user_id}/${comments[commentindex].comment}>`);
-              console.log(`the comments are now: ${tracks[trackindex].alltrackcomments}`);
-            }
-          }
-          
-
-          for (var i = 0; i < tracks.length; i++) {
             if(tracks[i].is_remix != 1){
               tracks[i].blank = ` - ${tracks[i].artist_name}`;
             }
@@ -640,6 +622,8 @@ app.get('/artist/:name', function(req,res){
               tracks[i].blank = ``;
             }
           }
+          
+          
 
           await conquerie.end(db);
 

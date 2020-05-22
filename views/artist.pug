@@ -63,6 +63,16 @@ block content
 	- var userid = currentuserid;
 	- var test = `${artist_name}`;
 
+	#myModal.modal
+		.modal-content
+			img(class='close', border='2', alt='back', src='../Images/PageIMG/close.png', height='50')
+			p Test Textttt...
+	
+	#myModal2.modal
+		.modal-content
+			img(class='close2', border='2', alt='back', src='../Images/PageIMG/close.png', height='50')
+			p No Comments!
+
 	#ulcontain
 		each track, index in x
 			.uldiv
@@ -82,8 +92,9 @@ block content
 							
 							input#name.form-control(type='hidden', name='name', value=`${artist_name}`)
 							img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
+					.downloadbutton
+						img(id=`${index}/${track.track_name}`, class='commentbutton', border='2', alt='back', src='../Images/PageIMG/comments.png', height='50')
 					div(id=`result${index}`)
-					li.tunetext(id=`comments${index}`)= `${track.alltrackcomments}`
 					
 	#ulcontain2
 	script.
@@ -96,6 +107,7 @@ block content
 			fixLargeText();
 			searchAjaxInit();
 			faveAjaxInit();
+			commentInit();
 			removeUnusedLinks();
 		});
 
@@ -287,6 +299,63 @@ block content
 						var theindex = data.index;
 						document.getElementById(`result${theindex}`).innerHTML = themsg;
 
+					},
+					error: function(){
+						console.log("Didn't Work");
+					}
+				});//ajax
+
+				});//click event
+			});//class selector
+		}//fave ajax init
+
+		function commentInit() {
+			document.querySelectorAll('.commentbutton').forEach(item => {
+				item.addEventListener('click', event => {
+				var thestring = item.id;
+				var splitty = thestring.split("/");
+				var index = splitty[0];
+				var trackname = splitty[1];
+
+				$.ajax({
+					url:`/comments`,
+					type: 'POST',
+					data: {
+						ind: index,
+						track_name: trackname
+					},
+					success: function(data){
+						if(data.nocomments == 1){
+							console.log("no comments");
+							var modal = document.getElementById("myModal2");
+							var span = document.getElementsByClassName("close2")[0];
+							modal.style.display = "block";
+							span.onclick = function(modal) {
+								var modal2 = document.getElementById("myModal2");
+								modal2.style.display = "none";
+							}
+							window.onclick = function(event) {
+								var modal3 = document.getElementById("myModal2");
+								if (event.target == modal3) {
+									modal3.style.display = "none";
+								}
+							}
+						}else{
+							console.table(data.comments);
+							var modal = document.getElementById("myModal");
+							var span = document.getElementsByClassName("close")[0];
+							modal.style.display = "block";
+							span.onclick = function(modal) {
+								var modal2 = document.getElementById("myModal");
+								modal2.style.display = "none";
+							}
+							window.onclick = function(event) {
+								var modal3 = document.getElementById("myModal");
+								if (event.target == modal3) {
+									modal3.style.display = "none";
+								}
+							}
+						}
 					},
 					error: function(){
 						console.log("Didn't Work");

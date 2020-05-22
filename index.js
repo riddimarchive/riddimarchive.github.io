@@ -489,12 +489,7 @@ app.get('/artist/:name', function(req,res){
       try{
 
           var name = aname;
-          var artist = {};
           var tracks = [];
-          var tracksfound = [];
-          var trackswithcomments = [];
-          var id = "";
-          var comments = [];
           var info = "";
           var fb = 'none';
           var sc = 'none';
@@ -526,18 +521,6 @@ app.get('/artist/:name', function(req,res){
           }
 
           let tresult = await trackquerie.getAllTracksFromArtist(db, name);
-          let commresult = await commquerie.getAllCommentsByTrack(db, name);
-          if(commresult.length > 0){
-            for (var i = 0; i < commresult.length; i++) {
-              var row = {
-                'track_id': commresult[i].track_id,
-                'user_id': commresult[i].user_id,
-                'comment': commresult[i].comment,
-                'username': commresult[i].username
-              }
-              comments.push(row);
-            }
-          }
           
           for (var i = 0; i < tresult.length; i++) {
             var row = {
@@ -603,12 +586,6 @@ app.get('/artist/:name', function(req,res){
           }
 
           for (var i = 0; i < tracks.length; i++) {
-            for (var z = 0; z < comments.length; z++) {
-              if(tracks[i].id == comments[z].track_id){
-                tracks[i].alltrackcomments = tracks[i].alltrackcomments + `${comments[z].username}/${comments[z].comment}>`;
-              }
-            }
-
             if(tracks[i].is_remix != 1){
               tracks[i].blank = ` - ${tracks[i].artist_name}`;
             }
@@ -2037,6 +2014,47 @@ app.post('/favorites', (req, res, next) => {
 
     }
     favoritesRemoveResponse(user_id, track_id, favetrack_name, theusername);
+});
+
+//POST REQUEST - COMMENTS - gets comments for a track
+app.post('/comments', (req, res, next) => {
+
+  var { ind, track_name } = req.body;
+
+  async function commentsResponse(ind, track_name){
+    try{
+        var comments = [];
+        var nocomments = 0;
+        var db = createConnection();
+        await conquerie.connect(db);
+
+        let commresult = await commquerie.getAllCommentsByTrackName(db, track_name);
+          if(commresult.length > 0){
+            for (var i = 0; i < commresult.length; i++) {
+              var row = {
+                'track_id': commresult[i].track_id,
+                'user_id': commresult[i].user_id,
+                'comment': commresult[i].comment,
+                'username': commresult[i].username,
+                'time': commresult[i].time
+              }
+              comments.push(row);
+            }
+          }else{
+            nocomments = 1;
+          }
+
+        await conquerie.end(db);
+
+        res.send({index: ind, track_name: track_name, comments: comments, nocomments: nocomments});
+
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+
+    }
+    commentsResponse(ind, track_name);
 });
 
 

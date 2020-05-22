@@ -491,6 +491,8 @@ app.get('/artist/:name', function(req,res){
           var name = aname;
           var artist = {};
           var tracks = [];
+          var trackswithcomments = [];
+          var id = "";
           var comments = [];
           var trackcomments = "";
           var info = "";
@@ -538,15 +540,6 @@ app.get('/artist/:name', function(req,res){
 
 
           for (var i = 0; i < tresult.length; i++) {
-
-            if(comments.length > 0){
-              for (var i = 0; i < comments.length; i++) {
-                if(tresult[i].id == comments[i].track_id){
-                  trackcomments = trackcomments + `${comments[i].user_id}/${comments[i].comment}>`;
-                }
-              }
-            }
-
             var row = {
               'track_name':tresult[i].track_name,
               'artist_name':tresult[i].artist_name,
@@ -560,25 +553,14 @@ app.get('/artist/:name', function(req,res){
               'is_remix': tresult[i].is_remix,
               'is_collab': tresult[i].is_collab,
               'blank': "",
-              'alltrackcomments': trackcomments
+              'alltrackcomments': ""
             }
             tracks.push(row);
-            trackcomments = "";
-
           }
 
           let collabresult = await trackquerie.getCollabsIncludingArtist(db, name);
           if(collabresult.length > 0){
             for (var i = 0; i < collabresult.length; i++) {
-
-              if(comments.length > 0){
-                for (var i = 0; i < comments.length; i++) {
-                  if(collabresult[i].id == comments[i].track_id){
-                    trackcomments = trackcomments + `${comments[i].user_id}/${comments[i].comment}>`;
-                  }
-                }
-              }
-
               var row = {
                 'track_name':collabresult[i].track_name,
                 'artist_name':collabresult[i].artist_name,
@@ -592,25 +574,15 @@ app.get('/artist/:name', function(req,res){
                 'is_remix': collabresult[i].is_remix,
                 'is_collab': collabresult[i].is_collab,
                 'blank': "",
-                'alltrackcomments': trackcomments
+                'alltrackcomments': ""
               }
               tracks.push(row);
-              trackcomments = "";
             }
           }
 
           let remixresult = await trackquerie.getTracksThatOthersRemixed(db, name);
           if(remixresult.length > 0){
             for (var i = 0; i < remixresult.length; i++) {
-
-              if(comments.length > 0){
-                for (var i = 0; i < comments.length; i++) {
-                  if(remixresult[i].id == comments[i].track_id){
-                    trackcomments = trackcomments + `${comments[i].user_id}/${comments[i].comment}>`;
-                  }
-                }
-              }
-
               var row = {
                 'track_name':remixresult[i].track_name,
                 'artist_name':remixresult[i].artist_name,
@@ -624,10 +596,19 @@ app.get('/artist/:name', function(req,res){
                 'is_remix': remixresult[i].is_remix,
                 'is_collab': remixresult[i].is_collab,
                 'blank': "",
-                'alltrackcomments': trackcomments
+                'alltrackcomments': ""
               }
               tracks.push(row);
-              trackcomments = "";
+            }
+          }
+
+          for (var i = 0; i < tracks.length; i++) {
+            id = tracks[i].id;
+            
+            for (var i = 0; i < comments.length; i++) {
+              if(id == comments[i].track_id){
+                tracks[i].alltrackcomments = tracks[i].alltrackcomments + `${comments[i].user_id}/${comments[i].comment}`;
+              }
             }
           }
 

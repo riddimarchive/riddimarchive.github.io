@@ -14,6 +14,7 @@ flash = require('connect-flash');
 //file reqs: database connect, query functions, hash functions
 const createConnection = require('./js/dbconnect');
 const conquerie = require('./js/conquery');
+const commquerie = require('./js/comquery');
 const artquerie = require('./js/artquery');
 const trackquerie = require('./js/trackquery');
 const userquerie = require('./js/userquery');
@@ -490,6 +491,8 @@ app.get('/artist/:name', function(req,res){
           var name = aname;
           var artist = {};
           var tracks = [];
+          var comments = [];
+          var trackcomments = "";
           var info = "";
           var fb = 'none';
           var sc = 'none';
@@ -521,7 +524,29 @@ app.get('/artist/:name', function(req,res){
           }
 
           let tresult = await trackquerie.getAllTracksFromArtist(db, name);
+          let commresult = await commquerie.getAllCommentsByArtistName(db, name);
+          if(commresult.length > 0){
+            for (var i = 0; i < commresult.length; i++) {
+              var row = {
+                'track_id': commresult[i].track_id,
+                'user_id': commresult[i].user_id,
+                'comment': commresult[i].comment
+              }
+              comments.push(row);
+            }
+          }
+
+
           for (var i = 0; i < tresult.length; i++) {
+
+            if(comments.length > 0){
+              for (var i = 0; i < comments.length; i++) {
+                if(tresult[i].id == comments[i].track_id){
+                  trackcomments = trackcomments + `${comments[i].user_id}/${comments[i].comment}>`;
+                }
+              }
+            }
+
             var row = {
               'track_name':tresult[i].track_name,
               'artist_name':tresult[i].artist_name,
@@ -534,14 +559,26 @@ app.get('/artist/:name', function(req,res){
               'original_artist': tresult[i].original_artist,
               'is_remix': tresult[i].is_remix,
               'is_collab': tresult[i].is_collab,
-              'blank': ""
+              'blank': "",
+              'alltrackcomments': trackcomments
             }
             tracks.push(row);
+            trackcomments = "";
+
           }
 
           let collabresult = await trackquerie.getCollabsIncludingArtist(db, name);
           if(collabresult.length > 0){
             for (var i = 0; i < collabresult.length; i++) {
+
+              if(comments.length > 0){
+                for (var i = 0; i < comments.length; i++) {
+                  if(collabresult[i].id == comments[i].track_id){
+                    trackcomments = trackcomments + `${comments[i].user_id}/${comments[i].comment}>`;
+                  }
+                }
+              }
+
               var row = {
                 'track_name':collabresult[i].track_name,
                 'artist_name':collabresult[i].artist_name,
@@ -554,15 +591,26 @@ app.get('/artist/:name', function(req,res){
                 'original_artist': collabresult[i].original_artist,
                 'is_remix': collabresult[i].is_remix,
                 'is_collab': collabresult[i].is_collab,
-                'blank': ""
+                'blank': "",
+                'alltrackcomments': trackcomments
               }
               tracks.push(row);
+              trackcomments = "";
             }
           }
 
           let remixresult = await trackquerie.getTracksThatOthersRemixed(db, name);
           if(remixresult.length > 0){
             for (var i = 0; i < remixresult.length; i++) {
+
+              if(comments.length > 0){
+                for (var i = 0; i < comments.length; i++) {
+                  if(remixresult[i].id == comments[i].track_id){
+                    trackcomments = trackcomments + `${comments[i].user_id}/${comments[i].comment}>`;
+                  }
+                }
+              }
+
               var row = {
                 'track_name':remixresult[i].track_name,
                 'artist_name':remixresult[i].artist_name,
@@ -575,9 +623,11 @@ app.get('/artist/:name', function(req,res){
                 'original_artist': remixresult[i].original_artist,
                 'is_remix': remixresult[i].is_remix,
                 'is_collab': remixresult[i].is_collab,
-                'blank': ""
+                'blank': "",
+                'alltrackcomments': trackcomments
               }
               tracks.push(row);
+              trackcomments = "";
             }
           }
 

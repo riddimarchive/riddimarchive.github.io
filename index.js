@@ -493,7 +493,6 @@ app.get('/artist/:name', function(req,res){
           var tracks = [];
           var tracksfound = [];
           var trackswithcomments = [];
-          var commentindexes = [];
           var id = "";
           var comments = [];
           var info = "";
@@ -606,35 +605,23 @@ app.get('/artist/:name', function(req,res){
           for (var i = 0; i < tracks.length; i++) {
             tracksfound.push(tracks[i].id);
           }
+          console.log(tracksfound);
           if(comments.length > 0){
             for (var i = 0; i < comments.length; i++) {
               trackswithcomments.push(comments[i].track_id);
             }
+            console.log(trackswithcomments);
           }
 
           for (var i = 0; i < tracksfound.length; i++) {
             if(trackswithcomments.includes(tracksfound[i])){
               const hascomment = (element) => element.id == tracksfound[i];
               var trackindex = tracks.findIndex(hascomment);
-              //const isrightcomment = (element) => element.track_id == tracksfound[i];
-              var commentindex = -1;
-              var done = 0;
-              while(done != -1){
-                commentindex = comments.indexOf(`${tracksfound[i]}`, (commentindex+1));
-                console.log("index found it is" + commentindex);
-                if(commentindex != -1){
-                  commentindexes.push(commentindex);
-                  console.log("COMMENTINDEXES BELOW");
-                  console.log(commentindexes);
-                  commentindex++;
-                }else{
-                  done = -1;
-                }
-              }
-              for (var i = 0; i < commentindexes.length; i++) {
-                tracks[trackindex].alltrackcomments.concat(`${comments[commentindexes[i]].user_id}/${comments[commentindexes[i]].comment}>`);
-                console.log(`the comments are now: ${tracks[trackindex].alltrackcomments}`);
-              }
+              const isrightcomment = (element) => element.track_id == tracksfound[i];
+              var commentindex = comments.findIndex(isrightcomment);
+
+              tracks[trackindex].alltrackcomments.concat(`${comments[commentindex].user_id}/${comments[commentindex].comment}>`);
+              console.log(`the comments are now: ${tracks[trackindex].alltrackcomments}`);
             }
           }
           

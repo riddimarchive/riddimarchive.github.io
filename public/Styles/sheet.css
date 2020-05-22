@@ -327,7 +327,11 @@ list-style-type: none;
 }
 
 .space{
-	margin-bottom: 17px
+  margin-bottom: 17px;
+  
+}.space2{
+  margin-bottom: 20px;
+  margin-right: 150px;
 }
 #fish div{
   padding-left: 1.5em;
@@ -706,3 +710,38 @@ li.tunetexttotwsmaller{
   text-decoration: none;
   cursor: pointer;
 }
+
+#allcomments{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+#fullcomment{
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  display: flex;
+  width: 300px;
+  flex-wrap: wrap;
+  overflow-wrap: normal;
+  justify-content: center;
+  border: black solid 3px;
+}
+
+#comuser{
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#comcom{
+  font-size: 27px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#comtime{
+  font-size: 24px;
+  font-weight: bold;
+}
+

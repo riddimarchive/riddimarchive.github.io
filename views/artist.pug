@@ -66,7 +66,10 @@ block content
 	#myModal.modal
 		.modal-content
 			img(class='close', border='2', alt='back', src='../Images/PageIMG/close.png', height='50')
-			p Test Textttt...
+			.artisth1
+				h1#commenttitle Insert Track Name Here
+			br
+			div(id='allcomments')
 	
 	#myModal2.modal
 		.modal-content
@@ -344,15 +347,30 @@ block content
 							console.table(data.comments);
 							var modal = document.getElementById("myModal");
 							var span = document.getElementsByClassName("close")[0];
+							var title = document.getElementById("commenttitle");
+							title.innerHTML = data.track_name;
+							var commentoutput = "";
+							var container = document.getElementById("allcomments");
+							
+							for (var i = 0; i < data.comments.length; i++) {
+								container.innerHTML += `<div id="fullcomment"><div id ="comuser">${data.comments[i].username}</div><div class ="space2"></div><div id ="comcom">${data.comments[i].comment}</div><div class ="space2"></div><div id ="comtime">Time: ${data.comments[i].time}</div></div><div class ="space2"></div><br>`;
+							}
+
+
+
 							modal.style.display = "block";
 							span.onclick = function(modal) {
 								var modal2 = document.getElementById("myModal");
+								var container = document.getElementById("allcomments");
+								container.innerHTML = "";
 								modal2.style.display = "none";
 							}
 							window.onclick = function(event) {
 								var modal3 = document.getElementById("myModal");
 								if (event.target == modal3) {
 									modal3.style.display = "none";
+									var container = document.getElementById("allcomments");
+									container.innerHTML = "";
 								}
 							}
 						}

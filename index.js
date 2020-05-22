@@ -491,10 +491,10 @@ app.get('/artist/:name', function(req,res){
           var name = aname;
           var artist = {};
           var tracks = [];
-          var trackswithcomments = [];
+          var tracksfound = [];
           var id = "";
           var comments = [];
-          var trackcomments = "";
+          var trackswithcomments = "";
           var info = "";
           var fb = 'none';
           var sc = 'none';
@@ -528,6 +528,7 @@ app.get('/artist/:name', function(req,res){
           let tresult = await trackquerie.getAllTracksFromArtist(db, name);
           let commresult = await commquerie.getAllCommentsByArtistName(db, name);
           if(commresult.length > 0){
+            console.log("we have comments");
             for (var i = 0; i < commresult.length; i++) {
               var row = {
                 'track_id': commresult[i].track_id,
@@ -537,8 +538,7 @@ app.get('/artist/:name', function(req,res){
               comments.push(row);
             }
           }
-
-
+          
           for (var i = 0; i < tresult.length; i++) {
             var row = {
               'track_name':tresult[i].track_name,
@@ -602,15 +602,6 @@ app.get('/artist/:name', function(req,res){
             }
           }
 
-          for (var i = 0; i < tracks.length; i++) {
-            id = tracks[i].id;
-            
-            for (var i = 0; i < comments.length; i++) {
-              if(id == comments[i].track_id){
-                tracks[i].alltrackcomments = tracks[i].alltrackcomments + `${comments[i].user_id}/${comments[i].comment}`;
-              }
-            }
-          }
 
           for (var i = 0; i < tracks.length; i++) {
             if(tracks[i].is_remix != 1){

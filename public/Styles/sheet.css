@@ -674,7 +674,7 @@ li.tunetexttotwsmaller{
 
 /* Modal Content */
 .modal-content {
-  background-color: #fefefe;
+  background-color: lightskyblue;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
@@ -683,7 +683,6 @@ li.tunetexttotwsmaller{
 
 /* The Close Button */
 .close {
-  color: #aaaaaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -712,7 +711,6 @@ li.tunetexttotwsmaller{
 }
 
 #allcomments{
-  display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
 }
@@ -722,7 +720,6 @@ li.tunetexttotwsmaller{
   padding-right: 15px;
   padding-bottom: 15px;
   display: flex;
-  width: 300px;
   flex-wrap: wrap;
   overflow-wrap: normal;
   justify-content: center;
@@ -731,6 +728,7 @@ li.tunetexttotwsmaller{
 
 #comuser{
   font-size: 24px;
+  margin-right: 24px;
   font-weight: bold;
 }
 
@@ -738,6 +736,7 @@ li.tunetexttotwsmaller{
   font-size: 27px;
   font-weight: bold;
   text-decoration: underline;
+  margin-right: 24px;
 }
 
 #comtime{

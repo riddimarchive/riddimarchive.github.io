@@ -62,7 +62,7 @@ function getAllTracksAthroughD(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE tracks.artist_name = ? AND tracks.track_name >= "A" AND tracks.track_name < "E" 
+		WHERE tracks.artist_name = ? AND tracks.track_name >= "0" AND tracks.track_name < "E" 
 		ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -194,7 +194,7 @@ function getCollabsIncludingArtistAthroughD(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE (tracks.track_name >= "A" AND tracks.track_name < "E") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) 
+		WHERE (tracks.track_name >= "0" AND tracks.track_name < "E") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) 
 		ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -324,7 +324,7 @@ function getTracksThatOthersRemixedAthroughD(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
 		FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE (tracks.track_name >= "A" AND tracks.track_name < "E") AND (tracks.o1 = ? OR tracks.o2 = ?) 
+		WHERE (tracks.track_name >= "0" AND tracks.track_name < "E") AND (tracks.o1 = ? OR tracks.o2 = ?) 
 		ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');

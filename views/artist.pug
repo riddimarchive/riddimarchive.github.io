@@ -106,7 +106,7 @@ block content
 							img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
 					.downloadbutton
 						img(id=`${index}/${track.track_name}`, class='commentbutton', border='2', alt='back', src='../Images/PageIMG/comments.png', height='50')
-					div(id=`result${index}`)
+					div(id=`result${index}`, class='downloadbutton')
 					
 	#ulcontain2
 	script.
@@ -274,6 +274,7 @@ block content
 						//added label
 						var labeldiv = document.createElement('div');
 						labeldiv.setAttribute('id', `result${i}`);
+						labeldiv.setAttribute('class', 'downloadbutton');
 
 						//final appends
 						newul.appendChild(textli);
@@ -502,6 +503,7 @@ block content
 								//added label
 								var labeldiv = document.createElement('div');
 								labeldiv.setAttribute('id', `result${i}`);
+								labeldiv.setAttribute('class', 'downloadbutton');
 
 								//final appends
 								newul.appendChild(textli);
@@ -548,19 +550,9 @@ block content
 					success: function(data){
 						if(data.nocomments == 1){
 							console.log("no comments");
-							var modal = document.getElementById("myModal2");
-							var span = document.getElementsByClassName("close2")[0];
-							modal.style.display = "block";
-							span.onclick = function(modal) {
-								var modal2 = document.getElementById("myModal2");
-								modal2.style.display = "none";
-							}
-							window.onclick = function(event) {
-								var modal3 = document.getElementById("myModal2");
-								if (event.target == modal3) {
-									modal3.style.display = "none";
-								}
-							}
+							var themsg = data.msg;
+							var theindex = data.index;
+							document.getElementById(`result${theindex}`).innerHTML = themsg;
 						}else{
 							console.table(data.comments);
 							var modal = document.getElementById("myModal");

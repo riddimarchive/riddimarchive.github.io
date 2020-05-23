@@ -2152,6 +2152,7 @@ app.post('/comments', (req, res, next) => {
     try{
         var comments = [];
         var nocomments = 0;
+        var msg = "";
         var db = createConnection();
         await conquerie.connect(db);
 
@@ -2169,11 +2170,12 @@ app.post('/comments', (req, res, next) => {
             }
           }else{
             nocomments = 1;
+            msg = "No Comments on this Tune!"
           }
 
         await conquerie.end(db);
 
-        res.send({index: ind, track_name: track_name, comments: comments, nocomments: nocomments});
+        res.send({index: ind, msg: msg, track_name: track_name, comments: comments, nocomments: nocomments});
 
       }catch(err){
         console.log(err);

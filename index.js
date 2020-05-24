@@ -421,6 +421,7 @@ app.get('/favorites', (req, res) => {
           }
 
           await conquerie.end(db);
+          tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
 
           res.render('favorites',{
             thetracks: tracks,
@@ -557,9 +558,10 @@ app.get('/artist/:name', function(req,res){
             }
           }
           
-          tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
+          
 
           await conquerie.end(db);
+          tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
 
           res.render('artist',{
             artist_name: name,
@@ -1721,9 +1723,9 @@ app.post('/pagetracks', (req, res, next) => {
         }
       }
 
+      await conquerie.end(db);
       tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
 
-      await conquerie.end(db);
       res.send({donothing: 0, tracks: tracks, currentuserid: user_id});
 
       }catch(err){
@@ -1909,6 +1911,7 @@ app.post('/favtunesearch',(req,res)=>{
               }
 
                 await conquerie.end(db);
+                tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
                 msg = "Results Found!:";
                 reloadlist = 1;
           

@@ -1,7 +1,0 @@
-previous link VVV
-
-'drive_url': 'https://drive.google.com/uc?export=download&id=' + tresult[i].drive_url,
-
-iframe link VVV
-
-https://drive.google.com/file/d/1I7gj6M7QYn6xUuOE0eVpRkxP46NfBn6u/preview

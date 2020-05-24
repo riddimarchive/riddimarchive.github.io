@@ -1,4 +1,0 @@
-make new branch?
-take passport out of module exports, export the normal way and see if works.
-if it does, remove .next and try it out.
-play with the order, see if passport fcn can be async.

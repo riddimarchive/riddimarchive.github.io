@@ -21,7 +21,7 @@ function end(db){
 	    		console.log('cant end connecty');
 	    		reject(err);
 	  		}
-	  		console.log('Connection ended yo');
+	  		console.log('DB Connection ended!!!');
 	  		resolve();
   		});
 	});

@@ -1,5 +1,3 @@
-// test connection to database with nodejs
-
 const mysql = require('mysql');
 
 function createConnection(){

@@ -68,7 +68,6 @@ app.use(passport.session());
 //render homepage, handle page errors
 app.get('/', (req, res) => {
 
-  // error page route
   app.use((req, res, next) => {
     return next(createError(404, 'File Not Found'));
   });
@@ -91,7 +90,8 @@ app.get('/', (req, res) => {
         var randdriveurl = "";
         var randartistname = "";
         var randtrackname = "";
-        
+
+        //set userid if logged in
         if(req.user !== undefined){
           user_id = req.user.id;
         }
@@ -102,17 +102,7 @@ app.get('/', (req, res) => {
         let result = await trackquerie.getTracksOfTheWeek(db);
 
         for (var i = 0; i < result.length; i++) {
-          var row = {
-            'track_name':result[i].track_name,
-            'artist_name':result[i].artist_name,
-            'drive_url': result[i].drive_url,
-            'id': result[i].id,
-            'collab_artist': result[i].collab_artist,
-            'original_artist': result[i].original_artist,
-            'is_remix': result[i].is_remix,
-            'is_collab': result[i].is_collab,
-            'blank': ""
-          }
+          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "" }
           totw.push(row);
         }
 
@@ -133,11 +123,8 @@ app.get('/', (req, res) => {
 
         let tresult = await artquerie.getAllArtistsAthroughD(db);
 
-        //store results
         for (var i = 0; i < tresult.length; i++) {
-          var row = {
-            'artist_name': tresult[i].artist_name
-          }
+          var row = { 'artist_name': tresult[i].artist_name }
           artists.push(row);
         }
 
@@ -158,18 +145,7 @@ app.get('/', (req, res) => {
 
         await conquerie.end(db);
 
-        res.render('homepage',{
-          title:'Riddim Archive Index',
-          msg: "",
-          artists: artists,
-          currentuserid: user_id,
-          randdriveurl: randdriveurl,
-          randartistname: randartistname,
-          randtrackname: randtrackname,
-          randtrackid: randtrackid,
-          shuftext: shuffletext,
-          totw: totw
-        });
+        res.render('homepage',{ title:'Riddim Archive Index', msg: "", artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw });
 
         }catch(err){
           console.log(err);
@@ -184,26 +160,18 @@ app.get('/', (req, res) => {
 
 //GET REQUEST - FAQ PAGE
 app.get('/faq', (req, res) => {
-  
-  res.render('faq',{
-    title:'Riddim Archive FAQ'
-  });
+
+  res.render('faq',{ title:'Riddim Archive FAQ' });
 
 });
 
 
 //GET REQUEST - LOGIN PAGE
 app.get('/login', (req, res) => {
+  
   var test = req.flash('error');
-  //handle non-login requests, go back to home
   if(req.user === undefined){
-    res.render('login',{
-      title:'Riddim Archive Login',
-      username: '',
-      er: '',
-      message: test
-    });
-
+    res.render('login',{ title:'Riddim Archive Login', username: '', er: '', message: test });
   }else{
     //store user returned by passport (req.user)
     var thelevel = req.user.access_level;
@@ -212,73 +180,51 @@ app.get('/login', (req, res) => {
     //redirect by permission level
     switch(thelevel) {
       case 3:
-        res.render('admdash',{
-          username: theusername
-        });
+        res.render('admdash',{ username: theusername });
         break;
       case 2:
-        res.render('moddash',{
-          username: theusername
-        });
+        res.render('moddash',{ username: theusername });
         break;
       case 1:
-        res.render('userdash',{
-          username: theusername
-        });
+        res.render('userdash',{ username: theusername });
         break;
     }//end switch
   }//end else
+
 });
 
 
 //GET REQUEST - USER DASHBOARD
 app.get('/dashboard', (req, res) => {
   
-  //handle non-login requests, go back to home
   if(req.user === undefined){
-
-    res.render('login',{
-      title:'Riddim Archive Login',
-      username: '',
-      er: '',
-      message: ''
-    });
-
+    res.render('login',{ title:'Riddim Archive Login', username: '', er: '', message: '' });
   }else{
-
-    //store user returned by passport (req.user)
+  //store user returned by passport (req.user)
     var thelevel = req.user.access_level;
     var theusername = req.user.username;
 
     //redirect by permission level
     switch(thelevel) {
       case 3:
-        res.render('admdash',{
-          username: theusername
-        });
+        res.render('admdash',{ username: theusername });
         break;
       case 2:
-        res.render('moddash',{
-          username: theusername
-        });
+        res.render('moddash',{ username: theusername });
         break;
       case 1:
-        res.render('userdash',{
-          username: theusername
-        });
+        res.render('userdash',{ username: theusername });
         break;
     }//end switch
   }//end else
+
 });
 
 
 //GET REQUEST - CREATE ACCOUNT PAGE
 app.get('/create', (req, res, next) => {
 
-  res.render('create',{
-    title:'Create Account',
-    msg: ""
-  });
+  res.render('create',{ title:'Create Account', msg: "" });
 
 });
 
@@ -286,24 +232,14 @@ app.get('/create', (req, res, next) => {
 //GET REQUEST - CHANGE PASSWORD PAGE
 app.get('/changepass', (req, res, next) => {
 
-  //handle non-login requests, go back to home
   if(req.user === undefined){
-    res.render('login',{
-      title:'Riddim Archive Login',
-      username: '',
-      er: '',
-      message: ''
-    });
-
+    res.render('login',{ title:'Riddim Archive Login', username: '', er: '', message: '' });
   }else{
     var theusername = req.user.username;
 
-    res.render('changepass',{
-      title:'Change Password',
-      msg: "",
-      username: theusername
-    });
+    res.render('changepass',{ title:'Change Password', msg: "", username: theusername });
   }
+
 });
 
 
@@ -316,15 +252,13 @@ app.get('/trackcrud', (req, res) => {
   }else{
 
       if(req.user.access_level > 1){   
-        res.render('trackcrud', {
-              msg: "",
-              msg2: ""
-            });
+        res.render('trackcrud', { msg: "", msg2: "" });
       }else{
         console.log("User does not have Access");
         res.redirect('/login');
       }//end inner else
   }//end main else
+
 });
 
 
@@ -338,29 +272,22 @@ app.get('/usercrud', (req, res) => {
 
       if(req.user.access_level > 1){
     
-        res.render('usercrud',{
-          username: ''
-        });
+        res.render('usercrud',{ username: '' });
     
       }else{
         console.log("User does not have Access");
         res.redirect('/login');
       }//end inner else
   }//end main else
+
 });
 
 
 //GET REQUEST - FAVORITES PAGE
 app.get('/favorites', (req, res) => {
 
-  //handle non-login requests, go back to home
   if(req.user === undefined){
-    res.render('login',{
-      title:'Riddim Archive Login',
-      username: '',
-      er: '',
-      message: ''
-    });
+    res.render('login',{ title:'Riddim Archive Login', username: '', er: '', message: '' });
 
   }else{
     var theusername = req.user.username;
@@ -382,26 +309,11 @@ app.get('/favorites', (req, res) => {
 
           await conquerie.end(db);
           
-          res.render('favorites',{
-            thetracks: tracks,
-            currentuserid: user_id,
-            username: theusername,
-            msg:msg
-          });
+          res.render('favorites',{ thetracks: tracks, currentuserid: user_id, username: theusername, msg:msg });
         }else{
 
           for (var i = 0; i < result.length; i++) {
-            var row = {
-              'track_name': result[i].track_name,
-              'artist_name': result[i].artist_name,
-              'drive_url': result[i].drive_url,
-              'id': result[i].id,
-              'collab_artist': result[i].collab_artist,
-              'original_artist': result[i].original_artist,
-              'is_remix': result[i].is_remix,
-              'is_collab': result[i].is_collab,
-              'blank': ""
-            }
+            var row = { 'track_name': result[i].track_name, 'artist_name': result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "" }
             tracks.push(row);
           }
 
@@ -423,12 +335,7 @@ app.get('/favorites', (req, res) => {
           await conquerie.end(db);
           tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
 
-          res.render('favorites',{
-            thetracks: tracks,
-            currentuserid: user_id,
-            username: theusername,
-            msg: msg
-          });
+          res.render('favorites',{ thetracks: tracks, currentuserid: user_id, username: theusername, msg: msg });
       }
 
       }catch(err){
@@ -440,6 +347,7 @@ app.get('/favorites', (req, res) => {
   favoritesPageResponse(user_id, theusername);
 
   }//end else
+
 });
 
 
@@ -453,30 +361,29 @@ app.get('/artcrud', (req, res) => {
 
       if(req.user.access_level > 1){
     
-        res.render('artcrud',{
-          msg: "",
-          msg2: ""
-        });
+        res.render('artcrud',{ msg: "", msg2: "" });
     
       }else{
         console.log("User does not have Access");
         res.redirect('/login');
       }//end inner else
   }//end main else
+
 });
 
 
 //GET REQUEST - LOGOUT
 app.get('/logout', function(req, res){
+
   req.logout();
   res.redirect('/');
+
 });
 
 
 //GET REQUEST - ARTIST PAGE
 app.get('/artist/:name', function(req,res){
 
-  //store name from url
   var art_name = req.params.name;
   var user_id = "";
 
@@ -563,18 +470,7 @@ app.get('/artist/:name', function(req,res){
           await conquerie.end(db);
           tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
 
-          res.render('artist',{
-            artist_name: name,
-            info: info,
-            fb: fb,
-            sc: sc,
-            bc: bc,
-            beat: beat,
-            insta: insta,
-            tracks: tracks,
-            currentuserid: user_id,
-            msg: msg
-          });
+          res.render('artist',{ artist_name: name, info: info, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, tracks: tracks, currentuserid: user_id, msg: msg });
 
       }catch(err){
         console.log(err);
@@ -595,34 +491,22 @@ app.get('/req/:page', function(req,res){
 
   switch(pagey) {
       case "submission":
-        res.render('submission',{
-          msg: ""
-        });
+        res.render('submission',{ msg: "" });
         break;
       case "tracksubmission":
-        res.render('tracksubmission',{
-          msg: ""
-        });
+        res.render('tracksubmission',{ msg: "" });
         break;
       case "tunereport":
-        res.render('tunereport',{
-          msg: ""
-        });
+        res.render('tunereport',{ msg: "" });
         break;
       case "removal":
-        res.render('removal',{
-          msg: ""
-        });
+        res.render('removal',{ msg: "" });
         break;
       case "question":
-        res.render('question',{
-          msg: ""
-        });
+        res.render('question',{ msg: "" });
         break;
       default:
-        res.render('faq',{
-          title:'Riddim Archive FAQ'
-        });
+        res.render('faq',{ title:'Riddim Archive FAQ' });
         break;
     }//end switch
 });
@@ -657,17 +541,7 @@ app.post('/', (req, res, next) => {
         let result = await trackquerie.getTracksOfTheWeek(db);
 
         for (var i = 0; i < result.length; i++) {
-          var row = {
-            'track_name':result[i].track_name,
-            'artist_name':result[i].artist_name,
-            'drive_url': result[i].drive_url,
-            'id': result[i].id,
-            'collab_artist': result[i].collab_artist,
-            'original_artist': result[i].original_artist,
-            'is_remix': result[i].is_remix,
-            'is_collab': result[i].is_collab,
-            'blank': ""
-          }
+          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "" }
           totw.push(row);
         }
 
@@ -690,9 +564,7 @@ app.post('/', (req, res, next) => {
 
         //store results
         for (var i = 0; i < tresult.length; i++) {
-          var row = {
-            'artist_name': tresult[i].artist_name
-          }
+          var row = { 'artist_name': tresult[i].artist_name }
           artists.push(row);
         }
 
@@ -710,21 +582,9 @@ app.post('/', (req, res, next) => {
           shuffletext = `${randresult[0].original_artist}${randtrackname}`;
         }
 
-
         await conquerie.end(db);
 
-        res.render('homepage',{
-          title:'Riddim Archive Index',
-          msg: "Please login to save Favorites!",
-          artists: artists,
-          currentuserid: user_id,
-          randdriveurl: randdriveurl,
-          randartistname: randartistname,
-          randtrackname: randtrackname,
-          randtrackid: randtrackid,
-          shuftext: shuffletext,
-          totw: totw
-        });
+        res.render('homepage',{ title:'Riddim Archive Index', msg: "Please login to save Favorites!", artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw });
 
         }catch(err){
           console.log(err);
@@ -755,17 +615,7 @@ app.post('/', (req, res, next) => {
         let result = await trackquerie.getTracksOfTheWeek(db);
 
         for (var i = 0; i < result.length; i++) {
-          var row = {
-            'track_name':result[i].track_name,
-            'artist_name':result[i].artist_name,
-            'drive_url': result[i].drive_url,
-            'id': result[i].id,
-            'collab_artist': result[i].collab_artist,
-            'original_artist': result[i].original_artist,
-            'is_remix': result[i].is_remix,
-            'is_collab': result[i].is_collab,
-            'blank': ""
-          }
+          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "" }
           totw.push(row);
         }
 
@@ -788,9 +638,7 @@ app.post('/', (req, res, next) => {
 
         //store results
         for (var i = 0; i < tresult.length; i++) {
-          var row = {
-            'artist_name': tresult[i].artist_name
-          }
+          var row = { 'artist_name': tresult[i].artist_name }
           artists.push(row);
         }
 
@@ -815,18 +663,7 @@ app.post('/', (req, res, next) => {
           msg = `${favetrack_name} is already added!`;        
           await conquerie.end(db);
 
-          res.render('homepage',{
-            title:'Riddim Archive Index',
-            msg: `${favetrack_name} is already added!`,
-            artists: artists,
-            currentuserid: user_id,
-            randdriveurl: randdriveurl,
-            randartistname: randartistname,
-            randtrackname: randtrackname,
-            randtrackid: randtrackid,
-            shuftext: shuffletext,
-            totw: totw
-          });
+          res.render('homepage',{ title:'Riddim Archive Index', msg: `${favetrack_name} is already added!`, artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw });
         }else{
 
           //store into favorites here, need user ID and track ID
@@ -835,18 +672,7 @@ app.post('/', (req, res, next) => {
           await conquerie.end(db);
         }
 
-        res.render('homepage',{
-          title:'Riddim Archive Index',
-          msg: `${favetrack_name} Added to Favorites!`,
-          artists: artists,
-          currentuserid: user_id,
-          randdriveurl: randdriveurl,
-          randartistname: randartistname,
-          randtrackname: randtrackname,
-          randtrackid: randtrackid,
-          shuftext: shuffletext,
-          totw: totw
-        });
+        res.render('homepage',{ title:'Riddim Archive Index', msg: `${favetrack_name} Added to Favorites!`, artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw });
 
         }catch(err){
           console.log(err);
@@ -917,17 +743,9 @@ app.post('/login', (req, res, next) => {
   var { username, password } = req.body;
 
   if(!username || !password){
-    res.render('login', {
-      username: username,
-      er: "",
-      message: 'Fill in all Fields!'
-    });
+    res.render('login', { username: username, er: "", message: 'Fill in all Fields!' });
   }else{
-    passport.authenticate('local', {
-      successRedirect: '/dashboard',
-      failureRedirect: '/login',
-      failureFlash : true
-    })(req, res, next);
+    passport.authenticate('local', { successRedirect: '/dashboard', failureRedirect: '/login', failureFlash : true })(req, res, next);
   }
 });
 
@@ -940,16 +758,10 @@ app.post('/create', (req, res, next) => {
   //res.send(username+password+password2);
   
   if(!username || !password || !password2){
-    res.render('create',{
-      title:'Create Account',
-      msg: "Fill in all Fields!"
-    });
+    res.render('create',{ title:'Create Account', msg: "Fill in all Fields!" });
   }else{
     if(password !== password2){
-      res.render('create',{
-        title:'Create Account',
-        msg: "Passwords Don't Match, Please Re-Enter"
-      });
+      res.render('create',{ title:'Create Account', msg: "Passwords Don't Match, Please Re-Enter" });
     }else{
       //perform hash and add query
       async function createPageResponse(username, password){
@@ -960,19 +772,13 @@ app.post('/create', (req, res, next) => {
 
           let uresult = await userquerie.getUserInfo(db, username);
           if(uresult.length > 0){
-            res.render('create',{
-              title:'Create Account',
-              msg: "Username Taken! Please Try a Different Name"
-            });
+            res.render('create',{ title:'Create Account', msg: "Username Taken! Please Try a Different Name" });
           }else{
               hashpass = await has.hashPass(password);
               let result = await userquerie.createAccount(db, username, hashpass);
 
               await conquerie.end(db);
-              res.render('create',{
-                title:'Create Account',
-                msg: "Account Created! Feel Free to Login at the link above!"
-              });
+              res.render('create',{ title:'Create Account', msg: "Account Created! Feel Free to Login at the link above!" });
           }//end else
         }catch(err){
           console.log(err);
@@ -995,18 +801,10 @@ app.post('/changepass', (req, res, next) => {
   //confirm password1 and 2 match
   //encrypt and replace password
   if(!newpass || !newpass2){
-    res.render('changepass',{
-      title:'Change Password',
-      msg: "Fill in all Fields!",
-      username: theusername
-    });
+    res.render('changepass',{ title:'Change Password', msg: "Fill in all Fields!", username: theusername });
   }else{
     if(newpass !== newpass2){
-      res.render('changepass',{
-        title:'Change Password',
-        msg: "Passwords Don't Match, Please Re-Enter",
-        username: theusername
-      });
+      res.render('changepass',{ title:'Change Password', msg: "Passwords Don't Match, Please Re-Enter", username: theusername });
     }else{
       //perform hash and add query
       async function changePassResponse(theusername, newpass){
@@ -1019,11 +817,7 @@ app.post('/changepass', (req, res, next) => {
           let result = await userquerie.changePass(db, theusername, hashpass);
 
           await conquerie.end(db);
-          res.render('changepass',{
-            title:'Change Password',
-            msg: "Password changed, please log in next time with new password",
-            username: theusername
-          });
+          res.render('changepass',{ title:'Change Password', msg: "Password changed, please log in next time with new password", username: theusername });
         }catch(err){
           console.log(err);
           res.render('error');
@@ -1084,10 +878,7 @@ app.post('/trackcreate', (req, res, next) => {
   //res.send(track_name + " " + artist_name + " " + drive_url + " " + is_collab + " " + collab1 + " " + collab2 + " " + collab3 + " " + collab4 + " " + is_remix + " " + og1 + " " + og2);
   
   if(!track_name || !artist_name || !drive_url){
-      res.render('trackcrud', {
-        msg: "Need Artist Name, Track Name, and URL!",
-        msg2: ""
-      });
+      res.render('trackcrud', { msg: "Need Artist Name, Track Name, and URL!", msg2: "" });
     }else{
       //make queries, get all artist/track info and render artist page
       async function storeFormResults(track_name, artist_name, drive_url){
@@ -1130,10 +921,7 @@ app.post('/trackcreate', (req, res, next) => {
 
             await conquerie.end(db);
 
-            res.render('trackcrud', {
-              msg: "Track Created!",
-              msg2: ""
-            });
+            res.render('trackcrud', { msg: "Track Created!", msg2: "" });
 
           }catch(err){
             console.log(err);
@@ -1154,15 +942,11 @@ app.post('/trackdelete', (req, res, next) => {
   var { track_name } = req.body;
 
   if(!track_name){
-            res.render('trackcrud', {
-              msg: "",
-              msg2: "Enter Track Name!"
-            });
+            res.render('trackcrud', { msg: "", msg2: "Enter Track Name!" });
   }else{
       //make queries, get all artist/track info and render artist page
             async function deletyTrack(track_name){
                 try{
-
                     var db = createConnection();
 
                     await conquerie.connect(db);
@@ -1171,18 +955,12 @@ app.post('/trackdelete', (req, res, next) => {
 
                     if(result.length == 0){
                         console.log("cant find track");
-                        res.render('trackcrud', {
-                          msg: "",
-                          msg2: "Track Not Found"
-                        });
+                        res.render('trackcrud', { msg: "", msg2: "Track Not Found" });
                     }else{
 
                         let tresult = await trackquerie.deleteTrack(db, track_name);
                         console.log("Track Found");
-                        res.render('trackcrud', {
-                          msg: "",
-                          msg2: "Track Deleted!"
-                        });
+                        res.render('trackcrud', { msg: "", msg2: "Track Deleted!" });
 
                     }
                     await conquerie.end(db);
@@ -1208,10 +986,7 @@ app.post('/usercreate', (req, res, next) => {
   var { username, password, access_level } = req.body;
 
   if(!username || !password || !access_level){
-            res.render('usercrud', {
-              msg: "Fill in all Fields!",
-              msg2: ""
-            });
+            res.render('usercrud', { msg: "Fill in all Fields!", msg2: "" });
     }else{
 
       async function addyUser(username, password, access_level){
@@ -1224,18 +999,12 @@ app.post('/usercreate', (req, res, next) => {
 
                     if(result.length > 0){
                         console.log("USER ALREADY EXISTY");
-                        res.render('usercrud', {
-                          msg: "USER ALREADY EXISTY",
-                          msg2: ""
-                        });
+                        res.render('usercrud', { msg: "USER ALREADY EXISTY", msg2: "" });
                     }else{
                         let hashedpass = await has.hashPass(password);
                         let tresult = await userquerie.addUser(db, username, hashedpass, access_level);
 
-                        res.render('usercrud', {
-                          msg: "USER Added!",
-                          msg2: ""
-                        });
+                        res.render('usercrud', { msg: "USER Added!", msg2: "" });
 
                     }
                     await conquerie.end(db);
@@ -1261,10 +1030,7 @@ app.post('/userdelete', (req, res, next) => {
   var { username } = req.body;
 
   if(!username){
-            res.render('usercrud', {
-              msg: "",
-              msg2: "Enter User Name!"
-            });
+            res.render('usercrud', { msg: "", msg2: "Enter User Name!" });
   }else{
       //make queries, get all artist/track info and render artist page
             async function deletyUser(username){
@@ -1277,18 +1043,12 @@ app.post('/userdelete', (req, res, next) => {
 
                     if(result.length == 0){
                         console.log("cant find user");
-                        res.render('usercrud', {
-                          msg: "",
-                          msg2: "User Not Found"
-                        });
+                        res.render('usercrud', { msg: "", msg2: "User Not Found" });
                     }else{
 
                         let tresult = await userquerie.deleteUser(db, username);
                         console.log("User Found");
-                        res.render('usercrud', {
-                          msg: "",
-                          msg2: "User Deleted!"
-                        });
+                        res.render('usercrud', { msg: "", msg2: "User Deleted!" });
 
                     }
                     await conquerie.end(db);
@@ -1314,10 +1074,7 @@ app.post('/artistcreate', (req, res, next) => {
   var { artist_name, crew, country, info, face, sound, band, beat, insta } = req.body;
 
   if(!artist_name){
-            res.render('artcrud', {
-              msg: "Fill in Artist Name",
-              msg2: ""
-            });
+            res.render('artcrud', { msg: "Fill in Artist Name", msg2: "" });
     }else{
             if(!crew){ crew = ""; }
             if(!country){ country = ""; }
@@ -1332,17 +1089,11 @@ app.post('/artistcreate', (req, res, next) => {
                     let result = await artquerie.getArtistInfo(db, artist_name);
 
                     if(result.length > 0){
-                        res.render('artcrud', {
-                          msg: "Artist ALREADY EXISTY",
-                          msg2: ""
-                        });
+                        res.render('artcrud', { msg: "Artist ALREADY EXISTY", msg2: "" });
                     }else{
 
                         let tresult = await artquerie.addArtist(db, artist_name, crew, country, info, face, sound, band, beat, insta);
-                        res.render('artcrud', {
-                          msg: "Artist Added!",
-                          msg2: ""
-                        });
+                        res.render('artcrud', { msg: "Artist Added!", msg2: "" });
 
                     }
 
@@ -1368,10 +1119,7 @@ app.post('/artistdelete', (req, res, next) => {
   var { artist_name } = req.body;
 
   if(!artist_name){
-            res.render('artcrud', {
-              msg: "",
-              msg2: "Enter Artist Name!"
-            });
+            res.render('artcrud', { msg: "", msg2: "Enter Artist Name!" });
   }else{
       //make queries, get all artist/track info and render artist page
             async function deletyArtist(artist_name){
@@ -1384,17 +1132,12 @@ app.post('/artistdelete', (req, res, next) => {
 
                     if(result.length == 0){
                         console.log("cant find artist");
-                        res.render('artcrud', {
-                          msg: "",
-                          msg2: "Artist Not Found"
-                        });
+                        res.render('artcrud', { msg: "", msg2: "Artist Not Found" });
                     }else{
 
                         let tresult = await artquerie.deleteArtist(db, artist_name);
                         console.log("Artist Found");
-                        res.render('artcrud', {
-                          msg: "",
-                          msg2: "Artist Deleted!"
+                        res.render('artcrud', { msg: "", msg2: "Artist Deleted!"
                         });
 
                     }
@@ -1449,9 +1192,7 @@ app.post('/search', (req, res, next) => {
               }else{
 
                   for (var i = 0; i < result.length; i++) {
-                    var row = {
-                      'artist_name': result[i].artist_name
-                    }
+                    var row = { 'artist_name': result[i].artist_name }
                     artists.push(row);
                   }
                   await conquerie.end(db);
@@ -1472,9 +1213,7 @@ app.post('/search', (req, res, next) => {
               }else{
 
                   for (var i = 0; i < cresult.length; i++) {
-                    var row = {
-                      'artist_name': cresult[i].artist_name
-                    }
+                    var row = { 'artist_name': cresult[i].artist_name }
                     artists.push(row);
                   }//end for
 
@@ -1514,45 +1253,35 @@ app.post('/page', (req, res, next) => {
       if(pagey == 0){
         let result = await artquerie.getAllArtistsAthroughD(db);
         for (var i = 0; i < result.length; i++) {
-          var row = {
-            'artist_name': result[i].artist_name
-          }
+          var row = { 'artist_name': result[i].artist_name }
           artists.push(row);
         }//end for
       }
       if(pagey == 1){
         let result = await artquerie.getAllArtistsEthroughI(db);
         for (var i = 0; i < result.length; i++) {
-          var row = {
-            'artist_name': result[i].artist_name
-          }
+          var row = { 'artist_name': result[i].artist_name }
           artists.push(row);
         }//end for
       }
       if(pagey == 2){
         let result = await artquerie.getAllArtistsJthroughO(db);
         for (var i = 0; i < result.length; i++) {
-          var row = {
-            'artist_name': result[i].artist_name
-          }
+          var row = { 'artist_name': result[i].artist_name }
           artists.push(row);
         }//end for
       }
       if(pagey == 3){
         let result = await artquerie.getAllArtistsPthroughT(db);
         for (var i = 0; i < result.length; i++) {
-          var row = {
-            'artist_name': result[i].artist_name
-          }
+          var row = { 'artist_name': result[i].artist_name }
           artists.push(row);
         }//end for
       }
       if(pagey == 4){
         let result = await artquerie.getAllArtistsUthroughZ(db);
         for (var i = 0; i < result.length; i++) {
-          var row = {
-            'artist_name': result[i].artist_name
-          }
+          var row = { 'artist_name': result[i].artist_name }
           artists.push(row);
         }//end for
       }
@@ -1779,33 +1508,13 @@ app.post('/tunesearch',(req,res)=>{
           }else{
           //there was a result, loading that instead
           for (var i = 0; i < sresult.length; i++) {
-           var row = {
-              'track_name':sresult[i].track_name,
-              'artist_name':sresult[i].artist_name,
-              'drive_url': sresult[i].drive_url,
-              'id': sresult[i].id,
-              'collab_artist': sresult[i].collab_artist,
-              'original_artist': sresult[i].original_artist,
-              'is_remix': sresult[i].is_remix,
-              'is_collab': sresult[i].is_collab,
-              'blank': ""
-           }
+           var row = { 'track_name':sresult[i].track_name, 'artist_name':sresult[i].artist_name, 'drive_url': sresult[i].drive_url, 'id': sresult[i].id, 'collab_artist': sresult[i].collab_artist, 'original_artist': sresult[i].original_artist, 'is_remix': sresult[i].is_remix, 'is_collab': sresult[i].is_collab, 'blank': "" }
            tracks.push(row);
           }
 
           if(collabsresult.length > 0){
             for (var i = 0; i < collabsresult.length; i++) {
-              var row = {
-                 'track_name':collabsresult[i].track_name,
-                 'artist_name':collabsresult[i].artist_name,
-                 'drive_url': collabsresult[i].drive_url,
-                 'id': collabsresult[i].id,
-                 'collab_artist': collabsresult[i].collab_artist,
-                 'original_artist': collabsresult[i].original_artist,
-                 'is_remix': collabsresult[i].is_remix,
-                 'is_collab': collabsresult[i].is_collab,
-                 'blank': ""
-              }
+              var row = { 'track_name':collabsresult[i].track_name, 'artist_name':collabsresult[i].artist_name, 'drive_url': collabsresult[i].drive_url, 'id': collabsresult[i].id, 'collab_artist': collabsresult[i].collab_artist, 'original_artist': collabsresult[i].original_artist, 'is_remix': collabsresult[i].is_remix, 'is_collab': collabsresult[i].is_collab, 'blank': "" }
               tracks.push(row);
              }
           }
@@ -1878,20 +1587,9 @@ app.post('/favtunesearch',(req,res)=>{
                   res.send({msg: msg, reloadlist: reloadlist, currentuserid: user_id, tracks: tracks});
 
               }else{
-                //there was a result, loading that instead
 
                 for (var i = 0; i < sresult.length; i++) {
-                 var row = {
-                    'track_name':sresult[i].track_name,
-                    'artist_name':sresult[i].artist_name,
-                    'drive_url': sresult[i].drive_url,
-                    'id': sresult[i].id,
-                    'collab_artist': sresult[i].collab_artist,
-                    'original_artist': sresult[i].original_artist,
-                    'is_remix': sresult[i].is_remix,
-                    'is_collab': sresult[i].is_collab,
-                    'blank': ""
-                 }
+                 var row = { 'track_name':sresult[i].track_name, 'artist_name':sresult[i].artist_name, 'drive_url': sresult[i].drive_url, 'id': sresult[i].id, 'collab_artist': sresult[i].collab_artist, 'original_artist': sresult[i].original_artist, 'is_remix': sresult[i].is_remix, 'is_collab': sresult[i].is_collab, 'blank': "" }
                  tracks.push(row);
                 }
 
@@ -1929,36 +1627,15 @@ app.post('/favtunesearch',(req,res)=>{
                   res.send({msg: msg, reloadlist: reloadlist, currentuserid: user_id, tracks: tracks});
 
               }else{
-                //there was a result, loading that instead
-
+                
                 for (var i = 0; i < sresult.length; i++) {
-                 var row = {
-                    'track_name':sresult[i].track_name,
-                    'artist_name':sresult[i].artist_name,
-                    'drive_url': sresult[i].drive_url,
-                    'id': sresult[i].id,
-                    'collab_artist': sresult[i].collab_artist,
-                    'original_artist': sresult[i].original_artist,
-                    'is_remix': sresult[i].is_remix,
-                    'is_collab': sresult[i].is_collab,
-                    'blank': ""
-                 }
+                 var row = { 'track_name':sresult[i].track_name, 'artist_name':sresult[i].artist_name, 'drive_url': sresult[i].drive_url, 'id': sresult[i].id, 'collab_artist': sresult[i].collab_artist, 'original_artist': sresult[i].original_artist, 'is_remix': sresult[i].is_remix, 'is_collab': sresult[i].is_collab, 'blank': "" }
                  tracks.push(row);
                 }
 
                 if(collabsresult.length > 0){
                   for (var i = 0; i < collabsresult.length; i++) {
-                    var row = {
-                       'track_name':collabsresult[i].track_name,
-                       'artist_name':collabsresult[i].artist_name,
-                       'drive_url': collabsresult[i].drive_url,
-                       'id': collabsresult[i].id,
-                       'collab_artist': collabsresult[i].collab_artist,
-                       'original_artist': collabsresult[i].original_artist,
-                       'is_remix': collabsresult[i].is_remix,
-                       'is_collab': collabsresult[i].is_collab,
-                       'blank': ""
-                    }
+                    var row = { 'track_name':collabsresult[i].track_name, 'artist_name':collabsresult[i].artist_name, 'drive_url': collabsresult[i].drive_url, 'id': collabsresult[i].id, 'collab_artist': collabsresult[i].collab_artist, 'original_artist': collabsresult[i].original_artist, 'is_remix': collabsresult[i].is_remix, 'is_collab': collabsresult[i].is_collab, 'blank': "" }
                     tracks.push(row);
                    }
                 }
@@ -2006,16 +1683,10 @@ app.post('/req/submission', (req, res, next) => {
 
   if (!req.files || Object.keys(req.files).length === 0) {
     console.log('No image was uploaded.');
-    res.render('submission',{
-      msg: "Please include Image!",
-      msg2: ""
-    });
+    res.render('submission',{ msg: "Please include Image!", msg2: "" });
   }else{
       if (!artist_name || !link){
-        res.render('submission',{
-          msg: "Please include Artist Name and Download Link!",
-          msg2: ""
-        });
+        res.render('submission',{ msg: "Please include Artist Name and Download Link!", msg2: "" });
       }else{
             let artist_img = req.files.img;
             
@@ -2023,10 +1694,7 @@ app.post('/req/submission', (req, res, next) => {
                 try{
                   await emailer.storeArtistImage(artist_img, artist_name);
                   await emailer.emailArtistForm(artist_name, crew, country, info, link, artist_img);
-                  res.render('submission',{
-                    msg: "Form Submitted! Admins will begin adding your page!",
-                    msg2: ""
-                  });
+                  res.render('submission',{ msg: "Form Submitted! Admins will begin adding your page!", msg2: "" });
                     
                 }catch(err){
                   console.log(err);
@@ -2050,16 +1718,12 @@ app.post('/req/removal', (req, res, next) => {
   var reason = "Artist/Track Removal Request";
 
   if (!info){
-    res.render('removal',{
-      msg: "Please include what you would like removed!"
-    });
+    res.render('removal',{ msg: "Please include what you would like removed!" });
   }else{
         async function makeEmail(reason, info){
             try{
               await emailer.standardEmail(reason, info);
-              res.render('removal',{
-                msg: "Form Submitted! We will remove the track/artist page ASAP!"
-              });
+              res.render('removal',{ msg: "Form Submitted! We will remove the track/artist page ASAP!" });
                 
             }catch(err){
               console.log(err);
@@ -2127,14 +1791,10 @@ app.post('/favorites', (req, res, next) => {
     try{
 
         var msg = `${favetrack_name} Removed from Favorites!`;
-
         var db = createConnection();
         await conquerie.connect(db);
-
         let ufresult = await userquerie.deleteUserFavorite(db, user_id, track_id);
-
         await conquerie.end(db);
-
         res.send({msg: msg, index: index});
 
       }catch(err){
@@ -2162,13 +1822,7 @@ app.post('/comments', (req, res, next) => {
         let commresult = await commquerie.getAllCommentsByTrackName(db, track_name);
           if(commresult.length > 0){
             for (var i = 0; i < commresult.length; i++) {
-              var row = {
-                'track_id': commresult[i].track_id,
-                'user_id': commresult[i].user_id,
-                'comment': commresult[i].comment,
-                'username': commresult[i].username,
-                'time': commresult[i].time
-              }
+              var row = { 'track_id': commresult[i].track_id, 'user_id': commresult[i].user_id, 'comment': commresult[i].comment, 'username': commresult[i].username, 'time': commresult[i].time }
               comments.push(row);
             }
           }else{
@@ -2198,16 +1852,12 @@ app.post('/req/tunereport', (req, res, next) => {
   var reason = "Tune Is Broken/Missing Alert";
 
   if (!info){
-    res.render('tunereport',{
-      msg: "Please include the tune that is missing!"
-    });
+    res.render('tunereport',{ msg: "Please include the tune that is missing!" });
   }else{
         async function makeEmail(reason, info){
             try{
               await emailer.standardEmail(reason, info);
-              res.render('tunereport',{
-                msg: "Form Submitted! We will fix/reupload the broken tune!"
-              });
+              res.render('tunereport',{ msg: "Form Submitted! We will fix/reupload the broken tune!" });
                 
             }catch(err){
               console.log(err);
@@ -2229,9 +1879,7 @@ app.post('/req/tracksubmission', (req, res, next) => {
   var info = "";
 
   if (!link){
-    res.render('tracksubmission',{
-      msg: "Please include link!"
-    });
+    res.render('tracksubmission',{ msg: "Please include link!" });
   }else{
         info = `
         
@@ -2240,9 +1888,7 @@ app.post('/req/tracksubmission', (req, res, next) => {
         async function makeEmail(reason, info){
             try{
               await emailer.standardEmail(reason, info);
-              res.render('tracksubmission',{
-                msg: "Form Submitted! We will add tunes to Riddim Archive if approved!"
-              });
+              res.render('tracksubmission',{ msg: "Form Submitted! We will add tunes to Riddim Archive if approved!" });
                 
             }catch(err){
               console.log(err);
@@ -2263,16 +1909,12 @@ app.post('/req/question', (req, res, next) => {
   var reason = "Question/Comment";
 
   if (!info){
-    res.render('question',{
-      msg: "Please include your question/comment!"
-    });
+    res.render('question',{ msg: "Please include your question/comment!" });
   }else{
         async function makeEmail(reason, info){
             try{
               await emailer.standardEmail(reason, info);
-              res.render('question',{
-                msg: "Form Submitted! We will reply as soon as we can!"
-              });
+              res.render('question',{ msg: "Form Submitted! We will reply as soon as we can!" });
                 
             }catch(err){
               console.log(err);
@@ -2284,11 +1926,8 @@ app.post('/req/question', (req, res, next) => {
           
 });
 
-
 //Server Request Handler
-app.listen(port, () => {
-  console.log(`Server running at: http://localhost:${port}/`);
-});
+app.listen(port, () => { console.log(`Server running at: http://localhost:${port}/`); });
 
 //export app
 module.export = app;

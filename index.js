@@ -1822,6 +1822,10 @@ app.post('/comments', (req, res, next) => {
         let commresult = await commquerie.getAllCommentsByTrackName(db, track_name);
           if(commresult.length > 0){
             for (var i = 0; i < commresult.length; i++) {
+              var thefullstring = commresult[i].time.toString();
+              var str = thefullstring.split(" ");
+              commresult[i].time = `${str[1]}/${str[2]}/${str[3]} - ${str[4]}`;
+
               var row = { 'track_id': commresult[i].track_id, 'user_id': commresult[i].user_id, 'comment': commresult[i].comment, 'username': commresult[i].username, 'time': commresult[i].time }
               comments.push(row);
             }

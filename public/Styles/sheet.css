@@ -324,6 +324,7 @@ a{
 
 ul{
 list-style-type: none;
+padding-left: 0.2em;
 }
 
 .welcometxt{
@@ -771,7 +772,15 @@ li.tunetexttotwsmaller{
   margin-left: 2em;
 }
 
-#numofhearts{
+.numheart{
   margin-top: 1.1em;
   font-weight: bold;
+}
+
+.uldiv{
+  border: black solid 3px;
+  padding-right: 0.2em;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  margin-top: 0.5em;
 }

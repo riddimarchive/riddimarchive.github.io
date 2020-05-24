@@ -36,7 +36,7 @@ block content
 					#test
 						img(border='2', alt='back', src='../../Images/PageIMG/tunesearch.png', height='50')
 					.downloadbutton
-						a(id='reload', href=`https://riddim-archive.herokuapp.com/artist/${artist_name}`)
+						a(id='reload', href=`https://www.riddimarchive.com/artist/${artist_name}`)
 							img(border='2', alt='Reload', src='../../Images/PageIMG/reloadt.png', height='50')
 					#labelgcenter3 #{message}
 		.artistpage
@@ -107,7 +107,7 @@ block content
 					.downloadbutton
 						img(id=`${index}/${track.track_name}`, class='commentbutton', border='2', alt='back', src='../Images/PageIMG/comments.png', height='50')
 						img(id=`${index}/${track.track_name}/${userid}`, class='heartbutton', border='0', alt='back', src='../Images/PageIMG/heart0.png', height='50')
-						div(id='numofhearts') 0
+						div(id=`${index}/numheart`, class='numheart') 0
 					div(id=`result${index}`, class='downloadbutton')
 					
 	#ulcontain2
@@ -487,6 +487,19 @@ block content
 			commentimg.setAttribute('height', '50');
 			commentimg.setAttribute('src', '../Images/PageIMG/comments.png');
 
+			var heartimg = document.createElement('img');
+			heartimg.setAttribute('id', `${i}/${tracks[i].track_name}/${currentuserid}`);
+			heartimg.setAttribute('class', 'heartbutton');
+			heartimg.setAttribute('border', '0');
+			heartimg.setAttribute('alt', 'back');
+			heartimg.setAttribute('height', '50');
+			heartimg.setAttribute('src', '../Images/PageIMG/heart0.png');
+
+			var numheartdiv = document.createElement('div');
+			numheartdiv.setAttribute('id', `${i}/numheart`);
+			numheartdiv.setAttribute('class', 'numheart');
+			numheartdiv.innerHTML = "0";
+
 			//finishing form
 			zeform.appendChild(trackidinput);
 			zeform.appendChild(tracknameinput);
@@ -501,6 +514,8 @@ block content
 
 			//comment append
 			downloaddiv2.appendChild(commentimg);
+			downloaddiv2.appendChild(heartimg);
+			downloaddiv2.appendChild(numheartdiv);
 
 			//finishing audio
 			audiodiv.appendChild(newaudio);

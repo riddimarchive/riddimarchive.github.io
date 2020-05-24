@@ -115,7 +115,7 @@ block content
 							img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
 					.downloadbutton
 						img(id=`${index}/${track.track_name}`, class='commentbutton', border='2', alt='back', src='../Images/PageIMG/comments.png', height='50')
-						img(id=`${index}/${track.track_name}/${userid}`, class='heartbutton', border='0', alt='back', src='../Images/PageIMG/heart0.png', height='50')
+						img(id=`${index}/${track.track_name}/${userid}`, class='heartbutton', border='0', alt='back', src=`../Images/PageIMG/heart${track.userhearted}.png`, height='50')
 						div(id=`${index}/numheart`, class='numheart')= `${track.hearts.length}`
 					div(id=`result${index}`, class='downloadbuttonwithbold')
 					
@@ -401,6 +401,7 @@ block content
 		}
 
 		function appendNewTrackList(tracks, currentuserid, i){
+
 			var thecontainer = document.getElementById('ulcontain2');
 
 			var newdiv = document.createElement('div');
@@ -501,7 +502,7 @@ block content
 			heartimg.setAttribute('border', '0');
 			heartimg.setAttribute('alt', 'back');
 			heartimg.setAttribute('height', '50');
-			heartimg.setAttribute('src', '../Images/PageIMG/heart0.png');
+			heartimg.setAttribute('src', `../Images/PageIMG/heart${tracks[i].userhearted}.png`);
 
 			var numheartdiv = document.createElement('div');
 			numheartdiv.setAttribute('id', `${i}/numheart`);

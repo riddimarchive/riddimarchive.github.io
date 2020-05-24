@@ -61,6 +61,14 @@ body {
   justify-content: center;
 }
 
+#labelgcenter3{
+  font-weight: bold;
+  font-size: xx-large;
+  color: greenyellow;
+  display: flex;
+  justify-content: center;
+}
+
 .header{
 	display: flex;
 	justify-content: center;
@@ -750,3 +758,20 @@ li.tunetexttotwsmaller{
   font-weight: bold;
 }
 
+.heartbutton{
+  margin-left: 2em;
+}
+
+.heartbutton:hover{
+  opacity: 0.3;
+  border: 2px visible black;
+}
+
+.commentbutton{
+  margin-left: 2em;
+}
+
+#numofhearts{
+  margin-top: 1.1em;
+  font-weight: bold;
+}

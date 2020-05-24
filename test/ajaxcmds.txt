@@ -1,0 +1,10 @@
+artist page - search ajax - tunesearch
+artist page - fave ajax - artist/${a_name}
+artist page - page ajax - pagetracks
+artist page - comment ajax - comments
+homepage - search ajax - search
+homepage - forward ajax - forward
+homepage - fave ajax - homepagefave
+homepage - page ajax - page
+favorites - search ajax - favtunesearch
+favorites - fave ajax - favorites

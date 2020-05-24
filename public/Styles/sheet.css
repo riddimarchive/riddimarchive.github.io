@@ -643,6 +643,13 @@ li.tunetexttotwsmaller{
   justify-content: center;
 }
 
+.downloadbuttonwithbold{
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  font-size: large;
+}
+
 .links{
   display: flex;
   justify-content: center;

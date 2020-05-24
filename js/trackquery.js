@@ -34,6 +34,25 @@ function getTracksOfTheWeek(db){
 
 	return querypromise;
 }
+
+function getAllHeartsOnTrack(db, track_id){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT hearts.user_id FROM hearts WHERE hearts.track_id = ?`, [track_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
 /////////////////////////////
 function getAllTracksFromArtist(db, artist_name){
 
@@ -598,6 +617,7 @@ function deleteTrack(db, track_name){
 module.exports = {
 	getTrackInfo,
 	getTracksOfTheWeek,
+	getAllHeartsOnTrack,
 	getAllTracksFromArtist,
 	getAllTracksAthroughD,
 	getAllTracksEthroughI,

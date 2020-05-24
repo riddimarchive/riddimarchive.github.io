@@ -7,12 +7,21 @@ block content
 		document.addEventListener('play', function(e){
 		var audios = document.getElementsByTagName('audio');
 		var curindex = e.target.id;
+		console.log(`curindex is: ${curindex}`);
+
+		var theplayingul = document.getElementById(`${curindex-10000}/uldiv`);
+		theplayingul.style.backgroundColor = "greenyellow";
 
 		var loadmsg = document.getElementById(`result${curindex-10000}`);
 		loadmsg.innerHTML = "Loading...";
+
 		for(var i = 0, len = audios.length; i < len;i++){
 		if(audios[i] != e.target){
 		audios[i].pause();
+
+		var notplayingul = document.getElementById(`${i}/uldiv`);
+		notplayingul.style.backgroundColor = "dodgerblue";
+		
 		var theid = (audios[i].id-10000);
 		var loadmsg = document.getElementById(`result${theid}`);
 		loadmsg.innerHTML = "";
@@ -87,7 +96,7 @@ block content
 
 	#ulcontain
 		each track, index in x
-			.uldiv
+			.uldiv(id=`${index}/uldiv`)
 				ul
 					li.tunetext= `${track.original_artist}${track.track_name}${track.blank}`
 					.regaudio
@@ -107,8 +116,8 @@ block content
 					.downloadbutton
 						img(id=`${index}/${track.track_name}`, class='commentbutton', border='2', alt='back', src='../Images/PageIMG/comments.png', height='50')
 						img(id=`${index}/${track.track_name}/${userid}`, class='heartbutton', border='0', alt='back', src='../Images/PageIMG/heart0.png', height='50')
-						div(id=`${index}/numheart`, class='numheart') 0
-					div(id=`result${index}`, class='downloadbutton')
+						div(id=`${index}/numheart`, class='numheart')= `${track.hearts.length}`
+					div(id=`result${index}`, class='downloadbuttonwithbold')
 					
 	#ulcontain2
 	script.
@@ -256,7 +265,6 @@ block content
 								element.removeChild(oldlist[(oldlist.length - 1)]);
 						}
 							var tracks = data.tracks;
-							console.table(tracks);
 							for (var i = 0; i < tracks.length; i++){
 								appendNewTrackList(tracks, data.currentuserid, i);
 							}
@@ -298,7 +306,6 @@ block content
 							var theindex = data.index;
 							document.getElementById(`result${theindex}`).innerHTML = themsg;
 						}else{
-							console.table(data.comments);
 							var modal = document.getElementById("myModal");
 							var span = document.getElementsByClassName("close")[0];
 							var title = document.getElementById("commenttitle");
@@ -398,6 +405,7 @@ block content
 
 			var newdiv = document.createElement('div');
 			newdiv.setAttribute('class', 'uldiv');
+			newdiv.setAttribute('id', id=`${i}/uldiv`);
 
 			var newul = document.createElement('ul');
 
@@ -498,7 +506,7 @@ block content
 			var numheartdiv = document.createElement('div');
 			numheartdiv.setAttribute('id', `${i}/numheart`);
 			numheartdiv.setAttribute('class', 'numheart');
-			numheartdiv.innerHTML = "0";
+			numheartdiv.innerHTML = `${tracks[i].hearts.length}`;
 
 			//finishing form
 			zeform.appendChild(trackidinput);
@@ -523,7 +531,7 @@ block content
 			//added label
 			var labeldiv = document.createElement('div');
 			labeldiv.setAttribute('id', `result${i}`);
-			labeldiv.setAttribute('class', 'downloadbutton');
+			labeldiv.setAttribute('class', 'downloadbuttonwithbold');
 
 			//final appends
 			newul.appendChild(textli);

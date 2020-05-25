@@ -89,7 +89,7 @@ block content
 
 	#myModal.modal
 		.modal-content
-			img(class='close', border='2', alt='back', src='../Images/PageIMG/close.png', height='50')
+			img(class='close', border='2', alt='back', src='../Images/PageIMG/close.png', height='70')
 			.artisth1
 				h1#commenttitle Insert Track Name Here
 			br
@@ -97,7 +97,7 @@ block content
 	
 	#myModal2.modal
 		.modal-content
-			img(class='close2', border='2', alt='back', src='../Images/PageIMG/close.png', height='50')
+			img(class='close2', border='2', alt='back', src='../Images/PageIMG/close.png', height='70')
 			p No Comments!
 
 	#ulcontain
@@ -240,34 +240,39 @@ block content
 					var track_id = splitty[1];
 					var user_id = splitty[2];
 					var hearted = splitty[3];
-					if(hearted == 0){
+					if(user_id !== ""){
+
+						if(hearted == 0){
 						$.ajax({
-						url:'/addheart',
-						type: 'POST',
-						data: {
-							index: index,
-							track_id: track_id,
-							user_id: user_id
-						},
-						success: function(data){
-							//changing img
-							var theindex = data.index;
-							var heartimg = document.getElementById(`${theindex}/${data.track_id}/${data.user_id}/0`);
-							heartimg.setAttribute('src', '../Images/PageIMG/heart1.png');
+							url:'/addheart',
+							type: 'POST',
+							data: {
+								index: index,
+								track_id: track_id,
+								user_id: user_id
+							},
+							success: function(data){
+								//changing img
+								var theindex = data.index;
+								var heartimg = document.getElementById(`${theindex}/${data.track_id}/${data.user_id}/0`);
+								heartimg.setAttribute('src', '../Images/PageIMG/heart1.png');
 
-							//adding one to number
-							var test = document.getElementById(`${theindex}/numheart`);
-							var str = test.innerHTML.toString();
-							var theint = parseInt(str);
-							test.innerHTML = (theint + 1);
+								//adding one to number
+								var test = document.getElementById(`${theindex}/numheart`);
+								var str = test.innerHTML.toString();
+								var theint = parseInt(str);
+								test.innerHTML = (theint + 1);
 
-						},
-						error: function(){
-							console.log("Didn't Work");
-						}
+							},
+							error: function(){
+								console.log("Didn't Work");
+							}
 						});//ajax
+						}else{
+							console.log("already Hearted!");
+						}
 					}else{
-						console.log("already Hearted!");
+						document.getElementById(`result${index}`).innerHTML = "Please Login to Like Tune!";
 					}
 
 				});//click event
@@ -337,6 +342,17 @@ block content
 			});//class selector
 		}//pageinit
 
+		function focusRestrict(event) {
+			document.addEventListener('focus', function(event) {
+				if (modalOpen && !modal.contains(event.target)) {
+					console.log("focusing");
+					event.stopPropagation();
+					modal.focus();
+				}
+			}, true);
+		}
+
+
 		function commentInit() {
 			console.log("comment init");
 			document.querySelectorAll('.commentbutton').forEach(item => {
@@ -371,22 +387,47 @@ block content
 								container.innerHTML += `<div id="fullcomment"><div id ="comuser">${data.comments[i].username}:</div><div id ="comcom">${data.comments[i].comment}</div><div id ="comtime">${data.comments[i].time}</div></div><div class ="space2"></div><br>`;
 							}
 
+							//made modal visible and fix body doc position
+							modal.setAttribute('tabindex', '0');
+							var bod = document.body;
+							bod.style.top = `-${window.scrollY}px`;
+							bod.style.position = "fixed";
 							modal.style.display = "block";
+							modal.focus();
+							
+							//close button handle
 							span.onclick = function(modal) {
 								var modal2 = document.getElementById("myModal");
 								var container = document.getElementById("allcomments");
 								container.innerHTML = "";
 								modal2.style.display = "none";
+								
+								//return body to normal
+								var bod = document.body;
+								const scrollY = bod.style.top;
+								bod.style.position = '';
+								bod.style.top = '';
+								window.scrollTo(0, parseInt(scrollY || '0') * -1);
 							}
+
+							//click off comment window handle
 							window.onclick = function(event) {
 								var modal3 = document.getElementById("myModal");
 								if (event.target == modal3) {
 									modal3.style.display = "none";
 									var container = document.getElementById("allcomments");
 									container.innerHTML = "";
+
+									//return body to normal
+									var bod = document.body;
+									const scrollY = bod.style.top;
+									bod.style.position = '';
+									bod.style.top = '';
+									window.scrollTo(0, parseInt(scrollY || '0') * -1);
 								}
 							}
-						}
+
+						}//else
 					},
 					error: function(){
 						console.log("Didn't Work");

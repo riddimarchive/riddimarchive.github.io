@@ -42,11 +42,12 @@ block content
 						input#search_results(type='text', name='search_results' placeholder="Enter Track Name...")
 					div
 						input#a_name(type='hidden', name='a_name', value=`${artist_name}`)
-					#test
+					div(id='test', class='custombutton')
 						img(border='2', alt='back', src='../../Images/PageIMG/tunesearch.png', height='50')
 					.downloadbutton
-						a(id='reload', href=`https://www.riddimarchive.com/artist/${artist_name}`)
-							img(border='2', alt='Reload', src='../../Images/PageIMG/reloadt.png', height='50')
+						.custombutton
+							a(id='reload', href=`https://www.riddimarchive.com/artist/${artist_name}`)
+								img(border='2', alt='Reload', src='../../Images/PageIMG/reloadt.png', height='50')
 					#labelgcenter3 #{message}
 		.artistpage
 			img(src=`../Images/Logos/${artist_name}.jpg`, alt="ADD ARTIST IMG HERE", height='275', width='275')

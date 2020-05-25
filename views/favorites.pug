@@ -40,11 +40,13 @@ block content
 							label.boldtext(for='search_style') Search by Artist
 							input#search_style.form-control(type='radio', name='search_style', value=1)
 						.downloadbutton
-							#test
-								img(border='2', alt='back', src='../Images/PageIMG/tunesearch.png', height='45')
+							.custombutton
+								#test
+									img(border='2', alt='back', src='../Images/PageIMG/tunesearch.png', height='45')
 						.downloadbutton
-							a(id='reload', href="https://www.riddimarchive.com/favorites")
-								img(border='2', alt='Reload', src='../Images/PageIMG/reload.png', height='50')
+							.custombutton
+								a(id='reload', href="https://www.riddimarchive.com/favorites")
+									img(border='2', alt='Reload', src='../Images/PageIMG/reload.png', height='50')
 						#labelgcenter #{message}
 	#ulcontain
 		each track, index in y
@@ -55,17 +57,19 @@ block content
 						audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none')
 					li.tunetext= `       `
 					.downloadbutton
-						a(href=track.drive_url)
-							img(border='2', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
-						form(id=`form ${index}`, method='POST')
-							input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
-							
-							input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
-							
-							input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
-							
-							input#name.form-control(type='hidden', name='name', value=`${track.artist_name}`)
-							img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/removefave.png', height='50')
+						.custombutton
+							a(href=track.drive_url)
+								img(border='2', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
+						.custombutton
+							form(id=`form ${index}`, method='POST')
+								input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
+
+								input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
+
+								input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
+
+								input#name.form-control(type='hidden', name='name', value=`${track.artist_name}`)
+								img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/removefave.png', height='50')
 					div(id=`result${index}`)
 	#ulcontain2
 	script.
@@ -148,10 +152,18 @@ block content
 
 					//download image
 					var downimage = document.createElement('img');
-					downimage.setAttribute('border', '0');
+					downimage.setAttribute('border', '2');
 					downimage.setAttribute('alt', 'Download Tune');
 					downimage.setAttribute('src', '../Images/PageIMG/download2.png');
 					downimage.setAttribute('height', '50');
+
+					//custom div1
+					var customdiv = document.createElement('div');
+					customdiv.setAttribute('class', 'custombutton');
+
+					//custom div2
+					var customdiv2 = document.createElement('div');
+					customdiv2.setAttribute('class', 'custombutton');
 
 					//form
 					var zeform = document.createElement('form');
@@ -206,9 +218,11 @@ block content
 
 					//finishing download
 					downlink.appendChild(downimage);
-					downloaddiv.appendChild(downlink);
-					downloaddiv.appendChild(zeform);
-
+					customdiv.appendChild(downlink);
+					customdiv2.appendChild(zeform);
+					downloaddiv.appendChild(customdiv);
+					downloaddiv.appendChild(customdiv2);
+					
 					//finishing audio
 					audiodiv.appendChild(newaudio);
 

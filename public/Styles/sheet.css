@@ -537,30 +537,35 @@ li.tunetextsmaller{
     display: flex;
     justify-content: center;
     justify-self: center;
- }
+}
  
- .ftxt{
+.ftxt{
     display: flex;
     justify-content: center;
     width: 750px;
     margin: 0.7em;
     font-size: x-large;
- }
+}
 
- .faqmainbtn form{
+.faqmainbtn:hover{
+  opacity: 0.3;
+  border: 2px visible black;
+}
+
+.faqmainbtn form{
     display: flex;
     justify-content: center;
     justify-self: center;
 }
 
- .faqmainbtn form input{
+.faqmainbtn form input{
     background: #c9e6ff;
     border: 0;
     text-transform: uppercase;
     padding: 1em;
     font-size: 36px;
     margin-bottom: 0.3em;
- }
+}
 
 .navbar{
   background-color:#3b5998;

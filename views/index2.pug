@@ -6,6 +6,8 @@ head
   title Riddim Archive
 
 body
+  - var username = `${theusername}`;
+  script(src='https://code.jquery.com/jquery-3.5.0.min.js')
   ul.navbar
     li
       a(href='../login') Login/Dashboard
@@ -15,6 +17,11 @@ body
       a(href='../faq') FAQ
     li
       a(href='../') Go Back
+    li
+      a(href='../logout') Log Out
+    li
+      a(id='userspot', class=`${username}`)
+    
   .header
     a.btn.btn-link(id='toplogo', href='../')
       img(src='../Images/Logos/NewLogoTest2.png' alt='Images/PageIMG/fail.png' height='150' width='150')
@@ -32,3 +39,32 @@ body
         a(href='../faq') FAQ
       li
         a(href='../') Go Back
+      li
+        a(href='logout') Log Out
+      li
+        a(id='userspot2', class=`${username}`)
+  script.
+    $(document).ready(function() {
+      console.log("Doc ready");
+      addUsername();
+    });
+
+    //- document.addEventListener("DOMContentLoaded", function(event) {
+    //-   console.log("Doc ready");
+    //-   addUsername();
+    //- });
+
+    function addUsername(){
+      var topspot = document.getElementById('userspot');
+      if(topspot.className !== undefined){
+        if(topspot.className != ""){
+          topspot.innerHTML = `Current User: ${topspot.className}`;
+        }
+      }
+      var bottomspot = document.getElementById('userspot2');
+      if(bottomspot.className !== undefined){
+        if(bottomspot.className != ""){
+          bottomspot.innerHTML = `Current User: ${bottomspot.className}`;
+        }
+      }
+    }

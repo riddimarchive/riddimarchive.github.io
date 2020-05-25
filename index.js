@@ -87,6 +87,7 @@ app.get('/', (req, res) => {
         var artists = [];
         var totw = [];
         var user_id = "";
+        var theusername = "";
         var randdriveurl = "";
         var randartistname = "";
         var randtrackname = "";
@@ -94,6 +95,7 @@ app.get('/', (req, res) => {
         //set userid if logged in
         if(req.user !== undefined){
           user_id = req.user.id;
+          theusername = req.user.username;
         }
 
         var db = createConnection();
@@ -145,7 +147,7 @@ app.get('/', (req, res) => {
 
         await conquerie.end(db);
 
-        res.render('homepage',{ title:'Riddim Archive Index', msg: "", artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw });
+        res.render('homepage',{ title:'Riddim Archive Index', msg: "", artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw, theusername: theusername });
 
         }catch(err){
           console.log(err);
@@ -160,8 +162,11 @@ app.get('/', (req, res) => {
 
 //GET REQUEST - FAQ PAGE
 app.get('/faq', (req, res) => {
-
-  res.render('faq',{ title:'Riddim Archive FAQ' });
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
+  res.render('faq',{ title:'Riddim Archive FAQ', theusername: theusername  });
 
 });
 
@@ -171,7 +176,7 @@ app.get('/login', (req, res) => {
   
   var test = req.flash('error');
   if(req.user === undefined){
-    res.render('login',{ title:'Riddim Archive Login', username: '', er: '', message: test });
+    res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: test });
   }else{
     //store user returned by passport (req.user)
     var thelevel = req.user.access_level;
@@ -180,13 +185,13 @@ app.get('/login', (req, res) => {
     //redirect by permission level
     switch(thelevel) {
       case 3:
-        res.render('admdash',{ username: theusername });
+        res.render('admdash',{ theusername: theusername });
         break;
       case 2:
-        res.render('moddash',{ username: theusername });
+        res.render('moddash',{ theusername: theusername });
         break;
       case 1:
-        res.render('userdash',{ username: theusername });
+        res.render('userdash',{ theusername: theusername });
         break;
     }//end switch
   }//end else
@@ -198,7 +203,7 @@ app.get('/login', (req, res) => {
 app.get('/dashboard', (req, res) => {
   
   if(req.user === undefined){
-    res.render('login',{ title:'Riddim Archive Login', username: '', er: '', message: '' });
+    res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: '' });
   }else{
   //store user returned by passport (req.user)
     var thelevel = req.user.access_level;
@@ -207,13 +212,13 @@ app.get('/dashboard', (req, res) => {
     //redirect by permission level
     switch(thelevel) {
       case 3:
-        res.render('admdash',{ username: theusername });
+        res.render('admdash',{ theusername: theusername });
         break;
       case 2:
-        res.render('moddash',{ username: theusername });
+        res.render('moddash',{ theusername: theusername });
         break;
       case 1:
-        res.render('userdash',{ username: theusername });
+        res.render('userdash',{ theusername: theusername });
         break;
     }//end switch
   }//end else
@@ -223,8 +228,11 @@ app.get('/dashboard', (req, res) => {
 
 //GET REQUEST - CREATE ACCOUNT PAGE
 app.get('/create', (req, res, next) => {
-
-  res.render('create',{ title:'Create Account', msg: "" });
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
+  res.render('create',{ title:'Create Account', msg: "", theusername: theusername });
 
 });
 
@@ -233,11 +241,11 @@ app.get('/create', (req, res, next) => {
 app.get('/changepass', (req, res, next) => {
 
   if(req.user === undefined){
-    res.render('login',{ title:'Riddim Archive Login', username: '', er: '', message: '' });
+    res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: '' });
   }else{
     var theusername = req.user.username;
 
-    res.render('changepass',{ title:'Change Password', msg: "", username: theusername });
+    res.render('changepass',{ title:'Change Password', msg: "", theusername: theusername });
   }
 
 });
@@ -250,9 +258,11 @@ app.get('/trackcrud', (req, res) => {
     console.log("User does not Exist");
     res.redirect('/login');
   }else{
-
+    
+      var theusername = "";
+      theusername = req.user.username;
       if(req.user.access_level > 1){   
-        res.render('trackcrud', { msg: "", msg2: "" });
+        res.render('trackcrud', { msg: "", msg2: "", theusername: theusername });
       }else{
         console.log("User does not have Access");
         res.redirect('/login');
@@ -270,9 +280,10 @@ app.get('/usercrud', (req, res) => {
     res.redirect('/login');
   }else{
 
+      var theusername = req.user.username;
       if(req.user.access_level > 1){
     
-        res.render('usercrud',{ username: '' });
+        res.render('usercrud',{ theusername: theusername });
     
       }else{
         console.log("User does not have Access");
@@ -287,7 +298,7 @@ app.get('/usercrud', (req, res) => {
 app.get('/favorites', (req, res) => {
 
   if(req.user === undefined){
-    res.render('login',{ title:'Riddim Archive Login', username: '', er: '', message: '' });
+    res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: '' });
 
   }else{
     var theusername = req.user.username;
@@ -309,7 +320,7 @@ app.get('/favorites', (req, res) => {
 
           await conquerie.end(db);
           
-          res.render('favorites',{ thetracks: tracks, currentuserid: user_id, username: theusername, msg:msg });
+          res.render('favorites',{ thetracks: tracks, currentuserid: user_id, theusername: theusername, msg:msg });
         }else{
 
           for (var i = 0; i < result.length; i++) {
@@ -335,7 +346,7 @@ app.get('/favorites', (req, res) => {
           await conquerie.end(db);
           tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
 
-          res.render('favorites',{ thetracks: tracks, currentuserid: user_id, username: theusername, msg: msg });
+          res.render('favorites',{ thetracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
       }
 
       }catch(err){
@@ -358,10 +369,10 @@ app.get('/artcrud', (req, res) => {
     console.log("User does not Exist");
     res.redirect('/login');
   }else{
-
+      var theusername = req.user.username;
       if(req.user.access_level > 1){
     
-        res.render('artcrud',{ msg: "", msg2: "" });
+        res.render('artcrud',{ msg: "", msg2: "", theusername: theusername });
     
       }else{
         console.log("User does not have Access");
@@ -386,9 +397,11 @@ app.get('/artist/:name', function(req,res){
 
   var art_name = req.params.name;
   var user_id = "";
+  var theusername = "";
 
   if(req.user !== undefined){
     user_id = req.user.id;
+    theusername = req.user.username;
   }
 
   
@@ -482,7 +495,7 @@ app.get('/artist/:name', function(req,res){
           await conquerie.end(db);
           tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
 
-          res.render('artist',{ artist_name: name, info: info, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, tracks: tracks, currentuserid: user_id, msg: msg });
+          res.render('artist',{ artist_name: name, info: info, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
 
       }catch(err){
         console.log(err);
@@ -498,27 +511,32 @@ app.get('/artist/:name', function(req,res){
 //GET REQUEST - REQUEST HANDLER
 app.get('/req/:page', function(req,res){
 
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
+
   //store page from url
   var pagey = req.params.page;
 
   switch(pagey) {
       case "submission":
-        res.render('submission',{ msg: "" });
+        res.render('submission',{ msg: "", theusername: theusername });
         break;
       case "tracksubmission":
-        res.render('tracksubmission',{ msg: "" });
+        res.render('tracksubmission',{ msg: "", theusername: theusername });
         break;
       case "tunereport":
-        res.render('tunereport',{ msg: "" });
+        res.render('tunereport',{ msg: "", theusername: theusername });
         break;
       case "removal":
-        res.render('removal',{ msg: "" });
+        res.render('removal',{ msg: "", theusername: theusername });
         break;
       case "question":
-        res.render('question',{ msg: "" });
+        res.render('question',{ msg: "", theusername: theusername });
         break;
       default:
-        res.render('faq',{ title:'Riddim Archive FAQ' });
+        res.render('faq',{ title:'Riddim Archive FAQ', theusername: theusername });
         break;
     }//end switch
 });
@@ -539,12 +557,14 @@ app.post('/', (req, res, next) => {
         var artists = [];
         var totw = [];
         var user_id = "";
+        var theusername = "";
         var randdriveurl = "";
         var randartistname = "";
         var randtrackname = "";
         
         if(req.user !== undefined){
           user_id = req.user.id;
+          theusername = req.user.username;
         }
 
         var db = createConnection();
@@ -596,7 +616,7 @@ app.post('/', (req, res, next) => {
 
         await conquerie.end(db);
 
-        res.render('homepage',{ title:'Riddim Archive Index', msg: "Please login to save Favorites!", artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw });
+        res.render('homepage',{ title:'Riddim Archive Index', msg: "Please login to save Favorites!", artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw, theusername: theusername });
 
         }catch(err){
           console.log(err);
@@ -613,12 +633,14 @@ app.post('/', (req, res, next) => {
         var artists = [];
         var totw = [];
         var user_id = "";
+        var theusername = "";
         var randdriveurl = "";
         var randartistname = "";
         var randtrackname = "";
         
         if(req.user !== undefined){
           user_id = req.user.id;
+          theusername = req.user.username;
         }
 
         var db = createConnection();
@@ -675,7 +697,7 @@ app.post('/', (req, res, next) => {
           msg = `${favetrack_name} is already added!`;        
           await conquerie.end(db);
 
-          res.render('homepage',{ title:'Riddim Archive Index', msg: `${favetrack_name} is already added!`, artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw });
+          res.render('homepage',{ title:'Riddim Archive Index', msg: `${favetrack_name} is already added!`, artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw, theusername: theusername });
         }else{
 
           //store into favorites here, need user ID and track ID
@@ -684,7 +706,7 @@ app.post('/', (req, res, next) => {
           await conquerie.end(db);
         }
 
-        res.render('homepage',{ title:'Riddim Archive Index', msg: `${favetrack_name} Added to Favorites!`, artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw });
+        res.render('homepage',{ title:'Riddim Archive Index', msg: `${favetrack_name} Added to Favorites!`, artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw, theusername: theusername });
 
         }catch(err){
           console.log(err);
@@ -755,7 +777,7 @@ app.post('/login', (req, res, next) => {
   var { username, password } = req.body;
 
   if(!username || !password){
-    res.render('login', { username: username, er: "", message: 'Fill in all Fields!' });
+    res.render('login', { theusername: username, er: "", message: 'Fill in all Fields!' });
   }else{
     passport.authenticate('local', { successRedirect: '/dashboard', failureRedirect: '/login', failureFlash : true })(req, res, next);
   }
@@ -767,16 +789,19 @@ app.post('/login', (req, res, next) => {
 app.post('/create', (req, res, next) => {
 
   var { username, password, password2 } = req.body;
-  //res.send(username+password+password2);
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
   
   if(!username || !password || !password2){
-    res.render('create',{ title:'Create Account', msg: "Fill in all Fields!" });
+    res.render('create',{ title:'Create Account', msg: "Fill in all Fields!" , theusername: theusername});
   }else{
     if(password !== password2){
-      res.render('create',{ title:'Create Account', msg: "Passwords Don't Match, Please Re-Enter" });
+      res.render('create',{ title:'Create Account', msg: "Passwords Don't Match, Please Re-Enter", theusername: theusername });
     }else{
       //perform hash and add query
-      async function createPageResponse(username, password){
+      async function createPageResponse(username, password, theusername){
         try{
           var db = createConnection();
           var hashpass = "";
@@ -784,13 +809,13 @@ app.post('/create', (req, res, next) => {
 
           let uresult = await userquerie.getUserInfo(db, username);
           if(uresult.length > 0){
-            res.render('create',{ title:'Create Account', msg: "Username Taken! Please Try a Different Name" });
+            res.render('create',{ title:'Create Account', msg: "Username Taken! Please Try a Different Name", theusername: theusername });
           }else{
               hashpass = await has.hashPass(password);
               let result = await userquerie.createAccount(db, username, hashpass);
 
               await conquerie.end(db);
-              res.render('create',{ title:'Create Account', msg: "Account Created! Feel Free to Login at the link above!" });
+              res.render('create',{ title:'Create Account', msg: "Account Created! Feel Free to Login at the link above!", theusername: theusername });
           }//end else
         }catch(err){
           console.log(err);
@@ -798,7 +823,7 @@ app.post('/create', (req, res, next) => {
         }
     }//end async
 
-    createPageResponse(username, password);
+    createPageResponse(username, password, theusername);
 
     }//end inner else
   }//end outer else
@@ -813,10 +838,10 @@ app.post('/changepass', (req, res, next) => {
   //confirm password1 and 2 match
   //encrypt and replace password
   if(!newpass || !newpass2){
-    res.render('changepass',{ title:'Change Password', msg: "Fill in all Fields!", username: theusername });
+    res.render('changepass',{ title:'Change Password', msg: "Fill in all Fields!", theusername: theusername });
   }else{
     if(newpass !== newpass2){
-      res.render('changepass',{ title:'Change Password', msg: "Passwords Don't Match, Please Re-Enter", username: theusername });
+      res.render('changepass',{ title:'Change Password', msg: "Passwords Don't Match, Please Re-Enter", theusername: theusername });
     }else{
       //perform hash and add query
       async function changePassResponse(theusername, newpass){
@@ -829,7 +854,7 @@ app.post('/changepass', (req, res, next) => {
           let result = await userquerie.changePass(db, theusername, hashpass);
 
           await conquerie.end(db);
-          res.render('changepass',{ title:'Change Password', msg: "Password changed, please log in next time with new password", username: theusername });
+          res.render('changepass',{ title:'Change Password', msg: "Password changed, please log in next time with new password", theusername: theusername });
         }catch(err){
           console.log(err);
           res.render('error');
@@ -886,14 +911,16 @@ forwardResponse();
 app.post('/trackcreate', (req, res, next) => {
 
   var { track_name, artist_name, drive_url, tune_of_week, is_collab, collab1, collab2, collab3, collab4, is_remix, og1, og2 } = req.body;
-
-  //res.send(track_name + " " + artist_name + " " + drive_url + " " + is_collab + " " + collab1 + " " + collab2 + " " + collab3 + " " + collab4 + " " + is_remix + " " + og1 + " " + og2);
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
   
   if(!track_name || !artist_name || !drive_url){
-      res.render('trackcrud', { msg: "Need Artist Name, Track Name, and URL!", msg2: "" });
+      res.render('trackcrud', { msg: "Need Artist Name, Track Name, and URL!", msg2: "", theusername: theusername });
     }else{
       //make queries, get all artist/track info and render artist page
-      async function storeFormResults(track_name, artist_name, drive_url){
+      async function storeFormResults(track_name, artist_name, drive_url, theusername){
           try{
             var collab_artist = "";
             var original_artist = "";
@@ -933,7 +960,7 @@ app.post('/trackcreate', (req, res, next) => {
 
             await conquerie.end(db);
 
-            res.render('trackcrud', { msg: "Track Created!", msg2: "" });
+            res.render('trackcrud', { msg: "Track Created!", msg2: "", theusername: theusername });
 
           }catch(err){
             console.log(err);
@@ -941,7 +968,7 @@ app.post('/trackcreate', (req, res, next) => {
           }
       }//end async
 
-      storeFormResults(track_name, artist_name, drive_url);
+      storeFormResults(track_name, artist_name, drive_url, theusername);
     }//end else
   
 });
@@ -952,12 +979,16 @@ app.post('/trackcreate', (req, res, next) => {
 app.post('/trackdelete', (req, res, next) => {
 
   var { track_name } = req.body;
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
 
   if(!track_name){
-            res.render('trackcrud', { msg: "", msg2: "Enter Track Name!" });
+            res.render('trackcrud', { msg: "", msg2: "Enter Track Name!", theusername: theusername });
   }else{
       //make queries, get all artist/track info and render artist page
-            async function deletyTrack(track_name){
+            async function deletyTrack(track_name, theusername){
                 try{
                     var db = createConnection();
 
@@ -967,12 +998,12 @@ app.post('/trackdelete', (req, res, next) => {
 
                     if(result.length == 0){
                         console.log("cant find track");
-                        res.render('trackcrud', { msg: "", msg2: "Track Not Found" });
+                        res.render('trackcrud', { msg: "", msg2: "Track Not Found", theusername: theusername });
                     }else{
 
                         let tresult = await trackquerie.deleteTrack(db, track_name);
                         console.log("Track Found");
-                        res.render('trackcrud', { msg: "", msg2: "Track Deleted!" });
+                        res.render('trackcrud', { msg: "", msg2: "Track Deleted!", theusername: theusername });
 
                     }
                     await conquerie.end(db);
@@ -984,7 +1015,7 @@ app.post('/trackdelete', (req, res, next) => {
 
             }
 
-            deletyTrack(track_name);
+            deletyTrack(track_name, theusername);
 
     }
 
@@ -996,12 +1027,16 @@ app.post('/trackdelete', (req, res, next) => {
 app.post('/usercreate', (req, res, next) => {
 
   var { username, password, access_level } = req.body;
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
 
   if(!username || !password || !access_level){
-            res.render('usercrud', { msg: "Fill in all Fields!", msg2: "" });
+            res.render('usercrud', { msg: "Fill in all Fields!", msg2: "", theusername: theusername });
     }else{
 
-      async function addyUser(username, password, access_level){
+      async function addyUser(username, password, access_level, theusername){
                 try{
 
                     var db = createConnection();
@@ -1011,12 +1046,12 @@ app.post('/usercreate', (req, res, next) => {
 
                     if(result.length > 0){
                         console.log("USER ALREADY EXISTY");
-                        res.render('usercrud', { msg: "USER ALREADY EXISTY", msg2: "" });
+                        res.render('usercrud', { msg: "USER ALREADY EXISTY", msg2: "", theusername: theusername });
                     }else{
                         let hashedpass = await has.hashPass(password);
                         let tresult = await userquerie.addUser(db, username, hashedpass, access_level);
 
-                        res.render('usercrud', { msg: "USER Added!", msg2: "" });
+                        res.render('usercrud', { msg: "USER Added!", msg2: "", theusername: theusername });
 
                     }
                     await conquerie.end(db);
@@ -1028,7 +1063,7 @@ app.post('/usercreate', (req, res, next) => {
 
             }
 
-            addyUser(username, password, access_level);
+            addyUser(username, password, access_level, theusername);
 
     }//end else
 
@@ -1040,12 +1075,16 @@ app.post('/usercreate', (req, res, next) => {
 app.post('/userdelete', (req, res, next) => {
 
   var { username } = req.body;
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
 
   if(!username){
-            res.render('usercrud', { msg: "", msg2: "Enter User Name!" });
+            res.render('usercrud', { msg: "", msg2: "Enter User Name!", theusername: theusername });
   }else{
       //make queries, get all artist/track info and render artist page
-            async function deletyUser(username){
+            async function deletyUser(username, theusername){
                 try{
 
                     var db = createConnection();
@@ -1055,12 +1094,12 @@ app.post('/userdelete', (req, res, next) => {
 
                     if(result.length == 0){
                         console.log("cant find user");
-                        res.render('usercrud', { msg: "", msg2: "User Not Found" });
+                        res.render('usercrud', { msg: "", msg2: "User Not Found", theusername: theusername });
                     }else{
 
                         let tresult = await userquerie.deleteUser(db, username);
                         console.log("User Found");
-                        res.render('usercrud', { msg: "", msg2: "User Deleted!" });
+                        res.render('usercrud', { msg: "", msg2: "User Deleted!", theusername: theusername });
 
                     }
                     await conquerie.end(db);
@@ -1072,7 +1111,7 @@ app.post('/userdelete', (req, res, next) => {
 
             }
 
-            deletyUser(username);
+            deletyUser(username, theusername);
 
     }
 
@@ -1084,15 +1123,18 @@ app.post('/userdelete', (req, res, next) => {
 app.post('/artistcreate', (req, res, next) => {
 
   var { artist_name, crew, country, info, face, sound, band, beat, insta } = req.body;
-
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
   if(!artist_name){
-            res.render('artcrud', { msg: "Fill in Artist Name", msg2: "" });
+            res.render('artcrud', { msg: "Fill in Artist Name", msg2: "", theusername: theusername });
     }else{
             if(!crew){ crew = ""; }
             if(!country){ country = ""; }
             if(!info){ info = ""; }
 
-            async function addyArtist(artist_name, crew, country, info){
+            async function addyArtist(artist_name, crew, country, info, theusername){
                 try{
 
                     var db = createConnection();
@@ -1101,11 +1143,11 @@ app.post('/artistcreate', (req, res, next) => {
                     let result = await artquerie.getArtistInfo(db, artist_name);
 
                     if(result.length > 0){
-                        res.render('artcrud', { msg: "Artist ALREADY EXISTY", msg2: "" });
+                        res.render('artcrud', { msg: "Artist ALREADY EXISTY", msg2: "", theusername: theusername });
                     }else{
 
                         let tresult = await artquerie.addArtist(db, artist_name, crew, country, info, face, sound, band, beat, insta);
-                        res.render('artcrud', { msg: "Artist Added!", msg2: "" });
+                        res.render('artcrud', { msg: "Artist Added!", msg2: "", theusername: theusername });
 
                     }
 
@@ -1118,7 +1160,7 @@ app.post('/artistcreate', (req, res, next) => {
 
             }
 
-            addyArtist(artist_name, crew, country, info);
+            addyArtist(artist_name, crew, country, info, theusername);
 
     }
 
@@ -1129,12 +1171,15 @@ app.post('/artistcreate', (req, res, next) => {
 app.post('/artistdelete', (req, res, next) => {
 
   var { artist_name } = req.body;
-
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
   if(!artist_name){
-            res.render('artcrud', { msg: "", msg2: "Enter Artist Name!" });
+            res.render('artcrud', { msg: "", msg2: "Enter Artist Name!", theusername: theusername });
   }else{
       //make queries, get all artist/track info and render artist page
-            async function deletyArtist(artist_name){
+            async function deletyArtist(artist_name, theusername){
                 try{
 
                     var db = createConnection();
@@ -1144,13 +1189,12 @@ app.post('/artistdelete', (req, res, next) => {
 
                     if(result.length == 0){
                         console.log("cant find artist");
-                        res.render('artcrud', { msg: "", msg2: "Artist Not Found" });
+                        res.render('artcrud', { msg: "", msg2: "Artist Not Found", theusername: theusername });
                     }else{
 
                         let tresult = await artquerie.deleteArtist(db, artist_name);
                         console.log("Artist Found");
-                        res.render('artcrud', { msg: "", msg2: "Artist Deleted!"
-                        });
+                        res.render('artcrud', { msg: "", msg2: "Artist Deleted!", theusername: theusername });
 
                     }
                     await conquerie.end(db);
@@ -1162,7 +1206,7 @@ app.post('/artistdelete', (req, res, next) => {
 
             }
 
-            deletyArtist(artist_name);
+            deletyArtist(artist_name, theusername);
 
     }
 
@@ -1715,14 +1759,18 @@ app.post('/favtunesearch',(req,res)=>{
 app.post('/req/submission', (req, res, next) => {
   
   var { artist_name, crew, country, info, link} = req.body;
-  //required: name, link, and image
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
 
+  //required: name, link, and image
   if (!req.files || Object.keys(req.files).length === 0) {
     console.log('No image was uploaded.');
-    res.render('submission',{ msg: "Please include Image!", msg2: "" });
+    res.render('submission',{ msg: "Please include Image!", msg2: "", theusername: theusername });
   }else{
       if (!artist_name || !link){
-        res.render('submission',{ msg: "Please include Artist Name and Download Link!", msg2: "" });
+        res.render('submission',{ msg: "Please include Artist Name and Download Link!", msg2: "", theusername: theusername });
       }else{
             let artist_img = req.files.img;
             
@@ -1730,7 +1778,7 @@ app.post('/req/submission', (req, res, next) => {
                 try{
                   await emailer.storeArtistImage(artist_img, artist_name);
                   await emailer.emailArtistForm(artist_name, crew, country, info, link, artist_img);
-                  res.render('submission',{ msg: "Form Submitted! Admins will begin adding your page!", msg2: "" });
+                  res.render('submission',{ msg: "Form Submitted! Admins will begin adding your page!", msg2: "", theusername: theusername });
                     
                 }catch(err){
                   console.log(err);
@@ -1750,16 +1798,20 @@ app.post('/req/submission', (req, res, next) => {
 app.post('/req/removal', (req, res, next) => {
   
   var { info } = req.body;
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
 
   var reason = "Artist/Track Removal Request";
 
   if (!info){
-    res.render('removal',{ msg: "Please include what you would like removed!" });
+    res.render('removal',{ msg: "Please include what you would like removed!", theusername: theusername });
   }else{
         async function makeEmail(reason, info){
             try{
               await emailer.standardEmail(reason, info);
-              res.render('removal',{ msg: "Form Submitted! We will remove the track/artist page ASAP!" });
+              res.render('removal',{ msg: "Form Submitted! We will remove the track/artist page ASAP!", theusername: theusername });
                 
             }catch(err){
               console.log(err);
@@ -1888,16 +1940,20 @@ app.post('/comments', (req, res, next) => {
 app.post('/req/tunereport', (req, res, next) => {
   
   var { info } = req.body;
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
 
   var reason = "Tune Is Broken/Missing Alert";
 
   if (!info){
-    res.render('tunereport',{ msg: "Please include the tune that is missing!" });
+    res.render('tunereport',{ msg: "Please include the tune that is missing!", theusername: theusername });
   }else{
         async function makeEmail(reason, info){
             try{
               await emailer.standardEmail(reason, info);
-              res.render('tunereport',{ msg: "Form Submitted! We will fix/reupload the broken tune!" });
+              res.render('tunereport',{ msg: "Form Submitted! We will fix/reupload the broken tune!", theusername: theusername });
                 
             }catch(err){
               console.log(err);
@@ -1914,12 +1970,16 @@ app.post('/req/tunereport', (req, res, next) => {
 app.post('/req/tracksubmission', (req, res, next) => {
   
   var { link } = req.body;
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
 
   var reason = "Track Submission (Non Artist)";
   var info = "";
 
   if (!link){
-    res.render('tracksubmission',{ msg: "Please include link!" });
+    res.render('tracksubmission',{ msg: "Please include link!", theusername: theusername });
   }else{
         info = `
         
@@ -1928,7 +1988,7 @@ app.post('/req/tracksubmission', (req, res, next) => {
         async function makeEmail(reason, info){
             try{
               await emailer.standardEmail(reason, info);
-              res.render('tracksubmission',{ msg: "Form Submitted! We will add tunes to Riddim Archive if approved!" });
+              res.render('tracksubmission',{ msg: "Form Submitted! We will add tunes to Riddim Archive if approved!", theusername: theusername });
                 
             }catch(err){
               console.log(err);
@@ -1945,16 +2005,20 @@ app.post('/req/tracksubmission', (req, res, next) => {
 app.post('/req/question', (req, res, next) => {
   
   var { info } = req.body;
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
 
   var reason = "Question/Comment";
 
   if (!info){
-    res.render('question',{ msg: "Please include your question/comment!" });
+    res.render('question',{ msg: "Please include your question/comment!", theusername: theusername });
   }else{
         async function makeEmail(reason, info){
             try{
               await emailer.standardEmail(reason, info);
-              res.render('question',{ msg: "Form Submitted! We will reply as soon as we can!" });
+              res.render('question',{ msg: "Form Submitted! We will reply as soon as we can!", theusername: theusername });
                 
             }catch(err){
               console.log(err);

@@ -455,10 +455,11 @@ app.get('/artist/:name', function(req,res){
             let thehearts = await trackquerie.getAllHeartsOnTrack(db, tracks[i].id);
             if(thehearts.length > 0){
               tracks[i].hearts = thehearts;
-              for (var z = 0; z < thehearts.length; z++) {
-                if(thehearts[z].user_id == user_id){
-                  tracks[i].userhearted = 1;
-                }
+              const isincluded = (element) => element.user_id == user_id;
+              var test = -1;
+              test = thehearts.findIndex(isincluded);
+              if (test != -1){
+                tracks[i].userhearted = 1;
               }
             }
 
@@ -1453,10 +1454,11 @@ app.post('/pagetracks', (req, res, next) => {
         let thehearts = await trackquerie.getAllHeartsOnTrack(db, tracks[i].id);
         if(thehearts.length > 0){
           tracks[i].hearts = thehearts;
-          for (var z = 0; z < thehearts.length; z++) {
-            if(thehearts[z].user_id == user_id){
-              tracks[i].userhearted = 1;
-            }
+          const isincluded = (element) => element.user_id == user_id;
+          var test = -1;
+          test = thehearts.findIndex(isincluded);
+          if (test != -1){
+            tracks[i].userhearted = 1;
           }
         }
 
@@ -1546,10 +1548,11 @@ app.post('/tunesearch',(req,res)=>{
             let thehearts = await trackquerie.getAllHeartsOnTrack(db, tracks[i].id);
             if(thehearts.length > 0){
               tracks[i].hearts = thehearts;
-              for (var z = 0; z < thehearts.length; z++) {
-                if(thehearts[z].user_id == user_id){
-                  tracks[i].userhearted = 1;
-                }
+              const isincluded = (element) => element.user_id == user_id;
+              var test = -1;
+              test = thehearts.findIndex(isincluded);
+              if (test != -1){
+                tracks[i].userhearted = 1;
               }
             }
 

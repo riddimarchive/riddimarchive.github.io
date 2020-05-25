@@ -123,7 +123,7 @@ block content
 								img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
 					.downloadbutton
 						img(id=`${index}/${track.track_name}`, class='commentbutton', border='2', alt='back', src='../Images/PageIMG/comments.png', height='50')
-						img(id=`${index}/${track.track_name}/${userid}`, class='heartbutton', border='0', alt='back', src=`../Images/PageIMG/heart${track.userhearted}.png`, height='50')
+						img(id=`${index}/${track.id}/${userid}/${track.userhearted}`, class='heartbutton', border='0', alt='back', src=`../Images/PageIMG/heart${track.userhearted}.png`, height='50')
 						div(id=`${index}/numheart`, class='numheart')= `${track.hearts.length}`
 					div(id=`result${index}`, class='downloadbuttonwithbold')
 					
@@ -138,6 +138,7 @@ block content
 			fixLargeText();
 			searchAjaxInit();
 			faveAjaxInit();
+			heartAjaxInit();
 			pageAjaxInit();
 			commentInit();
 			removeUnusedLinks();
@@ -182,6 +183,7 @@ block content
 					}
 				faveAjaxInit();
 				commentInit();
+				heartAjaxInit();
 				fixLargeText();
 				}//end if, reloading page elements within
 			
@@ -218,7 +220,6 @@ block content
 						var themsg = data.msg;
 						var theindex = data.index;
 						document.getElementById(`result${theindex}`).innerHTML = themsg;
-
 					},
 					error: function(){
 						console.log("Didn't Work");
@@ -228,6 +229,50 @@ block content
 				});//click event
 			});//class selector
 		}//fave ajax init
+
+		function heartAjaxInit() {
+			console.log("heart init");
+			document.querySelectorAll('.heartbutton').forEach(item => {
+				item.addEventListener('click', event => {
+					var thestring = item.id;
+					var splitty = thestring.split("/");
+					var index = splitty[0];
+					var track_id = splitty[1];
+					var user_id = splitty[2];
+					var hearted = splitty[3];
+					if(hearted == 0){
+						$.ajax({
+						url:'/addheart',
+						type: 'POST',
+						data: {
+							index: index,
+							track_id: track_id,
+							user_id: user_id
+						},
+						success: function(data){
+							//changing img
+							var theindex = data.index;
+							var heartimg = document.getElementById(`${theindex}/${data.track_id}/${data.user_id}/0`);
+							heartimg.setAttribute('src', '../Images/PageIMG/heart1.png');
+
+							//adding one to number
+							var test = document.getElementById(`${theindex}/numheart`);
+							var str = test.innerHTML.toString();
+							var theint = parseInt(str);
+							test.innerHTML = (theint + 1);
+
+						},
+						error: function(){
+							console.log("Didn't Work");
+						}
+						});//ajax
+					}else{
+						console.log("already Hearted!");
+					}
+
+				});//click event
+			});//class selector
+		}//heartinit
 
 		function pageAjaxInit() {
 			console.log("page Ajax Init");
@@ -278,6 +323,7 @@ block content
 							}
 							faveAjaxInit();
 							commentInit();
+							heartAjaxInit();
 							fixLargeText();
 						}//end do nothing if
 					},
@@ -324,8 +370,6 @@ block content
 							for (var i = 0; i < data.comments.length; i++) {
 								container.innerHTML += `<div id="fullcomment"><div id ="comuser">${data.comments[i].username}:</div><div id ="comcom">${data.comments[i].comment}</div><div id ="comtime">${data.comments[i].time}</div></div><div class ="space2"></div><br>`;
 							}
-
-
 
 							modal.style.display = "block";
 							span.onclick = function(modal) {
@@ -505,7 +549,7 @@ block content
 			commentimg.setAttribute('src', '../Images/PageIMG/comments.png');
 
 			var heartimg = document.createElement('img');
-			heartimg.setAttribute('id', `${i}/${tracks[i].track_name}/${currentuserid}`);
+			heartimg.setAttribute('id', `${i}/${tracks[i].id}/${currentuserid}/${tracks[i].userhearted}`);
 			heartimg.setAttribute('class', 'heartbutton');
 			heartimg.setAttribute('border', '0');
 			heartimg.setAttribute('alt', 'back');

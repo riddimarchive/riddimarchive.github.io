@@ -18,6 +18,7 @@ const commquerie = require('./js/comquery');
 const artquerie = require('./js/artquery');
 const trackquerie = require('./js/trackquery');
 const userquerie = require('./js/userquery');
+const heartquerie = require('./js/heartquery');
 const has = require('./js/hash');
 const emailer = require('./js/email');
 
@@ -465,7 +466,7 @@ app.get('/artist/:name', function(req,res){
 
           for (var i = 0; i < tracks.length; i++) {
 
-            let thehearts = await trackquerie.getAllHeartsOnTrack(db, tracks[i].id);
+            let thehearts = await heartquerie.getAllHeartsOnTrack(db, tracks[i].id);
             if(thehearts.length > 0){
               tracks[i].hearts = thehearts;
               const isincluded = (element) => element.user_id == user_id;
@@ -1495,7 +1496,7 @@ app.post('/pagetracks', (req, res, next) => {
 
       for (var i = 0; i < tracks.length; i++) {
 
-        let thehearts = await trackquerie.getAllHeartsOnTrack(db, tracks[i].id);
+        let thehearts = await heartquerie.getAllHeartsOnTrack(db, tracks[i].id);
         if(thehearts.length > 0){
           tracks[i].hearts = thehearts;
           const isincluded = (element) => element.user_id == user_id;
@@ -1589,7 +1590,7 @@ app.post('/tunesearch',(req,res)=>{
 
           for (var i = 0; i < tracks.length; i++) {
 
-            let thehearts = await trackquerie.getAllHeartsOnTrack(db, tracks[i].id);
+            let thehearts = await heartquerie.getAllHeartsOnTrack(db, tracks[i].id);
             if(thehearts.length > 0){
               tracks[i].hearts = thehearts;
               const isincluded = (element) => element.user_id == user_id;
@@ -1933,6 +1934,35 @@ app.post('/comments', (req, res, next) => {
 
     }
     commentsResponse(ind, track_name);
+});
+
+app.post('/addheart', (req, res, next) => {
+  var { index, track_id, user_id } = req.body;
+
+  if(user_id === "" || req.user.id === undefined){
+    var msg = "Please login to heart the tune!";
+    res.send({msg: msg, index: index});
+
+  //below else means user id is not blank
+  }else{
+    async function heartsAddResponse(index, track_id, user_id){
+      try{
+        var db = createConnection();
+        await conquerie.connect(db);
+
+        let result = await heartquerie.addHeart(db, track_id,user_id);
+
+        await conquerie.end(db);
+        res.send({msg: msg, index: index, hearted: 1, track_id: track_id, user_id: user_id});
+
+      }catch(err){
+      console.log(err);
+      res.render('error');
+    }
+
+  }
+  heartsAddResponse(index, track_id, user_id);
+  }
 });
 
 

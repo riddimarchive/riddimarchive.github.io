@@ -643,11 +643,21 @@ li.tunetexttotwsmaller{
   justify-content: center;
 }
 
+.downloadbutton:hover .child{
+  opacity: 0.3;
+  border: 2px visible black;
+}
+
 .downloadbuttonwithbold{
   display: flex;
   justify-content: center;
   font-weight: bold;
   font-size: large;
+}
+
+.downloadbuttonwithbold:hover .child{
+  opacity: 0.3;
+  border: 2px visible black;
 }
 
 .links{
@@ -777,6 +787,15 @@ li.tunetexttotwsmaller{
 
 .commentbutton{
   margin-left: 2em;
+}
+
+.commentbutton:hover{
+  opacity: 0.3;
+  border: 2px visible black;
+}
+.custombutton:hover{
+  opacity: 0.3;
+  border: 2px visible black;
 }
 
 .numheart{

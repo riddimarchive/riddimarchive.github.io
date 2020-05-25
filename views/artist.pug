@@ -71,11 +71,16 @@ block content
 	.middlecontain
 		.searchcontain2
 			.downloadbutton
-				img(id=`atod/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/athroughd.png', height='50')
-				img(id=`etoi/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/ethroughi.png', height='50')
-				img(id=`jtoo/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/jthrougho.png', height='50')
-				img(id=`ptot/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/pthrought.png', height='50')
-				img(id=`utoz/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/uthroughz.png', height='50')
+				.custombutton
+					img(id=`atod/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/athroughd.png', height='50')
+				.custombutton
+					img(id=`etoi/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/ethroughi.png', height='50')
+				.custombutton
+					img(id=`jtoo/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/jthrougho.png', height='50')
+				.custombutton
+					img(id=`ptot/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/pthrought.png', height='50')
+				.custombutton
+					img(id=`utoz/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/uthroughz.png', height='50')
 
 	- var x = tracks;
 	- var userid = currentuserid;
@@ -102,17 +107,19 @@ block content
 					.regaudio
 						audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none')
 					.downloadbutton
-						a(href=track.drive_url)
-							img(border='2', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
-						form(id=`form ${index}`, method='POST')
-							input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
-							
-							input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
-							
-							input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
-							
-							input#name.form-control(type='hidden', name='name', value=`${artist_name}`)
-							img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
+						.custombutton
+							a(href=track.drive_url)
+								img(border='2', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
+						.custombutton
+							form(id=`form ${index}`, method='POST')
+								input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
+								
+								input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
+								
+								input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
+								
+								input#name.form-control(type='hidden', name='name', value=`${artist_name}`)
+								img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
 					.downloadbutton
 						img(id=`${index}/${track.track_name}`, class='commentbutton', border='2', alt='back', src='../Images/PageIMG/comments.png', height='50')
 						img(id=`${index}/${track.track_name}/${userid}`, class='heartbutton', border='0', alt='back', src=`../Images/PageIMG/heart${track.userhearted}.png`, height='50')
@@ -516,10 +523,18 @@ block content
 			zeform.appendChild(artistnameinput);
 			zeform.appendChild(submitimage);
 
+			var custombuttondiv = document.createElement('div');
+			custombuttondiv.setAttribute('class', 'custombutton');
+
+			var custombuttondiv2 = document.createElement('div');
+			custombuttondiv2.setAttribute('class', 'custombutton');
+
 			//finishing download
 			downlink.appendChild(downimage);
-			downloaddiv.appendChild(downlink);
-			downloaddiv.appendChild(zeform);
+			custombuttondiv.appendChild(downlink);
+			custombuttondiv2.appendChild(zeform);
+			downloaddiv.appendChild(custombuttondiv);
+			downloaddiv.appendChild(custombuttondiv2);
 
 			//comment append
 			downloaddiv2.appendChild(commentimg);

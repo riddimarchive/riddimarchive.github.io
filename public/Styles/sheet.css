@@ -822,3 +822,11 @@ li.tunetexttotwsmaller{
   padding-bottom: 0em;
   margin-top: 0.5em;
 }
+
+#logouttext{
+  display: none;
+}
+
+#logouttext2{
+  display: none;
+}

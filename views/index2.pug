@@ -10,17 +10,17 @@ body
   script(src='https://code.jquery.com/jquery-3.5.0.min.js')
   ul.navbar
     li
-      a(href='../login') Login/Dashboard
-    li
       a(href='../create') Create Account
+    li
+      a(id='userspot', class=`${username}`)
+    li
+      a(id='logtext', href='../login') Login
     li
       a(href='../faq') FAQ
     li
+      a(id='logouttext', href='../logout') Log Out
+    li
       a(href='../') Go Back
-    li
-      a(href='../logout') Log Out
-    li
-      a(id='userspot', class=`${username}`)
     
   .header
     a.btn.btn-link(id='toplogo', href='../')
@@ -32,39 +32,57 @@ body
     p Site is Copyright and Created by: Justin Romprey aka Ernie Shmitz!
     ul.navbar
       li
-        a(href='../login') Login/Dashboard
-      li
         a(href='../create') Create Account
+      li
+        a(id='userspot2', class=`${username}`)
+      li
+        a(id='logtext2', href='../login') Login
       li
         a(href='../faq') FAQ
       li
+        a(id='logouttext2', href='../logout') Log Out
+      li
         a(href='../') Go Back
-      li
-        a(href='logout') Log Out
-      li
-        a(id='userspot2', class=`${username}`)
   script.
     $(document).ready(function() {
       console.log("Doc ready");
       addUsername();
     });
-
-    //- document.addEventListener("DOMContentLoaded", function(event) {
-    //-   console.log("Doc ready");
-    //-   addUsername();
-    //- });
-
+    
     function addUsername(){
       var topspot = document.getElementById('userspot');
+
       if(topspot.className !== undefined){
         if(topspot.className != ""){
-          topspot.innerHTML = `Current User: ${topspot.className}`;
+          topspot.innerHTML = `User: ${topspot.className}`;
+
+          var log = document.getElementById('logtext');
+          var logout = document.getElementById('logouttext');
+          log.innerHTML = 'Your Dashboard';
+          logout.style.display = 'block';
+
+        }else{
+          topspot.style.display = 'none';
         }
+      }else{
+        topspot.style.display = 'none';
       }
+
       var bottomspot = document.getElementById('userspot2');
       if(bottomspot.className !== undefined){
         if(bottomspot.className != ""){
-          bottomspot.innerHTML = `Current User: ${bottomspot.className}`;
+          bottomspot.innerHTML = `User: ${bottomspot.className}`;
+
+          var log2 = document.getElementById('logtext2');
+          var logout2 = document.getElementById('logouttext2');
+          log2.innerHTML = 'Your Dashboard';
+          logout2.style.display = 'block';
+          
+        }else{
+          bottomspot.style.display = 'none';
         }
+      }else{
+           bottomspot.style.display = 'none';
       }
+
     }

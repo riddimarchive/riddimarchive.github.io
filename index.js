@@ -1936,6 +1936,7 @@ app.post('/comments', (req, res, next) => {
     commentsResponse(ind, track_name);
 });
 
+//POST REQUEST - Add Heart
 app.post('/addheart', (req, res, next) => {
   var { index, track_id, user_id } = req.body;
 
@@ -1962,6 +1963,36 @@ app.post('/addheart', (req, res, next) => {
 
   }
   heartsAddResponse(index, track_id, user_id);
+  }
+});
+
+//POST REQUEST - Add Heart
+app.post('/removeheart', (req, res, next) => {
+  var { index, track_id, user_id } = req.body;
+
+  if(user_id === "" || req.user.id === undefined){
+    var msg = "Please login to heart the tune!";
+    res.send({msg: msg, index: index});
+
+  //below else means user id is not blank
+  }else{
+    async function heartsRemoveResponse(index, track_id, user_id){
+      try{
+        var db = createConnection();
+        await conquerie.connect(db);
+
+        let result = await heartquerie.deleteHeart(db, track_id,user_id);
+
+        await conquerie.end(db);
+        res.send({msg: msg, index: index, hearted: 0, track_id: track_id, user_id: user_id});
+
+      }catch(err){
+      console.log(err);
+      res.render('error');
+    }
+
+  }
+  heartsRemoveResponse(index, track_id, user_id);
   }
 });
 

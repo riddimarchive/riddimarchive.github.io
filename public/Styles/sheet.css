@@ -141,7 +141,7 @@ body {
 
 .fishchild img{
 	border: solid;
-  border-width: 2px;
+  border-width: 3px;
   border-color: #000;
   border-radius: 8px;
   justify-content: center;
@@ -153,7 +153,8 @@ a{
 }
 
 .fishchild img:hover{
-	opacity: 0.3;
+  border-color: greenyellow;
+  z-index: 1;
 }
 
 
@@ -349,13 +350,13 @@ padding-left: 0.2em;
   margin-right: 150px;
 }
 #fish div{
-  padding-left: 1.5em;
-  padding-bottom: 0.75em;
+  padding-left: 0.75em;
+  padding-bottom: 0.50em;
 }
 
 #fish2 div{
-  padding-left: 1.5em;
-  padding-bottom: 0.75em;
+  padding-left: 0.75em;
+  padding-bottom: 0.50em;
 }
 
 li.tunetext{
@@ -547,11 +548,6 @@ li.tunetextsmaller{
     font-size: x-large;
 }
 
-.faqmainbtn:hover{
-  opacity: 0.3;
-  border: 2px visible black;
-}
-
 .faqmainbtn form{
     display: flex;
     justify-content: center;
@@ -560,17 +556,22 @@ li.tunetextsmaller{
 
 .faqmainbtn form input{
     background: #c9e6ff;
-    border: 0;
     text-transform: uppercase;
     padding: 1em;
     font-size: 36px;
     margin-bottom: 0.3em;
+    border: solid 5px black;
 }
 
 .navbar{
   background-color:#3b5998;
   overflow:hidden;
   height: 60px;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
   margin: 0px 0px 0px 0px;
 }
 
@@ -578,6 +579,7 @@ li.tunetextsmaller{
   float:left;
   display:block;
   color:#f2f2f2;
+  z-index: 1000;
   text-align:center;
   padding:14px 16px;
   text-decoration:none;
@@ -594,6 +596,35 @@ li.tunetextsmaller{
   color:#000;
 }
 
+.navbarbottom{
+  background-color:#3b5998;
+  overflow:hidden;
+  height: 60px;
+  bottom: 0;
+  left: 0;
+  margin: 0px 0px 0px 0px;
+}
+
+.navbarbottom a{
+  float:left;
+  display:block;
+  color:#f2f2f2;
+  text-align:center;
+  padding:14px 16px;
+  text-decoration:none;
+  font-size: 30px;
+}
+
+.navbarbottom ul{
+  margin:8px 0 0 0;
+  list-style:none;
+}
+
+.navbarbottom a:hover{
+  background-color:#ddd;
+  color:#000;
+}
+
 p{
   padding-right: 100px;
 }
@@ -604,7 +635,7 @@ p{
 }
 
 #toplogo{
-  margin-top: 10px;
+  margin-top: 55px;
   margin-bottom: 10px;
 }
 
@@ -650,6 +681,7 @@ li.tunetexttotwsmaller{
 
 .downloadbutton:hover .child{
   opacity: 0.3;
+  z-index: 1;
   border: 2px visible black;
 }
 
@@ -687,11 +719,11 @@ li.tunetexttotwsmaller{
 #shufaudio{
   display: flex;
   justify-content: center;
+  z-index: 1;
 }
 
 #shuffleforward img:hover{
-  opacity: 0.3;
-  border: 2px visible black;
+  z-index: 1;
 }
 
 /* The Modal (background) */
@@ -792,6 +824,7 @@ li.tunetexttotwsmaller{
 
 .heartbutton:hover{
   opacity: 0.3;
+  z-index: 1;
   border: 2px visible black;
 }
 
@@ -800,12 +833,13 @@ li.tunetexttotwsmaller{
 }
 
 .commentbutton:hover{
-  opacity: 0.3;
-  border: 2px visible black;
+  z-index: 1;
+  border-color: greenyellow;
 }
-.custombutton:hover{
-  opacity: 0.3;
-  border: 2px visible black;
+
+.custombutton img:hover{
+  border-color: greenyellow;
+  z-index: 1;
 }
 
 .numheart{

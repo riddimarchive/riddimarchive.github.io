@@ -31,19 +31,19 @@ body
   hr
   footer 
     p Site is Copyright and Created by: Justin Romprey aka Ernie Shmitz!
-    ul.navbar
-      li
-        a(href='create') Create Account
-      li
-        a(id='userspot2', class=`${username}`)
-      li
-        a(id='logtext2', href='login') Login
-      li
-        a(href='faq') FAQ
-      li
-        a(id='logouttext2', href='logout') Log Out
-      li
-        a(href='../') Go Back
+  ul.navbarbottom
+    li
+      a(href='create') Create Account
+    li
+      a(id='userspot2', class=`${username}`)
+    li
+      a(id='logtext2', href='login') Login
+    li
+      a(href='faq') FAQ
+    li
+      a(id='logouttext2', href='logout') Log Out
+    li
+      a(href='../') Go Back
   script.
     $(document).ready(function() {
       console.log("Doc ready");

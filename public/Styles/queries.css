@@ -5,6 +5,7 @@
   
     #toplicontain{
         margin-top: 5.2em;
+        margin-right: 15em;
     }
 
     .navbarbottom{
@@ -13,6 +14,7 @@
   
     #bottomlicontain{
         margin-top: 5.2em;
+        margin-right: 15em;
     }
   
     .navbar a{
@@ -36,7 +38,27 @@
     }
   
 }
-  
+
+@media only screen and (max-width: 945px) {
+    #toplicontain{
+        margin-right: 7.5em;
+    }
+    #bottomlicontain{
+        margin-right: 7.5em;
+    }
+
+}
+
+@media only screen and (max-width: 850px) {
+    #toplicontain{
+        margin-right: 0em;
+    }
+    #bottomlicontain{
+        margin-right: 0em;
+    }
+
+}
+
 @media only screen and (max-width: 760px) {
     #toplicontain{
         flex-wrap: wrap;

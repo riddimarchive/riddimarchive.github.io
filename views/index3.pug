@@ -3,46 +3,51 @@ head
   meta(charset='UTF-8')
   link(rel='stylesheet' type='text/css' href='Styles/sheet.css')
   link(rel='icon', href='/favicon.ico')
+  link(href='https://fonts.googleapis.com/css?family=Roboto', rel='stylesheet')
+  link(rel='stylesheet' type='text/css' href='Styles/queries.css')
   title Riddim Archive
 
 body
   - var username = `${theusername}`;
   script(src='https://code.jquery.com/jquery-3.5.0.min.js')
-  ul.navbar
-    li
-      a(href='../create') Create Account
-    li
+  a.btn.btn-link(id='navbarhomebtn', href='../')
+  ul#topuserrect
+    li#topusertext
       a(id='userspot', class=`${username}`)
-    li
-      a(id='logtext', href='../login') Login
-    li
-      a(href='../faq') FAQ
-    li
-      a(id='logouttext', href='../logout') Log Out
-    li
-      a(href='../') Go Back
+  ul.navbar
+    #toplicontain(style.marginRight="0em")
+      li(id='spacerli')
+      li
+        a(href='../create') Create Account
+      li
+        a(id='logtext', href='../login') Login
+      li
+        a(href='../faq') FAQ
+      li
+        a(id='logouttext', href='../logout') Log Out
+      li
+        a(href='../') Go Back
     
   .header
-    a.btn.btn-link(id='toplogo', href='../')
-      img(src='Images/Logos/NewLogoTest2.png' alt='Images/PageIMG/fail.png' height='150' width='150')
+    #topspacer
   block content
   br
   hr
   footer 
     p Site is Copyright and Created by: Justin Romprey aka Ernie Shmitz!
   ul.navbarbottom
-    li
-      a(href='../create') Create Account
-    li
-      a(id='userspot2', class=`${username}`)
-    li
-      a(id='logtext2', href='../login') Login
-    li
-      a(href='../faq') FAQ
-    li
-      a(id='logouttext2', href='../logout') Log Out
-    li
-      a(href='../') Go Back
+    a.btn.btn-link(id='navbarhomebtnbottom', href='../')
+    #bottomlicontain
+      li
+        a(href='../create') Create Account
+      li
+        a(id='logtext2', href='../login') Login
+      li
+        a(href='../faq') FAQ
+      li
+        a(id='logouttext2', href='../logout') Log Out
+      li
+        a(href='../') Go Back
   script.
     $(document).ready(function() {
       console.log("Doc ready");
@@ -51,6 +56,7 @@ body
 
     function addUsername(){
       var topspot = document.getElementById('userspot');
+      var topbuttons = document.getElementById('toplicontain');
 
       if(topspot.className !== undefined){
         if(topspot.className != ""){
@@ -58,31 +64,24 @@ body
 
           var log = document.getElementById('logtext');
           var logout = document.getElementById('logouttext');
+          var log2 = document.getElementById('logtext2');
+          var logout2 = document.getElementById('logouttext2');
+          
+          var rect = document.getElementById('topuserrect');
+          var recttext = document.getElementById('topusertext');
+          var bottombuttons = document.getElementById('bottomlicontain');
+
           log.innerHTML = 'Your Dashboard';
           logout.style.display = 'block';
+          log2.innerHTML = 'Your Dashboard';
+          logout2.style.display = 'block';
 
+          rect.style.background = '#0C0E36';
+
+          recttext.style.display = 'block';
         }else{
-          topspot.style.display = 'none';
         }
       }else{
         topspot.style.display = 'none';
       }
-
-      var bottomspot = document.getElementById('userspot2');
-      if(bottomspot.className !== undefined){
-        if(bottomspot.className != ""){
-          bottomspot.innerHTML = `User: ${bottomspot.className}`;
-
-          var log2 = document.getElementById('logtext2');
-          var logout2 = document.getElementById('logouttext2');
-          log2.innerHTML = 'Your Dashboard';
-          logout2.style.display = 'block';
-          
-        }else{
-          bottomspot.style.display = 'none';
-        }
-      }else{
-           bottomspot.style.display = 'none';
-      }
-
     }

@@ -3,8 +3,6 @@ extends index3
 block content
 	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
 	- var usename = theusername;
-	.welcometxt
-		h1 Welcome #{usename}! Here are your favorite CHUNES:
 	- var y = thetracks;
 	- var userid = currentuserid;
 	- var message = msg;
@@ -48,6 +46,8 @@ block content
 								a(id='reload', href="https://www.riddimarchive.com/favorites")
 									img(border='2', alt='Reload', src='../Images/PageIMG/reload.png', height='50')
 						#labelgcenter #{message}
+	.welcometxt
+		h1 Welcome #{usename}! Here are your favorite CHUNES:
 	#ulcontain
 		each track, index in y
 			.uldiv(id=`uldiv ${index}`)

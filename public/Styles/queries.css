@@ -1,0 +1,62 @@
+@media only screen and (max-width: 1300px) {
+    .navbar{
+        height: 7.8em;
+    }
+  
+    #toplicontain{
+        margin-top: 5.2em;
+    }
+
+    .navbarbottom{
+        height: 7.8em;
+    }
+  
+    #bottomlicontain{
+        margin-top: 5.2em;
+    }
+  
+    .navbar a{
+        padding-top: 3px;
+        padding-bottom: 10px;
+        padding-left: 14px;
+        padding-right: 14px;
+        line-height: 23px;
+    }
+
+    .navbarbottom a{
+        padding-top: 3px;
+        padding-bottom: 0px;
+        padding-left: 14px;
+        padding-right: 14px;
+        line-height: 23px;
+    }
+
+    #topspacer{
+        margin-top: 140px;
+    }
+  
+}
+  
+@media only screen and (max-width: 760px) {
+    #toplicontain{
+        flex-wrap: wrap;
+    }
+
+    .navbar{
+        height: 9em;
+    }
+
+  
+}
+
+@media only screen and (max-width: 553px) {
+    #bottomlicontain{
+        flex-wrap: wrap;
+    }
+
+    .navbarbottom{
+        height: 9em;
+    }
+
+  
+}

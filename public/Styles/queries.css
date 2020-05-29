@@ -5,7 +5,7 @@
   
     #toplicontain{
         margin-top: 5.2em;
-        margin-right: 15em;
+        margin-right: 20em;
     }
 
     .navbarbottom{
@@ -14,7 +14,7 @@
   
     #bottomlicontain{
         margin-top: 5.2em;
-        margin-right: 15em;
+        margin-right: 20em;
     }
   
     .navbar a{
@@ -41,20 +41,20 @@
 
 @media only screen and (max-width: 945px) {
     #toplicontain{
-        margin-right: 7.5em;
+        margin-right: 15em;
     }
     #bottomlicontain{
-        margin-right: 7.5em;
+        margin-right: 15em;
     }
 
 }
 
 @media only screen and (max-width: 850px) {
     #toplicontain{
-        margin-right: 1.5em;
+        margin-right: 8em;
     }
     #bottomlicontain{
-        margin-right: 1.5em;
+        margin-right: 8em;
     }
 
 }
@@ -62,6 +62,10 @@
 @media only screen and (max-width: 760px) {
     #toplicontain{
         flex-wrap: wrap;
+        margin-right: 4em;
+    }
+    #bottomlicontain{
+        margin-right: 4em;
     }
 
     .navbar{
@@ -72,8 +76,14 @@
 }
 
 @media only screen and (max-width: 553px) {
+    #toplicontain{
+        flex-wrap: wrap;
+        margin-right: 4em;
+    }
+    
     #bottomlicontain{
         flex-wrap: wrap;
+        margin-right: 2em;
     }
 
     .navbarbottom{

@@ -88,16 +88,23 @@ block content
 	- var test = `${artist_name}`;
 
 	#myModal.modal
+		#modalspacer
 		.modal-content
 			img(class='close', border='2', alt='back', src='../Images/PageIMG/close.png', height='70')
 			.artisth1
 				h1#commenttitle Insert Track Name Here
-			form#cmtaddform(method='POST')
-					.downloadbutton
-						input#cmt(type='text', name='cmt' placeholder="Add Comment...")
-						input#extra.form-control(type='hidden', name='extra', value="")
-					div(id='cmtsubmit', class='custombutton')
-						img(border='2', alt='back', src='../../Images/PageIMG/addcmt.png', height='50')
+			.cmtcontainart
+				.cmtformart
+					form#cmtaddform(method='POST')
+						.downloadbutton
+							input#cmt(type='text', name='cmt' placeholder="Add Comment here...")
+							input#extra.form-control(type='hidden', name='extra', value=`${userid}`)
+						.downloadbutton
+							.custombutton
+								div(id='cmtsubmit', class='custombutton')
+									img(border='2', alt='back', src='../../Images/PageIMG/addcmt.png', height='50')
+				.downloadbutton
+					div(id=`cmtmessage`, class='downloadbuttonwithbold')
 			
 			br
 			div(id='allcomments')
@@ -374,14 +381,36 @@ block content
 			});//class selector
 		}//pageinit
 
-		function focusRestrict(event) {
-			document.addEventListener('focus', function(event) {
-				if (modalOpen && !modal.contains(event.target)) {
-					console.log("focusing");
-					event.stopPropagation();
-					modal.focus();
+		function commentformInit(){
+			console.log("commentform init");
+			var theform = $('#cmtaddform');
+			var thebutton = $('#cmtsubmit');
+			thebutton.click(function (ev) {
+				console.log("clicked button");
+				ev.preventDefault();
+				var extrainfoembed = document.getElementById("extra");
+				var str = extrainfoembed.value;
+				var splitty = str.split("/");
+				if (splitty[0] == ""){
+					document.getElementById('cmtmessage').innerHTML = "Please log in to add comment!";
+				}else{
+					$.ajax({
+						url:'../../addcomment',
+						type: 'POST',
+						data: theform.serialize(),
+						success: function(data){
+							document.getElementById('cmtmessage').innerHTML = "Comment Submitted";
+							var container = document.getElementById("allcomments");
+							var allpreviouscomments = container.innerHTML;
+							var newcommentstring = `<div class="newcomment"><div id="fullcomment"><div id ="comuser">${data.username}:</div><div id ="comcom">${data.cmt}</div><div id ="comtime">${data.cmttime}</div></div></div><div class ="space2"></div><br>`;
+							container.innerHTML = (newcommentstring + allpreviouscomments);
+						},
+						error: function(){
+						console.log("Didn't Work");
+						}
+					});//ajax
 				}
-			}, true);
+			});//submit
 		}
 
 
@@ -408,9 +437,15 @@ block content
 							var theindex = data.index;
 							document.getElementById(`result${theindex}`).innerHTML = themsg;
 						}else{
+							commentformInit();
 							var modal = document.getElementById("myModal");
 							var span = document.getElementsByClassName("close")[0];
 							var title = document.getElementById("commenttitle");
+
+							var extrainfoembed = document.getElementById("extra");
+							var uid = extrainfoembed.value;
+							extrainfoembed.setAttribute('value', `${uid}/${data.comments[0].track_id}`);
+
 							title.innerHTML = data.track_name;
 							var commentoutput = "";
 							var container = document.getElementById("allcomments");

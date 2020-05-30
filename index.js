@@ -1911,11 +1911,12 @@ app.post('/comments', (req, res, next) => {
         let commresult = await commquerie.getAllCommentsByTrackName(db, track_name);
           if(commresult.length > 0){
             for (var i = 0; i < commresult.length; i++) {
+              var timeunsplit = commresult[i].time;
               var thefullstring = commresult[i].time.toString();
               var str = thefullstring.split(" ");
               commresult[i].time = `${str[1]}/${str[2]}/${str[3]} - ${str[4]}`;
 
-              var row = { 'track_id': commresult[i].track_id, 'user_id': commresult[i].user_id, 'comment': commresult[i].comment, 'username': commresult[i].username, 'time': commresult[i].time }
+              var row = { 'track_id': commresult[i].track_id, 'user_id': commresult[i].user_id, 'comment': commresult[i].comment, 'username': commresult[i].username, 'time': commresult[i].time, 'timeunsplit': timeunsplit }
               comments.push(row);
             }
           }else{
@@ -1924,6 +1925,10 @@ app.post('/comments', (req, res, next) => {
           }
 
         await conquerie.end(db);
+        if(comments.length > 1){
+          comments.sort((a, b) => (a.timeunsplit < b.timeunsplit) ? 1 : -1);
+        }
+        
 
         res.send({index: ind, msg: msg, track_name: track_name, comments: comments, nocomments: nocomments});
 
@@ -1966,7 +1971,7 @@ app.post('/addheart', (req, res, next) => {
   }
 });
 
-//POST REQUEST - Add Heart
+//POST REQUEST - Remove Heart
 app.post('/removeheart', (req, res, next) => {
   var { index, track_id, user_id } = req.body;
 
@@ -1994,6 +1999,46 @@ app.post('/removeheart', (req, res, next) => {
   }
   heartsRemoveResponse(index, track_id, user_id);
   }
+});
+
+//POST REQUEST - Add Comment
+app.post('/addcomment', (req, res, next) => {
+  var { cmt, extra } = req.body;
+  var splitty = extra.split("/");
+  var user_id = splitty[0];
+  var track_id = splitty[1];
+
+  async function addCommentsResponse(cmt, track_id, user_id){
+    try{
+      var db = createConnection();
+      await conquerie.connect(db);
+
+      let usrname = await userquerie.getUsernamebyID(db, user_id);
+      var username = usrname[0].username;
+
+      let result = await commquerie.addComment(db, cmt, track_id, user_id, username);
+      let cmttimeandid = await commquerie.getCommentIDandTime(db, cmt, track_id, user_id);
+      if (cmttimeandid.length > 1){
+        console.log("Duplicate COmment from User");
+        cmttimeandid.sort((a, b) => (a.time < b.time) ? 1 : -1);
+      }
+
+      var thefullstring = cmttimeandid[0].time.toString();
+      var str = thefullstring.split(" ");
+      var cmttime = `${str[1]}/${str[2]}/${str[3]} - ${str[4]}`;
+      var cmtid = cmttimeandid[0].id;
+
+      await conquerie.end(db);
+      res.send({ cmt: cmt, cmttime: cmttime, cmtid: cmtid, track_id: track_id, user_id: user_id, username: username });
+
+      }catch(err){
+        console.log(err);
+        res.render('error');
+    }
+
+  }//end async
+  addCommentsResponse(cmt, track_id, user_id);
+
 });
 
 

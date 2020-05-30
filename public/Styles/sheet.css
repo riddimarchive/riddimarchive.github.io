@@ -105,8 +105,28 @@ body {
   box-sizing: border-box;
 }
 
+.searchformart{
+  border: black solid 3px;
+}
+
 .searchformart input[type=text], select {
   width: 100%;
+  padding: 20px 35px;
+  margin: 8px 0;
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.cmtformart{
+  border: black solid 3px;
+  padding-left: 10em;
+  padding-right: 10em;
+}
+
+.cmtformart input[type=text], select {
+  width: 75%;
   padding: 20px 35px;
   margin: 8px 0;
   display: flex;
@@ -163,10 +183,6 @@ a{
   border-width: 1px;
 }
 
-.searchformart{
-  border: black solid 3px;
-}
-
 #linksformart{
   border: black solid 3px;
 }
@@ -200,6 +216,14 @@ a{
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 20px;
+}
+
+.cmtcontainart{
+  background-color: deepskyblue;
+}
+
+.newcomment{
+  background-color: greenyellow;
 }
 
 #linkscontainart{
@@ -989,6 +1013,10 @@ li.tunetexttotwsmaller{
 
 #topspacer{
   margin-top: 70px;
+}
+
+#modalspacer{
+  margin-top: 0px;
 }
 
 #spacerli{

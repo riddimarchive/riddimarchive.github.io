@@ -2,6 +2,10 @@
     .navbar{
         height: 7.8em;
     }
+
+    #modalspacer{
+        margin-top: 60px;
+    }
   
     #toplicontain{
         margin-top: 5.2em;
@@ -70,6 +74,10 @@
 
     .navbar{
         height: 9em;
+    }
+
+    #modalspacer{
+        margin-top: 75px;
     }
 
   

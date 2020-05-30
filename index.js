@@ -508,6 +508,80 @@ app.get('/artist/:name', function(req,res){
 
 });
 
+//APP GET - SHARE LINK RESPONSE
+app.get('/share/:id', function(req,res){
+
+  var track_id = req.params.id;
+  var user_id = "";
+  var theusername = "";
+
+  if(req.user !== undefined){
+    user_id = req.user.id;
+    theusername = req.user.username;
+  }
+
+  //res.send(`Track id is ${track_id}, User Id is ${user_id}, Username is ${theusername}`);
+
+  async function sharelinkResponse(track_id){
+      try{
+          var tracks = [];
+          var msg = "";
+
+          var db = createConnection();
+          await conquerie.connect(db);
+          //get the track here
+
+          let tresult = await trackquerie.getTrackbyID(db, track_id);
+          if (tresult.length > 0){
+            var row = { 'track_name':tresult[0].track_name, 'artist_name':tresult[0].artist_name, 'drive_url': tresult[0].drive_url, 'artist_id': tresult[0].artist_id, 'id': tresult[0].id, 'collab_artist': tresult[0].collab_artist, 'original_artist': tresult[0].original_artist, 'is_remix': tresult[0].is_remix, 'is_collab': tresult[0].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+            tracks.push(row);
+
+            let thehearts = await heartquerie.getAllHeartsOnTrack(db, tracks[0].id);
+              if(thehearts.length > 0){
+                tracks[0].hearts = thehearts;
+                const isincluded = (element) => element.user_id == user_id;
+                var test = -1;
+                test = thehearts.findIndex(isincluded);
+                if (test != -1){
+                  tracks[0].userhearted = 1;
+                }
+              }
+  
+              if(tracks[0].is_remix != 1){
+                tracks[0].blank = ` - ${tracks[0].artist_name}`;
+              }
+              if(tracks[0].is_collab == 1){
+                tracks[0].blank = ` - ${tracks[0].artist_name}${tracks[0].collab_artist}`
+              }
+              if(tracks[0].is_collab != 1){
+                tracks[0].blank = ``;
+              }
+              if(tracks[0].is_remix == 1){
+                tracks[0].blank = ``;
+              }
+              await conquerie.end(db);
+              msg = "Track Found!";
+              res.render('share', { artist_name: tracks[0].artist_name, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
+              //res.send(`${tracks[0].artist_name}, ${tracks}, ${user_id}, ${theusername}, ${msg} hoorrray`);
+
+            }else{
+              //no track by that id is found
+              //Display not found page with link to home
+              await conquerie.end(db);
+              msg = "No Track Found";
+              //res.render('share', { artist_name: "", tracks: "", currentuserid: user_id, theusername: theusername, msg: msg });
+              //res.send(`${msg} booooo`);
+              res.render('error');
+            }
+            
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+  }
+  sharelinkResponse(track_id);
+});
+
 
 //GET REQUEST - REQUEST HANDLER
 app.get('/req/:page', function(req,res){

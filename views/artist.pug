@@ -107,11 +107,6 @@ block content
 			
 			br
 			div(id='allcomments')
-	
-	#myModal2.modal
-		.modal-content
-			img(class='close2', border='2', alt='back', src='../Images/PageIMG/close.png', height='70')
-			p No Comments!
 
 	#ulcontain
 		each track, index in x
@@ -439,6 +434,9 @@ block content
 
 				//turn off comment button on close
 				$('#cmtsubmit').off('click');
+				//clear comment message
+				var msg = document.getElementById("cmtmessage");
+				msg.innerHTML = "";
 			}
 
 			//click off comment window handle
@@ -458,6 +456,9 @@ block content
 					
 					//turn off comment button on close
 					$('#cmtsubmit').off('click');
+					//clear comment message
+					var msg = document.getElementById("cmtmessage");
+					msg.innerHTML = "";
 				}
 			}
 		}
@@ -510,7 +511,7 @@ block content
 
 				});//click event
 			});//class selector
-		}//fave ajax init
+		}//comment ajax init
 
 		function fixLargeText() {
 			console.log("large text init");

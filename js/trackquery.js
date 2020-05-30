@@ -17,6 +17,25 @@ function getTrackInfo(db, track_name){
 
 }
 
+function getTrackbyID(db, id){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT * FROM tracks WHERE id = ?`, [id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+
+}
+
 function getTracksOfTheWeek(db){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -616,6 +635,7 @@ function deleteTrack(db, track_name){
 
 module.exports = {
 	getTrackInfo,
+	getTrackbyID,
 	getTracksOfTheWeek,
 	getAllHeartsOnTrack,
 	getAllTracksFromArtist,

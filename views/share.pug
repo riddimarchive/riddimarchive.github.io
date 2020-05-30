@@ -1,0 +1,310 @@
+extends index2nobottom
+
+block content
+    script(src='https://code.jquery.com/jquery-3.5.0.min.js')
+    - var message = msg;
+    - var titley = tracks[0].track_name;
+    - var x = tracks;
+    - var userid = currentuserid;
+    - var test = `${artist_name}`;
+    .artisth1
+        h1#theh1 
+    
+    #ulcontainshare
+        each track, index in x
+            .uldiv(id=`${index}/uldiv`)
+                ul
+                    li.tunetextshare= `${track.original_artist}${track.track_name}${track.blank}`
+                    .regaudioshare
+                        audio(id='shareaudio', src=track.drive_url, type='audio/mpeg', controls='', preload='none')
+                    .downloadbutton
+                        .custombutton
+                            a(href=track.drive_url)
+                                img(border='2', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
+                        .custombutton
+                            form(id=`form ${index}`, method='POST')
+                                input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
+
+                                input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
+
+                                input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
+
+                                input#name.form-control(type='hidden', name='name', value=`${artist_name}`)
+                                img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
+                    .downloadbutton
+                        img(id=`${index}/${track.track_name}/${track.id}`, class='commentbutton', border='2', alt='back', src='../Images/PageIMG/comments.png', height='50')
+                        img(id=`${index}/${track.id}/${userid}/${track.userhearted}`, class='heartbutton', border='0', alt='back', src=`../Images/PageIMG/heart${track.userhearted}.png`, height='50')
+                        div(id=`${index}/numheart`, class='numheart')= `${track.hearts.length}`
+                    div(id=`result${index}`, class='downloadbuttonwithbold')
+                    
+    #myModal.modal
+        #modalspacer
+        .modal-content
+            img(class='close', border='2', alt='back', src='../Images/PageIMG/close.png', height='70')
+            .artisth1
+                h1#commenttitle Insert Track Name Here
+            .cmtcontainart
+                .cmtformart
+                    form#cmtaddform(method='POST')
+                        .downloadbutton
+                            input#cmt(type='text', name='cmt' placeholder="Add Comment here...")
+                            input#extra.form-control(type='hidden', name='extra', value=`${userid}`)
+                        .downloadbutton
+                            div(id='cmtsubmit', class='custombutton')
+                                img(border='2', alt='back', src='../../Images/PageIMG/addcmt.png', height='50')
+                .downloadbutton
+                    div(id=`cmtmessage`, class='downloadbuttonwithbold')
+            
+            br
+            div(id='allcomments')
+
+    script.
+        $(document).on("keydown", "form", function(event) { 
+            return event.key != "Enter";
+        });
+        
+        $(document).ready(function() {
+            console.log("Doc ready");
+            faveAjaxInit();
+            heartAjaxInit();
+            commentInit();
+        });
+
+        function faveAjaxInit() {
+            console.log("fave init");
+            document.querySelectorAll('.favebuttonclass').forEach(item => {
+                item.addEventListener('click', event => {
+                var theform = document.getElementById(`form ${item.id}`);
+                var tid = theform.elements["track_id"].value;
+                var t_name = theform.elements["favetrack_name"].value;
+                var uid = theform.elements["user_id"].value;
+                var a_name = theform.elements["name"].value;
+                var index = item.id;
+                $.ajax({
+                    url:`/artist/${a_name}`,
+                    type: 'POST',
+                    data: {
+                        track_id: tid,
+                        favetrack_name: t_name,
+                        user_id: uid,
+                        name: a_name,
+                        index: index
+                    },
+                    success: function(data){
+                        var themsg = data.msg;
+                        var theindex = data.index;
+                        document.getElementById(`result${theindex}`).innerHTML = themsg;
+                    },
+                    error: function(){
+                        console.log("Didn't Work");
+                    }
+                });//ajax
+                });//click event
+            });//class selector
+        }//fave ajax init
+
+        function heartAjaxInit() {
+            console.log("heart init");
+            document.querySelectorAll('.heartbutton').forEach(item => {
+                item.addEventListener('click', event => {
+                    var thestring = item.id;
+                    var splitty = thestring.split("/");
+                    var index = splitty[0];
+                    var track_id = splitty[1];
+                    var user_id = splitty[2];
+                    var hearted = splitty[3];
+                    if(user_id !== ""){
+                        if(hearted == 0){
+                            $.ajax({
+                                url:'/addheart',
+                                type: 'POST',
+                                data: {
+                                    index: index,
+                                    track_id: track_id,
+                                    user_id: user_id
+                                },
+                                success: function(data){
+                                    //changing img
+                                    var theindex = data.index;
+                                    var heartimg = document.getElementById(`${theindex}/${data.track_id}/${data.user_id}/0`);
+                                    heartimg.setAttribute('src', '../Images/PageIMG/heart1.png');
+                                    heartimg.setAttribute('id', `${theindex}/${data.track_id}/${data.user_id}/1`);
+                                    //adding one to number
+                                    var test = document.getElementById(`${theindex}/numheart`);
+                                    var str = test.innerHTML.toString();
+                                    var theint = parseInt(str);
+                                    test.innerHTML = (theint + 1);
+                                },
+                                error: function(){
+                                    console.log("Didn't Work");
+                                }
+                            });//ajax
+                        }else{
+                            $.ajax({
+                                url:'/removeheart',
+                                type: 'POST',
+                                data: {
+                                    index: index,
+                                    track_id: track_id,
+                                    user_id: user_id
+                                },
+                                success: function(data){
+                                    //changing img
+                                    var theindex = data.index;
+                                    var heartimg = document.getElementById(`${theindex}/${data.track_id}/${data.user_id}/1`);
+                                    heartimg.setAttribute('src', '../Images/PageIMG/heart0.png');
+                                    heartimg.setAttribute('id', `${theindex}/${data.track_id}/${data.user_id}/0`);
+                                    //adding one to number
+                                    var test = document.getElementById(`${theindex}/numheart`);
+                                    var str = test.innerHTML.toString();
+                                    var theint = parseInt(str);
+                                    test.innerHTML = (theint - 1);
+                                },
+                                error: function(){
+                                    console.log("Didn't Work");
+                                }
+                            });//ajax
+                        }
+                    }else{
+                        document.getElementById(`result${index}`).innerHTML = "Please Login to Like Tune!";
+                    }
+
+                });//click event
+            });//class selector
+        }//heartinit
+
+        function commentformInit(){
+            console.log("commentform init");
+            var theform = $('#cmtaddform');
+            var thebutton = $('#cmtsubmit');
+            thebutton.click(function (ev) {
+                console.log("clicked button");
+                ev.preventDefault();
+                var extrainfoembed = document.getElementById("extra");
+                var str = extrainfoembed.value;
+                var splitty = str.split("/");
+                if (splitty[0] == ""){
+                    document.getElementById('cmtmessage').innerHTML = "Please log in to add comment!";
+                }else{
+                    $.ajax({
+                        url:'../../addcomment',
+                        type: 'POST',
+                        data: theform.serialize(),
+                        success: function(data){
+                            document.getElementById('cmtmessage').innerHTML = "Comment Submitted";
+                            var container = document.getElementById("allcomments");
+                            var allpreviouscomments = container.innerHTML;
+                            var newcommentstring = `<div class="newcomment"><div id="fullcomment"><div id ="comuser">${data.username}:</div><div id ="comcom">${data.cmt}</div><div id ="comtime">${data.cmttime}</div></div></div><div class ="space2"></div><br>`;
+                            container.innerHTML = (newcommentstring + allpreviouscomments);
+                            allpreviouscomments = "";
+                            newcommentstring = "";
+                        },
+                        error: function(){
+                        console.log("Didn't Work");
+                        }
+                    });//ajax
+                }
+            });//submit
+        }
+              
+        function activateModal(modal, span){
+            //made modal visible and fix body doc position
+            modal.setAttribute('tabindex', '0');
+            var bod = document.body;
+            bod.style.top = `-${window.scrollY}px`;
+            bod.style.position = "fixed";
+            modal.style.display = "block";
+            modal.focus();
+
+            //close button handle
+            span.onclick = function(modal) {
+                var modal2 = document.getElementById("myModal");
+                var container = document.getElementById("allcomments");
+                container.innerHTML = "";
+                modal2.style.display = "none";
+
+                //return body to normal
+                var bod = document.body;
+                const scrollY = bod.style.top;
+                bod.style.position = '';
+                bod.style.top = '';
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
+
+                //turn off comment button on close
+                $('#cmtsubmit').off('click');
+                //clear comment message
+                var msg = document.getElementById("cmtmessage");
+                msg.innerHTML = "";
+            }
+
+            //click off comment window handle
+            window.onclick = function(event) {
+                var modal3 = document.getElementById("myModal");
+                if (event.target == modal3) {
+                    modal3.style.display = "none";
+                    var container = document.getElementById("allcomments");
+                    container.innerHTML = "";
+
+                    //return body to normal
+                    var bod = document.body;
+                    const scrollY = bod.style.top;
+                    bod.style.position = '';
+                    bod.style.top = '';
+                    window.scrollTo(0, parseInt(scrollY || '0') * -1);
+
+                    //turn off comment button on close
+                    $('#cmtsubmit').off('click');
+                    //clear comment message
+                    var msg = document.getElementById("cmtmessage");
+                    msg.innerHTML = "";
+                }
+            }
+        }
+
+
+        function commentInit() {
+            console.log("comment init");
+            document.querySelectorAll('.commentbutton').forEach(item => {
+                item.addEventListener('click', event => {
+                var thestring = item.id;
+                var splitty = thestring.split("/");
+                var index = splitty[0];
+                var trackname = splitty[1];
+                var track_id = splitty[2];
+
+                $.ajax({
+                    url:`/comments`,
+                    type: 'POST',
+                    data: {
+                        ind: index,
+                        track_name: trackname,
+                        track_id: track_id
+                    },
+                    success: function(data){
+                            var container = document.getElementById("allcomments");
+                            container.innerHTML = "";
+                            console.log("loading form");
+                            var modal = document.getElementById("myModal");
+                            var span = document.getElementsByClassName("close")[0];
+                            var title = document.getElementById("commenttitle");
+                            title.innerHTML = data.track_name;
+                            var extrainfoembed = document.getElementById("extra");
+                            var uid = extrainfoembed.value.split("/");
+                            var theid = uid[0];
+                            extrainfoembed.setAttribute('value', `${theid}/${data.track_id}`);
+                            if(data.nocomments != 1){
+                                for (var i = 0; i < data.comments.length; i++) {
+                                    container.innerHTML += `<div id="fullcomment"><div id ="comuser">${data.comments[i].username}:</div><div id ="comcom">${data.comments[i].comment}</div><div id ="comtime">${data.comments[i].time}</div></div><div class ="space2"></div><br>`;
+                                }
+                            }
+                            commentformInit();
+                            activateModal(modal, span);
+                    },
+                    error: function(){
+                        console.log("Didn't Work");
+                    }
+                });//ajax
+
+                });//click event
+            });//class selector
+        }//comment ajax init

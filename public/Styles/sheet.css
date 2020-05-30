@@ -327,6 +327,11 @@ a{
   flex-wrap: wrap;
 }
 
+#ulcontainshare{
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+}
+
 #ulcontain2{
   display: flex;
 	flex-direction: row;
@@ -428,6 +433,13 @@ li.tunetext{
   font-size: x-large;
   text-align: center;
   width: 330px;
+}
+
+li.tunetextshare{
+  font-size: xx-large;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 0.2em;
 }
 
 li.tunetextsmaller{
@@ -663,13 +675,25 @@ li.tunetexttotwsmaller{
   width: 250px;
   height: 39px;
 }
+
 .totw{
   display: flex;
   justify-content: center;
 }
+
 .regaudio{
     display: flex;
     justify-content: center;
+}
+
+.regaudioshare{
+  display: flex;
+  justify-content: center;
+}
+
+#shareaudio{
+  width: 85%;
+  margin-bottom: 0.2em;
 }
 
 .downloadbutton{

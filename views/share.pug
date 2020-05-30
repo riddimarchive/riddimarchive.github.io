@@ -34,8 +34,13 @@ block content
                                 img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
                     .downloadbutton
                         img(id=`${index}/${track.track_name}/${track.id}`, class='commentbutton', border='2', alt='back', src='../Images/PageIMG/comments.png', height='50')
+
                         img(id=`${index}/${track.id}/${userid}/${track.userhearted}`, class='heartbutton', border='0', alt='back', src=`../Images/PageIMG/heart${track.userhearted}.png`, height='50')
                         div(id=`${index}/numheart`, class='numheart')= `${track.hearts.length}`
+
+                        input(id=`sharelink${track.id}`, class='sharelink', type='text', name='sharelink', value=`https://www.riddimarchive.com/share/${track.id}`)
+                        img(id=`${index}/${track.id}`, class='sharebutton', border='0', alt='back', src=`../Images/PageIMG/share.png`, height='50')
+                        
                     div(id=`result${index}`, class='downloadbuttonwithbold')
                     
     #myModal.modal
@@ -69,6 +74,7 @@ block content
             faveAjaxInit();
             heartAjaxInit();
             commentInit();
+            shareInit();
         });
 
         function setTitle(){
@@ -313,3 +319,22 @@ block content
                 });//click event
             });//class selector
         }//comment ajax init
+
+        function shareInit() {
+            console.log("share init");
+            document.querySelectorAll('.sharebutton').forEach(item => {
+                item.addEventListener('click', event => {
+                    var thestring = item.id;
+                    var splitty = thestring.split("/");
+                    var index = splitty[0];
+                    var track_id = splitty[1];
+
+                    var theinput = document.getElementById(`sharelink${track_id}`);
+                    theinput.select();
+                    theinput.setSelectionRange(0, 99999);
+                    document.execCommand("copy");
+
+                    document.getElementById(`result${index}`).innerHTML = "Share Link Copied!";
+                });//click event
+            });//class selector
+        }//shareInit

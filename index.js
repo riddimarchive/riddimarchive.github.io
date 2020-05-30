@@ -1898,9 +1898,9 @@ app.post('/favorites', (req, res, next) => {
 //POST REQUEST - COMMENTS - gets comments for a track
 app.post('/comments', (req, res, next) => {
 
-  var { ind, track_name } = req.body;
+  var { ind, track_name, track_id } = req.body;
 
-  async function commentsResponse(ind, track_name){
+  async function commentsResponse(ind, track_name, track_id){
     try{
         var comments = [];
         var nocomments = 0;
@@ -1928,9 +1928,7 @@ app.post('/comments', (req, res, next) => {
         if(comments.length > 1){
           comments.sort((a, b) => (a.timeunsplit < b.timeunsplit) ? 1 : -1);
         }
-        
-
-        res.send({index: ind, msg: msg, track_name: track_name, comments: comments, nocomments: nocomments});
+        res.send({index: ind, msg: msg, track_name: track_name, track_id: track_id, comments: comments, nocomments: nocomments});
 
       }catch(err){
         console.log(err);
@@ -1938,7 +1936,7 @@ app.post('/comments', (req, res, next) => {
       }
 
     }
-    commentsResponse(ind, track_name);
+    commentsResponse(ind, track_name, track_id);
 });
 
 //POST REQUEST - Add Heart

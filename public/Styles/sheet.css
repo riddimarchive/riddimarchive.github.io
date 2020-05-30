@@ -173,8 +173,39 @@ a{
 }
 
 .fishchild img:hover{
-  border-color: greenyellow;
   z-index: 1;
+}
+
+.imgwrap:hover .imgdescription {
+  visibility: visible;
+  opacity: 1;
+}
+
+.imgwrap{
+  display: flex;
+  justify-content: center;
+}
+
+.imgdescription {
+  font-weight: bold;
+  margin: 0;
+  background: rgba(29, 106, 154, 0.92);
+  border: solid greenyellow 3px;
+  border-radius: 1em;
+  color: white;
+  font-size: x-large;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 20;
+  padding-top: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 2em;
+  margin-top: 3em;
+  width: 150px;
 }
 
 

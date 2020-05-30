@@ -126,7 +126,9 @@ block content
       each artist in x
         .fishchild
           a(href=`artist/${artist.artist_name}`)
-            img(src=`Images/Logos/${artist.artist_name}.jpg` alt="ADD ARTIST IMG HERE" height='275' width='275')
+            .imgwrap
+              p.imgdescription=`${artist.artist_name}`
+              img(src=`Images/Logos/${artist.artist_name}.jpg` alt="ADD ARTIST IMG HERE" height='275' width='275')
   #fishcontain2
     #fish2
 
@@ -144,6 +146,41 @@ block content
       pageAjaxInit();
       playInit();
     });
+
+    function appendArtistList(list){
+      for (var i = 0; i < list.length; i++){
+        //set container, everything will added within
+        var thecontainer = document.getElementById('fish2');
+
+        var fishchilddiv = document.createElement('div');
+        fishchilddiv.setAttribute('class', 'fishchild');
+
+        var imgwrapdiv = document.createElement('div');
+        imgwrapdiv.setAttribute('class', 'imgwrap');
+
+        var popuptxt = document.createElement('p');
+        popuptxt.setAttribute('class', 'imgdescription');
+        popuptxt.innerHTML= `${list[i].artist_name}`;
+
+        //page link
+        var artistlink = document.createElement('a');
+        artistlink.setAttribute('href', `artist/${list[i].artist_name}`);
+
+        //artist image
+        var artistimage = document.createElement('img');
+        artistimage.setAttribute('alt', 'ADD ARTIST IMG HERE');
+        artistimage.setAttribute('src', `Images/Logos/${list[i].artist_name}.jpg`);
+        artistimage.setAttribute('height', '275');
+        artistimage.setAttribute('width', '275');
+
+        imgwrapdiv.appendChild(popuptxt);
+        imgwrapdiv.appendChild(artistimage);
+        artistlink.appendChild(imgwrapdiv);
+        fishchilddiv.appendChild(artistlink);
+        thecontainer.appendChild(fishchilddiv);
+
+      }//forloop list iterate
+    }
 
     function searchAjaxInit() {
         console.log("Search Ajax Init");
@@ -170,30 +207,7 @@ block content
               }
 
               var list = data.artists;
-              for (var i = 0; i < list.length; i++){
-                //set container, everything will added within
-                var thecontainer = document.getElementById('fish2');
-
-                var fishchilddiv = document.createElement('div');
-                fishchilddiv.setAttribute('class', 'fishchild');
-
-                //page link
-                var artistlink = document.createElement('a');
-                artistlink.setAttribute('href', `artist/${list[i].artist_name}`);
-
-                //artist image
-                var artistimage = document.createElement('img');
-                artistimage.setAttribute('alt', 'ADD ARTIST IMG HERE');
-                artistimage.setAttribute('src', `Images/Logos/${list[i].artist_name}.jpg`);
-                artistimage.setAttribute('height', '275');
-                artistimage.setAttribute('width', '275');
-
-                artistlink.appendChild(artistimage);
-                fishchilddiv.appendChild(artistlink);
-                thecontainer.appendChild(fishchilddiv);
-
-
-              }//forloop list iterate
+              appendArtistList(list);
             }//reloadlist
           },
           error: function(){
@@ -348,28 +362,7 @@ block content
                     }
 
                     var list = data.artists;
-                    for (var i = 0; i < list.length; i++){
-                      //set container, everything will added within
-                      var thecontainer = document.getElementById('fish2');
-
-                      var fishchilddiv = document.createElement('div');
-                      fishchilddiv.setAttribute('class', 'fishchild');
-
-                      //page link
-                      var artistlink = document.createElement('a');
-                      artistlink.setAttribute('href', `artist/${list[i].artist_name}`);
-
-                      //artist image
-                      var artistimage = document.createElement('img');
-                      artistimage.setAttribute('alt', 'ADD ARTIST IMG HERE');
-                      artistimage.setAttribute('src', `Images/Logos/${list[i].artist_name}.jpg`);
-                      artistimage.setAttribute('height', '275');
-                      artistimage.setAttribute('width', '275');
-
-                      artistlink.appendChild(artistimage);
-                      fishchilddiv.appendChild(artistlink);
-                      thecontainer.appendChild(fishchilddiv);
-                    }//forloop list iterate
+                    appendArtistList(list);
                 }
                 
             },

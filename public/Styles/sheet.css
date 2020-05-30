@@ -332,6 +332,23 @@ a{
   padding-right: 1.5em;
 }
 
+.sharelink{
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.sharebutton{
+  margin-left: 0.3em;
+}
+
+.sharebutton:hover{
+  opacity: 0.3;
+  z-index: 1;
+  border: 2px visible black;
+}
+
 #ulcontain2{
   display: flex;
 	flex-direction: row;
@@ -696,6 +713,10 @@ li.tunetexttotwsmaller{
   margin-bottom: 0.2em;
 }
 
+#sharepagetitle{
+  display: none;
+}
+
 .downloadbutton{
   display: flex;
   justify-content: center;
@@ -845,7 +866,7 @@ li.tunetexttotwsmaller{
 }
 
 .heartbutton{
-  margin-left: 2em;
+  margin-left: 0.7em;
 }
 
 .heartbutton:hover{
@@ -855,7 +876,7 @@ li.tunetexttotwsmaller{
 }
 
 .commentbutton{
-  margin-left: 2em;
+  margin-left: 0em;
 }
 
 .commentbutton:hover{

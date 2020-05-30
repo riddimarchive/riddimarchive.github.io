@@ -7,6 +7,7 @@ block content
     - var x = tracks;
     - var userid = currentuserid;
     - var test = `${artist_name}`;
+    div#sharepagetitle #{titley}
     .artisth1
         h1#theh1 
     
@@ -64,11 +65,15 @@ block content
         });
         
         $(document).ready(function() {
-            console.log("Doc ready");
+            setTitle();
             faveAjaxInit();
             heartAjaxInit();
             commentInit();
         });
+
+        function setTitle(){
+            document.title = document.getElementById("sharepagetitle").innerHTML;
+        }
 
         function faveAjaxInit() {
             console.log("fave init");

@@ -92,6 +92,13 @@ block content
 			img(class='close', border='2', alt='back', src='../Images/PageIMG/close.png', height='70')
 			.artisth1
 				h1#commenttitle Insert Track Name Here
+			form#cmtaddform(method='POST')
+					.downloadbutton
+						input#cmt(type='text', name='cmt' placeholder="Add Comment...")
+						input#extra.form-control(type='hidden', name='extra', value="")
+					div(id='cmtsubmit', class='custombutton')
+						img(border='2', alt='back', src='../../Images/PageIMG/addcmt.png', height='50')
+			
 			br
 			div(id='allcomments')
 	

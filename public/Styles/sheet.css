@@ -336,6 +336,9 @@ a{
   position: fixed;
   left: 0;
   top: 0;
+  width: 1px;
+  height: 1px;
+  font-size: 300px;
   z-index: 1;
 }
 

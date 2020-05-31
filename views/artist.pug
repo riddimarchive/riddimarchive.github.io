@@ -339,6 +339,7 @@ block content
 					theinput.select();
 					theinput.setSelectionRange(0, 99999);
 					document.execCommand("copy");
+					window.getSelection().removeAllRanges();
 
 					document.getElementById(`result${index}`).innerHTML = "Share Link Copied!";
 				});//click event

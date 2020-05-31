@@ -135,7 +135,7 @@ block content
 						img(id=`${index}/${track.id}/${userid}/${track.userhearted}`, class='heartbutton', border='0', alt='back', src=`../Images/PageIMG/heart${track.userhearted}.png`, height='50')
 						div(id=`${index}/numheart`, class='numheart')= `${track.hearts.length}`
 
-						input(id=`sharelink${track.id}`, class='sharelink', type='text', name='sharelink', value=`https://www.riddimarchive.com/share/${track.id}`)
+						input(id=`sharelink${track.id}`, class='sharelink', readonly="readonly", type='text', name='sharelink', value=`https://www.riddimarchive.com/share/${track.id}`)
 						img(id=`${index}/${track.id}`, class='sharebutton', border='0', alt='back', src=`../Images/PageIMG/share.png`, height='50')
 						
 					div(id=`result${index}`, class='downloadbuttonwithbold')
@@ -144,6 +144,14 @@ block content
 	script.
 		$(document).on("keydown", "form", function(event) { 
 			return event.key != "Enter";
+		});
+
+		$(document).bind("keydown keypress", function(e){
+			if( e.which == 8 ){ // 8 == backspace
+				if(e.target.readOnly ){
+					e.preventDefault();
+				}
+			}
 		});
 
 		$(document).ready(function() {

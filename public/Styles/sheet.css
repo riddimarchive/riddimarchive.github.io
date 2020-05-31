@@ -342,6 +342,7 @@ a{
   font-size: 300px;
   opacity: 0;
   z-index: 1;
+  -webkit-touch-callout:none;
 }
 
 .sharebutton{

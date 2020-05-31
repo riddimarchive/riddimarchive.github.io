@@ -33,10 +33,10 @@ block content
 							input#search_results(type='text', name='search_results' placeholder="Type Search here...")
 						.downloadbutton
 							label.boldtext(for='search_style') Search by Track
-							input#search_style.form-control(type='radio', name='search_style', checked="checked", value=0)
+							input#search_style0.form-control(type='radio', name='search_style', checked="checked", value=0)
 						.downloadbutton
 							label.boldtext(for='search_style') Search by Artist
-							input#search_style.form-control(type='radio', name='search_style', value=1)
+							input#search_style1.form-control(type='radio', name='search_style', value=1)
 						.downloadbutton
 							.custombutton
 								#test
@@ -46,6 +46,28 @@ block content
 								a(id='reload', href="https://www.riddimarchive.com/favorites")
 									img(border='2', alt='Reload', src='../Images/PageIMG/reload.png', height='50')
 						#labelgcenter #{message}
+
+	#myModal.modal
+		#modalspacer
+		.modal-content
+			img(class='close', border='2', alt='back', src='../Images/PageIMG/close.png', height='70')
+			.artisth1
+				h1#commenttitle Insert Track Name Here
+			.cmtcontainart
+				.cmtformart
+					form#cmtaddform(method='POST')
+						.downloadbutton
+							input#cmt(type='text', name='cmt' placeholder="Add Comment here...")
+							input#extra.form-control(type='hidden', name='extra', value=`${userid}`)
+						.downloadbutton
+							div(id='cmtsubmit', class='custombutton')
+								img(border='2', alt='back', src='../../Images/PageIMG/addcmt.png', height='50')
+				.downloadbutton
+					div(id=`cmtmessage`, class='downloadbuttonwithbold')
+			
+			br
+			div(id='allcomments')
+
 	.welcometxt
 		h1 Welcome #{usename}! Here are your favorite CHUNES:
 	#ulcontain
@@ -62,15 +84,23 @@ block content
 								img(border='2', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
 						.custombutton
 							form(id=`form ${index}`, method='POST')
-								input#track_id.form-control(type='hidden', name='track_id', value=`${track.id}`)
-
-								input#favetrack_name.form-control(type='hidden', name='favetrack_name', value=`${track.track_name}`)
-
-								input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
-
-								input#name.form-control(type='hidden', name='name', value=`${track.artist_name}`)
+								input.form-control(id=`track_id${index}`, type='hidden', name=`track_id${index}`, value=`${track.id}`)
+								
+								input.form-control(id=`favetrack_name${index}`, type='hidden', name=`favetrack_name${index}`, value=`${track.track_name}`)
+								
+								input.form-control(id=`user_id${index}`, type='hidden', name=`user_id${index}`, value=`${userid}`)
+								
+								input.form-control(id=`name${index}`, type='hidden', name=`name${index}`, value=`${artist_name}`)
 								img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/removefave.png', height='50')
-					div(id=`result${index}`)
+					.downloadbutton
+						img(id=`${index}/${track.track_name}/${track.id}`, class='commentbutton', border='2', alt='back', src='../Images/PageIMG/comments.png', height='50')
+
+						img(id=`${index}/${track.id}/${userid}/${track.userhearted}`, class='heartbutton', border='0', alt='back', src=`../Images/PageIMG/heart${track.userhearted}.png`, height='50')
+						div(id=`${index}/numheart`, class='numheart')= `${track.hearts.length}`
+
+						input(id=`sharelink${track.id}`, class='sharelink', readonly="readonly", type='text', name='sharelink', value=`https://www.riddimarchive.com/share/${track.id}`)
+						img(id=`${index}/${track.id}`, class='sharebutton', border='0', alt='back', src=`../Images/PageIMG/share.png`, height='50')
+					div(id=`result${index}`, class='downloadbuttonwithbold')
 	#ulcontain2
 	script.
 		$(document).on("keydown", "form", function(event) { 
@@ -82,6 +112,9 @@ block content
 			fixLargeText();
 			searchAjaxInit();
 			faveAjaxInit();
+			heartAjaxInit();
+			shareInit();
+			commentInit();
 		});
 
 		$(document).ajaxComplete(function () {
@@ -115,134 +148,12 @@ block content
 				}
 				var tracks = data.tracks;
 				for (var i = 0; i < tracks.length; i++){
-					//set container, everything will added within
-					var thecontainer = document.getElementById('ulcontain2');
-
-					var newdiv = document.createElement('div');
-					newdiv.setAttribute('class', 'uldiv');
-					newdiv.setAttribute('id', `uldiv ${i}`);
-
-					var newul = document.createElement('ul');
-					newul.setAttribute('id', `ul ${i}`);
-
-					//Track Name Line
-					var textli = document.createElement('li');
-					textli.setAttribute('class', 'tunetext');
-					textli.innerHTML = `${tracks[i].original_artist}${tracks[i].track_name}${tracks[i].blank}`;
-
-					//audio div
-					var audiodiv = document.createElement('div');
-					audiodiv.setAttribute('class', 'regaudio');
-
-					//audio element
-					var newaudio = document.createElement('audio');
-					newaudio.setAttribute('src', `${tracks[i].drive_url}`);
-					newaudio.setAttribute('type', 'audio/mpeg');
-					newaudio.setAttribute('controls', '');
-					newaudio.setAttribute('preload', 'none');
-					newaudio.setAttribute('id', `${i+10000}`);
-
-					//download div
-					var downloaddiv = document.createElement('div');
-					downloaddiv.setAttribute('class', 'downloadbutton');
-
-					//download link
-					var downlink = document.createElement('a');
-					downlink.setAttribute('href', `${tracks[i].drive_url}`);
-
-					//download image
-					var downimage = document.createElement('img');
-					downimage.setAttribute('border', '2');
-					downimage.setAttribute('alt', 'Download Tune');
-					downimage.setAttribute('src', '../Images/PageIMG/download2.png');
-					downimage.setAttribute('height', '50');
-
-					//custom div1
-					var customdiv = document.createElement('div');
-					customdiv.setAttribute('class', 'custombutton');
-
-					//custom div2
-					var customdiv2 = document.createElement('div');
-					customdiv2.setAttribute('class', 'custombutton');
-
-					//form
-					var zeform = document.createElement('form');
-					zeform.setAttribute('method', 'POST');
-					zeform.setAttribute('id', `form ${i}`);
-					zeform.setAttribute('action', `/favorites`);
-
-					//form inputs:
-					var trackidinput = document.createElement('input');
-					trackidinput.setAttribute('id', 'track_id');
-					trackidinput.setAttribute('class', 'form-control');
-					trackidinput.setAttribute('type', 'hidden');
-					trackidinput.setAttribute('name', 'track_id');
-					trackidinput.setAttribute('value', `${tracks[i].id}`);
-
-					var tracknameinput = document.createElement('input');
-					tracknameinput.setAttribute('id', 'favetrack_name');
-					tracknameinput.setAttribute('class', 'form-control');
-					tracknameinput.setAttribute('type', 'hidden');
-					tracknameinput.setAttribute('name', 'favetrack_name');
-					tracknameinput.setAttribute('value', `${tracks[i].track_name}`);
-
-					var useridinput = document.createElement('input');
-					useridinput.setAttribute('id', 'user_id');
-					useridinput.setAttribute('class', 'form-control');
-					useridinput.setAttribute('type', 'hidden');
-					useridinput.setAttribute('name', 'user_id');
-					useridinput.setAttribute('value', `${data.currentuserid}`);
-
-					var artistnameinput = document.createElement('input');
-					artistnameinput.setAttribute('id', 'name');
-					artistnameinput.setAttribute('class', 'form-control');
-					artistnameinput.setAttribute('type', 'hidden');
-					artistnameinput.setAttribute('name', 'name');
-					artistnameinput.setAttribute('value', `${tracks[i].artist_name}`);
-
-					var submitimage = document.createElement('img');
-					submitimage.setAttribute('id', `${i}`);
-					submitimage.setAttribute('class', 'favebuttonclass');
-					submitimage.setAttribute('border', '2');
-					submitimage.setAttribute('alt', 'back');
-					submitimage.setAttribute('height', '50');
-					submitimage.setAttribute('src', '../Images/PageIMG/removefave.png');
-
-
-					//finishing form
-					zeform.appendChild(trackidinput);
-					zeform.appendChild(tracknameinput);
-					zeform.appendChild(useridinput);
-					zeform.appendChild(artistnameinput);
-					zeform.appendChild(submitimage);
-
-					//finishing download
-					downlink.appendChild(downimage);
-					customdiv.appendChild(downlink);
-					customdiv2.appendChild(zeform);
-					downloaddiv.appendChild(customdiv);
-					downloaddiv.appendChild(customdiv2);
-					
-					//finishing audio
-					audiodiv.appendChild(newaudio);
-
-					//added label
-					var labeldiv = document.createElement('div');
-					labeldiv.setAttribute('id', `result${i}`);
-
-					//final appends
-					newul.appendChild(textli);
-					newul.appendChild(audiodiv);
-					newul.appendChild(downloaddiv);
-					newul.appendChild(labeldiv);
-					newdiv.appendChild(newul);
-
-					//insert into page
-					thecontainer.appendChild(newdiv);
-
-
+					appendNewTrackList(tracks, data.currentuserid, i);
 				}
 				faveAjaxInit();
+				commentInit();
+				shareInit();
+				heartAjaxInit();
 				fixLargeText();
 				}//end if, reloading page elements within
 			
@@ -262,11 +173,10 @@ block content
 			document.querySelectorAll('.favebuttonclass').forEach(item => {
 				item.addEventListener('click', event => {
 				var theform = document.getElementById(`form ${item.id}`);
-				console.log(theform);
-				var tid = theform.elements["track_id"].value;
-				var t_name = theform.elements["favetrack_name"].value;
-				var uid = theform.elements["user_id"].value;
-				var a_name = theform.elements["name"].value;
+				var tid = theform.elements[0].value;
+				var t_name = theform.elements[1].value;
+				var uid = theform.elements[2].value;
+				var a_name = theform.elements[3].value;
 				var index = item.id;
 
 				$.ajax({
@@ -304,4 +214,410 @@ block content
 						item.setAttribute('class', 'tunetextsmaller');
 					}
 			});
+		}
+
+		function heartAjaxInit() {
+			console.log("heart init");
+			document.querySelectorAll('.heartbutton').forEach(item => {
+				item.addEventListener('click', event => {
+					var thestring = item.id;
+					var splitty = thestring.split("/");
+					var index = splitty[0];
+					var track_id = splitty[1];
+					var user_id = splitty[2];
+					var hearted = splitty[3];
+					if(user_id !== ""){
+
+						if(hearted == 0){
+							$.ajax({
+								url:'/addheart',
+								type: 'POST',
+								data: {
+									index: index,
+									track_id: track_id,
+									user_id: user_id
+								},
+								success: function(data){
+									//changing img
+									var theindex = data.index;
+									var heartimg = document.getElementById(`${theindex}/${data.track_id}/${data.user_id}/0`);
+									heartimg.setAttribute('src', '../Images/PageIMG/heart1.png');
+									heartimg.setAttribute('id', `${theindex}/${data.track_id}/${data.user_id}/1`);
+
+									//adding one to number
+									var test = document.getElementById(`${theindex}/numheart`);
+									var str = test.innerHTML.toString();
+									var theint = parseInt(str);
+									test.innerHTML = (theint + 1);
+
+								},
+								error: function(){
+									console.log("Didn't Work");
+								}
+							});//ajax
+						}else{
+							$.ajax({
+								url:'/removeheart',
+								type: 'POST',
+								data: {
+									index: index,
+									track_id: track_id,
+									user_id: user_id
+								},
+								success: function(data){
+									//changing img
+									var theindex = data.index;
+									var heartimg = document.getElementById(`${theindex}/${data.track_id}/${data.user_id}/1`);
+									heartimg.setAttribute('src', '../Images/PageIMG/heart0.png');
+									heartimg.setAttribute('id', `${theindex}/${data.track_id}/${data.user_id}/0`);
+
+									//adding one to number
+									var test = document.getElementById(`${theindex}/numheart`);
+									var str = test.innerHTML.toString();
+									var theint = parseInt(str);
+									test.innerHTML = (theint - 1);
+								},
+								error: function(){
+									console.log("Didn't Work");
+								}
+							});//ajax
+						}
+					}else{
+						document.getElementById(`result${index}`).innerHTML = "Please Login to Like Tune!";
+					}
+
+				});//click event
+			});//class selector
+		}//heartinit
+
+		function shareInit() {
+			console.log("share init");
+			document.querySelectorAll('.sharebutton').forEach(item => {
+				item.addEventListener('click', event => {
+					var thestring = item.id;
+					var splitty = thestring.split("/");
+					var index = splitty[0];
+					var track_id = splitty[1];
+
+					var theinput = document.getElementById(`sharelink${track_id}`);
+					theinput.select();
+					theinput.setSelectionRange(0, 99999);
+					document.execCommand("copy");
+					window.getSelection().removeAllRanges();
+
+					document.getElementById(`result${index}`).innerHTML = "Share Link Copied!";
+				});//click event
+			});//class selector
+		}//shareInit
+
+		function commentformInit(){
+			console.log("commentform init");
+			var theform = $('#cmtaddform');
+			var thebutton = $('#cmtsubmit');
+			thebutton.click(function (ev) {
+				console.log("clicked button");
+				ev.preventDefault();
+				var extrainfoembed = document.getElementById("extra");
+				var str = extrainfoembed.value;
+				var splitty = str.split("/");
+				if (splitty[0] == ""){
+					document.getElementById('cmtmessage').innerHTML = "Please log in to add comment!";
+				}else{
+					$.ajax({
+						url:'../../addcomment',
+						type: 'POST',
+						data: theform.serialize(),
+						success: function(data){
+							document.getElementById('cmtmessage').innerHTML = "Comment Submitted";
+							var container = document.getElementById("allcomments");
+							var allpreviouscomments = container.innerHTML;
+							var newcommentstring = `<div class="newcomment"><div id="fullcomment"><div id ="comuser">${data.username}:</div><div id ="comcom">${data.cmt}</div><div id ="comtime">${data.cmttime}</div></div></div><div class ="space2"></div><br>`;
+							container.innerHTML = (newcommentstring + allpreviouscomments);
+							allpreviouscomments = "";
+							newcommentstring = "";
+						},
+						error: function(){
+						console.log("Didn't Work");
+						}
+					});//ajax
+				}
+			});//submit
+		}
+		
+		function activateModal(modal, span){
+			//made modal visible and fix body doc position
+			modal.setAttribute('tabindex', '0');
+			var bod = document.body;
+			bod.style.top = `-${window.scrollY}px`;
+			bod.style.position = "fixed";
+			modal.style.display = "block";
+			modal.focus();
+			
+			//close button handle
+			span.onclick = function(modal) {
+				var modal2 = document.getElementById("myModal");
+				var container = document.getElementById("allcomments");
+				container.innerHTML = "";
+				modal2.style.display = "none";
+				
+				//return body to normal
+				var bod = document.body;
+				const scrollY = bod.style.top;
+				bod.style.position = '';
+				bod.style.top = '';
+				window.scrollTo(0, parseInt(scrollY || '0') * -1);
+
+				//turn off comment button on close
+				$('#cmtsubmit').off('click');
+				//clear comment message
+				var msg = document.getElementById("cmtmessage");
+				msg.innerHTML = "";
+			}
+
+			//click off comment window handle
+			window.onclick = function(event) {
+				var modal3 = document.getElementById("myModal");
+				if (event.target == modal3) {
+					modal3.style.display = "none";
+					var container = document.getElementById("allcomments");
+					container.innerHTML = "";
+
+					//return body to normal
+					var bod = document.body;
+					const scrollY = bod.style.top;
+					bod.style.position = '';
+					bod.style.top = '';
+					window.scrollTo(0, parseInt(scrollY || '0') * -1);
+					
+					//turn off comment button on close
+					$('#cmtsubmit').off('click');
+					//clear comment message
+					var msg = document.getElementById("cmtmessage");
+					msg.innerHTML = "";
+				}
+			}
+		}
+
+
+		function commentInit() {
+			console.log("comment init");
+			document.querySelectorAll('.commentbutton').forEach(item => {
+				item.addEventListener('click', event => {
+				var thestring = item.id;
+				var splitty = thestring.split("/");
+				var index = splitty[0];
+				var trackname = splitty[1];
+				var track_id = splitty[2];
+
+				$.ajax({
+					url:`/comments`,
+					type: 'POST',
+					data: {
+						ind: index,
+						track_name: trackname,
+						track_id: track_id
+					},
+					success: function(data){
+							var container = document.getElementById("allcomments");
+							container.innerHTML = "";
+							console.log("loading form");
+							var modal = document.getElementById("myModal");
+							var span = document.getElementsByClassName("close")[0];
+							var title = document.getElementById("commenttitle");
+							title.innerHTML = data.track_name;
+
+							var extrainfoembed = document.getElementById("extra");
+							var uid = extrainfoembed.value.split("/");
+							var theid = uid[0];
+							extrainfoembed.setAttribute('value', `${theid}/${data.track_id}`);
+							
+							if(data.nocomments != 1){
+								for (var i = 0; i < data.comments.length; i++) {
+									container.innerHTML += `<div id="fullcomment"><div id ="comuser">${data.comments[i].username}:</div><div id ="comcom">${data.comments[i].comment}</div><div id ="comtime">${data.comments[i].time}</div></div><div class ="space2"></div><br>`;
+								}
+							}
+							commentformInit();
+							activateModal(modal, span);
+					},
+					error: function(){
+						console.log("Didn't Work");
+					}
+				});//ajax
+
+				});//click event
+			});//class selector
+		}//comment ajax init
+
+		function appendNewTrackList(tracks, currentuserid, i){
+
+			var thecontainer = document.getElementById('ulcontain2');
+
+			var newdiv = document.createElement('div');
+			newdiv.setAttribute('class', 'uldiv');
+			newdiv.setAttribute('id', id=`${i}/uldiv`);
+
+			var newul = document.createElement('ul');
+
+			//Track Name Line
+			var textli = document.createElement('li');
+			textli.setAttribute('class', 'tunetext');
+			textli.innerHTML = `${tracks[i].original_artist}${tracks[i].track_name}${tracks[i].blank}`
+
+			//audio div
+			var audiodiv = document.createElement('div');
+			audiodiv.setAttribute('class', 'regaudio');
+
+			//audio element
+			var newaudio = document.createElement('audio');
+			newaudio.setAttribute('src', `${tracks[i].drive_url}`);
+			newaudio.setAttribute('type', 'audio/mpeg');
+			newaudio.setAttribute('controls', '');
+			newaudio.setAttribute('preload', 'none');
+			newaudio.setAttribute('id', `${i+10000}`);
+
+			//download div
+			var downloaddiv = document.createElement('div');
+			downloaddiv.setAttribute('class', 'downloadbutton');
+
+			//download link
+			var downlink = document.createElement('a');
+			downlink.setAttribute('href', `${tracks[i].drive_url}`);
+
+			//download image
+			var downimage = document.createElement('img');
+			downimage.setAttribute('border', '2');
+			downimage.setAttribute('alt', 'Download Tune');
+			downimage.setAttribute('src', '../Images/PageIMG/download2.png');
+			downimage.setAttribute('height', '50');
+
+			//form
+			var zeform = document.createElement('form');
+			zeform.setAttribute('method', 'POST');
+			zeform.setAttribute('id', `form ${i}`);
+			zeform.setAttribute('action', `/artist/${tracks[i].artist_name}`);
+
+			//form inputs:
+			var trackidinput = document.createElement('input');
+			trackidinput.setAttribute('id', `track_id${i}`);
+			trackidinput.setAttribute('class', 'form-control');
+			trackidinput.setAttribute('type', 'hidden');
+			trackidinput.setAttribute('name', `track_id${i}`);
+			trackidinput.setAttribute('value', `${tracks[i].id}`);
+
+			var tracknameinput = document.createElement('input');
+			tracknameinput.setAttribute('id', `favetrack_name${i}`);
+			tracknameinput.setAttribute('class', 'form-control');
+			tracknameinput.setAttribute('type', 'hidden');
+			tracknameinput.setAttribute('name', `favetrack_name${i}`);
+			tracknameinput.setAttribute('value', `${tracks[i].track_name}`);
+
+			var useridinput = document.createElement('input');
+			useridinput.setAttribute('id', `user_id${i}`);
+			useridinput.setAttribute('class', 'form-control');
+			useridinput.setAttribute('type', 'hidden');
+			useridinput.setAttribute('name', `user_id${i}`);
+			useridinput.setAttribute('value', `${currentuserid}`);
+
+			var artistnameinput = document.createElement('input');
+			artistnameinput.setAttribute('id', `name${i}`);
+			artistnameinput.setAttribute('class', 'form-control');
+			artistnameinput.setAttribute('type', 'hidden');
+			artistnameinput.setAttribute('name', `name${i}`);
+			artistnameinput.setAttribute('value', `${tracks[i].artist_name}`);
+
+			var submitimage = document.createElement('img');
+			submitimage.setAttribute('id', `${i}`);
+			submitimage.setAttribute('class', 'favebuttonclass');
+			submitimage.setAttribute('border', '2');
+			submitimage.setAttribute('alt', 'back');
+			submitimage.setAttribute('height', '50');
+			submitimage.setAttribute('src', '../Images/PageIMG/addfave.png');
+
+			var downloaddiv2 = document.createElement('div');
+			downloaddiv2.setAttribute('class', 'downloadbutton');
+
+			var commentimg = document.createElement('img');
+			commentimg.setAttribute('id', `${i}/${tracks[i].track_name}/${tracks[i].id}`);
+			commentimg.setAttribute('class', 'commentbutton');
+			commentimg.setAttribute('border', '2');
+			commentimg.setAttribute('alt', 'back');
+			commentimg.setAttribute('height', '50');
+			commentimg.setAttribute('src', '../Images/PageIMG/comments.png');
+
+			var heartimg = document.createElement('img');
+			heartimg.setAttribute('id', `${i}/${tracks[i].id}/${currentuserid}/${tracks[i].userhearted}`);
+			heartimg.setAttribute('class', 'heartbutton');
+			heartimg.setAttribute('border', '0');
+			heartimg.setAttribute('alt', 'back');
+			heartimg.setAttribute('height', '50');
+			heartimg.setAttribute('src', `../Images/PageIMG/heart${tracks[i].userhearted}.png`);
+
+			var numheartdiv = document.createElement('div');
+			numheartdiv.setAttribute('id', `${i}/numheart`);
+			numheartdiv.setAttribute('class', 'numheart');
+			numheartdiv.innerHTML = `${tracks[i].hearts.length}`;
+
+			//finishing form
+			zeform.appendChild(trackidinput);
+			zeform.appendChild(tracknameinput);
+			zeform.appendChild(useridinput);
+			zeform.appendChild(artistnameinput);
+			zeform.appendChild(submitimage);
+
+			var custombuttondiv = document.createElement('div');
+			custombuttondiv.setAttribute('class', 'custombutton');
+
+			var custombuttondiv2 = document.createElement('div');
+			custombuttondiv2.setAttribute('class', 'custombutton');
+
+			var sharelink = document.createElement('input');
+			sharelink.setAttribute('id', `sharelink${tracks[i].id}`);
+			sharelink.setAttribute('class', 'sharelink');
+			sharelink.setAttribute('readonly', 'readonly');
+			sharelink.setAttribute('type', 'text');
+			sharelink.setAttribute('name', 'sharelink');
+			sharelink.setAttribute('value', `https://www.riddimarchive.com/share/${tracks[i].id}`);
+
+
+			var shareimg = document.createElement('img');
+			shareimg.setAttribute('id', `${i}/${tracks[i].id}`);
+			shareimg.setAttribute('class', 'sharebutton');
+			shareimg.setAttribute('border', '0');
+			shareimg.setAttribute('alt', 'back');
+			shareimg.setAttribute('src', '../Images/PageIMG/share.png');
+			shareimg.setAttribute('height', '50');
+
+			//finishing download
+			downlink.appendChild(downimage);
+			custombuttondiv.appendChild(downlink);
+			custombuttondiv2.appendChild(zeform);
+			downloaddiv.appendChild(custombuttondiv);
+			downloaddiv.appendChild(custombuttondiv2);
+
+			//comment append
+			downloaddiv2.appendChild(commentimg);
+			downloaddiv2.appendChild(heartimg);
+			downloaddiv2.appendChild(numheartdiv);
+			downloaddiv2.appendChild(sharelink);
+			downloaddiv2.appendChild(shareimg);
+
+			//finishing audio
+			audiodiv.appendChild(newaudio);
+
+			//added label
+			var labeldiv = document.createElement('div');
+			labeldiv.setAttribute('id', `result${i}`);
+			labeldiv.setAttribute('class', 'downloadbuttonwithbold');
+
+			//final appends
+			newul.appendChild(textli);
+			newul.appendChild(audiodiv);
+			newul.appendChild(downloaddiv);
+			newul.appendChild(downloaddiv2);
+			newul.appendChild(labeldiv);
+			newdiv.appendChild(newul);
+
+			//insert into page
+			thecontainer.appendChild(newdiv);
+
 		}

@@ -325,11 +325,23 @@ app.get('/favorites', (req, res) => {
         }else{
 
           for (var i = 0; i < result.length; i++) {
-            var row = { 'track_name': result[i].track_name, 'artist_name': result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "" }
+            var row = { 'track_name': result[i].track_name, 'artist_name': result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
             tracks.push(row);
           }
 
           for (var i = 0; i < tracks.length; i++) {
+
+            let thehearts = await heartquerie.getAllHeartsOnTrack(db, tracks[i].id);
+            if(thehearts.length > 0){
+              tracks[i].hearts = thehearts;
+              const isincluded = (element) => element.user_id == user_id;
+              var test = -1;
+              test = thehearts.findIndex(isincluded);
+              if (test != -1){
+                tracks[i].userhearted = 1;
+              }
+            }
+
             if(tracks[i].is_remix != 1){
               tracks[i].blank = ` - ${tracks[i].artist_name}`;
             }
@@ -1744,11 +1756,23 @@ app.post('/favtunesearch',(req,res)=>{
               }else{
 
                 for (var i = 0; i < sresult.length; i++) {
-                 var row = { 'track_name':sresult[i].track_name, 'artist_name':sresult[i].artist_name, 'drive_url': sresult[i].drive_url, 'id': sresult[i].id, 'collab_artist': sresult[i].collab_artist, 'original_artist': sresult[i].original_artist, 'is_remix': sresult[i].is_remix, 'is_collab': sresult[i].is_collab, 'blank': "" }
+                 var row = { 'track_name':sresult[i].track_name, 'artist_name':sresult[i].artist_name, 'drive_url': sresult[i].drive_url, 'id': sresult[i].id, 'collab_artist': sresult[i].collab_artist, 'original_artist': sresult[i].original_artist, 'is_remix': sresult[i].is_remix, 'is_collab': sresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
                  tracks.push(row);
                 }
 
                 for (var i = 0; i < tracks.length; i++) {
+
+                  let thehearts = await heartquerie.getAllHeartsOnTrack(db, tracks[i].id);
+                  if(thehearts.length > 0){
+                    tracks[i].hearts = thehearts;
+                    const isincluded = (element) => element.user_id == user_id;
+                    var test = -1;
+                    test = thehearts.findIndex(isincluded);
+                    if (test != -1){
+                      tracks[i].userhearted = 1;
+                    }
+                  }
+
                   if(tracks[i].is_remix != 1){
                     tracks[i].blank = ` - ${tracks[i].artist_name}`;
                   }
@@ -1784,18 +1808,30 @@ app.post('/favtunesearch',(req,res)=>{
               }else{
                 
                 for (var i = 0; i < sresult.length; i++) {
-                 var row = { 'track_name':sresult[i].track_name, 'artist_name':sresult[i].artist_name, 'drive_url': sresult[i].drive_url, 'id': sresult[i].id, 'collab_artist': sresult[i].collab_artist, 'original_artist': sresult[i].original_artist, 'is_remix': sresult[i].is_remix, 'is_collab': sresult[i].is_collab, 'blank': "" }
+                 var row = { 'track_name':sresult[i].track_name, 'artist_name':sresult[i].artist_name, 'drive_url': sresult[i].drive_url, 'id': sresult[i].id, 'collab_artist': sresult[i].collab_artist, 'original_artist': sresult[i].original_artist, 'is_remix': sresult[i].is_remix, 'is_collab': sresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
                  tracks.push(row);
                 }
 
                 if(collabsresult.length > 0){
                   for (var i = 0; i < collabsresult.length; i++) {
-                    var row = { 'track_name':collabsresult[i].track_name, 'artist_name':collabsresult[i].artist_name, 'drive_url': collabsresult[i].drive_url, 'id': collabsresult[i].id, 'collab_artist': collabsresult[i].collab_artist, 'original_artist': collabsresult[i].original_artist, 'is_remix': collabsresult[i].is_remix, 'is_collab': collabsresult[i].is_collab, 'blank': "" }
+                    var row = { 'track_name':collabsresult[i].track_name, 'artist_name':collabsresult[i].artist_name, 'drive_url': collabsresult[i].drive_url, 'id': collabsresult[i].id, 'collab_artist': collabsresult[i].collab_artist, 'original_artist': collabsresult[i].original_artist, 'is_remix': collabsresult[i].is_remix, 'is_collab': collabsresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
                     tracks.push(row);
                    }
                 }
 
                 for (var i = 0; i < tracks.length; i++) {
+
+                  let thehearts = await heartquerie.getAllHeartsOnTrack(db, tracks[i].id);
+                  if(thehearts.length > 0){
+                    tracks[i].hearts = thehearts;
+                    const isincluded = (element) => element.user_id == user_id;
+                    var test = -1;
+                    test = thehearts.findIndex(isincluded);
+                    if (test != -1){
+                      tracks[i].userhearted = 1;
+                    }
+                  }
+
                   if(tracks[i].is_remix != 1){
                     tracks[i].blank = ` - ${tracks[i].artist_name}`;
                   }

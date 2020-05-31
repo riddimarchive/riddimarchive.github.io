@@ -205,6 +205,7 @@ block content
 					}
 				faveAjaxInit();
 				commentInit();
+				shareInit();
 				heartAjaxInit();
 				fixLargeText();
 				}//end if, reloading page elements within
@@ -395,6 +396,7 @@ block content
 							}
 							faveAjaxInit();
 							commentInit();
+							shareInit();
 							heartAjaxInit();
 							fixLargeText();
 						}//end do nothing if
@@ -724,6 +726,23 @@ block content
 			var custombuttondiv2 = document.createElement('div');
 			custombuttondiv2.setAttribute('class', 'custombutton');
 
+			var sharelink = document.createElement('input');
+			sharelink.setAttribute('id', `sharelink${tracks[i].id}`);
+			sharelink.setAttribute('class', 'sharelink');
+			sharelink.setAttribute('readonly', 'readonly');
+			sharelink.setAttribute('type', 'text');
+			sharelink.setAttribute('name', 'sharelink');
+			sharelink.setAttribute('value', `https://www.riddimarchive.com/share/${tracks[i].id}`);
+
+
+			var shareimg = document.createElement('img');
+			shareimg.setAttribute('id', `${i}/${tracks[i].id}`);
+			shareimg.setAttribute('class', 'sharebutton');
+			shareimg.setAttribute('border', '0');
+			shareimg.setAttribute('alt', 'back');
+			shareimg.setAttribute('src', '../Images/PageIMG/share.png');
+			shareimg.setAttribute('height', '50');
+
 			//finishing download
 			downlink.appendChild(downimage);
 			custombuttondiv.appendChild(downlink);
@@ -735,6 +754,8 @@ block content
 			downloaddiv2.appendChild(commentimg);
 			downloaddiv2.appendChild(heartimg);
 			downloaddiv2.appendChild(numheartdiv);
+			downloaddiv2.appendChild(sharelink);
+			downloaddiv2.appendChild(shareimg);
 
 			//finishing audio
 			audiodiv.appendChild(newaudio);

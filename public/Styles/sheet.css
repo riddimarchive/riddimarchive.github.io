@@ -334,13 +334,14 @@ a{
 
 .sharelink{
   position: fixed;
-  left: 0;
-  top: 0;
+  right: 0;
+  bottom: 0;
   margin: 0;
   width: 150px;
   height: 30px;
   font-size: 300px;
   z-index: 1;
+  opacity: 0.01;
 }
 
 .sharebutton{

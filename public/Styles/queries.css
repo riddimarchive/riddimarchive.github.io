@@ -62,20 +62,18 @@
     audio{
         position: relative;
         width: 100%;
-        height: 200px;
-        margin: 0 0 0 2em;
+        margin: 1em 0 2em 0;
     }
 
     @supports (-webkit-touch-callout: none) {
         audio{
             position: relative;
             width: 100%;
-            height: 200px;
-            margin: 0 0 0 2em;
+            margin: 1em 0 2em 0;
         }
 
         #iosspacer{
-            margin-top: 5em;
+            margin-top: 3em;
         }
 
         .ulcontain{

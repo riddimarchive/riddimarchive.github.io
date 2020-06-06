@@ -468,7 +468,7 @@ audio{
 }
 
 li.tunetextshare{
-  font-size: xx-large;
+  font-size: -webkit-xxx-large;
   text-align: center;
   font-weight: bold;
   margin-bottom: 0.2em;

@@ -94,6 +94,12 @@
             margin: 1em 0 2em 0;
         }
 
+        #shareaudio{
+            position: relative;
+            width: 95%;
+            margin: 1em 0 2em 0;
+        }
+
         #iosspacer{
             margin-top: 3em;
         }

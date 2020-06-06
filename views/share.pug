@@ -17,7 +17,8 @@ block content
                 ul
                     li.tunetextshare= `${track.original_artist}${track.track_name}${track.blank}`
                     .regaudioshare
-                        audio(id='shareaudio', src=track.drive_url, type='audio/mpeg', controls='', preload='none')
+                        audio(id='shareaudio', src=track.drive_url, type='audio/mpeg', controls='', preload='preload')
+                    #iosspacer
                     .downloadbutton
                         .custombutton
                             a(href=track.drive_url)

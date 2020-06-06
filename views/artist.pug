@@ -33,6 +33,8 @@ block content
 		h1#theh1 #{artist_name}
 
 	.middlecontain
+		.artistpage
+			img(src=`../Images/Logos/${artist_name}.jpg`, alt="ADD ARTIST IMG HERE", height='275', width='275')
 		.searchcontainart
 			.searchformart
 				.downloadbutton
@@ -49,11 +51,10 @@ block content
 							a(id='reload', href=`https://www.riddimarchive.com/artist/${artist_name}`)
 								img(border='2', alt='Reload', src='../../Images/PageIMG/reloadt.png', height='50')
 					#labelgcenter3 #{message}
-		.artistpage
-			img(src=`../Images/Logos/${artist_name}.jpg`, alt="ADD ARTIST IMG HERE", height='275', width='275')
 		#linkscontainart
 			#linksformart
-				.bigboldtext2 Support The Artist!
+				.downloadbutton
+					.bigboldtext2 Support The Artist!
 				.downloadbutton
 					.links
 						a(id='thefb', class=`${fb}`, href=`${fb}`)

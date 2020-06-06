@@ -116,6 +116,7 @@ block content
 						li.tunetext= `${track.original_artist}${track.track_name}${track.blank}`
 					.regaudio
 						audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none')
+					#iosspacer
 					.downloadbutton
 						.custombutton
 							a(href=track.drive_url)
@@ -641,6 +642,10 @@ block content
 			newaudio.setAttribute('preload', 'none');
 			newaudio.setAttribute('id', `${i+10000}`);
 
+			//iosspacer
+			var iosspacediv = document.createElement('div');
+			iosspacediv.setAttribute('id', 'iosspacer');
+
 			//download div
 			var downloaddiv = document.createElement('div');
 			downloaddiv.setAttribute('class', 'downloadbutton');
@@ -778,6 +783,7 @@ block content
 			//final appends
 			newul.appendChild(textdiv);
 			newul.appendChild(audiodiv);
+			newul.appendChild(iosspacediv);
 			newul.appendChild(downloaddiv);
 			newul.appendChild(downloaddiv2);
 			newul.appendChild(labeldiv);

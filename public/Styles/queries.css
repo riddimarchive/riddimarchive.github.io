@@ -68,6 +68,10 @@
             height: 60px;
             margin: 0 0 0 2em;
         }
+        
+        #iosspacer{
+            margin-top: 4em;
+        }
 
         .ulcontain{
             padding-left: 1em;

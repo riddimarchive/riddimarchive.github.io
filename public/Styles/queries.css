@@ -66,6 +66,24 @@
             height: 100%;
             margin: 0 0 0 2em;
         }
+
+        .ulcontain{
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+          
+        #ulcontain{
+            display: block;
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+    
+        #ulcontain2{
+            display: block;
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+
     }
   
 }

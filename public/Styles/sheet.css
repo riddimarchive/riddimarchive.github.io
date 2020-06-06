@@ -481,7 +481,13 @@ li.tunetextsmaller{
   width: 330px;
 }
 
+#commentnextindex{
+  display: none;
+}
 
+#inpagecommentposted{
+  display: none;
+}
 
 .contactdiv{
   align-items: center;
@@ -831,6 +837,7 @@ li.tunetexttotwsmaller{
   color: #000;
   text-decoration: none;
   cursor: pointer;
+  border: solid greenyellow 3px;
 }
 
 /* The Close Button */
@@ -846,6 +853,7 @@ li.tunetexttotwsmaller{
   color: #000;
   text-decoration: none;
   cursor: pointer;
+  border: solid greenyellow 3px;
 }
 
 #allcomments{
@@ -853,7 +861,7 @@ li.tunetexttotwsmaller{
   flex-wrap: wrap;
 }
 
-#fullcomment{
+.fullcomment{
   padding-left: 15px;
   padding-right: 15px;
   padding-bottom: 15px;
@@ -864,26 +872,34 @@ li.tunetexttotwsmaller{
   border: black solid 3px;
 }
 
-#comuser{
+.comuser{
   font-size: 24px;
   margin-right: 1.1em;
-  margin-top: 0.25em;
   font-weight: bold;
+  margin-top: 0.65em;
 }
 
-#comcom{
+.comcom{
   font-size: 27px;
   font-weight: bold;
   text-decoration: underline;
   margin-right: 1.1em;
-  margin-top: 0.2em;
+  margin-top: 0.55em;
 }
 
-#comtime{
+.comtime{
   font-size: 24px;
   font-weight: bold;
   margin-right: 1.1em;
-  margin-top: 0.25em;
+  margin-top: 0.65em;
+}
+
+.cmtremovebutton{
+  margin-top: 0.45em;
+}
+
+.cmtremovebutton img:hover{
+  border: solid greenyellow 3px;
 }
 
 .heartbutton{

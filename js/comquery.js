@@ -77,6 +77,24 @@ function addComment(db, cmt, track_id, user_id, usrname){
 	return querypromise;
 }
 
+function deleteComment(db, username, thecomment, thetime){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`DELETE FROM comments WHERE username = ? AND comment = ? AND time = ? LIMIT 1`, [username, thecomment, thetime], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
 function getCommentIDandTime(db, cmt, track_id, user_id){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -100,5 +118,6 @@ module.exports = {
 	getAllCommentsByTrack,
 	getAllCommentsByTrackName,
 	addComment,
+	deleteComment,
 	getCommentIDandTime
 };

@@ -2024,7 +2024,46 @@ app.post('/comments', (req, res, next) => {
               var timeunsplit = commresult[i].time;
               var thefullstring = commresult[i].time.toString();
               var str = thefullstring.split(" ");
-              commresult[i].time = `${str[1]}/${str[2]}/${str[3]} - ${str[4]}`;
+              switch(str[1]) {
+                case "Jan":
+                  str[1] = "01";
+                  break;
+                case "Feb":
+                  str[1] = "02";
+                  break;
+                case "Mar":
+                  str[1] = "03";
+                  break;
+                case "Apr":
+                  str[1] = "04";
+                  break;
+                case "May":
+                  str[1] = "05";
+                  break;
+                case "Jun":
+                  str[1] = "06";
+                  break;
+                case "Jul":
+                  str[1] = "07";
+                  break;
+                case "Aug":
+                  str[1] = "08";
+                  break;
+                case "Sep":
+                  str[1] = "09";
+                  break;
+                case "Oct":
+                  str[1] = "10";
+                  break;
+                case "Nov":
+                  str[1] = "11";
+                  break;
+                case "Dec":
+                  str[1] = "12";
+                  break;
+              }
+
+              commresult[i].time = `${str[2]}/${str[1]}/${str[3]} - ${str[4]}`;
 
               var row = { 'track_id': commresult[i].track_id, 'user_id': commresult[i].user_id, 'comment': commresult[i].comment, 'username': commresult[i].username, 'time': commresult[i].time, 'timeunsplit': timeunsplit }
               comments.push(row);
@@ -2147,6 +2186,36 @@ app.post('/addcomment', (req, res, next) => {
   }//end async
   addCommentsResponse(cmt, track_id, user_id);
 
+});
+
+//POST REQUEST - Remove Comment
+app.post('/removecmt', (req, res, next) => {
+  var { index, username, thecomment, thetime } = req.body;
+
+  if(req.user === undefined){
+    var msg = "Please login to Remove comment!";
+    res.send({msg: msg, index: index});
+
+  //below else means user id is not blank
+  }else{
+    async function commentsRemoveResponse(index, username, thecomment, thetime){
+      try{
+        var db = createConnection();
+        await conquerie.connect(db);
+
+        let result = await commquerie.deleteComment(db, username, thecomment, thetime);
+
+        await conquerie.end(db);
+        res.send({msg: "Comment Deleted!", index: index});
+
+      }catch(err){
+      console.log(err);
+      res.render('error');
+    }
+
+  }
+  commentsRemoveResponse(index, username, thecomment, thetime);
+  }
 });
 
 

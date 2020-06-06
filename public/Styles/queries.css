@@ -80,6 +80,12 @@
             margin: 1em 0 2em 0;
         }
 
+        #shufaudio{
+            position: relative;
+            width: 100%;
+            margin: 1em 0 2em 0;
+        }
+
         #iosspacer{
             margin-top: 3em;
         }
@@ -179,4 +185,10 @@
     }
 
   
+}
+
+@supports not (-webkit-touch-callout: none) {
+    #iosspaceralwayson{
+        margin-top: 0em;
+    }
 }

@@ -137,3 +137,13 @@
 
   
 }
+
+@supports (-webkit-touch-callout: none) {
+    li.tunetext{
+        color: greenyellow;
+    }
+}
+  
+@supports not (-webkit-touch-callout: none) {
+    /* CSS for other than iOS devices */ 
+}

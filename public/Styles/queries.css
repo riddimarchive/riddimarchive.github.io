@@ -61,8 +61,10 @@
 
     @supports (-webkit-touch-callout: none) {
         audio{
+            position: relative;
             width: 100%;
             height: 70px;
+            margin: 0 0 0 0.5em;
         }
     }
   

@@ -65,6 +65,14 @@
         margin: 1em 0 2em 0;
     }
 
+    li.tunetext {
+        font-size: xx-large;
+    }
+
+    #theh1 {
+        font-size: xx-large;
+    }
+
     @supports (-webkit-touch-callout: none) {
         audio{
             position: relative;

@@ -58,10 +58,11 @@
         padding-left: 10em;
         padding-right: 10em;
     }
-    
+
     @supports (-webkit-touch-callout: none) {
         audio{
             width: 100%;
+            height: 70px;
         }
     }
   

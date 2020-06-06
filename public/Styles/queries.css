@@ -59,18 +59,23 @@
         padding-right: 10em;
     }
 
+    audio{
+        position: relative;
+        width: 100%;
+        height: 200px;
+        margin: 0 0 0 2em;
+    }
+
     @supports (-webkit-touch-callout: none) {
         audio{
             position: relative;
-            object-fit: none;
-            object-position: fixed;
             width: 100%;
-            height: 60px;
+            height: 200px;
             margin: 0 0 0 2em;
         }
-        
+
         #iosspacer{
-            margin-top: 4em;
+            margin-top: 5em;
         }
 
         .ulcontain{
@@ -168,8 +173,4 @@
     }
 
   
-}
-  
-@supports not (-webkit-touch-callout: none) {
-    /* CSS for other than iOS devices */ 
 }

@@ -66,11 +66,11 @@
     }
 
     li.tunetext {
-        font-size: xx-large;
+        font-size: -webkit-xxx-large;
     }
 
     #theh1 {
-        font-size: xx-large;
+        font-size: -webkit-xxx-large;
     }
 
     .middlecontain{

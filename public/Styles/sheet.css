@@ -457,7 +457,7 @@ padding-left: 0.2em;
 }
 
 li.tunetext{
-  font-size: x-large;
+  font-size: xx-large;
   text-align: center;
   width: 330px;
 }
@@ -475,7 +475,7 @@ li.tunetextshare{
 }
 
 li.tunetextsmaller{
-  font-size: large;
+  font-size: x-large;
   text-align: center;
   word-wrap: normal;
   width: 330px;

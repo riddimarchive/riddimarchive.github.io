@@ -74,10 +74,11 @@ block content
 		each track, index in y
 			.uldiv(id=`uldiv ${index}`)
 				ul(id=`ul ${index}`)
-					li.tunetext= `${track.original_artist}${track.track_name}${track.blank}`
+					.downloadbutton
+						li.tunetext= `${track.original_artist}${track.track_name}${track.blank}`
 					.regaudio
 						audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none')
-					li.tunetext= `       `
+					#iosspacer
 					.downloadbutton
 						.custombutton
 							a(href=track.drive_url)
@@ -458,10 +459,15 @@ block content
 
 			var newul = document.createElement('ul');
 
+			var textdiv = document.createElement('div');
+			textdiv.setAttribute('class', 'downloadbutton');
+
 			//Track Name Line
 			var textli = document.createElement('li');
 			textli.setAttribute('class', 'tunetext');
-			textli.innerHTML = `${tracks[i].original_artist}${tracks[i].track_name}${tracks[i].blank}`
+			textli.innerHTML = `${tracks[i].original_artist}${tracks[i].track_name}${tracks[i].blank}`;
+
+			textdiv.appendChild(textli);
 
 			//audio div
 			var audiodiv = document.createElement('div');

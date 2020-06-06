@@ -58,7 +58,12 @@
         padding-left: 10em;
         padding-right: 10em;
     }
-
+    
+    @supports (-webkit-touch-callout: none) {
+        audio{
+            width: 100%;
+        }
+    }
   
 }
 
@@ -136,12 +141,6 @@
     }
 
   
-}
-
-@supports (-webkit-touch-callout: none) {
-    li.tunetext{
-        color: greenyellow;
-    }
 }
   
 @supports not (-webkit-touch-callout: none) {

@@ -241,6 +241,8 @@ a{
   padding-left: 20px;
   padding-right: 20px;
   border: black solid 3px;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 .searchcontainart{
@@ -367,6 +369,7 @@ a{
 .artistpage{
   display: flex;
   justify-content: center;
+  margin-bottom: 1em;
 }
 .artisth1{
   display: flex;
@@ -732,6 +735,12 @@ li.tunetexttotwsmaller{
   opacity: 0.3;
   z-index: 1;
   border: 2px visible black;
+}
+
+.pagedownloadbutton{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .downloadbuttonwithbold{

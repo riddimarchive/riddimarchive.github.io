@@ -566,7 +566,7 @@ app.get('/share/:id', function(req,res){
                 tracks[0].blank = ` - ${tracks[0].artist_name}${tracks[0].collab_artist}`
               }
               if(tracks[0].is_collab != 1){
-                tracks[0].blank = ``;
+                tracks[0].blank = ` - ${tracks[0].artist_name}`;
               }
               if(tracks[0].is_remix == 1){
                 tracks[0].blank = ``;

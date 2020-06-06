@@ -40,6 +40,25 @@
     #topspacer{
         margin-top: 140px;
     }
+
+    .ulcontain{
+        display: block;
+        padding-left: 10em;
+        padding-right: 10em;
+    }
+      
+    #ulcontain{
+        display: block;
+        padding-left: 10em;
+        padding-right: 10em;
+    }
+
+    #ulcontain2{
+        display: block;
+        padding-left: 10em;
+        padding-right: 10em;
+    }
+
   
 }
 
@@ -59,6 +78,24 @@
     }
     #bottomlicontain{
         margin-right: 8em;
+    }
+
+    .ulcontain{
+        display: block;
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+      
+    #ulcontain{
+        display: block;
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+
+    #ulcontain2{
+        display: block;
+        padding-left: 2em;
+        padding-right: 2em;
     }
 
 }

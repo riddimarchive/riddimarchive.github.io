@@ -58,7 +58,7 @@ block content
       #shuftext
         text.boldtext= `${shuf}`
       .downloadbutton
-        audio(id='shufaudio', type='audio/mpeg', controls='')
+        audio(id='shufaudio', type='audio/mpeg', controls='', preload='none')
           source(id='shufaudiosrc' src=`${shuffleurl}`)
       #iosspaceralwayson
       .downloadbutton

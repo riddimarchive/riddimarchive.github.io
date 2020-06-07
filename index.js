@@ -186,7 +186,8 @@ app.get('/googleapitest', (req, res) => {
 
 function authorize(credentials, callback) {
   console.log("Calling Auth");
-  const {client_secret, client_id} = credentials.web;
+  const client_secret = process.env.CLIENT_SECRET;
+  const client_id = process.env.CLIENT_ID;
   var redirect_uris = [`https://www.riddimarchive.com/googleapitest`]
   const oAuth2Client = new google.auth.OAuth2(
       client_id, client_secret, redirect_uris[0]);
@@ -243,12 +244,12 @@ function listFiles(auth) {
   });
 }
 
-fs.readFile('credentials.json', (err, content) => {
-  if (err) return console.log('Error loading client secret file:', err);
-  // Authorize a client with credentials, then call the Google Drive API.
-  console.log("FILE READ");
-  authorize(JSON.parse(content), listFiles);
-});
+// fs.readFile('credentials.json', (err, content) => {
+//   if (err) return console.log('Error loading client secret file:', err);
+//   // Authorize a client with credentials, then call the Google Drive API.
+//   console.log("FILE READ");
+//   authorize(JSON.parse(content), listFiles);
+// });
 
 });
 

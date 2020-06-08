@@ -454,11 +454,14 @@ block content
 								}
 							}
 
-							var newcommentstring = `<div class="newcomment"><div class="fullcomment" id="fullcomment/${theint}"><div class="comuser" id ="comuser/${theint}">${data.username} :</div><div class="comcom" id ="comcom/${theint}">${data.cmt}</div><div class="comtime" id ="comtime/${theint}">${data.cmttime}</div><div class="cmtremovebutton" id="cmtremove/${theint}"><img border="2" alt="back" src="../../Images/PageIMG/close.png" height="45" width="45"/></div></div></div><div class ="space2"></div><br>`;
+							var newcommentstring = `<div class="newcomment"><div class="fullcomment" id="fullcomment/${theint}"><div class="comuser" id ="comuser/${theint}">${data.username}</div><div class="comcom" id ="comcom/${theint}">${data.cmt}</div><div class="comtime" id ="comtime/${theint}">${data.cmttime}</div><div class="cmtremovebutton" id="cmtremove/${theint}"><img border="2" alt="back" src="../../Images/PageIMG/close.png" height="45" width="45"/></div><div class="comuserid" id ="comuserid/${theint}">${data.user_id}</div></div></div><div class ="space2"></div><br>`;
 							container.innerHTML = (newcommentstring + allpreviouscomments);
 							allpreviouscomments = "";
 							newcommentstring = "";
+							var newcmtremovebutton = document.getElementById(`cmtremove/${theint}`);
+							newcmtremovebutton.style.display = "block";
 							document.getElementById("commentnextindex").innerHTML = (theint + 1);
+							removeCommentInit();
 						},
 						error: function(){
 						console.log("Didn't Work");
@@ -470,15 +473,25 @@ block content
 
 		function removeCommentInit(){
 			document.querySelectorAll('.cmtremovebutton').forEach(item => {
-				item.addEventListener('click', event => {
-					var thestring = item.id;
-					var splitty = thestring.split("/");
-					var index = splitty[1];
+				var thestring = item.id;
+				var splitty = thestring.split("/");
+				var index = splitty[1];
 
+				var extrainfoembed = document.getElementById("extra");
+				var uid = extrainfoembed.value.split("/");
+				var currentuserid = uid[0];
+				console.log(`currentuserid is: ${currentuserid}`);
+
+				var cmtusrid = document.getElementById(`comuserid/${index}`).innerHTML;
+
+				if(currentuserid == cmtusrid){
+					item.style.display = "block";
+				}
+
+				item.addEventListener('click', event => {
 					var usernamestr = document.getElementById(`comuser/${index}`).innerHTML;
 					var splitty2 = usernamestr.split(" ");
 					var username = splitty2[0];
-					console.log(`username is: ${username}`);
 
 					var thecomment = document.getElementById(`comcom/${index}`).innerHTML;
 					console.log(`thecomment is: ${thecomment}`);
@@ -488,8 +501,8 @@ block content
 					var datestr = splitty3[0];
 					var timestr = splitty3[1];
 					var splitty4 = datestr.split("/");
-					var day = splitty4[0];
-					var month = splitty4[1];
+					var month = splitty4[0];
+					var day = splitty4[1];
 					var year = splitty4[2];
 					var thetime = `${year}-${month}-${day} ${timestr}`
 
@@ -497,13 +510,17 @@ block content
 						url:`/removecmt`,
 						type: 'POST',
 						data: {
-							ind: index,
+							index: index,
 							username: username,
 							thecomment: thecomment,
 							thetime: thetime
 						},
 						success: function(data){
 							document.getElementById('cmtmessage').innerHTML = `${data.msg}`;
+							console.log(`the index is ${data.index}`);
+							var thedeletedcmt = document.getElementById(`fullcomment/${data.index}`);
+							thedeletedcmt.innerHTML = "";
+							thedeletedcmt.style.display = "none";
 						},
 						error: function(){
 							console.log("Didn't Work");
@@ -605,7 +622,7 @@ block content
 							
 							if(data.nocomments != 1){
 								for (var i = 0; i < data.comments.length; i++) {
-									container.innerHTML += `<div class="fullcomment" id="fullcomment/${i}"><div class="comuser" id ="comuser/${i}">${data.comments[i].username} :</div><div class="comcom" id ="comcom/${i}">${data.comments[i].comment}</div><div class="comtime" id ="comtime/${i}">${data.comments[i].time}</div><div class="cmtremovebutton" id="cmtremove/${i}"><img border="2" alt="back" src="../../Images/PageIMG/close.png" height="45" width="45"/></div></div><div class ="space2"></div><br>`;
+									container.innerHTML += `<div class="fullcomment" id="fullcomment/${i}"><div class="comuser" id ="comuser/${i}">${data.comments[i].username}</div><div class="comcom" id ="comcom/${i}">${data.comments[i].comment}</div><div class="comtime" id ="comtime/${i}">${data.comments[i].time}</div><div class="cmtremovebutton" id="cmtremove/${i}"><img border="2" alt="back" src="../../Images/PageIMG/close.png" height="45" width="45"/></div><div class="comuserid" id ="comuserid/${i}">${data.comments[i].user_id}</div></div><div class ="space2"></div><br>`;
 								}
 							}
 							commentformInit(data.comments.length);

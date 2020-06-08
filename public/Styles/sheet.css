@@ -894,12 +894,17 @@ li.tunetexttotwsmaller{
   margin-top: 0.65em;
 }
 
+.comuserid{
+  display: none;
+}
+
 .cmtremovebutton{
   margin-top: 0.45em;
+  display: none;
 }
 
 .cmtremovebutton img:hover{
-  border: solid greenyellow 3px;
+  border: solid red 3px;
 }
 
 .heartbutton{

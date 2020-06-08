@@ -2024,46 +2024,19 @@ app.post('/comments', (req, res, next) => {
               var timeunsplit = commresult[i].time;
               var thefullstring = commresult[i].time.toString();
               var str = thefullstring.split(" ");
-              switch(str[1]) {
-                case "Jan":
-                  str[1] = "01";
-                  break;
-                case "Feb":
-                  str[1] = "02";
-                  break;
-                case "Mar":
-                  str[1] = "03";
-                  break;
-                case "Apr":
-                  str[1] = "04";
-                  break;
-                case "May":
-                  str[1] = "05";
-                  break;
-                case "Jun":
-                  str[1] = "06";
-                  break;
-                case "Jul":
-                  str[1] = "07";
-                  break;
-                case "Aug":
-                  str[1] = "08";
-                  break;
-                case "Sep":
-                  str[1] = "09";
-                  break;
-                case "Oct":
-                  str[1] = "10";
-                  break;
-                case "Nov":
-                  str[1] = "11";
-                  break;
-                case "Dec":
-                  str[1] = "12";
-                  break;
-              }
-
-              commresult[i].time = `${str[2]}/${str[1]}/${str[3]} - ${str[4]}`;
+              if(str[1] == "Jan") { str[1] = "01"; }
+              if(str[1] == "Feb") { str[1] = "02"; }
+              if(str[1] == "Mar") { str[1] = "03"; }
+              if(str[1] == "Apr") { str[1] = "04"; }
+              if(str[1] == "May") { str[1] = "05"; }
+              if(str[1] == "Jun") { str[1] = "06"; }
+              if(str[1] == "Jul") { str[1] = "07"; }
+              if(str[1] == "Aug") { str[1] = "08"; }
+              if(str[1] == "Sep") { str[1] = "09"; }
+              if(str[1] == "Oct") { str[1] = "10"; }
+              if(str[1] == "Nov") { str[1] = "11"; }
+              if(str[1] == "Dec") { str[1] = "12"; }
+              commresult[i].time = `${str[1]}/${str[2]}/${str[3]} - ${str[4]}`;
 
               var row = { 'track_id': commresult[i].track_id, 'user_id': commresult[i].user_id, 'comment': commresult[i].comment, 'username': commresult[i].username, 'time': commresult[i].time, 'timeunsplit': timeunsplit }
               comments.push(row);
@@ -2172,6 +2145,18 @@ app.post('/addcomment', (req, res, next) => {
 
       var thefullstring = cmttimeandid[0].time.toString();
       var str = thefullstring.split(" ");
+        if(str[1] == "Jan") { str[1] = "01"; }
+        if(str[1] == "Feb") { str[1] = "02"; }
+        if(str[1] == "Mar") { str[1] = "03"; }
+        if(str[1] == "Apr") { str[1] = "04"; }
+        if(str[1] == "May") { str[1] = "05"; }
+        if(str[1] == "Jun") { str[1] = "06"; }
+        if(str[1] == "Jul") { str[1] = "07"; }
+        if(str[1] == "Aug") { str[1] = "08"; }
+        if(str[1] == "Sep") { str[1] = "09"; }
+        if(str[1] == "Oct") { str[1] = "10"; }
+        if(str[1] == "Nov") { str[1] = "11"; }
+        if(str[1] == "Dec") { str[1] = "12"; }
       var cmttime = `${str[1]}/${str[2]}/${str[3]} - ${str[4]}`;
       var cmtid = cmttimeandid[0].id;
 

@@ -426,12 +426,15 @@ block content
 				var extrainfoembed = document.getElementById("extra");
 				var str = extrainfoembed.value;
 				var splitty = str.split("/");
-				if (splitty[0] == ""){
-					document.getElementById('cmtmessage').innerHTML = "Please log in to add comment!";
+				var theform2 = document.getElementById('cmtaddform');
+
+				if (splitty[0] == "" || theform2.elements[0].value == ""){
+
+					var thecmtmessage = document.getElementById('cmtmessage');
+					if (splitty[0] == ""){ thecmtmessage.innerHTML = "Please Log In to Add Comment!"; }
+					if (theform2.elements[0].value == ""){ thecmtmessage.innerHTML = "Please Enter Comment!"; }
+
 				}else{
-					var theform2 = document.getElementById("cmtaddform");
-					console.log(`comment is: ${theform2.elements[0].value}`);
-					console.log(`extra is: ${theform2.elements[1].value}`);
 					$.ajax({
 						url:'../../addcomment',
 						type: 'POST',
@@ -467,7 +470,7 @@ block content
 						console.log("Didn't Work");
 						}
 					});//ajax
-				}
+				}//else - no user or no comment
 			});//submit
 		}
 

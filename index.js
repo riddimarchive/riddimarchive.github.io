@@ -635,6 +635,7 @@ app.get('/tests3page', (req, res, next) => {
   if(req.user !== undefined){
     theusername = req.user.username;
   }
+  console.log("HELO FISH");
   res.render('tests3',{ theusername: theusername });
 });
 
@@ -2318,7 +2319,6 @@ app.post('/tests3upload', (req, res, next) => {
     res.send({msg: themsg, song: ""});
   }else{
     const song = req.files.file;
-
     s3fcn.uploadToS3(song);
     themsg = "File uploaded!";
     res.send({msg: themsg});   

@@ -1,0 +1,63 @@
+extends index
+
+block content
+	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
+	txt  
+	.artisth1 
+		h1 S3 Test Upload
+	#labelgcenter 
+
+	.faqform
+		form#fileuploadform(method='POST', enctype='multipart/form-data')
+			.label Upload File:
+			br
+			div.form-group
+				input#thefile(type='file', name='thefile')
+			.downloadbutton
+				div(id='thesubmit', class='thesubmit')
+					img(border='2', alt='back', src='Images/PageIMG/upload.png', height='50')
+	script.
+		$(document).on("keydown", "form", function(event) { 
+			return event.key != "Enter";
+		});
+
+		$(document).bind("keydown keypress", function(e){
+			if( e.which == 8 ){ // 8 == backspace
+				if(e.target.readOnly ){
+					e.preventDefault();
+				}
+			}
+		});
+
+		$(document).ready(function() {
+			console.log("Doc ready");
+			uploadInit();
+		});
+
+		function uploadInit(){
+			var theform = $('#fileuploadform');
+			var thebutton = $('#thesubmit');
+			thebutton.click(function (ev) {
+				console.log("clicked button");
+				ev.preventDefault();
+
+				var fd = new FormData();
+				var files = $('#thefile')[0].files[0];
+				fd.append('file', files);
+				 
+				$.ajax({
+					url:'/tests3upload',
+					type: 'POST',
+					data: fd,
+					processData: false,
+					contentType: false,
+					success: function(data){
+						var msg = document.getElementById("labelgcenter");
+						msg.innerHTML = data.msg;
+					},
+					error: function(){
+						console.log("Didn't Work");
+					}
+				});
+			});
+		}

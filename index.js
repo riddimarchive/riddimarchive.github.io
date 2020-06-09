@@ -21,6 +21,7 @@ const userquerie = require('./js/userquery');
 const heartquerie = require('./js/heartquery');
 const has = require('./js/hash');
 const emailer = require('./js/email');
+const s3fcn = require('./js/s3fcn');
 
 // create new express app and save it as "app"
 const app = express();
@@ -42,9 +43,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(fileUpload());
 
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
-
 //express-session
 app.use(session({
   secret: 'secret fish',
@@ -626,6 +626,16 @@ app.get('/req/:page', function(req,res){
         res.render('faq',{ title:'Riddim Archive FAQ', theusername: theusername });
         break;
     }//end switch
+});
+
+//GET REQUEST - GET S3 Page
+app.get('/tests3page', (req, res, next) => {
+
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
+  res.render('tests3',{ theusername: theusername });
 });
 
 
@@ -2296,6 +2306,24 @@ app.post('/req/question', (req, res, next) => {
         makeEmail(reason, info);
     }
           
+});
+
+//POST REQUEST - TEST S3 Upload
+app.post('/tests3upload', (req, res, next) => {
+
+  var themsg = "";
+  if (!req.files || Object.keys(req.files).length === 0) {
+    console.log('No image was uploaded.');
+    themsg = "No image was uploaded.";
+    res.send({msg: themsg, song: ""});
+  }else{
+    const song = req.files.file;
+
+    s3fcn.uploadToS3(song);
+    themsg = "File uploaded!";
+    res.send({msg: themsg});   
+  }
+
 });
 
 //Server Request Handler

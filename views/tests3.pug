@@ -31,7 +31,7 @@ block content
 		.uldiv
 			ul
 				.regaudio
-					audio(id='0/5/A3/420', src='placeholder.mp3', type='audio/mpeg', controls='', preload='none')
+					audio(id='0/5/A3/420', src='https://riddim-archive-tune-store.s3-us-west-1.amazonaws.com/A/A3/420.mp3', type='audio/mpeg', controls='', preload='none')
 						
 	script.
 		$(document).on("keydown", "form", function(event) { 
@@ -54,6 +54,7 @@ block content
 		document.addEventListener('play', function(e){
 			console.log("DO THINGS");
 			//do things
+			/*
 			e.target.src = "";
 			var theidstr = e.target.id;
 			var splitty = theidstr.split("/");
@@ -79,7 +80,7 @@ block content
 					console.log("Didn't Work");
 				}
 			});
-
+			*/
 		}, true);
 
 		function uploadInit(){

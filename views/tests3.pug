@@ -9,6 +9,16 @@ block content
 
 	.faqform
 		form#fileuploadform(method='POST', enctype='multipart/form-data')
+			.label Artist Name:
+			br
+			div.form-group
+				input#art_name(type='text', name='art_name')
+			br
+			.label Track Name:
+			br
+			div.form-group
+				input#tra_name(type='text', name='tra_name')
+			br
 			.label Upload File:
 			br
 			div.form-group
@@ -16,6 +26,13 @@ block content
 			.downloadbutton
 				div(id='thesubmit', class='thesubmit')
 					img(border='2', alt='back', src='Images/PageIMG/upload.png', height='50')
+	
+	#ulcontain
+		.uldiv
+			ul
+				.regaudio
+					audio(id='0/5/A3/420', src='placeholder.mp3', type='audio/mpeg', controls='', preload='none')
+						
 	script.
 		$(document).on("keydown", "form", function(event) { 
 			return event.key != "Enter";
@@ -34,6 +51,37 @@ block content
 			uploadInit();
 		});
 
+		document.addEventListener('play', function(e){
+			console.log("DO THINGS");
+			//do things
+			e.target.src = "";
+			var theidstr = e.target.id;
+			var splitty = theidstr.split("/");
+			var index = splitty[0];
+			var track_id = splitty[1];
+			var artist_name = splitty[2];
+			var track_name = splitty[3];
+
+			$.ajax({
+				url:'/tests3gettrack',
+				type: 'POST',
+				data: {
+					index: index,
+					track_id: track_id,
+					artist_name: artist_name,
+					track_name: track_name
+				},
+				success: function(data){
+					var msg = document.getElementById("labelgcenter");
+					msg.innerHTML = data.msg;
+				},
+				error: function(){
+					console.log("Didn't Work");
+				}
+			});
+
+		}, true);
+
 		function uploadInit(){
 			var theform = $('#fileuploadform');
 			var thebutton = $('#thesubmit');
@@ -43,7 +91,11 @@ block content
 
 				var fd = new FormData();
 				var files = $('#thefile')[0].files[0];
+				var artist_name = document.getElementById("art_name").value;
+				var track_name = document.getElementById("tra_name").value;
 				fd.append('file', files);
+				fd.append('artist_name', artist_name);
+				fd.append('track_name', track_name);
 				 
 				$.ajax({
 					url:'/tests3upload',

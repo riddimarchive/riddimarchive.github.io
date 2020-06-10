@@ -1,6 +1,6 @@
 const aws = require('aws-sdk');
 
-function uploadToS3(file) {
+function uploadToS3(file, artist_name, track_name, artfirstletter) {
 	let s3bucket = new aws.S3({
 	  accessKeyId: process.env.ACCESS_KEY,
 	  secretAccessKey: process.env.SECRET_ACCESS_KEY,
@@ -9,8 +9,8 @@ function uploadToS3(file) {
 	s3bucket.createBucket(function () {
 	  var params = {
 	   Bucket: process.env.BUCKET,
-	   Tagging: 'Artist=A3&DB ID=10&Track Name=Murder',
-	   Key: `A/A3/${file.name}`,
+	   Tagging: `Artist=${artist_name}&Track Name=${track_name}`,
+	   Key: `${artfirstletter}/${artist_name}/${file.name}`,
 	   Body: file.data,
 	  };
 	  s3bucket.upload(params, function (err, data) {

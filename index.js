@@ -635,7 +635,6 @@ app.get('/tests3page', (req, res, next) => {
   if(req.user !== undefined){
     theusername = req.user.username;
   }
-  console.log("HELO FISH");
   res.render('tests3',{ theusername: theusername });
 });
 
@@ -2312,6 +2311,10 @@ app.post('/req/question', (req, res, next) => {
 //POST REQUEST - TEST S3 Upload
 app.post('/tests3upload', (req, res, next) => {
 
+  var { artist_name, track_name } = req.body;
+  var artstr = artist_name;
+  var artfirstletter = artstr.charAt(0);
+
   var themsg = "";
   if (!req.files || Object.keys(req.files).length === 0) {
     console.log('No image was uploaded.');
@@ -2319,10 +2322,20 @@ app.post('/tests3upload', (req, res, next) => {
     res.send({msg: themsg, song: ""});
   }else{
     const song = req.files.file;
-    s3fcn.uploadToS3(song);
+    s3fcn.uploadToS3(song, artist_name, track_name, artfirstletter);
     themsg = "File uploaded!";
     res.send({msg: themsg});   
   }
+
+});
+
+//POST REQUEST - TEST S3 Get Track
+app.post('/tests3gettrack', (req, res, next) => {
+
+  var { index, track_id, artist_name, track_name } = req.body;
+
+  var themsg = `Function Called - index is: ${index} track_id is: ${track_id} artist_name is: ${artist_name} track_name is: ${track_name}`;
+  res.send({ msg: themsg });
 
 });
 

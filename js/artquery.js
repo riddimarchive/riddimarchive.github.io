@@ -36,6 +36,25 @@ function getAllArtists(db){
 
 }
 
+function getArtistNameByID(db, id){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT artist_name FROM artists WHERE id = ?`, [id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+
+}
+
 function getAllArtistsAthroughD(db){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -222,6 +241,7 @@ function deleteArtist(db, artist_name){
 module.exports = {
 	getArtistInfo,
 	getAllArtists,
+	getArtistNameByID,
 	getAllArtistsAthroughD,
 	getAllArtistsEthroughI,
 	getAllArtistsJthroughO,

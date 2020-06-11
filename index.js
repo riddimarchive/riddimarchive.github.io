@@ -210,18 +210,42 @@ app.get('/dashboard', (req, res) => {
     var thelevel = req.user.access_level;
     var theusername = req.user.username;
 
-    //redirect by permission level
-    switch(thelevel) {
-      case 3:
-        res.render('admdash',{ theusername: theusername });
-        break;
-      case 2:
-        res.render('moddash',{ theusername: theusername });
-        break;
-      case 1:
-        res.render('userdash',{ theusername: theusername });
-        break;
-    }//end switch
+    async function getArtistVerify(thelevel, theusername){
+      try{
+        var db = createConnection();
+        await conquerie.connect(db);
+        var art_name = "";
+        var art_id = "";
+
+        let result = await userquerie.verifyArtistbyUsername(db, theusername);
+        if(result.length > 0){
+          art_id = result[0].artist_id_verify;
+          let artresult = await artquerie.getArtistNameByID(db, art_id);
+          art_name = artresult[0].artist_name;
+        }
+        console.log(`ARTIST NAME BE: ${art_name}`);
+        console.log(`ARTIST ID BE: ${art_id}`);
+        await conquerie.end(db);
+        //redirect by permission level
+        switch(thelevel) {
+        case 3:
+          res.render('admdash',{ theusername: theusername });
+          break;
+        case 2:
+          res.render('moddash',{ theusername: theusername });
+          break;
+        case 1:
+          res.render('userdash',{ theusername: theusername, art_id, art_name });
+          break;
+        }//end switch
+      }catch(err){
+      console.log(err);
+      res.render('error');
+      }
+
+    }
+    getArtistVerify(thelevel, theusername);
+
   }//end else
 
 });
@@ -629,13 +653,15 @@ app.get('/req/:page', function(req,res){
 });
 
 //GET REQUEST - GET S3 Page
-app.get('/tests3page', (req, res, next) => {
+app.get('/tuneup', (req, res, next) => {
 
-  var theusername = "";
-  if(req.user !== undefined){
-    theusername = req.user.username;
+  if(req.user === undefined){
+    res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: '' });
+  }else{
+    var theusername = req.user.username;
+
+    res.render('tests3',{ title:'Tune Upload', msg: "", theusername: theusername });
   }
-  res.render('tests3',{ theusername: theusername });
 });
 
 
@@ -2322,7 +2348,8 @@ app.post('/tests3upload', (req, res, next) => {
     res.send({msg: themsg, song: ""});
   }else{
     const song = req.files.file;
-    s3fcn.uploadToS3(song, artist_name, track_name, artfirstletter);
+    var makepublic = 0;
+    s3fcn.uploadToS3(song, artist_name, track_name, artfirstletter, makepublic);
     themsg = "File uploaded!";
     res.send({msg: themsg});   
   }

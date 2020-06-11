@@ -1,6 +1,7 @@
 extends index3
 
 block content
+	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
 	.artisth1 
 		h1 USER DASHBOARD
 	br
@@ -9,12 +10,17 @@ block content
 	
 	.welcometxt
 		h1 Welcome #{username}!
+	div(title=`${art_id}`, id='dashartid')
+	div(title=`${art_name}`, id='dashartname')
 	
 	.fishcontain
 		#fish
 			.fishchild
 				a(href='../')
 					img(src='Images/PageIMG/browsearchive.png' alt='Images/PageIMG/fail.png' height='250' width='250')
+			.fishchild(id='uppagelink')
+				a(href='tuneup')
+					img(id="tuneimg", src='Images/PageIMG/tuneup.png' alt='Images/PageIMG/fail.png' height='250' width='250')
 			.fishchild
 				a(href='favorites')
 					img(src='Images/PageIMG/favorites.png' alt='Images/PageIMG/fail.png' height='250' width='250')
@@ -24,3 +30,25 @@ block content
 			.fishchild
 				a(href='logout')
 					img(src='Images/PageIMG/logout.png' alt='Images/PageIMG/fail.png' height='250' width='250')
+	
+	script.
+		$(document).ready(function() {
+			console.log("Doc ready");
+			addVerifyButton();
+		});
+
+		function tuneUpInit() {
+			console.log("tune init here");
+		}
+
+		function addVerifyButton() {
+			var theid = document.getElementById('dashartid');
+			if (theid.title != ""){
+				var thename = document.getElementById('dashartname').title;
+				var thebutton = document.getElementById('uppagelink');
+				thebutton.style.display = "block";
+				var theimg = document.getElementById('tuneimg');
+				theimg.setAttribute('id', `${theid.title}/${thename}`);
+				tuneUpInit();
+			}
+		}

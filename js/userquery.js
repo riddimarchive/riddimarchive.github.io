@@ -110,6 +110,24 @@ function getUsernamebyID(db, id){
 	return querypromise;
 }
 
+function verifyArtistbyUsername(db, username){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT artist_id_verify FROM users WHERE username = ? AND artist_id_verify <> "0"`, [username], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
 function getUserFavorites(db, id){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -215,6 +233,7 @@ module.exports = {
 	changePass,
 	getUserByid,
 	getUsernamebyID,
+	verifyArtistbyUsername,
 	getUserFavorites,
 	checkUserFavorite,
 	addUserFavorite,

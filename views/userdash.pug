@@ -19,8 +19,10 @@ block content
 				a(href='../')
 					img(src='Images/PageIMG/browsearchive.png' alt='Images/PageIMG/fail.png' height='250' width='250')
 			.fishchild(id='uppagelink')
-				a(href='tuneup')
-					img(id="tuneimg", src='Images/PageIMG/tuneup.png' alt='Images/PageIMG/fail.png' height='250' width='250')
+				form(method='POST' action='/tuneup')
+					input#theid(type='hidden', name='theid', value=`${art_id}`)
+					input#theartistname(type='hidden', name='theartistname', value=`${art_name}`)
+					input#tuneimg.tuneimgbutton(type='image', src='Images/PageIMG/tuneup.png' height='250' width='250' alt='Submit')
 			.fishchild
 				a(href='favorites')
 					img(src='Images/PageIMG/favorites.png' alt='Images/PageIMG/fail.png' height='250' width='250')
@@ -38,7 +40,29 @@ block content
 		});
 
 		function tuneUpInit() {
-			console.log("tune init here");
+			//- document.querySelectorAll('.tuneimgbutton').forEach(item => {
+			//- 	item.addEventListener('click', event => {
+			//- 		var thestring = item.id;
+			//- 		var splitty = thestring.split("/");
+			//- 		var theid = splitty[0];
+			//- 		var theartistname = splitty[1];
+
+			//- 		$.ajax({
+			//- 			url:'/tuneup',
+			//- 			type: 'POST',
+			//- 			data: {
+			//- 				theid: theid,
+			//- 				theartistname: theartistname
+			//- 			},
+			//- 			success: function(data){
+
+			//- 			},
+			//- 			error: function(){
+			//- 				console.log("Didn't Work");
+			//- 			}
+			//- 		});//ajax
+			//- 	});//click
+			//- });//class selector
 		}
 
 		function addVerifyButton() {

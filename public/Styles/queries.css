@@ -138,6 +138,11 @@
         height: 400px;
     }
 
+    .fishchild form input{
+        width: 400px;
+        height: 400px;
+    }
+
     .imgdescription{
         padding-top: 3em;
         padding-left: 2em;

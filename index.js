@@ -223,8 +223,6 @@ app.get('/dashboard', (req, res) => {
           let artresult = await artquerie.getArtistNameByID(db, art_id);
           art_name = artresult[0].artist_name;
         }
-        console.log(`ARTIST NAME BE: ${art_name}`);
-        console.log(`ARTIST ID BE: ${art_id}`);
         await conquerie.end(db);
         //redirect by permission level
         switch(thelevel) {
@@ -660,10 +658,32 @@ app.get('/tuneup', (req, res, next) => {
   }else{
     var theusername = req.user.username;
 
-    res.render('tests3',{ title:'Tune Upload', msg: "", theusername: theusername });
-  }
-});
+    async function getArtistVerify(theusername){
+      try{
+        var db = createConnection();
+        await conquerie.connect(db);
+        var art_name = "";
+        var art_id = "";
 
+        let result = await userquerie.verifyArtistbyUsername(db, theusername);
+        if(result.length > 0){
+          art_id = result[0].artist_id_verify;
+          let artresult = await artquerie.getArtistNameByID(db, art_id);
+          art_name = artresult[0].artist_name;
+        }
+        await conquerie.end(db);
+        res.render('tests3',{ title:'Tune Upload', msg: "", theusername: theusername , theid: art_id, theartname: art_name});
+      }catch(err){
+      console.log(err);
+      res.render('error');
+      }
+
+    }
+    getArtistVerify(theusername);
+
+  }//end else
+
+});
 
 //POST REQUESTS
 //***********************
@@ -2332,6 +2352,20 @@ app.post('/req/question', (req, res, next) => {
         makeEmail(reason, info);
     }
           
+});
+
+//POST REQUEST - GET S3 Page
+app.post('/tuneup', (req, res, next) => {
+
+  var { theid, theartistname } = req.body;
+
+  if(req.user === undefined){
+    res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: '' });
+  }else{
+    var theusername = req.user.username;
+
+    res.render('tests3',{ title:'Tune Upload', msg: "", theusername: theusername , theid: theid, theartname: theartistname});
+  }
 });
 
 //POST REQUEST - TEST S3 Upload

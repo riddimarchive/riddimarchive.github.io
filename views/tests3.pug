@@ -5,15 +5,12 @@ block content
 	txt  
 	.artisth1 
 		h1 S3 Test Upload
-	#labelgcenter 
+	#labelgcenter
+	div(title=`${theid}`, id='dashartid')
+	div(title=`${theartname}`, id='dashartname')
 
 	.faqform
 		form#fileuploadform(method='POST', enctype='multipart/form-data')
-			.label Artist Name:
-			br
-			div.form-group
-				input#art_name(type='text', name='art_name')
-			br
 			.label Track Name:
 			br
 			div.form-group
@@ -92,12 +89,13 @@ block content
 
 				var fd = new FormData();
 				var files = $('#thefile')[0].files[0];
-				var artist_name = document.getElementById("art_name").value;
-				var track_name = document.getElementById("tra_name").value;
+				var artist_name = document.getElementById("dashartname").title;
+				var track_namestr = document.getElementById("tra_name").value.toString();
+				const regex = /[^a-zA-Z0-9 ]/g;
+				var track_name = track_namestr.replace(regex, "");
 				fd.append('file', files);
 				fd.append('artist_name', artist_name);
 				fd.append('track_name', track_name);
-				 
 				$.ajax({
 					url:'/tests3upload',
 					type: 'POST',

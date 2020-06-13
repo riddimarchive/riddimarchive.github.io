@@ -168,11 +168,24 @@ body {
   flex-grow: 1;
 }
 
+.fishchild form input{
+	border: solid;
+  border-width: 3px;
+  border-color: #000;
+  border-radius: 8px;
+  justify-content: center;
+  flex-grow: 1;
+}
+
 a{
   text-decoration: none;
 }
 
 .fishchild img:hover{
+  z-index: 1;
+}
+
+.fishchild form input:hover{
   z-index: 1;
 }
 

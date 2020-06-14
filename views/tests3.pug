@@ -6,10 +6,15 @@ block content
 	.artisth1 
 		h1 S3 Test Upload
 	#labelgcenter
+
 	div(title=`${theid}`, id='dashartid')
 	div(title=`${theartname}`, id='dashartname')
 	div(title='0', id='currentcollabvalue')
 	div(title='0', id='currentremixvalue')
+	div(title='0', id='collabcounter')
+	div(title='0', id='collabminus')
+	div(title='0', id='remixcounter')
+
 	br
 
 
@@ -37,32 +42,33 @@ block content
 				#collabfield1
 					.downloadbutton
 						.labelmid Collab Artist 1:
-					input#col1(type='text', name='col1', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
-					.downloadbutton
-						img(id='addcol/1', class='addcolbtn', border='2', alt='back', src='Images/PageIMG/upload.png', height='35')
+					.middlecontain
+						input#col1(type='text', name='col1', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 70%;")
+						img(id='addcol', class='addcolbtn', border='2', alt='back', src='Images/PageIMG/upload.png', height='35')
+
 				#collabfield2
 					.downloadbutton
 						.labelmid Collab Artist 2:
 					input#col2(type='text', name='col2', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
-					.downloadbutton
-						img(id='addcol/2', class='addcolbtn', border='2', alt='back', src='Images/PageIMG/upload.png', height='35')
+
 				#collabfield3
 					.downloadbutton
 						.labelmid Collab Artist 3:
 					input#col3(type='text', name='col3', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
-					.downloadbutton
-						img(id='addcol/3', class='addcolbtn', border='2', alt='back', src='Images/PageIMG/upload.png', height='35')
+
 				#collabfield4
 					.downloadbutton
 						.labelmid Collab Artist 4:
 					input#col4(type='text', name='col4', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
 
+			br
+
 			#remixfields
 				#remixfield1
 					.downloadbutton
 						.labelmid Original Artist 1:
-					input#rem1(type='text', name='rem1', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
-					.downloadbutton
+					.middlecontain
+						input#rem1(type='text', name='rem1', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 70%;")
 						img(id='addrem/1', class='addrembtn', border='2', alt='back', src='Images/PageIMG/upload.png', height='35')
 				#remixfield2
 					.downloadbutton
@@ -101,8 +107,8 @@ block content
 			document.getElementById("currentcollabvalue").title = 0;
 			document.getElementById("currentremixvalue").title = 0;
 			uploadInit();
-			collabAddInit();
-			remixAddInit();
+			collabInit();
+			remixInit();
 		});
 
 		function change(thevalue){
@@ -150,34 +156,77 @@ block content
 			return document.getElementById("currentcollabvalue").title;
 		}
 
-		function collabAddInit(){
+		function collabInit(){
 			document.querySelectorAll('.addcolbtn').forEach(item => {
 				item.addEventListener('click', event => {
-				var thestring = item.id;
-				var splitty = thestring.split("/");
-				var index = splitty[1];
-				console.log(`index is: ${index}`);
-				if(index == 1){
-					var colfield2 = document.getElementById("collabfield2");
-					colfield2.style.display = "block";
-				}
-				if(index == 2){
-					var colfield3 = document.getElementById("collabfield3");
-					colfield3.style.display = "block";
-				}
-				if(index == 3){
-					var colfield4 = document.getElementById("collabfield4");
-					colfield4.style.display = "block";
-				}
+				var counterstr = document.getElementById("collabcounter").title.toString();
+				var counter = parseInt(counterstr);
+				var minusstr = document.getElementById("collabminus").title.toString();
+				var minusmode = parseInt(minusstr);
+
+				switch(counter) {
+					case 0:
+						var field2 = document.getElementById("collabfield2");
+						if(minusmode == 0){
+							field2.style.display = "block";
+							counter++;
+							document.getElementById("collabcounter").title = counter;
+						}else{
+							field2.style.display = "none";
+							document.getElementById("collabminus").title = 0;
+							item.src = 'Images/PageIMG/upload.png';
+						}
+						break;
+					case 1:
+						var field3 = document.getElementById("collabfield3");
+						if(minusmode == 0){
+							field3.style.display = "block";
+							counter++;
+							document.getElementById("collabcounter").title = counter;
+						}else{
+							field3.style.display = "none";
+							counter--;
+							document.getElementById("collabcounter").title = counter;
+							minusmode = 0;
+						}
+						break;
+					case 2:
+						var field4 = document.getElementById("collabfield4");
+						if(minusmode == 0){
+							field4.style.display = "block";
+						}else{
+							field4.style.display = "none";
+							counter--;
+							document.getElementById("collabcounter").title = counter;
+						}
+						document.getElementById("collabminus").title = 1;
+
+						item.src = 'Images/PageIMG/minus.png';
+						break;
+				}//end switch
+
 				});//click event
 			});//class selector
 		}
 
-		function remixAddInit(){
+		function remixInit(){
 			document.querySelectorAll('.addrembtn').forEach(item => {
 				item.addEventListener('click', event => {
-					var remfield2 = document.getElementById("remixfield2");
-					remfield2.style.display = "block";
+					var remixstr = document.getElementById("remixcounter").title.toString();
+					var counter = parseInt(remixstr);
+					if(counter == 0){
+						var field2 = document.getElementById("remixfield2");
+						field2.style.display = "block";
+						counter++;
+						document.getElementById("remixcounter").title = counter;
+						item.src = 'Images/PageIMG/minus.png';
+					}else{
+						var field2 = document.getElementById("remixfield2");
+						field2.style.display = "none";
+						counter--;
+						document.getElementById("remixcounter").title = counter;
+						item.src = 'Images/PageIMG/upload.png';
+					}
 				});//click event
 			});//class selector
 		}

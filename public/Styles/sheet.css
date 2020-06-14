@@ -144,6 +144,14 @@ body {
   border: black solid 3px;
 }
 
+.addcolbtn{
+  margin-left: 1em;
+}
+
+.addrembtn{
+  margin-left: 1em;
+}
+
 .searchformart input[type=text], select {
   width: 100%;
   padding: 20px 35px;

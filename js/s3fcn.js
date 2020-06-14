@@ -7,9 +7,9 @@ function uploadToS3(file, artist_name, track_name, artfirstletter, makepublic) {
 	  Bucket: process.env.BUCKET,
 	});
 	s3bucket.createBucket(function () {
-	  var tagstring = `Artist=${artist_name}&Track Name=${track_name}`;
+	  var tagstring = `Artist=${artist_name}`;
 	  if (makepublic == 1){
-		tagstring = `Artist=${artist_name}&Track Name=${track_name}&public=yes`;
+		tagstring = `public=yes&Artist=${artist_name}`;
 	  }
 	  var params = {
 	   Bucket: process.env.BUCKET,

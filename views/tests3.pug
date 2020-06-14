@@ -43,23 +43,23 @@ block content
 					.downloadbutton
 						.labelmid Collab Artist 1:
 					.middlecontain
-						input#col1(type='text', name='col1', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 70%;")
+						input#col1(type='text', name='col1', value="", style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 70%;")
 						img(id='addcol', class='addcolbtn', border='2', alt='back', src='Images/PageIMG/upload.png', height='35')
 
 				#collabfield2
 					.downloadbutton
 						.labelmid Collab Artist 2:
-					input#col2(type='text', name='col2', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+					input#col2(type='text', name='col2', value="", style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
 
 				#collabfield3
 					.downloadbutton
 						.labelmid Collab Artist 3:
-					input#col3(type='text', name='col3', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+					input#col3(type='text', name='col3', value="", style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
 
 				#collabfield4
 					.downloadbutton
 						.labelmid Collab Artist 4:
-					input#col4(type='text', name='col4', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+					input#col4(type='text', name='col4', value="", style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
 
 			br
 
@@ -68,12 +68,12 @@ block content
 					.downloadbutton
 						.labelmid Original Artist 1:
 					.middlecontain
-						input#rem1(type='text', name='rem1', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 70%;")
+						input#rem1(type='text', name='rem1', value="", style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 70%;")
 						img(id='addrem/1', class='addrembtn', border='2', alt='back', src='Images/PageIMG/upload.png', height='35')
 				#remixfield2
 					.downloadbutton
 						.labelmid Original Artist 2:
-					input#rem2(type='text', name='rem2', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+					input#rem2(type='text', name='rem2', value="", style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
 
 			.label3 Upload File:
 			br
@@ -82,12 +82,14 @@ block content
 			.downloadbutton
 				div(id='thesubmit', class='thesubmit')
 					img(border='2', alt='back', src='Images/PageIMG/upload.png', height='50')
-	
-	#ulcontain
-		.uldiv
-			ul
-				.regaudio
-					audio(id='0/5/A3/420', src='https://riddim-archive-tune-store.s3-us-west-1.amazonaws.com/A/A3/420.mp3', type='audio/mpeg', controls='', preload='none')
+			.downloadbutton
+				#labelgcenter2
+	.downloadbutton
+		#ulcontain
+			.uldiv
+				ul
+					.regaudio
+						audio(id='0/5/A3/420', src='https://riddim-archive-tune-store.s3-us-west-1.amazonaws.com/A/A3/420.mp3', type='audio/mpeg', controls='', preload='none')
 						
 	script.
 		$(document).on("keydown", "form", function(event) { 
@@ -153,7 +155,7 @@ block content
 		}
 
 		function getCurrentRemixValue(){
-			return document.getElementById("currentcollabvalue").title;
+			return document.getElementById("currentremixvalue").title;
 		}
 
 		function collabInit(){
@@ -237,24 +239,42 @@ block content
 			thebutton.click(function (ev) {
 				console.log("clicked button");
 				ev.preventDefault();
-
+				var msg = document.getElementById("labelgcenter");
+				msg.innerHTML = "Uploading...";
+				var msg2 = document.getElementById("labelgcenter2");
+				msg2.innerHTML = "Uploading...";
 				var fd = new FormData();
 				var files = $('#thefile')[0].files[0];
 
 				var artist_name = document.getElementById("dashartname").title;
+				var artist_id = document.getElementById("dashartid").title;
 
-				var track_namestr = document.getElementById("tra_name").value.toString();
-				const regex = /[^a-zA-Z0-9 ]/g;
-				var track_name = track_namestr.replace(regex, "");
+				var track_name = document.getElementById("tra_name").value.toString();
 
 				var is_collab = getCurrentCollabValue();
 				var is_remix = getCurrentRemixValue();
 
+				var col1 = document.getElementById("col1").value;
+				var col2 = document.getElementById("col2").value;
+				var col3 = document.getElementById("col3").value;
+				var col4 = document.getElementById("col4").value;
+
+				var rem1 = document.getElementById("rem1").value;
+				var rem2 = document.getElementById("rem2").value;
+
 				fd.append('file', files);
 				fd.append('artist_name', artist_name);
+				fd.append('artist_id', artist_id);
 				fd.append('track_name', track_name);
 				fd.append('is_collab', is_collab);
 				fd.append('is_remix', is_remix);
+
+				fd.append('col1', col1);
+				fd.append('col2', col2);
+				fd.append('col3', col3);
+				fd.append('col4', col4);
+				fd.append('rem1', rem1);
+				fd.append('rem2', rem2);
 
 				$.ajax({
 					url:'/tests3upload',
@@ -264,7 +284,9 @@ block content
 					contentType: false,
 					success: function(data){
 						var msg = document.getElementById("labelgcenter");
+						var msg2 = document.getElementById("labelgcenter2");
 						msg.innerHTML = data.msg;
+						msg2.innerHTML = data.msg;
 					},
 					error: function(){
 						console.log("Didn't Work");

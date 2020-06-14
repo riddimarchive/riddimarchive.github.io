@@ -2371,21 +2371,98 @@ app.post('/tuneup', (req, res, next) => {
 //POST REQUEST - TEST S3 Upload
 app.post('/tests3upload', (req, res, next) => {
 
-  var { artist_name, track_name, is_collab } = req.body;             
+  var { artist_name, artist_id, track_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2 } = req.body;             
   var artstr = artist_name;
   var artfirstletter = artstr.charAt(0);
 
+  //console.log(`Art name is : ${artist_name}Track Name is:${track_name} Is Collab?${is_collab} Is Remix?${is_remix} col1 ${col1}col2${col2} col3 ${col3}col4 ${col4}rem1 ${rem1}rem2${rem2}`);
+  //res.send({artist_name: artist_name, track_name: track_name, is_collab: is_collab, is_remix: is_remix, col1: col1, col2: col2, col3: col3, col4: col4, rem1: rem1, rem2: rem2 }); 
+  
   var themsg = "";
   if (!req.files || Object.keys(req.files).length === 0) {
-    console.log('No image was uploaded.');
-    themsg = "No image was uploaded.";
+    themsg = "Be sure to Add File and Trackname!";
     res.send({msg: themsg, song: ""});
   }else{
-    const song = req.files.file;
-    var makepublic = 0;
-    s3fcn.uploadToS3(song, artist_name, track_name, artfirstletter, makepublic);
-    themsg = "File uploaded!";
-    res.send({msg: themsg});   
+    if(track_name == ""){
+      themsg = "Need Trackname!";
+      res.send({msg: themsg, song: ""});
+    }else{
+      if(is_collab == 1 && col1 == ""){
+        themsg = "You marked tune as a Collab, Please add a Collab Artist!";
+        res.send({msg: themsg, song: ""});
+      }else{
+        if(is_remix == 1 && rem1 == ""){
+          themsg = "You marked tune as a Remix, Please add a Remix Artist!";
+          res.send({msg: themsg, song: ""});
+        }else{
+          //all checks passed - add song to aws s3 and DB
+
+          const song = req.files.file;
+          var makepublic = 1;
+          s3fcn.uploadToS3(song, artist_name, track_name, artfirstletter, makepublic);
+          themsg = "File uploaded!";
+          //add tune to db!
+          async function storeFormResults(artist_name, artist_id, track_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2){
+            try{
+              var collab_artist = "";
+              var original_artist = "";
+              if(is_collab == 1){
+                  if(col1 != "" && col2 != "" && col3 != "" && col4 != ""){
+                    collab_artist = `, ${col1}, ${col2}, ${col3}, & ${col4}`;
+                  }
+                  if(col1 != "" && col2 != "" && col3 != "" && col4 == ""){
+                    collab_artist = `, ${col1}, ${col2}, & ${col3}`;
+                  }
+                  if(col1 != "" && col2 != "" && col3 == "" && col4 == ""){
+                    collab_artist = `, ${col1}, & ${col2}`;
+                  }
+                  if(col1 != "" && col2 == "" && col3 == "" && col4 == ""){
+                    collab_artist = ` & ${col1}`;
+                  }
+              }
+
+              if(is_remix == 1){
+                if(rem1 != "" && rem2 != ""){
+                  original_artist = `${rem1} & ${rem2} - `;
+                }
+                if(rem1 != "" && rem2 == ""){
+                  original_artist = `${rem2} - `;
+                }
+              }
+
+              var db = createConnection();
+              await conquerie.connect(db);
+              var tune_of_week = 0;
+              //construct drive url
+              var drive_url = "";
+              const regexspace = /[ ]/g;
+              const regexamp = /[&]/g;
+              var artstrtest = artstr.replace(regexspace, "+");
+              var artstrtest2 = encodeURI(artstrtest);
+              var artnamefinalencode = artstrtest2.replace(regexamp, "%26");
+
+              var filenamestrtest = song.name.replace(regexspace, "+");
+              var filenamestrtest2 = encodeURI(filenamestrtest);
+              var filenamefinalencode = filenamestrtest2.replace(regexamp, "%26");
+              drive_url = `https://riddim-archive-tune-store.s3-us-west-1.amazonaws.com/${artnamefinalencode.charAt(0)}/${artnamefinalencode}/${filenamefinalencode}`
+
+
+
+              let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, collab_artist, original_artist, drive_url, col1, col2, col3, col4, is_collab, rem1, rem2, is_remix, tune_of_week);
+
+              await conquerie.end(db);
+
+
+            }catch(err){
+              console.log(err);
+              res.render('error');
+            }
+          }//end async
+          storeFormResults(artist_name, artist_id, track_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2);
+          res.send({msg: themsg, song: song});
+        }
+      } 
+    }
   }
 
 });

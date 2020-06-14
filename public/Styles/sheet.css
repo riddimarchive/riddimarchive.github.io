@@ -518,6 +518,12 @@ li.tunetext{
   width: 330px;
 }
 
+li#tunetext{
+  font-size: xx-large;
+  text-align: center;
+  width: 330px;
+}
+
 audio{
   width: 300px;
   height: 54px;
@@ -796,6 +802,11 @@ li.tunetexttotwsmaller{
 
 .downloadbutton{
   display: flex;
+  justify-content: center;
+}
+
+#downloadbuttonhidden{
+  display: none;
   justify-content: center;
 }
 

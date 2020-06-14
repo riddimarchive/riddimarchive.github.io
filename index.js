@@ -2375,9 +2375,6 @@ app.post('/tests3upload', (req, res, next) => {
   var artstr = artist_name;
   var artfirstletter = artstr.charAt(0);
 
-  //console.log(`Art name is : ${artist_name}Track Name is:${track_name} Is Collab?${is_collab} Is Remix?${is_remix} col1 ${col1}col2${col2} col3 ${col3}col4 ${col4}rem1 ${rem1}rem2${rem2}`);
-  //res.send({artist_name: artist_name, track_name: track_name, is_collab: is_collab, is_remix: is_remix, col1: col1, col2: col2, col3: col3, col4: col4, rem1: rem1, rem2: rem2 }); 
-  
   var themsg = "";
   if (!req.files || Object.keys(req.files).length === 0) {
     themsg = "Be sure to Add File and Trackname!";

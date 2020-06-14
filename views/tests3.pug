@@ -8,18 +8,71 @@ block content
 	#labelgcenter
 	div(title=`${theid}`, id='dashartid')
 	div(title=`${theartname}`, id='dashartname')
+	div(title='0', id='currentcollabvalue')
+	div(title='0', id='currentremixvalue')
+	br
+
 
 	.faqform
 		form#fileuploadform(method='POST', enctype='multipart/form-data')
-			.label Track Name:
+			.downloadbutton
+				.labelmid Track Name:
+			input#tra_name(type='text', name='tra_name' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+			br
+			.middlecontain
+				.label2 Is Collab?:
+					.labelflexdiv
+						.labelflex Yes
+							input#is_collab.is_collab(type='radio', name='is_collab', value=1, style="height:35px; width:35px; vertical-align: middle;", onclick="change(this.value)")
+						.labelflex No
+							input#is_collab.is_collab(type='radio', name='is_collab', checked="checked", value=0, style="height:35px; width:35px; vertical-align: middle;", onclick="change(this.value)")
+				.label2 Is Remix?:
+					.labelflexdiv
+						.labelflex Yes
+							input#is_remix.is_remix(type='radio', name='is_remix', value=1, style="height:35px; width:35px; vertical-align: middle;", onclick="changeRemix(this.value)")
+						.labelflex No
+							input#is_remix.is_remix(type='radio', name='is_remix', checked="checked", value=0, style="height:35px; width:35px; vertical-align: middle;", onclick="changeRemix(this.value)")
+	
+			#collabfields
+				#collabfield1
+					.downloadbutton
+						.labelmid Collab Artist 1:
+					input#col1(type='text', name='col1', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+					.downloadbutton
+						img(id='addcol/1', class='addcolbtn', border='2', alt='back', src='Images/PageIMG/upload.png', height='35')
+				#collabfield2
+					.downloadbutton
+						.labelmid Collab Artist 2:
+					input#col2(type='text', name='col2', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+					.downloadbutton
+						img(id='addcol/2', class='addcolbtn', border='2', alt='back', src='Images/PageIMG/upload.png', height='35')
+				#collabfield3
+					.downloadbutton
+						.labelmid Collab Artist 3:
+					input#col3(type='text', name='col3', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+					.downloadbutton
+						img(id='addcol/3', class='addcolbtn', border='2', alt='back', src='Images/PageIMG/upload.png', height='35')
+				#collabfield4
+					.downloadbutton
+						.labelmid Collab Artist 4:
+					input#col4(type='text', name='col4', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+
+			#remixfields
+				#remixfield1
+					.downloadbutton
+						.labelmid Original Artist 1:
+					input#rem1(type='text', name='rem1', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+					.downloadbutton
+						img(id='addrem/1', class='addrembtn', border='2', alt='back', src='Images/PageIMG/upload.png', height='35')
+				#remixfield2
+					.downloadbutton
+						.labelmid Original Artist 2:
+					input#rem2(type='text', name='rem2', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+
+			.label3 Upload File:
 			br
 			div.form-group
-				input#tra_name(type='text', name='tra_name')
-			br
-			.label Upload File:
-			br
-			div.form-group
-				input#thefile(type='file', name='thefile')
+				input#thefile(type='file', name='thefile', style="min-width: 100%; border: solid 2px; padding: 1em; margin-bottom: 0.75em;")
 			.downloadbutton
 				div(id='thesubmit', class='thesubmit')
 					img(border='2', alt='back', src='Images/PageIMG/upload.png', height='50')
@@ -45,40 +98,89 @@ block content
 
 		$(document).ready(function() {
 			console.log("Doc ready");
+			document.getElementById("currentcollabvalue").title = 0;
+			document.getElementById("currentremixvalue").title = 0;
 			uploadInit();
+			collabAddInit();
+			remixAddInit();
 		});
 
-		document.addEventListener('play', function(e){
-			console.log("DO THINGS");
-			//do things
-			/*
-			e.target.src = "";
-			var theidstr = e.target.id;
-			var splitty = theidstr.split("/");
-			var index = splitty[0];
-			var track_id = splitty[1];
-			var artist_name = splitty[2];
-			var track_name = splitty[3];
+		function change(thevalue){
+			var collabfields = document.getElementById("collabfields");
+			if(thevalue == 1){
+				console.log("1");
+				collabfields.style.display = "block";
+			}
+			if(thevalue == 0){
+				console.log("0");
+				collabfields.style.display = "none";
+			}
 
-			$.ajax({
-				url:'/tests3gettrack',
-				type: 'POST',
-				data: {
-					index: index,
-					track_id: track_id,
-					artist_name: artist_name,
-					track_name: track_name
-				},
-				success: function(data){
-					var msg = document.getElementById("labelgcenter");
-					msg.innerHTML = data.msg;
-				},
-				error: function(){
-					console.log("Didn't Work");
+			document.getElementById("currentcollabvalue").title = thevalue;
+			var elements = document.getElementsByClassName('is_collab');
+			var top = elements[0];
+			var bottom = elements[1];
+			top.value = 1;
+			bottom.value = 0;
+		}
+
+		function changeRemix(thevalue){
+			var remixfields = document.getElementById("remixfields");
+			if(thevalue == 1){
+				console.log("1");
+				remixfields.style.display = "block";
+			}
+			if(thevalue == 0){
+				console.log("0");
+				remixfields.style.display = "none";
+			}
+			document.getElementById("currentremixvalue").title = thevalue;
+			var elements = document.getElementsByClassName('is_remix');
+			var top = elements[0];
+			var bottom = elements[1];
+			top.value = 1;
+			bottom.value = 0;
+		}
+
+		function getCurrentCollabValue(){
+			return document.getElementById("currentcollabvalue").title;
+		}
+
+		function getCurrentRemixValue(){
+			return document.getElementById("currentcollabvalue").title;
+		}
+
+		function collabAddInit(){
+			document.querySelectorAll('.addcolbtn').forEach(item => {
+				item.addEventListener('click', event => {
+				var thestring = item.id;
+				var splitty = thestring.split("/");
+				var index = splitty[1];
+				console.log(`index is: ${index}`);
+				if(index == 1){
+					var colfield2 = document.getElementById("collabfield2");
+					colfield2.style.display = "block";
 				}
-			});
-			*/
-		}, true);
+				if(index == 2){
+					var colfield3 = document.getElementById("collabfield3");
+					colfield3.style.display = "block";
+				}
+				if(index == 3){
+					var colfield4 = document.getElementById("collabfield4");
+					colfield4.style.display = "block";
+				}
+				});//click event
+			});//class selector
+		}
+
+		function remixAddInit(){
+			document.querySelectorAll('.addrembtn').forEach(item => {
+				item.addEventListener('click', event => {
+					var remfield2 = document.getElementById("remixfield2");
+					remfield2.style.display = "block";
+				});//click event
+			});//class selector
+		}
 
 		function uploadInit(){
 			var theform = $('#fileuploadform');
@@ -89,13 +191,22 @@ block content
 
 				var fd = new FormData();
 				var files = $('#thefile')[0].files[0];
+
 				var artist_name = document.getElementById("dashartname").title;
+
 				var track_namestr = document.getElementById("tra_name").value.toString();
 				const regex = /[^a-zA-Z0-9 ]/g;
 				var track_name = track_namestr.replace(regex, "");
+
+				var is_collab = getCurrentCollabValue();
+				var is_remix = getCurrentRemixValue();
+
 				fd.append('file', files);
 				fd.append('artist_name', artist_name);
 				fd.append('track_name', track_name);
+				fd.append('is_collab', is_collab);
+				fd.append('is_remix', is_remix);
+
 				$.ajax({
 					url:'/tests3upload',
 					type: 'POST',

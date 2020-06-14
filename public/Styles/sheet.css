@@ -29,6 +29,41 @@ body {
 .label{
   font-weight: bold;
   font-size: x-large;
+  margin: 0;
+  padding: 0;
+}
+
+.label2{
+  font-weight: bold;
+  font-size: x-large;
+  margin: 0;
+  padding: 0;
+  width: 7em;
+}
+
+.label3{
+  font-weight: bold;
+  font-size: x-large;
+  margin: 0;
+  padding: 0;
+  width: 12em;
+}
+
+.labelmid{
+  font-weight: bold;
+  font-size: x-large;
+  margin-left: 0.75em;
+  padding: 0;
+  width: 8em;
+}
+
+.labelflex{
+  font-weight: bold;
+  font-size: x-large;
+  display: flex;
+  width: 5em;
+  height: 2em;
+  margin-left: 1.5em;
 }
 
 .labelg{
@@ -550,7 +585,7 @@ li.tunetextsmaller{
 .faqform{
   display: flex;
   justify-content: center;
-  padding-left: 7em;
+  /* padding-left: 7em; */
   flex-wrap: wrap;
 }
 
@@ -569,7 +604,7 @@ li.tunetextsmaller{
   padding-top:1.5em;
   padding-bottom:1.5em;
   padding-left:1em;
-  padding-right: 20em;
+  /* padding-right: 20em; */
 }
 .faqform form .label{
   width: 800px;
@@ -1173,5 +1208,48 @@ li.tunetexttotwsmaller{
 }
 
 #dashartname{
+  display: none;
+}
+
+#currentcollabvalue{
+  display: none;
+}
+
+#currentremixvalue{
+  display: none;
+}
+
+.labelflexdiv{
+  border: black solid 2px;
+  margin-bottom: 0.75em;
+}
+
+#collabfields{
+  display: none;
+}
+
+#collabfield1{
+}
+
+#collabfield2{
+  display: none;
+}
+
+#collabfield3{
+  display: none;
+}
+
+#collabfield4{
+  display: none;
+}
+
+#remixfields{
+  display: none;
+}
+
+#remixfield1{
+}
+
+#remixfield2{
   display: none;
 }

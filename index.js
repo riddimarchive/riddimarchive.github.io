@@ -2371,7 +2371,7 @@ app.post('/tuneup', (req, res, next) => {
 //POST REQUEST - TEST S3 Upload
 app.post('/tests3upload', (req, res, next) => {
 
-  var { artist_name, track_name } = req.body;
+  var { artist_name, track_name, is_collab } = req.body;             
   var artstr = artist_name;
   var artfirstletter = artstr.charAt(0);
 

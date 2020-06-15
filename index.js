@@ -255,7 +255,27 @@ app.get('/create', (req, res, next) => {
   if(req.user !== undefined){
     theusername = req.user.username;
   }
-  res.render('create',{ title:'Create Account', msg: "", theusername: theusername });
+  res.render('create',{ title:'Create User Account', msg: "", theusername: theusername });
+
+});
+
+//GET REQUEST - CREATE ARTIST ACCOUNT PAGE
+app.get('/artselfcreate', (req, res, next) => {
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
+  res.render('artcreate',{ title:'Create Artist Account', msg: "", theusername: theusername });
+
+});
+
+//GET REQUEST - CREATE ACCOUNT PAGE
+app.get('/selectacct', (req, res, next) => {
+  var theusername = "";
+  if(req.user !== undefined){
+    theusername = req.user.username;
+  }
+  res.render('selectacct',{ title:'Create User Account', msg: "", theusername: theusername });
 
 });
 
@@ -525,8 +545,6 @@ app.get('/artist/:name', function(req,res){
             }
           }
           
-          
-
           await conquerie.end(db);
           tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
 

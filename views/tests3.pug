@@ -2,9 +2,14 @@ extends index
 
 block content
 	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
-	txt  
+	txt
+	.downloadbutton
+		.custombutton
+			a(href=`../artist/${theartname}`)
+				img(border='2' src='Images/PageIMG/myartistpage.png' alt='Images/PageIMG/fail.png' height='50')
+	br
 	.artisth1 
-		h1 Upload Page
+		h1 Upload Track
 	#labelgcenter
 
 	div(title=`${theid}`, id='dashartid')
@@ -24,27 +29,28 @@ block content
 				.labelmid Track Name:
 			input#tra_name(type='text', name='tra_name' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
 			br
-			.middlecontain
-				.label2 Is Collab?:
+			.middlecontain2
+				.label2 Is this track a Collab?:
 					.labelflexdiv
-						.labelflex Yes
+						div(class='labelflex') Yes
 							input#is_collab.is_collab(type='radio', name='is_collab', value=1, style="height:35px; width:35px; vertical-align: middle;", onclick="change(this.value)")
-						.labelflex No
+						div(class='labelflex', style="margin-left: 3.3em;") No
 							input#is_collab.is_collab(type='radio', name='is_collab', checked="checked", value=0, style="height:35px; width:35px; vertical-align: middle;", onclick="change(this.value)")
-				.label2 Is Remix?:
+				.label2 Is this track a Remix?:
 					.labelflexdiv
-						.labelflex Yes
+						div(class='labelflex') Yes
 							input#is_remix.is_remix(type='radio', name='is_remix', value=1, style="height:35px; width:35px; vertical-align: middle;", onclick="changeRemix(this.value)")
-						.labelflex No
+						div(class='labelflex', style="margin-left: 3.3em;") No
 							input#is_remix.is_remix(type='radio', name='is_remix', checked="checked", value=0, style="height:35px; width:35px; vertical-align: middle;", onclick="changeRemix(this.value)")
 	
 			#collabfields
 				#collabfield1
 					.downloadbutton
 						.labelmid Collab Artist 1:
-					.middlecontain
+					.middlecontain2
 						input#col1(type='text', name='col1', value="", style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 70%;")
-						img(id='addcol', class='addcolbtn', border='2', alt='back', src='Images/PageIMG/plus.png', height='35')
+						.custombutton
+							img(id='addcol', class='addcolbtn', border='2', alt='back', src='Images/PageIMG/plus.png', height='35')
 
 				#collabfield2
 					.downloadbutton
@@ -67,7 +73,7 @@ block content
 				#remixfield1
 					.downloadbutton
 						.labelmid Original Artist 1:
-					.middlecontain
+					.middlecontain2
 						input#rem1(type='text', name='rem1', value="", style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 70%;")
 						img(id='addrem/1', class='addrembtn', border='2', alt='back', src='Images/PageIMG/plus.png', height='35')
 				#remixfield2
@@ -80,8 +86,9 @@ block content
 			div.form-group
 				input#thefile(type='file', name='thefile', style="min-width: 100%; border: solid 2px; padding: 1em; margin-bottom: 0.75em;")
 			.downloadbutton
-				div(id='preview', class='previewbtn')
-					img(border='2', alt='back', src='Images/PageIMG/preview.png', height='50')
+				.custombutton
+					div(id='preview', class='previewbtn')
+						img(border='2', alt='back', src='Images/PageIMG/preview.png', height='50')
 			.downloadbutton
 				#labelgcenter2
 	#downloadbuttonhidden
@@ -93,8 +100,9 @@ block content
 					.regaudio
 						audio(id='previewtune', src='', type='audio/mpeg', controls='', preload='none')
 		.downloadbutton
-			div(id='thesubmit', class='thesubmit')
-				img(border='2', alt='back', src='Images/PageIMG/upload.png', height='50', style="margin-top: 2.5em;")
+			.custombutton
+				div(id='thesubmit', class='thesubmit')
+					img(border='2', alt='back', src='Images/PageIMG/upload.png', height='50', style="margin-top: 2.5em;height: 75px;")
 						
 	script.
 		$(document).on("keydown", "form", function(event) { 
@@ -277,7 +285,7 @@ block content
 					original_artist = `${rem1} & ${rem2} - `;
 				}
 				if(rem1 != "" && rem2 == ""){
-					original_artist = `${rem2} - `;
+					original_artist = `${rem1} - `;
 				}
 			}
 
@@ -293,6 +301,9 @@ block content
 			if(is_remix == 1){
 				blank = ``;
 			}
+			if(is_collab == 1 && is_remix){
+				blank = ``;
+			}
 
 			return `${original_artist}${track_name}${blank}`;
 
@@ -304,7 +315,7 @@ block content
 				console.log("clicked button");
 				ev.preventDefault();
 				var msg2 = document.getElementById("labelgcenter2");
-				msg2.innerHTML = "Please see Preview Below, This is how your tune will look!<br>	If you Selected Collab or Artist:<br>I Recommend taking that info out of Track Name!";
+				msg2.innerHTML = "Please see Preview Below, This is how your tune will look!<br>Click Upload Button to Submit<br>*Note*: If you Selected Yes for Collab or Remix:<br>I Recommend taking that info out of the Track Name!";
 
 				var finalstr = generateUploadString();
 

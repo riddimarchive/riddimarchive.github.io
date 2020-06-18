@@ -2390,8 +2390,6 @@ app.post('/tuneup', (req, res, next) => {
 app.post('/tests3upload', (req, res, next) => {
 
   var { artist_name, artist_id, track_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2 } = req.body;             
-  var artstr = artist_name;
-  var artfirstletter = artstr.charAt(0);
 
   var themsg = "";
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -2413,8 +2411,12 @@ app.post('/tests3upload', (req, res, next) => {
           //all checks passed - add song to aws s3 and DB
 
           const song = req.files.file;
+          var artstr = artist_name;
+          var artfirstletter = artstr.charAt(0);
           var makepublic = 1;
-          s3fcn.uploadToS3(song, artist_name, track_name, artfirstletter, makepublic);
+          var islogo = 0;
+
+          s3fcn.uploadToS3(song, islogo, artist_name, artfirstletter, makepublic);
           themsg = "File uploaded!";
           //add tune to db!
           async function storeFormResults(artist_name, artist_id, track_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2){
@@ -2479,6 +2481,76 @@ app.post('/tests3upload', (req, res, next) => {
       } 
     }
   }
+
+});
+
+//POST REQUEST - TEST S3 Upload
+app.post('/newartistacctcreate', (req, res, next) => {
+
+  var { username, pass1, pass2, artist_name } = req.body;
+
+  if (!req.files || Object.keys(req.files).length === 0) {
+    res.send({msg: "Be sure to Attach Both Files!"});
+  }else{
+    if(!username || !pass1 || !pass2){
+      res.send({msg: "Be sure to include Username and Password Twice!"});
+    }else{
+      if(pass1 !== pass2){
+        res.send({msg: "Passwords do not match, Please Re-enter"});
+      }else{
+        //perform hash and add query
+        async function createArtResponse(username, pass1, artist_name){
+          try{
+            var db = createConnection();
+            var hashpass = "";
+            await conquerie.connect(db);
+  
+            let uresult = await userquerie.getUserInfo(db, username);
+            if(uresult.length > 0){
+              res.send({msg: "Username Taken! Please Try a Different Name"});
+            }else{
+                hashpass = await has.hashPass(pass1);
+                let result = await userquerie.createAccount(db, username, hashpass);
+                await conquerie.end(db);
+
+                const proof = req.files.prooffile;
+                const logo = req.files.artistlogo;
+                var artstr = artist_name;
+                var artfirstletter = artstr.charAt(0);
+                var makepublic = 1;
+                var islogo = 1;
+
+                s3fcn.uploadToS3(logo, islogo, artist_name, artfirstletter, makepublic);
+
+                var img_url = "";
+                const regexspace = /[ ]/g;
+                const regexamp = /[&]/g;
+                var artstrtest = artstr.replace(regexspace, "+");
+                var artstrtest2 = encodeURI(artstrtest);
+                var artnamefinalencode = artstrtest2.replace(regexamp, "%26");
+
+                var filenamestrtest = logo.name.replace(regexspace, "+");
+                var filenamestrtest2 = encodeURI(filenamestrtest);
+                var filenamefinalencode = filenamestrtest2.replace(regexamp, "%26");
+                img_url = `https://riddim-archive-tune-store.s3-us-west-1.amazonaws.com/Images/${artnamefinalencode.charAt(0)}/${artnamefinalencode}/${filenamefinalencode}`
+                console.log("urlbelow");
+                console.log(img_url);
+
+                await emailer.storeArtistVerifyImage(proof, artist_name);
+                await emailer.emailArtistVerify(artist_name, img_url);
+                res.send({msg: "Artist Account Submitted.<br>Once Info is verified, you can upload tunes to your Artist Page!"});
+            }//else 4, username is free
+          }catch(err){
+            console.log(err);
+            res.render('error');
+          }
+        }//end async
+  
+      createArtResponse(username, pass1, artist_name);
+  
+      }//else 3, passwords match
+    }//else 2, username + passwords entered
+  }//else 1, files are attached
 
 });
 

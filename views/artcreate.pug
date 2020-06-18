@@ -2,6 +2,108 @@ extends index3
 
 block content
 	.artisth1 
-		h1 Create ARTIST Account - *Work In Progress*
-	- var message = msg;
-	.labelgcenter #{message}
+		h1 Create Artist Account
+	#labelgcenter
+
+	.faqform
+		form#fileuploadform(method='POST', enctype='multipart/form-data')
+			.downloadbutton
+				.labelmid2 User Name:
+			input#username(type='text', name='username' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+			br
+			.downloadbutton
+				.labelmid2 Password:
+			input#pass1(type='password', name='pass1' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+			br
+
+			.downloadbutton
+				.labelmid2 Enter Password Again:
+			input#pass2(type='password', name='pass2' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+			br
+			.downloadbutton
+				.labelmid2 Artist Name:
+			input#art_name(type='text', name='art_name' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+			br
+			.label3nowidth Please upload Image Proof that you are this artist!
+			.label3nowidth Admins will verify before assigning to you/creating page:
+			input#prooffile(type='file', name='prooffile', style="min-width: 100%; border: solid 2px; padding: 1em; margin-bottom: 0.75em;")
+			br
+			
+			.label3nowidth Upload Artist Logo (Square Image 500 x 500 is best):
+			input#artistlogo(type='file', name='artistlogo', style="min-width: 100%; border: solid 2px; padding: 1em; margin-bottom: 0.75em;")
+			br
+	.downloadbutton
+		.custombutton
+			div(id='thesubmit', class='thesubmit')
+				img(border='2', alt='back', src='Images/PageIMG/artsubmit.png', height='50', style="height: 75px;")
+	.downloadbutton
+		#labelgcenter2
+
+	script.
+		$(document).on("keydown", "form", function(event) { 
+			return event.key != "Enter";
+		});
+
+		$(document).bind("keydown keypress", function(e){
+			if( e.which == 8 ){ // 8 == backspace
+				if(e.target.readOnly ){
+					e.preventDefault();
+				}
+			}
+		});
+
+		$(document).ready(function() {
+			console.log("Doc ready");
+			uploadInit();
+		});
+
+		function uploadInit(){
+			var theform = $('#fileuploadform');
+			var thebutton = $('#thesubmit');
+			thebutton.click(function (ev) {
+				console.log("clicked button");
+				ev.preventDefault();
+				var msg = document.getElementById("labelgcenter");
+				msg.innerHTML = "Submitting...";
+				var msg2 = document.getElementById("labelgcenter2");
+				msg2.innerHTML = "Submitting...";
+				var fd = new FormData();
+				var prooffile = $('#prooffile')[0].files[0];
+				var artistlogo = $('#artistlogo')[0].files[0];
+
+				console.table(prooffile);
+				console.table(artistlogo);
+				var username = document.getElementById("username").value
+				var pass1 = document.getElementById("pass1").value
+				var pass2 = document.getElementById("pass2").value
+				var artist_name = document.getElementById("art_name").value
+				console.log(username);
+				console.log(pass1);
+				console.log(pass2);
+				console.log(artist_name);
+
+				fd.append('prooffile', prooffile);
+				fd.append('artistlogo', artistlogo);
+				fd.append('username', username);
+				fd.append('pass1', pass1);
+				fd.append('pass2', pass2);
+				fd.append('artist_name', artist_name);
+
+				$.ajax({
+					url:'/newartistacctcreate',
+					type: 'POST',
+					data: fd,
+					processData: false,
+					contentType: false,
+					success: function(data){
+						var msg = document.getElementById("labelgcenter");
+						var msg2 = document.getElementById("labelgcenter2");
+						msg.innerHTML = data.msg;
+						msg2.innerHTML = data.msg;
+					},
+					error: function(){
+						console.log("Didn't Work");
+					}
+				});
+			});
+		}

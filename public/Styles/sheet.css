@@ -49,12 +49,27 @@ body {
   width: 12em;
 }
 
+.label3nowidth{
+  font-weight: bold;
+  font-size: x-large;
+  margin: 0;
+  padding: 0;
+}
+
 .labelmid{
   font-weight: bold;
   font-size: x-large;
   margin-left: 0.75em;
   padding: 0;
   width: 8em;
+}
+
+.labelmid2{
+  font-weight: bold;
+  font-size: x-large;
+  margin-left: 0.75em;
+  margin-top: 0.75em;
+  padding: 0;
 }
 
 .labelflex{

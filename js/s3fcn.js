@@ -1,6 +1,6 @@
 const aws = require('aws-sdk');
 
-function uploadToS3(file, artist_name, track_name, artfirstletter, makepublic) {
+function uploadToS3(file, islogo, artist_name, artfirstletter, makepublic) {
 	let s3bucket = new aws.S3({
 	  accessKeyId: process.env.ACCESS_KEY,
 	  secretAccessKey: process.env.SECRET_ACCESS_KEY,
@@ -8,15 +8,23 @@ function uploadToS3(file, artist_name, track_name, artfirstletter, makepublic) {
 	});
 	s3bucket.createBucket(function () {
 	  var tagstring = `Artist=${artist_name}`;
+	  var params = {
+		Bucket: process.env.BUCKET,
+		Tagging: `${tagstring}`,
+		Key: `${artfirstletter}/${artist_name}/${file.name}`,
+		Body: file.data,
+	  };
 	  if (makepublic == 1){
 		tagstring = `public=yes&Artist=${artist_name}`;
 	  }
-	  var params = {
-	   Bucket: process.env.BUCKET,
-	   Tagging: `${tagstring}`,
-	   Key: `${artfirstletter}/${artist_name}/${file.name}`,
-	   Body: file.data,
-	  };
+	  if (islogo == 1){
+		params = {
+			Bucket: process.env.BUCKET,
+			Tagging: `${tagstring}`,
+			Key: `Images/${artfirstletter}/${artist_name}/${file.name}`,
+			Body: file.data,
+		};
+	  }
 	  s3bucket.upload(params, function (err, data) {
 		console.log("in upload function");
 	   if (err) {

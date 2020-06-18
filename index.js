@@ -2537,7 +2537,7 @@ app.post('/newartistacctcreate', (req, res, next) => {
                 console.log(img_url);
 
                 await emailer.storeArtistVerifyImage(proof, artist_name);
-                await emailer.emailArtistVerify(artist_name, img_url);
+                await emailer.emailArtistVerify(username, artist_name, img_url);
                 res.send({msg: "Artist Account Submitted.<br>Once Info is verified, you can upload tunes to your Artist Page!"});
             }//else 4, username is free
           }catch(err){

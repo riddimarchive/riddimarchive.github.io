@@ -83,12 +83,13 @@ function emailArtistForm(artist_name, crew, country, info, link, artist_img){
 	return filepromise;
 }
 
-function emailArtistVerify(artist_name, img_url){
+function emailArtistVerify(username, artist_name, img_url){
 
 	let filepromise = new Promise(function(resolve, reject){
         const output = 
             `Artist Account Create!
-        
+
+            Username: ${username}
             Artist Name: ${artist_name}
             IMG URL: ${img_url}`;
         

@@ -127,7 +127,7 @@ app.get('/', (req, res) => {
         let tresult = await artquerie.getAllArtistsAthroughD(db);
 
         for (var i = 0; i < tresult.length; i++) {
-          var row = { 'artist_name': tresult[i].artist_name }
+          var row = { 'artist_name': tresult[i].artist_name, 'img_url': tresult[i].img_url }
           artists.push(row);
         }
 
@@ -480,6 +480,7 @@ app.get('/artist/:name', function(req,res){
 
           let result = await artquerie.getArtistInfo(db, name);
           info = `${result[0].info}`;
+          var img_url = `${result[0].img_url}`;
           if(result[0].fb.length > 1){
             fb = `https://www.facebook.com/${result[0].fb}`;
           }
@@ -548,7 +549,7 @@ app.get('/artist/:name', function(req,res){
           await conquerie.end(db);
           tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
 
-          res.render('artist',{ artist_name: name, info: info, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
+          res.render('artist',{ artist_name: name, info: info, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, img_url: img_url, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
 
       }catch(err){
         console.log(err);
@@ -757,7 +758,7 @@ app.post('/', (req, res, next) => {
 
         //store results
         for (var i = 0; i < tresult.length; i++) {
-          var row = { 'artist_name': tresult[i].artist_name }
+          var row = { 'artist_name': tresult[i].artist_name, 'img_url': tresult[i].img_url }
           artists.push(row);
         }
 
@@ -833,7 +834,7 @@ app.post('/', (req, res, next) => {
 
         //store results
         for (var i = 0; i < tresult.length; i++) {
-          var row = { 'artist_name': tresult[i].artist_name }
+          var row = { 'artist_name': tresult[i].artist_name, 'img_url': tresult[i].img_url }
           artists.push(row);
         }
 
@@ -1068,7 +1069,6 @@ forwardResponse();
 
 
 //POST REQUEST - Track Create
-//check for field entry, authenticate and redirect with passport
 app.post('/trackcreate', (req, res, next) => {
 
   var { track_name, artist_name, drive_url, tune_of_week, is_collab, collab1, collab2, collab3, collab4, is_remix, og1, og2 } = req.body;
@@ -1409,7 +1409,7 @@ app.post('/search', (req, res, next) => {
               }else{
 
                   for (var i = 0; i < result.length; i++) {
-                    var row = { 'artist_name': result[i].artist_name }
+                    var row = { 'artist_name': result[i].artist_name, 'img_url': result[i].img_url }
                     artists.push(row);
                   }
                   await conquerie.end(db);
@@ -1430,7 +1430,7 @@ app.post('/search', (req, res, next) => {
               }else{
 
                   for (var i = 0; i < cresult.length; i++) {
-                    var row = { 'artist_name': cresult[i].artist_name }
+                    var row = { 'artist_name': cresult[i].artist_name, 'img_url': cresult[i].img_url }
                     artists.push(row);
                   }//end for
 
@@ -1470,35 +1470,35 @@ app.post('/page', (req, res, next) => {
       if(pagey == 0){
         let result = await artquerie.getAllArtistsAthroughD(db);
         for (var i = 0; i < result.length; i++) {
-          var row = { 'artist_name': result[i].artist_name }
+          var row = { 'artist_name': result[i].artist_name, 'img_url': result[i].img_url }
           artists.push(row);
         }//end for
       }
       if(pagey == 1){
         let result = await artquerie.getAllArtistsEthroughI(db);
         for (var i = 0; i < result.length; i++) {
-          var row = { 'artist_name': result[i].artist_name }
+          var row = { 'artist_name': result[i].artist_name, 'img_url': result[i].img_url }
           artists.push(row);
         }//end for
       }
       if(pagey == 2){
         let result = await artquerie.getAllArtistsJthroughO(db);
         for (var i = 0; i < result.length; i++) {
-          var row = { 'artist_name': result[i].artist_name }
+          var row = { 'artist_name': result[i].artist_name, 'img_url': result[i].img_url }
           artists.push(row);
         }//end for
       }
       if(pagey == 3){
         let result = await artquerie.getAllArtistsPthroughT(db);
         for (var i = 0; i < result.length; i++) {
-          var row = { 'artist_name': result[i].artist_name }
+          var row = { 'artist_name': result[i].artist_name, 'img_url': result[i].img_url }
           artists.push(row);
         }//end for
       }
       if(pagey == 4){
         let result = await artquerie.getAllArtistsUthroughZ(db);
         for (var i = 0; i < result.length; i++) {
-          var row = { 'artist_name': result[i].artist_name }
+          var row = { 'artist_name': result[i].artist_name, 'img_url': result[i].img_url }
           artists.push(row);
         }//end for
       }

@@ -1,7 +1,7 @@
 function getArtistInfo(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT id, info, fb, sc, bc, beat, insta FROM artists WHERE artist_name = ?`, [artist_name], (error, result, fields) => {
+		db.query(`SELECT id, info, fb, sc, bc, beat, insta, img_url FROM artists WHERE artist_name = ?`, [artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -20,7 +20,7 @@ function getArtistInfo(db, artist_name){
 function getAllArtists(db){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT artist_name FROM artists`, (error, result, fields) => {
+		db.query(`SELECT artist_name, img_url FROM artists`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -58,7 +58,7 @@ function getArtistNameByID(db, id){
 function getAllArtistsAthroughD(db){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT artist_name FROM artists 
+		db.query(`SELECT artist_name, img_url FROM artists 
 		WHERE artist_name >= "0" and artist_name < "E" 
 		ORDER BY artist_name`, (error, result, fields) => {
 	    	if (error) {
@@ -79,7 +79,7 @@ function getAllArtistsAthroughD(db){
 function getAllArtistsEthroughI(db){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT artist_name FROM artists 
+		db.query(`SELECT artist_name, img_url FROM artists 
 		WHERE artist_name >= "E" and artist_name < "J" 
 		ORDER BY artist_name`, (error, result, fields) => {
 	    	if (error) {
@@ -100,7 +100,7 @@ function getAllArtistsEthroughI(db){
 function getAllArtistsJthroughO(db){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT artist_name FROM artists 
+		db.query(`SELECT artist_name, img_url FROM artists 
 		WHERE artist_name >= "J" and artist_name < "P" 
 		ORDER BY artist_name`, (error, result, fields) => {
 	    	if (error) {
@@ -121,7 +121,7 @@ function getAllArtistsJthroughO(db){
 function getAllArtistsPthroughT(db){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT artist_name FROM artists 
+		db.query(`SELECT artist_name, img_url FROM artists 
 		WHERE artist_name >= "P" and artist_name < "U" 
 		ORDER BY artist_name`, (error, result, fields) => {
 	    	if (error) {
@@ -142,7 +142,7 @@ function getAllArtistsPthroughT(db){
 function getAllArtistsUthroughZ(db){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT artist_name FROM artists 
+		db.query(`SELECT artist_name, img_url FROM artists 
 		WHERE artist_name >= "U" 
 		ORDER BY artist_name`, (error, result, fields) => {
 	    	if (error) {
@@ -163,7 +163,7 @@ function getAllArtistsUthroughZ(db){
 function searchArtists(db, search_results){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT artist_name FROM artists 
+		db.query(`SELECT artist_name, img_url FROM artists 
 		WHERE artist_name LIKE ?`, [search_results], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -183,7 +183,7 @@ function searchArtists(db, search_results){
 function searchArtistsByCrew(db, search_results){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT artist_name FROM artists 
+		db.query(`SELECT artist_name, img_url FROM artists 
 		WHERE crew LIKE ?`, [search_results], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');

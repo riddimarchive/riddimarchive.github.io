@@ -129,7 +129,7 @@ block content
           a(href=`artist/${artist.artist_name}`)
             .imgwrap
               p.imgdescription=`${artist.artist_name}`
-              img(src=`Images/Logos/${artist.artist_name}.jpg` alt="ADD ARTIST IMG HERE" height='275' width='275')
+              img(src=`${artist.img_url}` alt="ADD ARTIST IMG HERE" height='275' width='275')
   #fishcontain2
     #fish2
 
@@ -170,7 +170,7 @@ block content
         //artist image
         var artistimage = document.createElement('img');
         artistimage.setAttribute('alt', 'ADD ARTIST IMG HERE');
-        artistimage.setAttribute('src', `Images/Logos/${list[i].artist_name}.jpg`);
+        artistimage.setAttribute('src', `${list[i].img_url}`);
         artistimage.setAttribute('height', '275');
         artistimage.setAttribute('width', '275');
 

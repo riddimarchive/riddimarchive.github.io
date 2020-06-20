@@ -105,23 +105,8 @@ app.get('/', (req, res) => {
         let result = await trackquerie.getTracksOfTheWeek(db);
 
         for (var i = 0; i < result.length; i++) {
-          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "" }
+          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "" }
           totw.push(row);
-        }
-
-        for (var i = 0; i < totw.length; i++) {
-          if(totw[i].is_remix != 1){
-            totw[i].blank = ` - ${totw[i].artist_name}`;
-          }
-          if(totw[i].is_collab == 1){
-            totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`
-          }
-          if(totw[i].is_collab != 1){
-            totw[i].blank = ` - ${totw[i].artist_name}`;
-          }
-          if(totw[i].is_remix == 1){
-            totw[i].blank = ``;
-          }
         }
 
         let tresult = await artquerie.getAllArtistsAthroughD(db);
@@ -137,15 +122,7 @@ app.get('/', (req, res) => {
         randtrackname = randresult[0].track_name;
         randtrackid = randresult[0].id;
 
-        var shuffletext = `${randartistname} - ${randtrackname}`;
-
-        if(randresult[0].is_collab == 1){
-          shuffletext = `${randartistname}${randresult[0].collab_artist} - ${randtrackname}`
-        }
-        if(randresult[0].is_remix == 1){
-          shuffletext = `${randresult[0].original_artist}${randtrackname}`;
-        }
-
+        var shuffletext = `${randtrackname}`;
         await conquerie.end(db);
 
         res.render('homepage',{ title:'Riddim Archive Index', msg: "", artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw, theusername: theusername });
@@ -367,7 +344,7 @@ app.get('/favorites', (req, res) => {
         }else{
 
           for (var i = 0; i < result.length; i++) {
-            var row = { 'track_name': result[i].track_name, 'artist_name': result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+            var row = { 'track_name': result[i].track_name, 'artist_name': result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'short_name': result[i].short_name, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
             tracks.push(row);
           }
 
@@ -383,23 +360,10 @@ app.get('/favorites', (req, res) => {
                 tracks[i].userhearted = 1;
               }
             }
-
-            if(tracks[i].is_remix != 1){
-              tracks[i].blank = ` - ${tracks[i].artist_name}`;
-            }
-            if(tracks[i].is_collab == 1){
-              tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`
-            }
-            if(tracks[i].is_collab != 1){
-              tracks[i].blank = ` - ${tracks[i].artist_name}`;
-            }
-            if(tracks[i].is_remix == 1){
-              tracks[i].blank = ``;
-            }
           }
 
           await conquerie.end(db);
-          tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
+          tracks.sort((a, b) => (a.short_name > b.short_name) ? 1 : -1);
 
           res.render('favorites',{ thetracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
       }
@@ -499,14 +463,14 @@ app.get('/artist/:name', function(req,res){
 
           let tresult = await trackquerie.getAllTracksFromArtist(db, name);
           for (var i = 0; i < tresult.length; i++) {
-            var row = { 'track_name':tresult[i].track_name, 'artist_name':tresult[i].artist_name, 'drive_url': tresult[i].drive_url, 'crew': tresult[i].crew, 'country': tresult[i].country, 'artist_id': tresult[i].artist_id, 'id': tresult[i].id, 'collab_artist': tresult[i].collab_artist, 'original_artist': tresult[i].original_artist, 'is_remix': tresult[i].is_remix, 'is_collab': tresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+            var row = { 'track_name':tresult[i].track_name, 'artist_name':tresult[i].artist_name, 'drive_url': tresult[i].drive_url, 'crew': tresult[i].crew, 'country': tresult[i].country, 'artist_id': tresult[i].artist_id, 'id': tresult[i].id, 'short_name': tresult[i].short_name, 'is_remix': tresult[i].is_remix, 'is_collab': tresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
             tracks.push(row);
           }
 
           let collabresult = await trackquerie.getCollabsIncludingArtist(db, name);
           if(collabresult.length > 0){
             for (var i = 0; i < collabresult.length; i++) {
-              var row = { 'track_name':collabresult[i].track_name, 'artist_name':collabresult[i].artist_name, 'drive_url': collabresult[i].drive_url, 'crew': collabresult[i].crew, 'country': collabresult[i].country, 'artist_id': collabresult[i].artist_id, 'id': collabresult[i].id, 'collab_artist': collabresult[i].collab_artist, 'original_artist': collabresult[i].original_artist, 'is_remix': collabresult[i].is_remix, 'is_collab': collabresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+              var row = { 'track_name':collabresult[i].track_name, 'artist_name':collabresult[i].artist_name, 'drive_url': collabresult[i].drive_url, 'crew': collabresult[i].crew, 'country': collabresult[i].country, 'artist_id': collabresult[i].artist_id, 'id': collabresult[i].id, 'short_name': collabresult[i].short_name, 'is_remix': collabresult[i].is_remix, 'is_collab': collabresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
               tracks.push(row);
             }
           }
@@ -514,7 +478,7 @@ app.get('/artist/:name', function(req,res){
           let remixresult = await trackquerie.getTracksThatOthersRemixed(db, name);
           if(remixresult.length > 0){
             for (var i = 0; i < remixresult.length; i++) {
-              var row = { 'track_name':remixresult[i].track_name, 'artist_name':remixresult[i].artist_name, 'drive_url': remixresult[i].drive_url, 'crew': remixresult[i].crew, 'country': remixresult[i].country, 'artist_id': remixresult[i].artist_id, 'id': remixresult[i].id, 'collab_artist': remixresult[i].collab_artist, 'original_artist': remixresult[i].original_artist, 'is_remix': remixresult[i].is_remix, 'is_collab': remixresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+              var row = { 'track_name':remixresult[i].track_name, 'artist_name':remixresult[i].artist_name, 'drive_url': remixresult[i].drive_url, 'crew': remixresult[i].crew, 'country': remixresult[i].country, 'artist_id': remixresult[i].artist_id, 'id': remixresult[i].id, 'short_name': remixresult[i].short_name, 'is_remix': remixresult[i].is_remix, 'is_collab': remixresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
               tracks.push(row);
             }
           }
@@ -531,23 +495,10 @@ app.get('/artist/:name', function(req,res){
                 tracks[i].userhearted = 1;
               }
             }
-
-            if(tracks[i].is_remix != 1){
-              tracks[i].blank = ` - ${tracks[i].artist_name}`;
-            }
-            if(tracks[i].is_collab == 1){
-              tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`
-            }
-            if(tracks[i].is_collab != 1){
-              tracks[i].blank = ``;
-            }
-            if(tracks[i].is_remix == 1){
-              tracks[i].blank = ``;
-            }
           }
           
           await conquerie.end(db);
-          tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
+          tracks.sort((a, b) => (a.short_name > b.short_name) ? 1 : -1);
 
           res.render('artist',{ artist_name: name, info: info, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, img_url: img_url, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
 
@@ -586,7 +537,7 @@ app.get('/share/:id', function(req,res){
 
           let tresult = await trackquerie.getTrackbyID(db, track_id);
           if (tresult.length > 0){
-            var row = { 'track_name':tresult[0].track_name, 'artist_name':tresult[0].artist_name, 'drive_url': tresult[0].drive_url, 'artist_id': tresult[0].artist_id, 'id': tresult[0].id, 'collab_artist': tresult[0].collab_artist, 'original_artist': tresult[0].original_artist, 'is_remix': tresult[0].is_remix, 'is_collab': tresult[0].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+            var row = { 'track_name':tresult[0].track_name, 'artist_name':tresult[0].artist_name, 'drive_url': tresult[0].drive_url, 'artist_id': tresult[0].artist_id, 'id': tresult[0].id, 'is_remix': tresult[0].is_remix, 'is_collab': tresult[0].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
             tracks.push(row);
 
             let thehearts = await heartquerie.getAllHeartsOnTrack(db, tracks[0].id);
@@ -599,19 +550,7 @@ app.get('/share/:id', function(req,res){
                   tracks[0].userhearted = 1;
                 }
               }
-  
-              if(tracks[0].is_remix != 1){
-                tracks[0].blank = ` - ${tracks[0].artist_name}`;
-              }
-              if(tracks[0].is_collab == 1){
-                tracks[0].blank = ` - ${tracks[0].artist_name}${tracks[0].collab_artist}`
-              }
-              if(tracks[0].is_collab != 1){
-                tracks[0].blank = ` - ${tracks[0].artist_name}`;
-              }
-              if(tracks[0].is_remix == 1){
-                tracks[0].blank = ``;
-              }
+
               await conquerie.end(db);
               msg = "Track Found!";
               res.render('share', { artist_name: tracks[0].artist_name, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
@@ -735,23 +674,8 @@ app.post('/', (req, res, next) => {
         let result = await trackquerie.getTracksOfTheWeek(db);
 
         for (var i = 0; i < result.length; i++) {
-          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "" }
+          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "" }
           totw.push(row);
-        }
-
-        for (var i = 0; i < totw.length; i++) {
-          if(totw[i].is_remix != 1){
-            totw[i].blank = ` - ${totw[i].artist_name}`;
-          }
-          if(totw[i].is_collab == 1){
-            totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`
-          }
-          if(totw[i].is_collab != 1){
-            totw[i].blank = ` - ${totw[i].artist_name}`;
-          }
-          if(totw[i].is_remix == 1){
-            totw[i].blank = ``;
-          }
         }
 
         let tresult = await artquerie.getAllArtists(db);
@@ -767,14 +691,7 @@ app.post('/', (req, res, next) => {
         randartistname = randresult[0].artist_name;
         randtrackname = randresult[0].track_name;
         randtrackid = randresult[0].id;
-        var shuffletext = `${randartistname} - ${randtrackname}`;
-
-        if(randresult[0].is_collab == 1){
-          shuffletext = `${randartistname}${randresult[0].collab_artist} - ${randtrackname}`
-        }
-        if(randresult[0].is_remix == 1){
-          shuffletext = `${randresult[0].original_artist}${randtrackname}`;
-        }
+        var shuffletext = `${randtrackname}`;
 
         await conquerie.end(db);
 
@@ -811,23 +728,8 @@ app.post('/', (req, res, next) => {
         let result = await trackquerie.getTracksOfTheWeek(db);
 
         for (var i = 0; i < result.length; i++) {
-          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "" }
+          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'id': result[i].id, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "" }
           totw.push(row);
-        }
-
-        for (var i = 0; i < totw.length; i++) {
-          if(totw[i].is_remix != 1){
-            totw[i].blank = ` - ${totw[i].artist_name}`;
-          }
-          if(totw[i].is_collab == 1){
-            totw[i].blank = ` - ${totw[i].artist_name}${totw[i].collab_artist}`
-          }
-          if(totw[i].is_collab != 1){
-            totw[i].blank = ` - ${totw[i].artist_name}`;
-          }
-          if(totw[i].is_remix == 1){
-            totw[i].blank = ``;
-          }
         }
 
         let tresult = await artquerie.getAllArtists(db);
@@ -843,15 +745,7 @@ app.post('/', (req, res, next) => {
         randartistname = randresult[0].artist_name;
         randtrackname = randresult[0].track_name;
         randtrackid = randresult[0].id;
-        var shuffletext = `${randartistname} - ${randtrackname}`;
-
-        if(randresult[0].is_collab == 1){
-          shuffletext = `${randartistname}${randresult[0].collab_artist} - ${randtrackname}`
-        }
-        if(randresult[0].is_remix == 1){
-          shuffletext = `${randresult[0].original_artist}${randtrackname}`;
-        }
-
+        var shuffletext = `${randtrackname}`;
         
         //confirm favorite isn't already there
         let ckresult = await userquerie.checkUserFavorite(db, user_id, track_id);
@@ -1046,14 +940,7 @@ app.post('/forward',(req,res)=>{
       thedriveurl = result[0].drive_url;
       theartistname = result[0].artist_name;
       thetrackname = result[0].track_name;
-      var shuffletext = `${theartistname} - ${thetrackname}`;
-
-      if(result[0].is_collab == 1){
-        shuffletext = `${theartistname}${result[0].collab_artist} - ${thetrackname}`
-      }
-      if(result[0].is_remix == 1){
-        shuffletext = `${result[0].original_artist}${thetrackname}`;
-      }
+      var shuffletext = `${thetrackname}`;
 
       await conquerie.end(db);
       res.send({source: thedriveurl, id: theid, artist_name: theartistname, track_name: thetrackname, shuftext: shuffletext});
@@ -1071,7 +958,7 @@ forwardResponse();
 //POST REQUEST - Track Create
 app.post('/trackcreate', (req, res, next) => {
 
-  var { track_name, artist_name, drive_url, tune_of_week, is_collab, collab1, collab2, collab3, collab4, is_remix, og1, og2 } = req.body;
+  var { track_name, artist_name, drive_url, tune_of_week, short_name, is_collab, collab1, collab2, collab3, collab4, is_remix, og1, og2 } = req.body;
   var theusername = "";
   if(req.user !== undefined){
     theusername = req.user.username;
@@ -1083,32 +970,6 @@ app.post('/trackcreate', (req, res, next) => {
       //make queries, get all artist/track info and render artist page
       async function storeFormResults(track_name, artist_name, drive_url, theusername){
           try{
-            var collab_artist = "";
-            var original_artist = "";
-            if(is_collab == 1){
-                if(collab1 != "" && collab2 != "" && collab3 != "" && collab4 != ""){
-                  collab_artist = `, ${collab1}, ${collab2}, ${collab3}, & ${collab4}`;
-                }
-                if(collab1 != "" && collab2 != "" && collab3 != "" && collab4 == ""){
-                  collab_artist = `, ${collab1}, ${collab2}, & ${collab3}`;
-                }
-                if(collab1 != "" && collab2 != "" && collab3 == "" && collab4 == ""){
-                  collab_artist = `, ${collab1}, & ${collab2}`;
-                }
-                if(collab1 != "" && collab2 == "" && collab3 == "" && collab4 == ""){
-                  collab_artist = ` & ${collab1}`;
-                }
-            }
-
-            if(is_remix == 1){
-              if(og1 != "" && og2 != ""){
-                original_artist = `${og1} & ${og2} - `;
-              }
-              if(og1 != "" && og2 == ""){
-                original_artist = `${og1} - `;
-              }
-            }
-
             var db = createConnection();
             var artist_id;
 
@@ -1117,7 +978,7 @@ app.post('/trackcreate', (req, res, next) => {
 
             //store artist query result
             artist_id = result[0].id;
-            let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, collab_artist, original_artist, drive_url, collab1, collab2, collab3, collab4, is_collab, og1, og2, is_remix, tune_of_week);
+            let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, short_name, drive_url, collab1, collab2, collab3, collab4, is_collab, og1, og2, is_remix, tune_of_week);
 
             await conquerie.end(db);
 
@@ -1537,14 +1398,14 @@ app.post('/pagetracks', (req, res, next) => {
       if(pagey == 0){
         let result = await trackquerie.getAllTracksAthroughD(db, artist_name);
         for (var i = 0; i < result.length; i++) {
-          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'crew': result[i].crew, 'country': result[i].country, 'artist_id': result[i].artist_id, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'crew': result[i].crew, 'country': result[i].country, 'artist_id': result[i].artist_id, 'id': result[i].id, 'short_name': result[i].short_name, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
           tracks.push(row);
         }
 
         let collabresult = await trackquerie.getCollabsIncludingArtistAthroughD(db, artist_name);
           if(collabresult.length > 0){
             for (var i = 0; i < collabresult.length; i++) {
-              var row = { 'track_name':collabresult[i].track_name, 'artist_name':collabresult[i].artist_name, 'drive_url': collabresult[i].drive_url, 'crew': collabresult[i].crew, 'country': collabresult[i].country, 'artist_id': collabresult[i].artist_id, 'id': collabresult[i].id, 'collab_artist': collabresult[i].collab_artist, 'original_artist': collabresult[i].original_artist, 'is_remix': collabresult[i].is_remix, 'is_collab': collabresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+              var row = { 'track_name':collabresult[i].track_name, 'artist_name':collabresult[i].artist_name, 'drive_url': collabresult[i].drive_url, 'crew': collabresult[i].crew, 'country': collabresult[i].country, 'artist_id': collabresult[i].artist_id, 'id': collabresult[i].id, 'short_name': collabresult[i].short_name, 'is_remix': collabresult[i].is_remix, 'is_collab': collabresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
               tracks.push(row);
             }
           }
@@ -1552,7 +1413,7 @@ app.post('/pagetracks', (req, res, next) => {
         let remixresult = await trackquerie.getTracksThatOthersRemixedAthroughD(db, artist_name);
           if(remixresult.length > 0){
             for (var i = 0; i < remixresult.length; i++) {
-              var row = { 'track_name':remixresult[i].track_name, 'artist_name':remixresult[i].artist_name, 'drive_url': remixresult[i].drive_url, 'crew': remixresult[i].crew, 'country': remixresult[i].country, 'artist_id': remixresult[i].artist_id, 'id': remixresult[i].id, 'collab_artist': remixresult[i].collab_artist, 'original_artist': remixresult[i].original_artist, 'is_remix': remixresult[i].is_remix, 'is_collab': remixresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+              var row = { 'track_name':remixresult[i].track_name, 'artist_name':remixresult[i].artist_name, 'drive_url': remixresult[i].drive_url, 'crew': remixresult[i].crew, 'country': remixresult[i].country, 'artist_id': remixresult[i].artist_id, 'id': remixresult[i].id, 'short_name': remixresult[i].short_name, 'is_remix': remixresult[i].is_remix, 'is_collab': remixresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
               tracks.push(row);
             }
           }
@@ -1561,14 +1422,14 @@ app.post('/pagetracks', (req, res, next) => {
       if(pagey == 1){
         let result = await trackquerie.getAllTracksEthroughI(db, artist_name);
         for (var i = 0; i < result.length; i++) {
-          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'crew': result[i].crew, 'country': result[i].country, 'artist_id': result[i].artist_id, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'crew': result[i].crew, 'country': result[i].country, 'artist_id': result[i].artist_id, 'id': result[i].id, 'short_name': result[i].short_name, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
           tracks.push(row);
         }
 
         let collabresult = await trackquerie.getCollabsIncludingArtistEthroughI(db, artist_name);
           if(collabresult.length > 0){
             for (var i = 0; i < collabresult.length; i++) {
-              var row = { 'track_name':collabresult[i].track_name, 'artist_name':collabresult[i].artist_name, 'drive_url': collabresult[i].drive_url, 'crew': collabresult[i].crew, 'country': collabresult[i].country, 'artist_id': collabresult[i].artist_id, 'id': collabresult[i].id, 'collab_artist': collabresult[i].collab_artist, 'original_artist': collabresult[i].original_artist, 'is_remix': collabresult[i].is_remix, 'is_collab': collabresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+              var row = { 'track_name':collabresult[i].track_name, 'artist_name':collabresult[i].artist_name, 'drive_url': collabresult[i].drive_url, 'crew': collabresult[i].crew, 'country': collabresult[i].country, 'artist_id': collabresult[i].artist_id, 'id': collabresult[i].id, 'short_name': collabresult[i].short_name, 'is_remix': collabresult[i].is_remix, 'is_collab': collabresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
               tracks.push(row);
             }
           }
@@ -1576,7 +1437,7 @@ app.post('/pagetracks', (req, res, next) => {
         let remixresult = await trackquerie.getTracksThatOthersRemixedEthroughI(db, artist_name);
         if(remixresult.length > 0){
             for (var i = 0; i < remixresult.length; i++) {
-              var row = { 'track_name':remixresult[i].track_name, 'artist_name':remixresult[i].artist_name, 'drive_url': remixresult[i].drive_url, 'crew': remixresult[i].crew, 'country': remixresult[i].country, 'artist_id': remixresult[i].artist_id, 'id': remixresult[i].id, 'collab_artist': remixresult[i].collab_artist, 'original_artist': remixresult[i].original_artist, 'is_remix': remixresult[i].is_remix, 'is_collab': remixresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+              var row = { 'track_name':remixresult[i].track_name, 'artist_name':remixresult[i].artist_name, 'drive_url': remixresult[i].drive_url, 'crew': remixresult[i].crew, 'country': remixresult[i].country, 'artist_id': remixresult[i].artist_id, 'id': remixresult[i].id, 'short_name': remixresult[i].short_name, 'is_remix': remixresult[i].is_remix, 'is_collab': remixresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
               tracks.push(row);
             }
           }
@@ -1585,14 +1446,14 @@ app.post('/pagetracks', (req, res, next) => {
       if(pagey == 2){
         let result = await trackquerie.getAllTracksJthroughO(db, artist_name);
         for (var i = 0; i < result.length; i++) {
-          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'crew': result[i].crew, 'country': result[i].country, 'artist_id': result[i].artist_id, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'crew': result[i].crew, 'country': result[i].country, 'artist_id': result[i].artist_id, 'id': result[i].id, 'short_name': result[i].short_name, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
           tracks.push(row);
         }
 
         let collabresult = await trackquerie.getCollabsIncludingArtistJthroughO(db, artist_name);
           if(collabresult.length > 0){
             for (var i = 0; i < collabresult.length; i++) {
-              var row = { 'track_name':collabresult[i].track_name, 'artist_name':collabresult[i].artist_name, 'drive_url': collabresult[i].drive_url, 'crew': collabresult[i].crew, 'country': collabresult[i].country, 'artist_id': collabresult[i].artist_id, 'id': collabresult[i].id, 'collab_artist': collabresult[i].collab_artist, 'original_artist': collabresult[i].original_artist, 'is_remix': collabresult[i].is_remix, 'is_collab': collabresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+              var row = { 'track_name':collabresult[i].track_name, 'artist_name':collabresult[i].artist_name, 'drive_url': collabresult[i].drive_url, 'crew': collabresult[i].crew, 'country': collabresult[i].country, 'artist_id': collabresult[i].artist_id, 'id': collabresult[i].id, 'short_name': collabresult[i].short_name, 'is_remix': collabresult[i].is_remix, 'is_collab': collabresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
               tracks.push(row);
             }
           }
@@ -1600,7 +1461,7 @@ app.post('/pagetracks', (req, res, next) => {
         let remixresult = await trackquerie.getTracksThatOthersRemixedJthroughO(db, artist_name);
         if(remixresult.length > 0){
             for (var i = 0; i < remixresult.length; i++) {
-              var row = { 'track_name':remixresult[i].track_name, 'artist_name':remixresult[i].artist_name, 'drive_url': remixresult[i].drive_url, 'crew': remixresult[i].crew, 'country': remixresult[i].country, 'artist_id': remixresult[i].artist_id, 'id': remixresult[i].id, 'collab_artist': remixresult[i].collab_artist, 'original_artist': remixresult[i].original_artist, 'is_remix': remixresult[i].is_remix, 'is_collab': remixresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+              var row = { 'track_name':remixresult[i].track_name, 'artist_name':remixresult[i].artist_name, 'drive_url': remixresult[i].drive_url, 'crew': remixresult[i].crew, 'country': remixresult[i].country, 'artist_id': remixresult[i].artist_id, 'id': remixresult[i].id, 'short_name': remixresult[i].short_name, 'is_remix': remixresult[i].is_remix, 'is_collab': remixresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
               tracks.push(row);
             }
           }
@@ -1609,21 +1470,21 @@ app.post('/pagetracks', (req, res, next) => {
       if(pagey == 3){
         let result = await trackquerie.getAllTracksPthroughT(db, artist_name);
         for (var i = 0; i < result.length; i++) {
-          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'crew': result[i].crew, 'country': result[i].country, 'artist_id': result[i].artist_id, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'crew': result[i].crew, 'country': result[i].country, 'artist_id': result[i].artist_id, 'id': result[i].id, 'short_name': result[i].short_name, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
           tracks.push(row);
         }
 
         let collabresult = await trackquerie.getCollabsIncludingArtistPthroughT(db, artist_name);
           if(collabresult.length > 0){
             for (var i = 0; i < collabresult.length; i++) {
-              var row = { 'track_name':collabresult[i].track_name, 'artist_name':collabresult[i].artist_name, 'drive_url': collabresult[i].drive_url, 'crew': collabresult[i].crew, 'country': collabresult[i].country, 'artist_id': collabresult[i].artist_id, 'id': collabresult[i].id, 'collab_artist': collabresult[i].collab_artist, 'original_artist': collabresult[i].original_artist, 'is_remix': collabresult[i].is_remix, 'is_collab': collabresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+              var row = { 'track_name':collabresult[i].track_name, 'artist_name':collabresult[i].artist_name, 'drive_url': collabresult[i].drive_url, 'crew': collabresult[i].crew, 'country': collabresult[i].country, 'artist_id': collabresult[i].artist_id, 'id': collabresult[i].id, 'short_name': collabresult[i].short_name, 'is_remix': collabresult[i].is_remix, 'is_collab': collabresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
               tracks.push(row);
             }
           }
         let remixresult = await trackquerie.getTracksThatOthersRemixedPthroughT(db, artist_name);
         if(remixresult.length > 0){
             for (var i = 0; i < remixresult.length; i++) {
-              var row = { 'track_name':remixresult[i].track_name, 'artist_name':remixresult[i].artist_name, 'drive_url': remixresult[i].drive_url, 'crew': remixresult[i].crew, 'country': remixresult[i].country, 'artist_id': remixresult[i].artist_id, 'id': remixresult[i].id, 'collab_artist': remixresult[i].collab_artist, 'original_artist': remixresult[i].original_artist, 'is_remix': remixresult[i].is_remix, 'is_collab': remixresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+              var row = { 'track_name':remixresult[i].track_name, 'artist_name':remixresult[i].artist_name, 'drive_url': remixresult[i].drive_url, 'crew': remixresult[i].crew, 'country': remixresult[i].country, 'artist_id': remixresult[i].artist_id, 'id': remixresult[i].id, 'short_name': remixresult[i].short_name, 'is_remix': remixresult[i].is_remix, 'is_collab': remixresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
               tracks.push(row);
             }
           }
@@ -1632,14 +1493,14 @@ app.post('/pagetracks', (req, res, next) => {
       if(pagey == 4){
         let result = await trackquerie.getAllTracksUthroughZ(db, artist_name);
         for (var i = 0; i < result.length; i++) {
-          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'crew': result[i].crew, 'country': result[i].country, 'artist_id': result[i].artist_id, 'id': result[i].id, 'collab_artist': result[i].collab_artist, 'original_artist': result[i].original_artist, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+          var row = { 'track_name':result[i].track_name, 'artist_name':result[i].artist_name, 'drive_url': result[i].drive_url, 'crew': result[i].crew, 'country': result[i].country, 'artist_id': result[i].artist_id, 'id': result[i].id, 'short_name': result[i].short_name, 'is_remix': result[i].is_remix, 'is_collab': result[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
           tracks.push(row);
         }
 
         let collabresult = await trackquerie.getCollabsIncludingArtistUthroughZ(db, artist_name);
         if(collabresult.length > 0){
           for (var i = 0; i < collabresult.length; i++) {
-            var row = { 'track_name':collabresult[i].track_name, 'artist_name':collabresult[i].artist_name, 'drive_url': collabresult[i].drive_url, 'crew': collabresult[i].crew, 'country': collabresult[i].country, 'artist_id': collabresult[i].artist_id, 'id': collabresult[i].id, 'collab_artist': collabresult[i].collab_artist, 'original_artist': collabresult[i].original_artist, 'is_remix': collabresult[i].is_remix, 'is_collab': collabresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+            var row = { 'track_name':collabresult[i].track_name, 'artist_name':collabresult[i].artist_name, 'drive_url': collabresult[i].drive_url, 'crew': collabresult[i].crew, 'country': collabresult[i].country, 'artist_id': collabresult[i].artist_id, 'id': collabresult[i].id, 'short_name': collabresult[i].short_name, 'is_remix': collabresult[i].is_remix, 'is_collab': collabresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
             tracks.push(row);
           }
         }
@@ -1647,7 +1508,7 @@ app.post('/pagetracks', (req, res, next) => {
         let remixresult = await trackquerie.getTracksThatOthersRemixedUthroughZ(db, artist_name);
         if(remixresult.length > 0){
             for (var i = 0; i < remixresult.length; i++) {
-              var row = { 'track_name':remixresult[i].track_name, 'artist_name':remixresult[i].artist_name, 'drive_url': remixresult[i].drive_url, 'crew': remixresult[i].crew, 'country': remixresult[i].country, 'artist_id': remixresult[i].artist_id, 'id': remixresult[i].id, 'collab_artist': remixresult[i].collab_artist, 'original_artist': remixresult[i].original_artist, 'is_remix': remixresult[i].is_remix, 'is_collab': remixresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+              var row = { 'track_name':remixresult[i].track_name, 'artist_name':remixresult[i].artist_name, 'drive_url': remixresult[i].drive_url, 'crew': remixresult[i].crew, 'country': remixresult[i].country, 'artist_id': remixresult[i].artist_id, 'id': remixresult[i].id, 'short_name': remixresult[i].short_name, 'is_remix': remixresult[i].is_remix, 'is_collab': remixresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
               tracks.push(row);
             }
         }
@@ -1666,23 +1527,10 @@ app.post('/pagetracks', (req, res, next) => {
             tracks[i].userhearted = 1;
           }
         }
-
-        if(tracks[i].is_remix != 1){
-          tracks[i].blank = ` - ${tracks[i].artist_name}`;
-        }
-        if(tracks[i].is_collab == 1){
-          tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`
-        }
-        if(tracks[i].is_collab != 1){
-          tracks[i].blank = ``;
-        }
-        if(tracks[i].is_remix == 1){
-          tracks[i].blank = ``;
-        }
       }
 
       await conquerie.end(db);
-      tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
+      tracks.sort((a, b) => (a.short_name > b.short_name) ? 1 : -1);
 
       res.send({donothing: 0, tracks: tracks, currentuserid: user_id});
 
@@ -1737,13 +1585,13 @@ app.post('/tunesearch',(req,res)=>{
           }else{
           //there was a result, loading that instead
           for (var i = 0; i < sresult.length; i++) {
-           var row = { 'track_name':sresult[i].track_name, 'artist_name':sresult[i].artist_name, 'drive_url': sresult[i].drive_url, 'id': sresult[i].id, 'collab_artist': sresult[i].collab_artist, 'original_artist': sresult[i].original_artist, 'is_remix': sresult[i].is_remix, 'is_collab': sresult[i].is_collab, 'blank': "", 'hearts': "", 'userhearted': "0" }
+           var row = { 'track_name':sresult[i].track_name, 'artist_name':sresult[i].artist_name, 'drive_url': sresult[i].drive_url, 'id': sresult[i].id, 'short_name': sresult[i].short_name, 'is_remix': sresult[i].is_remix, 'is_collab': sresult[i].is_collab, 'blank': "", 'hearts': "", 'userhearted': "0" }
            tracks.push(row);
           }
 
           if(collabsresult.length > 0){
             for (var i = 0; i < collabsresult.length; i++) {
-              var row = { 'track_name':collabsresult[i].track_name, 'artist_name':collabsresult[i].artist_name, 'drive_url': collabsresult[i].drive_url, 'id': collabsresult[i].id, 'collab_artist': collabsresult[i].collab_artist, 'original_artist': collabsresult[i].original_artist, 'is_remix': collabsresult[i].is_remix, 'is_collab': collabsresult[i].is_collab, 'blank': "", 'hearts': "", 'userhearted': "0" }
+              var row = { 'track_name':collabsresult[i].track_name, 'artist_name':collabsresult[i].artist_name, 'drive_url': collabsresult[i].drive_url, 'id': collabsresult[i].id, 'short_name': collabsresult[i].short_name, 'is_remix': collabsresult[i].is_remix, 'is_collab': collabsresult[i].is_collab, 'blank': "", 'hearts': "", 'userhearted': "0" }
               tracks.push(row);
              }
           }
@@ -1759,19 +1607,6 @@ app.post('/tunesearch',(req,res)=>{
               if (test != -1){
                 tracks[i].userhearted = 1;
               }
-            }
-
-            if(tracks[i].is_remix != 1){
-              tracks[i].blank = ` - ${tracks[i].artist_name}`;
-            }
-            if(tracks[i].is_collab == 1){
-              tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`
-            }
-            if(tracks[i].is_collab != 1){
-              tracks[i].blank = ``;
-            }
-            if(tracks[i].is_remix == 1){
-              tracks[i].blank = ``;
             }
           }
 
@@ -1830,7 +1665,7 @@ app.post('/favtunesearch',(req,res)=>{
               }else{
 
                 for (var i = 0; i < sresult.length; i++) {
-                 var row = { 'track_name':sresult[i].track_name, 'artist_name':sresult[i].artist_name, 'drive_url': sresult[i].drive_url, 'id': sresult[i].id, 'collab_artist': sresult[i].collab_artist, 'original_artist': sresult[i].original_artist, 'is_remix': sresult[i].is_remix, 'is_collab': sresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+                 var row = { 'track_name':sresult[i].track_name, 'artist_name':sresult[i].artist_name, 'drive_url': sresult[i].drive_url, 'id': sresult[i].id, 'short_name': sresult[i].short_name, 'is_remix': sresult[i].is_remix, 'is_collab': sresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
                  tracks.push(row);
                 }
 
@@ -1846,23 +1681,10 @@ app.post('/favtunesearch',(req,res)=>{
                       tracks[i].userhearted = 1;
                     }
                   }
-
-                  if(tracks[i].is_remix != 1){
-                    tracks[i].blank = ` - ${tracks[i].artist_name}`;
-                  }
-                  if(tracks[i].is_collab == 1){
-                    tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`
-                  }
-                  if(tracks[i].is_collab != 1){
-                    tracks[i].blank = ` - ${tracks[i].artist_name}`;
-                  }
-                  if(tracks[i].is_remix == 1){
-                    tracks[i].blank = ``;
-                  }
-              }
+                }
 
                 await conquerie.end(db);
-                tracks.sort((a, b) => (a.track_name > b.track_name) ? 1 : -1);
+                tracks.sort((a, b) => (a.short_name > b.short_name) ? 1 : -1);
                 msg = "Results Found!:";
                 reloadlist = 1;
           
@@ -1882,13 +1704,13 @@ app.post('/favtunesearch',(req,res)=>{
               }else{
                 
                 for (var i = 0; i < sresult.length; i++) {
-                 var row = { 'track_name':sresult[i].track_name, 'artist_name':sresult[i].artist_name, 'drive_url': sresult[i].drive_url, 'id': sresult[i].id, 'collab_artist': sresult[i].collab_artist, 'original_artist': sresult[i].original_artist, 'is_remix': sresult[i].is_remix, 'is_collab': sresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+                 var row = { 'track_name':sresult[i].track_name, 'artist_name':sresult[i].artist_name, 'drive_url': sresult[i].drive_url, 'id': sresult[i].id, 'short_name': sresult[i].short_name, 'is_remix': sresult[i].is_remix, 'is_collab': sresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
                  tracks.push(row);
                 }
 
                 if(collabsresult.length > 0){
                   for (var i = 0; i < collabsresult.length; i++) {
-                    var row = { 'track_name':collabsresult[i].track_name, 'artist_name':collabsresult[i].artist_name, 'drive_url': collabsresult[i].drive_url, 'id': collabsresult[i].id, 'collab_artist': collabsresult[i].collab_artist, 'original_artist': collabsresult[i].original_artist, 'is_remix': collabsresult[i].is_remix, 'is_collab': collabsresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
+                    var row = { 'track_name':collabsresult[i].track_name, 'artist_name':collabsresult[i].artist_name, 'drive_url': collabsresult[i].drive_url, 'id': collabsresult[i].id, 'short_name': collabsresult[i].short_name, 'is_remix': collabsresult[i].is_remix, 'is_collab': collabsresult[i].is_collab, 'blank': "", 'alltrackcomments': "", 'hearts': "", 'userhearted': "0" }
                     tracks.push(row);
                    }
                 }
@@ -1905,20 +1727,7 @@ app.post('/favtunesearch',(req,res)=>{
                       tracks[i].userhearted = 1;
                     }
                   }
-
-                  if(tracks[i].is_remix != 1){
-                    tracks[i].blank = ` - ${tracks[i].artist_name}`;
-                  }
-                  if(tracks[i].is_collab == 1){
-                    tracks[i].blank = ` - ${tracks[i].artist_name}${tracks[i].collab_artist}`
-                  }
-                  if(tracks[i].is_collab != 1){
-                    tracks[i].blank = ` - ${tracks[i].artist_name}`;
-                  }
-                  if(tracks[i].is_remix == 1){
-                    tracks[i].blank = ``;
-                  }
-              }
+                }
 
                 await conquerie.end(db);
                 msg = "Results Found!:";
@@ -2389,7 +2198,7 @@ app.post('/tuneup', (req, res, next) => {
 //POST REQUEST - TEST S3 Upload
 app.post('/tests3upload', (req, res, next) => {
 
-  var { artist_name, artist_id, track_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2 } = req.body;             
+  var { artist_name, artist_id, track_name, short_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2 } = req.body;             
 
   var themsg = "";
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -2419,33 +2228,8 @@ app.post('/tests3upload', (req, res, next) => {
           s3fcn.uploadToS3(song, islogo, artist_name, artfirstletter, makepublic);
           themsg = "File uploaded!";
           //add tune to db!
-          async function storeFormResults(artist_name, artist_id, track_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2){
+          async function storeFormResults(artist_name, artist_id, track_name, short_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2){
             try{
-              var collab_artist = "";
-              var original_artist = "";
-              if(is_collab == 1){
-                  if(col1 != "" && col2 != "" && col3 != "" && col4 != ""){
-                    collab_artist = `, ${col1}, ${col2}, ${col3}, & ${col4}`;
-                  }
-                  if(col1 != "" && col2 != "" && col3 != "" && col4 == ""){
-                    collab_artist = `, ${col1}, ${col2}, & ${col3}`;
-                  }
-                  if(col1 != "" && col2 != "" && col3 == "" && col4 == ""){
-                    collab_artist = `, ${col1}, & ${col2}`;
-                  }
-                  if(col1 != "" && col2 == "" && col3 == "" && col4 == ""){
-                    collab_artist = ` & ${col1}`;
-                  }
-              }
-
-              if(is_remix == 1){
-                if(rem1 != "" && rem2 != ""){
-                  original_artist = `${rem1} & ${rem2} - `;
-                }
-                if(rem1 != "" && rem2 == ""){
-                  original_artist = `${rem2} - `;
-                }
-              }
 
               var db = createConnection();
               await conquerie.connect(db);
@@ -2465,7 +2249,7 @@ app.post('/tests3upload', (req, res, next) => {
 
 
 
-              let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, collab_artist, original_artist, drive_url, col1, col2, col3, col4, is_collab, rem1, rem2, is_remix, tune_of_week);
+              let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, short_name, drive_url, col1, col2, col3, col4, is_collab, rem1, rem2, is_remix, tune_of_week);
 
               await conquerie.end(db);
 
@@ -2475,7 +2259,7 @@ app.post('/tests3upload', (req, res, next) => {
               res.render('error');
             }
           }//end async
-          storeFormResults(artist_name, artist_id, track_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2);
+          storeFormResults(artist_name, artist_id, track_name, short_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2);
           res.send({msg: themsg, song: song});
         }
       } 

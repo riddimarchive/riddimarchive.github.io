@@ -344,6 +344,7 @@ block content
 				var artist_id = document.getElementById("dashartid").title;
 
 				var track_name = document.getElementById("tra_name").value.toString();
+				var short_name = "";
 
 				var is_collab = getCurrentCollabValue();
 				var is_remix = getCurrentRemixValue();
@@ -360,6 +361,7 @@ block content
 				fd.append('artist_name', artist_name);
 				fd.append('artist_id', artist_id);
 				fd.append('track_name', track_name);
+				fd.append('short_name', short_name);
 				fd.append('is_collab', is_collab);
 				fd.append('is_remix', is_remix);
 

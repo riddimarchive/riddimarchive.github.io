@@ -76,7 +76,7 @@ function getAllHeartsOnTrack(db, track_id){
 function getAllTracksFromArtist(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE tracks.artist_name = ? 
 		ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
@@ -98,7 +98,7 @@ function getAllTracksFromArtist(db, artist_name){
 function getAllTracksAthroughD(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE tracks.artist_name = ? AND tracks.track_name >= "0" AND tracks.track_name < "E" 
 		ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
@@ -120,7 +120,7 @@ function getAllTracksAthroughD(db, artist_name){
 function getAllTracksEthroughI(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE tracks.artist_name = ? AND tracks.track_name >= "E" AND tracks.track_name < "J" 
 		ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
@@ -142,7 +142,7 @@ function getAllTracksEthroughI(db, artist_name){
 function getAllTracksJthroughO(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE tracks.artist_name = ? AND tracks.track_name >= "J" AND tracks.track_name < "P" 
 		ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
@@ -164,7 +164,7 @@ function getAllTracksJthroughO(db, artist_name){
 function getAllTracksPthroughT(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE tracks.artist_name = ? AND tracks.track_name >= "P" AND tracks.track_name < "U" 
 		ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
@@ -186,7 +186,7 @@ function getAllTracksPthroughT(db, artist_name){
 function getAllTracksUthroughZ(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE tracks.artist_name = ? AND tracks.track_name >= "U" 
 		ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
@@ -208,7 +208,7 @@ function getAllTracksUthroughZ(db, artist_name){
 function getCollabsIncludingArtist(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ? 
 		ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
@@ -230,7 +230,7 @@ function getCollabsIncludingArtist(db, artist_name){
 function getCollabsIncludingArtistAthroughD(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE (tracks.track_name >= "0" AND tracks.track_name < "E") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) 
 		ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
@@ -251,7 +251,7 @@ function getCollabsIncludingArtistAthroughD(db, artist_name){
 function getCollabsIncludingArtistEthroughI(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE (tracks.track_name >= "E" AND tracks.track_name < "J") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) 
 		ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
@@ -272,7 +272,7 @@ function getCollabsIncludingArtistEthroughI(db, artist_name){
 function getCollabsIncludingArtistJthroughO(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE (tracks.track_name >= "J" AND tracks.track_name < "P") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) 
 		ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
@@ -293,7 +293,7 @@ function getCollabsIncludingArtistJthroughO(db, artist_name){
 function getCollabsIncludingArtistPthroughT(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE (tracks.track_name >= "P" AND tracks.track_name < "U") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) 
 		ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
@@ -314,7 +314,7 @@ function getCollabsIncludingArtistPthroughT(db, artist_name){
 function getCollabsIncludingArtistUthroughZ(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE (tracks.track_name >= "U") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) 
 		ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
@@ -338,7 +338,7 @@ function getCollabsIncludingArtistUthroughZ(db, artist_name){
 function getTracksThatOthersRemixed(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE tracks.o1 = ? OR tracks.o2 = ? 
 		ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
@@ -360,7 +360,7 @@ function getTracksThatOthersRemixed(db, artist_name){
 function getTracksThatOthersRemixedAthroughD(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
 		FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE (tracks.track_name >= "0" AND tracks.track_name < "E") AND (tracks.o1 = ? OR tracks.o2 = ?) 
 		ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
@@ -382,7 +382,7 @@ function getTracksThatOthersRemixedAthroughD(db, artist_name){
 function getTracksThatOthersRemixedEthroughI(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
 		FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE (tracks.track_name >= "E" AND tracks.track_name < "J") AND (tracks.o1 = ? OR tracks.o2 = ?) 
 		ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
@@ -404,7 +404,7 @@ function getTracksThatOthersRemixedEthroughI(db, artist_name){
 function getTracksThatOthersRemixedJthroughO(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
 		FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE (tracks.track_name >= "J" AND tracks.track_name < "P") AND (tracks.o1 = ? OR tracks.o2 = ?) 
 		ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
@@ -426,7 +426,7 @@ function getTracksThatOthersRemixedJthroughO(db, artist_name){
 function getTracksThatOthersRemixedPthroughT(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
 		FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE (tracks.track_name >= "P" AND tracks.track_name < "U") AND (tracks.o1 = ? OR tracks.o2 = ?) 
 		ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
@@ -447,7 +447,7 @@ function getTracksThatOthersRemixedPthroughT(db, artist_name){
 function getTracksThatOthersRemixedUthroughZ(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
 		FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name 
 		WHERE (tracks.track_name >= "U") AND (tracks.o1 = ? OR tracks.o2 = ?) 
 		ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
@@ -468,7 +468,7 @@ function getTracksThatOthersRemixedUthroughZ(db, artist_name){
 function searchTunes(db, search_results, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT track_name, artist_name, drive_url, collab_artist, original_artist, is_remix, is_collab, id FROM tracks 
+		db.query(`SELECT track_name, artist_name, drive_url, short_name, is_remix, is_collab, id FROM tracks 
 		WHERE track_name LIKE ? AND artist_name = ? 
 		ORDER BY track_name`, [search_results, artist_name], (error, result, fields) => {
 	    	if (error) {
@@ -488,7 +488,7 @@ function searchTunes(db, search_results, artist_name){
 function searchTunesCollabRemix(db, search_results, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT track_name, artist_name, drive_url, collab_artist, original_artist, is_remix, is_collab, id FROM tracks 
+		db.query(`SELECT track_name, artist_name, drive_url, short_name, is_remix, is_collab, id FROM tracks 
 		WHERE (track_name LIKE ? AND c1 = ?) OR (track_name LIKE ? AND c2 = ?) OR (track_name LIKE ? AND c3 = ?) 
 		OR (track_name LIKE ? AND c4 = ?) OR (track_name LIKE ? AND o1 = ?) OR (track_name LIKE ? AND o2 = ?) 
 		ORDER BY track_name`, [search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name], (error, result, fields) => {
@@ -509,7 +509,7 @@ function searchTunesCollabRemix(db, search_results, artist_name){
 function searchFavorites(db, user_id, search_results){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab FROM tracks 
+		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab FROM tracks 
 		INNER JOIN userfavorites ON tracks.id = userfavorites.track_id 
 		WHERE userfavorites.user_id = ? AND tracks.track_name LIKE ? 
 		ORDER BY tracks.artist_name`, [user_id, search_results], (error, result, fields) => {
@@ -531,7 +531,7 @@ function searchFavorites(db, user_id, search_results){
 function searchFavoritesByArtist(db, user_id, search_results){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab FROM tracks 
+		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab FROM tracks 
 		INNER JOIN userfavorites ON tracks.id = userfavorites.track_id 
 		WHERE userfavorites.user_id = ? AND tracks.artist_name LIKE ? 
 		ORDER BY tracks.artist_name`, [user_id, search_results], (error, result, fields) => {
@@ -553,7 +553,7 @@ function searchFavoritesByArtist(db, user_id, search_results){
 function searchFavoritesByArtistCollabRemix(db, user_id, search_results){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.collab_artist, tracks.original_artist, tracks.is_remix, tracks.is_collab FROM tracks 
+		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab FROM tracks 
 		INNER JOIN userfavorites ON tracks.id = userfavorites.track_id 
 		WHERE (userfavorites.user_id = ? AND c1 LIKE ?) OR (userfavorites.user_id = ? AND c2 LIKE ?) OR (userfavorites.user_id = ? AND c3 LIKE ?) 
 		OR (userfavorites.user_id = ? AND c4 LIKE ?) OR (userfavorites.user_id = ? AND o1 LIKE ?) OR (userfavorites.user_id = ? AND o2 LIKE ?) 
@@ -576,7 +576,7 @@ function searchFavoritesByArtistCollabRemix(db, user_id, search_results){
 function getRandomTrack(db){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT id, artist_name, track_name, drive_url, collab_artist, original_artist, is_remix, is_collab from tracks ORDER BY RAND() LIMIT 1`, (error, result, fields) => {
+		db.query(`SELECT id, artist_name, track_name, drive_url from tracks ORDER BY RAND() LIMIT 1`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -594,11 +594,11 @@ function getRandomTrack(db){
 
 
 
-function addTrack(db, artist_id, artist_name, track_name, collab_artist, original_artist, drive_url, collab1, collab2, collab3, collab4, is_collab, og1, og2, is_remix, tune_of_week){
+function addTrack(db, artist_id, artist_name, track_name, short_name, drive_url, collab1, collab2, collab3, collab4, is_collab, og1, og2, is_remix, tune_of_week){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`INSERT INTO tracks(artist_id, artist_name, track_name, collab_artist, original_artist, drive_url, c1, c2, c3, c4, is_collab, o1, o2, is_remix, tune_of_week) 
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [artist_id, artist_name, track_name, collab_artist, original_artist, drive_url, collab1, collab2, collab3, collab4, is_collab, og1, og2, is_remix, tune_of_week], (error, result, fields) => {
+		db.query(`INSERT INTO tracks(artist_id, artist_name, track_name, short_name, drive_url, c1, c2, c3, c4, is_collab, o1, o2, is_remix, tune_of_week) 
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [artist_id, artist_name, track_name, short_name, drive_url, collab1, collab2, collab3, collab4, is_collab, og1, og2, is_remix, tune_of_week], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

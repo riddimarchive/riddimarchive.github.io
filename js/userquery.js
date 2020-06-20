@@ -134,7 +134,7 @@ function getUserFavorites(db, id){
 		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab FROM tracks 
 		INNER JOIN userfavorites ON tracks.id = userfavorites.track_id 
 		WHERE userfavorites.user_id = ? 
-		ORDER BY tracks.artist_name`, [id], (error, result, fields) => {
+		ORDER BY tracks.short_name`, [id], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

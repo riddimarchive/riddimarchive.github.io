@@ -469,8 +469,8 @@ function searchTunes(db, search_results, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT track_name, artist_name, drive_url, short_name, is_remix, is_collab, id FROM tracks 
-		WHERE track_name LIKE ? AND artist_name = ? 
-		ORDER BY track_name`, [search_results, artist_name], (error, result, fields) => {
+		WHERE short_name LIKE ? AND artist_name = ? 
+		ORDER BY short_name`, [search_results, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -489,9 +489,9 @@ function searchTunesCollabRemix(db, search_results, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT track_name, artist_name, drive_url, short_name, is_remix, is_collab, id FROM tracks 
-		WHERE (track_name LIKE ? AND c1 = ?) OR (track_name LIKE ? AND c2 = ?) OR (track_name LIKE ? AND c3 = ?) 
-		OR (track_name LIKE ? AND c4 = ?) OR (track_name LIKE ? AND o1 = ?) OR (track_name LIKE ? AND o2 = ?) 
-		ORDER BY track_name`, [search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name], (error, result, fields) => {
+		WHERE (short_name LIKE ? AND c1 = ?) OR (short_name LIKE ? AND c2 = ?) OR (short_name LIKE ? AND c3 = ?) 
+		OR (short_name LIKE ? AND c4 = ?) OR (short_name LIKE ? AND o1 = ?) OR (short_name LIKE ? AND o2 = ?) 
+		ORDER BY short_name`, [search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -511,8 +511,8 @@ function searchFavorites(db, user_id, search_results){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab FROM tracks 
 		INNER JOIN userfavorites ON tracks.id = userfavorites.track_id 
-		WHERE userfavorites.user_id = ? AND tracks.track_name LIKE ? 
-		ORDER BY tracks.artist_name`, [user_id, search_results], (error, result, fields) => {
+		WHERE userfavorites.user_id = ? AND tracks.short_name LIKE ? 
+		ORDER BY tracks.short_name`, [user_id, search_results], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -533,8 +533,8 @@ function searchFavoritesByArtist(db, user_id, search_results){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab FROM tracks 
 		INNER JOIN userfavorites ON tracks.id = userfavorites.track_id 
-		WHERE userfavorites.user_id = ? AND tracks.artist_name LIKE ? 
-		ORDER BY tracks.artist_name`, [user_id, search_results], (error, result, fields) => {
+		WHERE userfavorites.user_id = ? AND tracks.short_name LIKE ? 
+		ORDER BY tracks.short_name`, [user_id, search_results], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -557,7 +557,7 @@ function searchFavoritesByArtistCollabRemix(db, user_id, search_results){
 		INNER JOIN userfavorites ON tracks.id = userfavorites.track_id 
 		WHERE (userfavorites.user_id = ? AND c1 LIKE ?) OR (userfavorites.user_id = ? AND c2 LIKE ?) OR (userfavorites.user_id = ? AND c3 LIKE ?) 
 		OR (userfavorites.user_id = ? AND c4 LIKE ?) OR (userfavorites.user_id = ? AND o1 LIKE ?) OR (userfavorites.user_id = ? AND o2 LIKE ?) 
-		ORDER BY track_name`, [user_id, search_results, user_id, search_results, user_id, search_results, user_id, search_results, user_id, search_results, user_id, search_results], (error, result, fields) => {
+		ORDER BY short_name`, [user_id, search_results, user_id, search_results, user_id, search_results, user_id, search_results, user_id, search_results, user_id, search_results], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

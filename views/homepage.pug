@@ -101,7 +101,7 @@ block content
           each track, index in y
             ul
               .uldivtotw
-                li.tunetexttotw= `${track.track_name}`
+                li.tunetexttotw= `${track.blank}${track.track_name}`
                 .totw
                   audio(id=`${index+10000}`, src=track.drive_url, type='audio/mpeg', controls='', preload='none', style='width:100%;') Sorry Bruv, Your Browser Can't Play dis chune!
                 .downloadbutton

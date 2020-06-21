@@ -15,7 +15,7 @@ block content
         each track, index in x
             .uldiv(id=`${index}/uldiv`)
                 ul
-                    li.tunetextshare= `${track.track_name}`
+                    li.tunetextshare= `${track.blank}${track.track_name}`
                     .regaudioshare
                         audio(id='shareaudio', src=track.drive_url, type='audio/mpeg', controls='', preload='preload')
                     #iosspacer

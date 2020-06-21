@@ -116,6 +116,12 @@ app.get('/', (req, res) => {
           artists.push(row);
         }
 
+        for (var i = 0; i < totw.length; i++) {
+          if(totw[i].is_collab == 0 && totw[i].is_remix == 0){
+            totw[i].blank = `${totw[i].artist_name} - `;
+          }
+        }
+
         let randresult = await trackquerie.getRandomTrack(db);
         randdriveurl = randresult[0].drive_url;
         randartistname = randresult[0].artist_name;
@@ -123,6 +129,10 @@ app.get('/', (req, res) => {
         randtrackid = randresult[0].id;
 
         var shuffletext = `${randtrackname}`;
+        if(randresult[0].is_collab == 0 && randresult[0].is_remix == 0){
+          shuffletext = `${randartistname} - ${randtrackname}`;
+        }
+
         await conquerie.end(db);
 
         res.render('homepage',{ title:'Riddim Archive Index', msg: "", artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw, theusername: theusername });
@@ -550,11 +560,15 @@ app.get('/share/:id', function(req,res){
                   tracks[0].userhearted = 1;
                 }
               }
+              for (var i = 0; i < tracks.length; i++) {
+                if(tracks[i].is_collab == 0 && tracks[i].is_remix == 0){
+                  tracks[i].blank = `${tracks[i].artist_name} - `;
+                }
+              }
 
               await conquerie.end(db);
               msg = "Track Found!";
               res.render('share', { artist_name: tracks[0].artist_name, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
-              //res.send(`${tracks[0].artist_name}, ${tracks}, ${user_id}, ${theusername}, ${msg} hoorrray`);
 
             }else{
               //no track by that id is found
@@ -686,12 +700,22 @@ app.post('/', (req, res, next) => {
           artists.push(row);
         }
 
+        for (var i = 0; i < totw.length; i++) {
+          if(totw[i].is_collab == 0 && totw[i].is_remix == 0){
+            totw[i].blank = `${totw[i].artist_name} - `;
+          }
+        }
+
         let randresult = await trackquerie.getRandomTrack(db);
         randdriveurl = randresult[0].drive_url;
         randartistname = randresult[0].artist_name;
         randtrackname = randresult[0].track_name;
         randtrackid = randresult[0].id;
         var shuffletext = `${randtrackname}`;
+
+        if(randresult[0].is_collab == 0 && randresult[0].is_remix == 0){
+          shuffletext = `${randartistname} - ${randtrackname}`;
+        }
 
         await conquerie.end(db);
 
@@ -740,13 +764,23 @@ app.post('/', (req, res, next) => {
           artists.push(row);
         }
 
+        for (var i = 0; i < totw.length; i++) {
+          if(totw[i].is_collab == 0 && totw[i].is_remix == 0){
+            totw[i].blank = `${totw[i].artist_name} - `;
+          }
+        }
+
         let randresult = await trackquerie.getRandomTrack(db);
         randdriveurl = randresult[0].drive_url;
         randartistname = randresult[0].artist_name;
         randtrackname = randresult[0].track_name;
         randtrackid = randresult[0].id;
         var shuffletext = `${randtrackname}`;
-        
+
+        if(randresult[0].is_collab == 0 && randresult[0].is_remix == 0){
+          shuffletext = `${randartistname} - ${randtrackname}`;
+        }
+
         //confirm favorite isn't already there
         let ckresult = await userquerie.checkUserFavorite(db, user_id, track_id);
         if(ckresult.length > 0){
@@ -941,6 +975,10 @@ app.post('/forward',(req,res)=>{
       theartistname = result[0].artist_name;
       thetrackname = result[0].track_name;
       var shuffletext = `${thetrackname}`;
+
+      if(result[0].is_collab == 0 && result[0].is_remix == 0){
+        shuffletext = `${theartistname} - ${thetrackname}`;
+      }
 
       await conquerie.end(db);
       res.send({source: thedriveurl, id: theid, artist_name: theartistname, track_name: thetrackname, shuftext: shuffletext});

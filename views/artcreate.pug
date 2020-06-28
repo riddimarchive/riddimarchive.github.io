@@ -67,43 +67,47 @@ block content
 				msg.innerHTML = "Submitting...";
 				var msg2 = document.getElementById("labelgcenter2");
 				msg2.innerHTML = "Submitting...";
-				var fd = new FormData();
 				var prooffile = $('#prooffile')[0].files[0];
 				var artistlogo = $('#artistlogo')[0].files[0];
 
-				console.table(prooffile);
-				console.table(artistlogo);
-				var username = document.getElementById("username").value
-				var pass1 = document.getElementById("pass1").value
-				var pass2 = document.getElementById("pass2").value
-				var artist_name = document.getElementById("art_name").value
-				console.log(username);
-				console.log(pass1);
-				console.log(pass2);
-				console.log(artist_name);
+				if(prooffile.type != "image/jpeg" && prooffile.type != "image/png" && artistlogo.type != "image/jpeg" && artistlogo.type != "image/png"){
+					msg.innerHTML = "WRONG FORMAT: Please Upload JPG/JPEG/PNG!";
+					msg2.innerHTML = "WRONG FORMAT: Please Upload JPG/JPEG/PNG!";
+				}else{
+					if(prooffile.size > 10241374 || artistlogo.size > 10241374){
+						msg.innerHTML = "PROOF OR ARTIST FILE TOO BIG: 10 MB is the Max!";
+						msg2.innerHTML = "PROOF OR ARTIST FILE TOO BIG: 10 MB is the Max!";
+					}else{
+						var fd = new FormData();
+						var username = document.getElementById("username").value;
+						var pass1 = document.getElementById("pass1").value;
+						var pass2 = document.getElementById("pass2").value;
+						var artist_name = document.getElementById("art_name").value;
 
-				fd.append('prooffile', prooffile);
-				fd.append('artistlogo', artistlogo);
-				fd.append('username', username);
-				fd.append('pass1', pass1);
-				fd.append('pass2', pass2);
-				fd.append('artist_name', artist_name);
+						fd.append('prooffile', prooffile);
+						fd.append('artistlogo', artistlogo);
+						fd.append('username', username);
+						fd.append('pass1', pass1);
+						fd.append('pass2', pass2);
+						fd.append('artist_name', artist_name);
 
-				$.ajax({
-					url:'/newartistacctcreate',
-					type: 'POST',
-					data: fd,
-					processData: false,
-					contentType: false,
-					success: function(data){
-						var msg = document.getElementById("labelgcenter");
-						var msg2 = document.getElementById("labelgcenter2");
-						msg.innerHTML = data.msg;
-						msg2.innerHTML = data.msg;
-					},
-					error: function(){
-						console.log("Didn't Work");
+						$.ajax({
+							url:'/newartistacctcreate',
+							type: 'POST',
+							data: fd,
+							processData: false,
+							contentType: false,
+							success: function(data){
+								var msg = document.getElementById("labelgcenter");
+								var msg2 = document.getElementById("labelgcenter2");
+								msg.innerHTML = data.msg;
+								msg2.innerHTML = data.msg;
+							},
+							error: function(){
+								console.log("Didn't Work");
+							}
+						});
 					}
-				});
+				}
 			});
 		}

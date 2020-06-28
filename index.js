@@ -370,6 +370,10 @@ app.get('/favorites', (req, res) => {
                 tracks[i].userhearted = 1;
               }
             }
+
+            if(tracks[i].is_collab == 0 && tracks[i].is_remix == 0){
+              tracks[i].blank = `${tracks[i].artist_name} - `;
+            }
           }
 
           await conquerie.end(db);
@@ -1719,6 +1723,10 @@ app.post('/favtunesearch',(req,res)=>{
                       tracks[i].userhearted = 1;
                     }
                   }
+
+                  if(tracks[i].is_collab == 0 && tracks[i].is_remix == 0){
+                    tracks[i].blank = `${tracks[i].artist_name} - `;
+                  }
                 }
 
                 await conquerie.end(db);
@@ -1764,6 +1772,10 @@ app.post('/favtunesearch',(req,res)=>{
                     if (test != -1){
                       tracks[i].userhearted = 1;
                     }
+                  }
+
+                  if(tracks[i].is_collab == 0 && tracks[i].is_remix == 0){
+                    tracks[i].blank = `${tracks[i].artist_name} - `;
                   }
                 }
 

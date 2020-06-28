@@ -1,90 +1,78 @@
 extends index3
 
 block content
-	h1 ARTIST C.R.U.D
-	br
-	
 	- var message = msg;
 	- var message2 = msg2;
 
-	.labelg #{message}
-	.labelg #{message2}
+	.labelgcenter #{message}
+	.labelgcenter #{message2}
 
-	h2 Add Artist
-	.contactdiv
-		.contact
-			form(method='POST', action='/artistcreate', enctype='multipart/form-data')
-				div
-					button.btn.btn-primary.btn-block(type='submit') Submit
-				br
-				.label Artist Name:
-				br
-				div.form-group
-					input#artist_name.form-control(type='text', name='artist_name')
-				br
-
-				.label Crew:
-				br
-				div.form-group
-					input#crew.form-control(type='text', name='crew')
-				br
-
-				.label Country:
-				br
-				div.form-group 
-					input#country.form-control(type='text', name='country')
-				br
-
-				.label Info (Short sentence or two about you and your style, Be creative!):
-				br
-				div.form-group
-					textarea#info.form-control(type='text', name='info' rows='5')
-				br
-
-				.label Facebook:
-				br
-				div.form-group 
-					input#face.form-control(type='text', name='face', value="")
-				br
-
-				.label Soundcloud:
-				br
-				div.form-group 
-					input#sound.form-control(type='text', name='sound', value="")
-				br
-
-				.label Bandcamp:
-				br
-				div.form-group 
-					input#band.form-control(type='text', name='band', value="")
-				br
-
-				.label Beatport:
-				br
-				div.form-group 
-					input#beat.form-control(type='text', name='beat', value="")
-				br
-
-				.label Instagram:
-				br
-				div.form-group 
-					input#insta.form-control(type='text', name='insta', value="")
-				br
-				div
-					button.btn.btn-primary.btn-block(type='submit') Submit
+	.artisth1 
+		h1 Add Artist
+	.faqform
+		form(method='POST', action='/artistcreate', enctype='multipart/form-data')
+			.downloadbutton
+				button.smallmidbutton(type='submit') Submit
+			br
+			.downloadbutton
+				.labelmid2 Artist Name:
+			.downloadbutton
+				input#artist_name.frmtextfield(type='text', name='artist_name')
+			br
+			.downloadbutton
+				.labelmid2 Crew:
+			.downloadbutton
+				input#crew.frmtextfield(type='text', name='crew')
+			br
+			.downloadbutton
+				.labelmid2 Country:
+			.downloadbutton
+				input#country.frmtextfield(type='text', name='country')
+			br
+			.downloadbutton
+				.labelmid2 Info (Short sentence or two about you and your style, Be creative!)::
+			.downloadbutton
+				input#info.frmtextfield(type='text', name='info' rows='5')
+			br
+			.downloadbutton
+				.labelmid2 Facebook:
+			.downloadbutton
+				input#face.frmtextfield(type='text', name='face', value="")
+			br
+			.downloadbutton
+				.labelmid2 Soundcloud:
+			.downloadbutton
+				input#sound.frmtextfield(type='text', name='sound', value="")
+			br
+			.downloadbutton
+				.labelmid2 Bandcamp:
+			.downloadbutton
+				input#band.frmtextfield(type='text', name='band', value="")
+			br
+			.downloadbutton
+				.labelmid2 Beatport:
+			.downloadbutton
+				input#beat.frmtextfield(type='text', name='beat', value="")
+			br
+			.downloadbutton
+				.labelmid2 Instagram:
+			.downloadbutton
+				input#insta.frmtextfield(type='text', name='insta', value="")
+			br
+			.downloadbutton
+				button.smallmidbutton(type='submit') Submit
 	br
 	br
 	br
 	br
-
-	h2 Delete Artist
-	.contactdiv
-		.contact
-			form(method='POST' action='/artistdelete')
-				.label Artist Name:
-				div.form-group
-					input#artist_name.form-control(type='text', name='artist_name')
-				br
-
-				div
-					button.btn.btn-primary.btn-block(type='submit') Submit
+	.artisth1 
+		h1 Delete Artist
+	.faqform
+		form(method='POST' action='/artistdelete')
+			.downloadbutton
+				.labelmid2 Artist Name:
+			.downloadbutton
+				input#artist_name.form-control(type='text', name='artist_name')
+			br
+			.downloadbutton
+				button.smallmidbutton(type='submit') Submit

@@ -1,116 +1,120 @@
 extends index3
 
 block content
-	h1 TRACK C.R.U.D
-	
 	- var message = msg;
 	- var message2 = msg2;
-	//- var message3 = msg3;
 
-	.labelg #{message}
-	.labelg #{message2}
+	.labelgcenter #{message}
+	.labelgcenter #{message2}
 
-	h2 Add Track
-	.contactdiv
-		.contact
-			form(method='POST' action='/trackcreate')
-				.label Track Name:
-				br
-				div.form-group
-					input#track_name.form-control(type='text', name='track_name')
-				br
+	.artisth1 
+		h1 Add Track
+	.faqform
+		form(method='POST' action='/trackcreate')
+			.downloadbutton
+				button.smallmidbutton(type='submit') Submit
+			.downloadbutton
+				.labelmid2 Track Name:
+			.downloadbutton
+				input#track_name.frmtextfield(type='text', name='track_name')
+			br
+			.downloadbutton
+				.labelmid2 Short Name:
+			.downloadbutton
+				input#short_name.frmtextfield(type='text', name='short_name')
+			br
+			.downloadbutton
+				.labelmid2 Artist Name:
+			.downloadbutton
+				input#artist_name.frmtextfield(type='text', name='artist_name')
+			br
+			.downloadbutton
+				.labelmid2 Drive URL:
+			.downloadbutton
+				input#drive_url.frmtextfield(type='text', name='drive_url')
+			br
+			.downloadbutton
+				.labelmid2 Is Tune of the Week?:
+			br
+			.downloadbutton
+				.radiolabel Yes
+				input#tune_of_week(type='radio', name='tune_of_week', value=1)
+			br
+			.downloadbutton
+				.radiolabel No
+				input#tune_of_week(type='radio', name='tune_of_week', checked="checked", value=0)
+			br
+			br
+			.downloadbutton
+				.labelmid2 Is Collab?:
+			br
+			.downloadbutton
+				.radiolabel Yes
+				input#is_collab(type='radio', name='is_collab', value=1)
+			br
+			.downloadbutton
+				.radiolabel No
+				input#is_collab(type='radio', name='is_collab', checked="checked", value=0)
+			br
+			br
+			.downloadbutton
+				.labelmid2 Collab Artist 1:
+			.downloadbutton
+				input#collab1.frmtextfield(type='text', name='collab1')
+			br
+			.downloadbutton
+				.labelmid2 Collab Artist 2:
+			.downloadbutton
+				input#collab2.frmtextfield(type='text', name='collab2')
+			br
+			.downloadbutton
+				.labelmid2 Collab Artist 3:
+			.downloadbutton
+				input#collab3.frmtextfield(type='text', name='collab3')
+			br
+			.downloadbutton
+				.labelmid2 Collab Artist 4:
+			.downloadbutton
+				input#collab4.frmtextfield(type='text', name='collab4')
+			br
+			br
+			.downloadbutton
+				.labelmid2 Is Remix?:
+			br
+			.downloadbutton
+				.radiolabel Yes
+				input#is_remix(type='radio', name='is_remix', value=1)
+			br
+			.downloadbutton
+				.radiolabel No
+				input#is_remix(type='radio', name='is_remix', checked="checked", value=0)
+			br
+			br
 
-				.label Short Name:
-				br
-				div.form-group
-					input#short_name.form-control(type='text', name='short_name')
-				br
-
-				.label Artist Name:
-				br
-				div.form-group
-					input#artist_name.form-control(type='text', name='artist_name')
-				br
-
-				.label Drive URL:
-				div.form-group
-					input#drive_url.form-control(type='text', name='drive_url')
-				br
-
-				.label Is Tune of the Week?:
-				.label Yes
-				div.form-group
-					input#tune_of_week.form-control(type='radio', name='tune_of_week', value=1)
-					br
-				.label No
-					input#tune_of_week.form-control(type='radio', name='tune_of_week', checked="checked", value=0)
-				br
-
-				.label Is Collab?:
-				.label Yes
-				div.form-group
-					input#is_collab.form-control(type='radio', name='is_collab', value=1)
-					br
-				.label No
-					input#is_collab.form-control(type='radio', name='is_collab', checked="checked", value=0)
-				br
-
-				.label Collab Artist 1:
-				div.form-group
-					input#collab1.form-control(type='text', name='collab1')
-				br
-
-				.label Collab Artist 2:
-				div.form-group
-					input#collab2.form-control(type='text', name='collab2')
-				br
-
-				.label Collab Artist 3:
-				div.form-group
-					input#collab3.form-control(type='text', name='collab3')
-				br
-
-				.label Collab Artist 4:
-				div.form-group
-					input#collab4.form-control(type='text', name='collab4')
-				br
-
-				.label Is Remix?:
-				.label Yes
-				div.form-group
-					input#is_remix.form-control(type='radio', name='is_remix', value=1)
-					br
-				.label No
-					input#is_remix.form-control(type='radio', name='is_remix', checked="checked", value=0)
-				br
-
-				.label Original Artist 1:
-				div.form-group
-					input#og1.form-control(type='text', name='og1')
-				br
-
-				.label Original Artist 2:
-				div.form-group
-					input#og2.form-control(type='text', name='og2')
-				br
-
-				div
-					button.btn.btn-primary.btn-block(type='submit') Submit
+			.downloadbutton
+				.labelmid2 Original Artist 1:
+			.downloadbutton
+				input#og1.frmtextfield(type='text', name='og1')
+			br
+			.downloadbutton
+				.labelmid2 Original Artist 2:
+			.downloadbutton
+				input#og2.frmtextfield(type='text', name='og2')
+			br
+			.downloadbutton
+				button.smallmidbutton(type='submit') Submit
 	br
 	br
 	br
 	br
-		
-	h2 Delete Track
-	.contactdiv
-		.contact
-			form(method='POST' action='/trackdelete')
-				.label Track Name:
-				br
-				div.form-group
-					input#track_name.form-control(type='text', name='track_name')
-				br
-		
-				div
-					button.btn.btn-primary.btn-block(type='submit') Submit
-	
+	.artisth1 
+		h1 Delete Track
+	.faqform
+		form(method='POST' action='/trackdelete')
+			.downloadbutton
+				.labelmid2 Track Name:
+			.downloadbutton
+				input#track_name.form-control(type='text', name='track_name')
+			br
+			.downloadbutton
+				button.smallmidbutton(type='submit') Submit

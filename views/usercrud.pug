@@ -1,55 +1,52 @@
 extends index3
 
 block content
-	h1 USER C.R.U.D
-	
 	- var message = msg;
 	- var message2 = msg2;
-	.labelg #{message}
-	.labelg #{message2}
+	.labelgcenter #{message}
+	.labelgcenter #{message2}
 
-	h1 Add User
-	.contactdiv
-		.contact
-			form(method='POST' action='/usercreate')
-				.label Username:
-				br
-				div.form-group
-					input#username.form-control(type='text', name='username')
-				br
-
-				.label Password:
-				br
-				div.form-group 
-					input#password.form-control(type='password', name='password')
-				br
-
-				.label User Access Level:
-				.label Admin
-				div.form-group
-					input#access_level.form-control(type='radio', name='access_level', value=3)
-					br
-					.label Mod
-					input#access_level.form-control(type='radio', name='access_level', value=2)
-					br
-					.label Standard
-					input#access_level.form-control(type='radio', name='access_level', checked="checked", value=1)
-					br
-
-				div
-					button.btn.btn-primary.btn-block(type='submit') Submit
+	.artisth1 
+		h1 Add User
+	.faqform
+		form(method='POST' action='/usercreate')
+			.downloadbutton
+				.labelmid2 Username:
+			.downloadbutton
+				input#username.frmtextfield(type='text', name='username')
+			br
+			.downloadbutton
+				.labelmid2 Password:
+			.downloadbutton
+				input#password.frmtextfield(type='password', name='password')
+			br
+			.downloadbutton
+				.labelmid2 User Access Level:
+			br
+			.downloadbutton
+				.radiolabel Admin
+				input#access_level(type='radio', name='access_level', value=3)
+			br
+			.downloadbutton
+				.radiolabel Mod
+				input#access_level(type='radio', name='access_level', value=2)
+			br
+			.downloadbutton
+				.radiolabel Standard
+				input#access_level(type='radio', name='access_level', checked="checked", value=1)
+			br
+			.downloadbutton
+				button.smallmidbutton(type='submit') Submit
 	br
 	br
-	
-	h1 Delete User
-	.contactdiv
-		.contact
-			form(method='POST' action='/userdelete')
-				.label Username:
-				br
-				div.form-group
-					input#username.form-control(type='text', name='username')
-				br
-
-				div
-					button.btn.btn-primary.btn-block(type='submit') Submit
+	.artisth1 
+		h1 Delete User
+	.faqform
+		form(method='POST' action='/userdelete')
+			.downloadbutton
+				.labelmid2 Username:
+			.downloadbutton
+				input#username.form-control(type='text', name='username')
+			br
+			.downloadbutton
+				button.smallmidbutton(type='submit') Submit

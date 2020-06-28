@@ -333,68 +333,71 @@ block content
 				var msg2 = document.getElementById("labelgcenter2");
 				msg2.innerHTML = "Uploading...";
 				var files = $('#thefile')[0].files[0];
-				console.log(`The type of the file is: ${files.type}`);
-				console.log(`The size of the file is: ${files.size}`);
-				if(files.type != "audio/mpeg" && files.type != "audio/wav" && files.type != "audio/aiff"){
-					msg.innerHTML = "WRONG FORMAT: Please Upload MP3/WAV/AIFF!";
-					msg2.innerHTML = "WRONG FORMAT: Please Upload MP3/WAV/AIFF!";
+				console.log(`files is: ${files}`);
+				if (!files) {
+					msg.innerHTML = "File not Attached!";
+					msg2.innerHTML = "File not Attached!";
 				}else{
-					console.log("File is Correct Format");
-					if(files.size > 102060124){
-						console.log(`FILE TOO BIG: 100 MB is the Max!`);
+					if(files.type != "audio/mpeg" && files.type != "audio/wav" && files.type != "audio/aiff"){
+						msg.innerHTML = "WRONG FORMAT: Please Upload MP3/WAV/AIFF!";
+						msg2.innerHTML = "WRONG FORMAT: Please Upload MP3/WAV/AIFF!";
 					}else{
-						console.log("File is Correct Size");
-						var fd = new FormData();
-						var artist_name = document.getElementById("dashartname").title;
-						var artist_id = document.getElementById("dashartid").title;
+						if(files.size > 102060124){
+							msg.innerHTML = "FILE TOO BIG: 100 MB is the Max!";
+							msg2.innerHTML = "FILE TOO BIG: 100 MB is the Max!";
+						}else{
+							var fd = new FormData();
+							var artist_name = document.getElementById("dashartname").title;
+							var artist_id = document.getElementById("dashartid").title;
 
-						var track_name = document.getElementById("tra_name").value.toString();
-						var short_name = "";
+							var track_name = document.getElementById("tra_name").value.toString();
+							var short_name = "";
 
-						var is_collab = getCurrentCollabValue();
-						var is_remix = getCurrentRemixValue();
+							var is_collab = getCurrentCollabValue();
+							var is_remix = getCurrentRemixValue();
 
-						var col1 = document.getElementById("col1").value;
-						var col2 = document.getElementById("col2").value;
-						var col3 = document.getElementById("col3").value;
-						var col4 = document.getElementById("col4").value;
+							var col1 = document.getElementById("col1").value;
+							var col2 = document.getElementById("col2").value;
+							var col3 = document.getElementById("col3").value;
+							var col4 = document.getElementById("col4").value;
 
-						var rem1 = document.getElementById("rem1").value;
-						var rem2 = document.getElementById("rem2").value;
+							var rem1 = document.getElementById("rem1").value;
+							var rem2 = document.getElementById("rem2").value;
 
-						fd.append('file', files);
-						fd.append('artist_name', artist_name);
-						fd.append('artist_id', artist_id);
-						fd.append('track_name', track_name);
-						fd.append('short_name', short_name);
-						fd.append('is_collab', is_collab);
-						fd.append('is_remix', is_remix);
+							fd.append('file', files);
+							fd.append('artist_name', artist_name);
+							fd.append('artist_id', artist_id);
+							fd.append('track_name', track_name);
+							fd.append('short_name', short_name);
+							fd.append('is_collab', is_collab);
+							fd.append('is_remix', is_remix);
 
-						fd.append('col1', col1);
-						fd.append('col2', col2);
-						fd.append('col3', col3);
-						fd.append('col4', col4);
-						fd.append('rem1', rem1);
-						fd.append('rem2', rem2);
+							fd.append('col1', col1);
+							fd.append('col2', col2);
+							fd.append('col3', col3);
+							fd.append('col4', col4);
+							fd.append('rem1', rem1);
+							fd.append('rem2', rem2);
 
-						$.ajax({
-							url:'/tests3upload',
-							type: 'POST',
-							data: fd,
-							processData: false,
-							contentType: false,
-							success: function(data){
-								var msg = document.getElementById("labelgcenter");
-								var msg2 = document.getElementById("labelgcenter2");
-								msg.innerHTML = data.msg;
-								msg2.innerHTML = data.msg;
-							},
-							error: function(){
-								console.log("Didn't Work");
-							}
-						});//end ajax
+							$.ajax({
+								url:'/tests3upload',
+								type: 'POST',
+								data: fd,
+								processData: false,
+								contentType: false,
+								success: function(data){
+									var msg = document.getElementById("labelgcenter");
+									var msg2 = document.getElementById("labelgcenter2");
+									msg.innerHTML = data.msg;
+									msg2.innerHTML = data.msg;
+								},
+								error: function(){
+									console.log("Didn't Work");
+								}
+							});//end ajax
 
-					}//second else - file is less than 100 MB
-				}//first else - file is correct type
+						}//third else - file is less than 100 MB
+					}//second else - file is correct type
+				}//first else - file attached
 			});
 		}

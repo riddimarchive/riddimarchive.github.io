@@ -20,6 +20,7 @@ block content
 	div(title='0', id='collabminus')
 	div(title='0', id='remixcounter')
 	div(title='0', id='leftprevvalue')
+	div(title='0', id='rightprevvalue')
 
 	br
 
@@ -251,29 +252,48 @@ block content
 			});//class selector
 		}
 
-		function rangeInit(strlen){
+		function handleRange(strlen){
 			var leftRangeInput = document.getElementById("leftslide");
 			var rightRangeInput = document.getElementById("rightslide");
 			leftRangeInput.max = strlen;
 			rightRangeInput.max = strlen;
 			document.getElementById("rightslide").value = `${strlen}`;
+			document.getElementById("rightprevvalue").title = `${strlen}`;
+
+			//Highlight String at the Beginning
+			document.querySelectorAll('.letter').forEach(item => {
+				var split = item.id.split("/");
+				for (var i = 0; i < strlen; i++){
+					var theselectedletter = document.getElementById(`letter/${i}`);
+					theselectedletter.style.color = "greenyellow";
+				}
+			});
+
+			//add brackets to beginning and end
+			var leftinitbrack = document.getElementById(`txtsplit/0`);
+			leftinitbrack.innerHTML = `<div class="redtext">[[</div>`;
+			var rightinitbrack = document.getElementById(`txtsplit/${strlen}`);
+			rightinitbrack.innerHTML = `<div class="redtext">]]</div>`;
+
 
 			leftRangeInput.addEventListener("change", function() {
+				var currright = document.getElementById("rightprevvalue").title;
 				var prevleft = document.getElementById("leftprevvalue").title;
 				var prevleftbound = document.getElementById(`txtsplit/${prevleft}`);
 				prevleftbound.innerHTML = "";
 
 				var thevalue = leftRangeInput.value;
-				if (thevalue == strlen){
-					thevalue--;
+				console.log(`THE VALUE BEFORE IS ${thevalue}`);
+				if (thevalue >= parseInt(currright)){
+					thevalue = (parseInt(currright)-1);
 				}
-				console.log(`THE VALUE IS ${thevalue}`);
+				console.log(`THE VALUE AFTER IS ${thevalue}`);
 				var leftbound = document.getElementById(`txtsplit/${thevalue}`);
-				leftbound.innerHTML = "*|";
+				leftbound.innerHTML = `<div class="redtext">[[</div>`;
 
 				document.querySelectorAll('.letter').forEach(item => {
 					var split = item.id.split("/");
-					for (var i = thevalue; i < strlen; i++){
+					for (var i = thevalue; i < parseInt(currright); i++){
 						var theselectedletter = document.getElementById(`letter/${i}`);
 						theselectedletter.style.color = "greenyellow";
 					}
@@ -287,7 +307,35 @@ block content
 			}, false);
 
 			rightRangeInput.addEventListener("change", function() {
-				console.log(rightRangeInput.value);
+				var currleft = document.getElementById("leftprevvalue").title;
+				var prevright = document.getElementById("rightprevvalue").title;
+				var prevrightbound = document.getElementById(`txtsplit/${prevright}`);
+				prevrightbound.innerHTML = "";
+
+				var thevalue = rightRangeInput.value;
+				console.log(`THE VALUE BEFORE IS ${thevalue}`);
+				if (thevalue <= parseInt(currleft)){
+					thevalue = (parseInt(currleft)+1);
+				}
+				console.log(`THE VALUE AFTER IS ${thevalue}`);
+				var rightbound = document.getElementById(`txtsplit/${thevalue}`);
+				rightbound.innerHTML = `<div class="redtext">]]</div>`;
+
+				document.querySelectorAll('.letter').forEach(item => {
+					var split = item.id.split("/");
+					for (var i = thevalue; i > parseInt(currleft); i--){
+						if (i == strlen){
+							i--;
+						}
+						var theselectedletter = document.getElementById(`letter/${i}`);
+						theselectedletter.style.color = "greenyellow";
+					}
+					for (var j = thevalue; j < strlen; j++){
+						var theselectedletter = document.getElementById(`letter/${j}`);
+						theselectedletter.style.color = "black";
+					}
+				});
+				document.getElementById("rightprevvalue").title = thevalue;
 			}, false);
 		}
 
@@ -311,9 +359,10 @@ block content
 					for (var i = 0; i < theSplit.length; i++){
 						outstring = `${outstring}<div class="txtsplit" id="txtsplit/${i}"></div><div class="letter" id="letter/${i}">${theSplit[i]}</div>`;
 					}
+					outstring = `${outstring}<div class="txtsplit" id="txtsplit/${theSplit.length}"></div>`;
 					var thetext = document.getElementById("tunetextnowidth");
 					thetext.innerHTML = outstring;
-					rangeInit(finalstr.length);
+					handleRange(finalstr.length);
 
 					document.querySelectorAll('.downloadbuttonhidden').forEach(item => {
 						item.style.display = "flex";

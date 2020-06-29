@@ -1331,6 +1331,11 @@ li.tunetexttotwsmaller{
   display: contents;
 }
 
+.redtext{
+  display: contents;
+  color: red;
+}
+
 input[type=range] {
   width: 20em;
   background-color: transparent;

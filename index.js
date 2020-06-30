@@ -2280,7 +2280,7 @@ app.post('/tests3upload', (req, res, next) => {
           //add tune to db!
           async function storeFormResults(artist_name, artist_id, track_name, short_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2){
             try{
-
+              console.log("in async");
               var db = createConnection();
               await conquerie.connect(db);
               var tune_of_week = 0;
@@ -2296,12 +2296,13 @@ app.post('/tests3upload', (req, res, next) => {
               var filenamestrtest2 = encodeURI(filenamestrtest);
               var filenamefinalencode = filenamestrtest2.replace(regexamp, "%26");
               drive_url = `https://riddim-archive-tune-store.s3-us-west-1.amazonaws.com/${artnamefinalencode.charAt(0)}/${artnamefinalencode}/${filenamefinalencode}`
-
+              console.log(drive_url);
 
 
               let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, short_name, drive_url, col1, col2, col3, col4, is_collab, rem1, rem2, is_remix, tune_of_week);
 
               await conquerie.end(db);
+              res.send({msg: "File Uploaded! Note: Large files may take a moment!"});
 
 
             }catch(err){
@@ -2310,7 +2311,6 @@ app.post('/tests3upload', (req, res, next) => {
             }
           }//end async
           storeFormResults(artist_name, artist_id, track_name, short_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2);
-          res.send({msg: themsg, song: song});
         }
       } 
     }

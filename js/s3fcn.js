@@ -8,15 +8,18 @@ function uploadToS3(file, islogo, artist_name, artfirstletter, makepublic) {
 	});
 	s3bucket.createBucket(function () {
 	  var tagstring = `Artist=${artist_name}`;
+	  if (makepublic == 1){
+		console.log("MAKE PUBLIC");
+		tagstring = `public=yes&Artist=${artist_name}`;
+		console.log("Tagstring below");
+		console.log(tagstring);
+	  }
 	  var params = {
 		Bucket: process.env.BUCKET,
 		Tagging: `${tagstring}`,
 		Key: `${artfirstletter}/${artist_name}/${file.name}`,
 		Body: file.data,
 	  };
-	  if (makepublic == 1){
-		tagstring = `public=yes&Artist=${artist_name}`;
-	  }
 	  if (islogo == 1){
 		params = {
 			Bucket: process.env.BUCKET,

@@ -111,6 +111,22 @@ body {
   justify-content: center;
 }
 
+#labelgcenter2black{
+  font-weight: bold;
+  font-size: x-large;
+  color: black;
+  display: flex;
+  justify-content: center;
+}
+#labelgcenter2contents{
+  font-weight: bold;
+  font-size: x-large;
+  color: greenyellow;
+  text-decoration: underline;
+  display: contents;
+  justify-content: center;
+}
+
 #labelgcenter3{
   font-weight: bold;
   font-size: xx-large;

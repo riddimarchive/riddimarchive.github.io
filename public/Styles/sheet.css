@@ -1344,7 +1344,7 @@ li.tunetexttotwsmaller{
 }
 
 .letter{
-  display: contents;
+  display: initial;
 }
 
 .redtext{

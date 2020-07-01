@@ -288,6 +288,8 @@ block content
 				var prevleft = document.getElementById("leftprevvalue").title;
 				var prevleftbound = document.getElementById(`txtsplit/${prevleft}`);
 				prevleftbound.innerHTML = "";
+				var begin = document.getElementById(`txtsplit/0`);
+				begin.innerHTML = "";
 
 				var thevalue = leftRangeInput.value;
 				console.log(`THE VALUE BEFORE IS ${thevalue}`);
@@ -302,11 +304,15 @@ block content
 					var split = item.id.split("/");
 					for (var i = thevalue; i < parseInt(currright); i++){
 						var theselectedletter = document.getElementById(`letter/${i}`);
-						theselectedletter.style.color = "greenyellow";
+						if (theselectedletter !== null){
+							theselectedletter.style.color = "greenyellow";
+						}
 					}
 					for (var j = 0; j < thevalue; j++){
 						var notselectedletter = document.getElementById(`letter/${j}`);
-						notselectedletter.style.color = "black";
+						if (notselectedletter !== null){
+							notselectedletter.style.color = "black";
+						}
 					}
 				});
 				document.getElementById("leftprevvalue").title = thevalue;
@@ -335,11 +341,15 @@ block content
 							i--;
 						}
 						var theselectedletter = document.getElementById(`letter/${i}`);
-						theselectedletter.style.color = "greenyellow";
+						if (theselectedletter !== null){
+							theselectedletter.style.color = "greenyellow";
+						}
 					}
 					for (var j = thevalue; j < strlen; j++){
-						var theselectedletter = document.getElementById(`letter/${j}`);
-						theselectedletter.style.color = "black";
+						var notselectedletter = document.getElementById(`letter/${j}`);
+						if (notselectedletter !== null){
+							notselectedletter.style.color = "black";
+						}
 					}
 				});
 				document.getElementById("rightprevvalue").title = thevalue;
@@ -422,7 +432,8 @@ block content
 
 							var rightindex = parseInt(document.getElementById("rightprevvalue").title);
 							var leftindex = parseInt(document.getElementById("leftprevvalue").title);
-							short_name = track_name.substring(leftindex,rightindex);
+							short_name = track_name.substring(leftindex, rightindex);
+							short_name = short_name.trim();
 
 							
 							fd.append('file', files);

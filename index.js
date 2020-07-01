@@ -593,6 +593,21 @@ app.get('/share/:id', function(req,res){
   sharelinkResponse(track_id);
 });
 
+//APP GET - SECRET SHARE LINK RESPONSE
+app.get('/secretshare/:id', function(req,res){
+
+  var track_id = req.params.id;
+  var user_id = "";
+  var theusername = "";
+
+  if(req.user !== undefined){
+    user_id = req.user.id;
+    theusername = req.user.username;
+  }
+
+  res.render('secretshare', { title:'Secret Share', msg: "", theusername: theusername, track_id: track_id });
+
+});
 
 //GET REQUEST - REQUEST HANDLER
 app.get('/req/:page', function(req,res){
@@ -649,6 +664,44 @@ app.get('/tuneup', (req, res, next) => {
           art_name = artresult[0].artist_name;
           await conquerie.end(db);
           res.render('tests3',{ title:'Tune Upload', msg: "", theusername: theusername , theid: art_id, theartname: art_name});
+        }else{
+          await conquerie.end(db);
+          res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: `You do not have access to this artist's page!` });
+        }
+      }catch(err){
+      console.log(err);
+      res.render('error');
+      }
+
+    }
+    getArtistVerify(theusername);
+
+  }//end else
+
+});
+
+//GET REQUEST - GET Secret Tunes
+app.get('/secrettunes', (req, res, next) => {
+
+  if(req.user === undefined){
+    res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: '' });
+  }else{
+    var theusername = req.user.username;
+
+    async function getArtistVerify(theusername){
+      try{
+        var db = createConnection();
+        await conquerie.connect(db);
+        var art_name = "";
+        var art_id = "";
+
+        let result = await userquerie.verifyArtistbyUsername(db, theusername);
+        if(result.length > 0 && result[0].artist_id_verify != 0){
+          art_id = result[0].artist_id_verify;
+          let artresult = await artquerie.getArtistNameByID(db, art_id);
+          art_name = artresult[0].artist_name;
+          await conquerie.end(db);
+          res.render('secret',{ title:'Tune Upload', msg: "", theusername: theusername , theid: art_id, theartname: art_name});
         }else{
           await conquerie.end(db);
           res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: `You do not have access to this artist's page!` });
@@ -2269,6 +2322,28 @@ app.post('/tuneup', (req, res, next) => {
 
     res.render('tests3',{ title:'Tune Upload', msg: "", theusername: theusername , theid: theid, theartname: theartistname});
   }
+});
+
+//POST REQUEST - GET S3 Page
+app.post('/secrettunes', (req, res, next) => {
+
+  var { theid, theartistname } = req.body;
+
+  if(req.user === undefined){
+    res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: '' });
+  }else{
+    var theusername = req.user.username;
+
+    res.render('secret',{ title:'Secret Tunes', msg: "", theusername: theusername , theid: theid, theartname: theartistname});
+  }
+});
+
+//POST REQUEST - GET S3 Page
+app.post('/secretsubmit', (req, res, next) => {
+
+  var { password, track_id } = req.body;
+  res.send({password: password, track_id: track_id});
+
 });
 
 //POST REQUEST - TEST S3 Upload

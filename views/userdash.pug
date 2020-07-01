@@ -23,6 +23,11 @@ block content
 					input#theid(type='hidden', name='theid', value=`${art_id}`)
 					input#theartistname(type='hidden', name='theartistname', value=`${art_name}`)
 					input#tuneimg.tuneimgbutton(type='image', src='Images/PageIMG/tuneup.png' height='250' width='250' alt='Submit')
+			.fishchild(id='secrettuneslink')
+				form(method='POST' action='/secrettunes')
+					input#scrtid(type='hidden', name='scrtid', value=`${art_id}`)
+					input#scrtartistname(type='hidden', name='scrtartistname', value=`${art_name}`)
+					input#secretimg.tuneimgbutton(type='image', src='Images/PageIMG/secret.png' height='250' width='250' alt='Submit')
 			.fishchild
 				a(href='favorites')
 					img(src='Images/PageIMG/favorites.png' alt='Images/PageIMG/fail.png' height='250' width='250')
@@ -39,40 +44,18 @@ block content
 			addVerifyButton();
 		});
 
-		function tuneUpInit() {
-			//- document.querySelectorAll('.tuneimgbutton').forEach(item => {
-			//- 	item.addEventListener('click', event => {
-			//- 		var thestring = item.id;
-			//- 		var splitty = thestring.split("/");
-			//- 		var theid = splitty[0];
-			//- 		var theartistname = splitty[1];
-
-			//- 		$.ajax({
-			//- 			url:'/tuneup',
-			//- 			type: 'POST',
-			//- 			data: {
-			//- 				theid: theid,
-			//- 				theartistname: theartistname
-			//- 			},
-			//- 			success: function(data){
-
-			//- 			},
-			//- 			error: function(){
-			//- 				console.log("Didn't Work");
-			//- 			}
-			//- 		});//ajax
-			//- 	});//click
-			//- });//class selector
-		}
-
 		function addVerifyButton() {
 			var theid = document.getElementById('dashartid');
 			if (theid.title != ""){
 				var thename = document.getElementById('dashartname').title;
 				var thebutton = document.getElementById('uppagelink');
 				thebutton.style.display = "block";
+				var scrtbutton = document.getElementById('secrettuneslink');
+				scrtbutton.style.display = "block";
+				
 				var theimg = document.getElementById('tuneimg');
 				theimg.setAttribute('id', `${theid.title}/${thename}`);
-				tuneUpInit();
+				var secretimg = document.getElementById('secretimg');
+				secretimg.setAttribute('id', `${theid.title}/${thename}`);
 			}
 		}

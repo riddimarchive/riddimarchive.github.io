@@ -1284,6 +1284,10 @@ li.tunetexttotwsmaller{
   display: none;
 }
 
+#secrettuneslink{
+  display: none;
+}
+
 #dashartid{
   display: none;
 }

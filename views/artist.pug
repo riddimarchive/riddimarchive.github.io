@@ -194,32 +194,32 @@ block content
 		});
 
 		function isArtistCheck(){
-			var artname = document.getElementById('theh1').innerHTML;
-			var usrid = parseInt(document.getElementById('extra').value);
+			var usr = document.getElementById('extra').value;
+			if (usr !== ""){
+				var artname = document.getElementById('theh1').innerHTML;
+				var usrid = parseInt(usr);
 			
-			$.ajax({
-			url:'/isArtistCheck',
-			type: 'POST',
-			data: {
-				artname: artname,
-				usrid: usrid
-			},
-			success: function(data){
-				if(data.isArtist == 1){
-					//make upload page buttons visible
-					//make track delete buttons visible
-					console.log(`Artist verified: ${data.artname}`);
-					document.querySelectorAll('.downloadbuttonhidden').forEach(item => {
-						item.style.display = "flex";
-					});
-				}else{
-					console.log(`Artist not verified!`);
+				$.ajax({
+				url:'/isArtistCheck',
+				type: 'POST',
+				data: {
+					artname: artname,
+					usrid: usrid
+				},
+				success: function(data){
+					if(data.isArtist == 1){
+						//make upload page buttons visible
+						//make track delete buttons visible
+						document.querySelectorAll('.downloadbuttonhidden').forEach(item => {
+							item.style.display = "flex";
+						});
+					}
+				},
+				error: function(){
+				console.log("Didn't Work");
 				}
-			},
-			error: function(){
-			console.log("Didn't Work");
+				});//ajax
 			}
-			});//ajax
 		}
 
 		function searchAjaxInit() {

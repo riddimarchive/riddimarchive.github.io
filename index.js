@@ -813,12 +813,7 @@ app.post('/', (req, res, next) => {
   }
 
   homeResponse();
-
-
-  
   }
-
-
 });
 
 //POST REQUEST - Homepagefave
@@ -1233,7 +1228,6 @@ app.post('/artistcreate', (req, res, next) => {
     }
 
 });
-
 
 //POST REQUEST - Artist Delete
 app.post('/artistdelete', (req, res, next) => {

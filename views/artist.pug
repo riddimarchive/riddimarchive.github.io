@@ -29,6 +29,11 @@ block content
 		}
 		}
 		}, true);
+	.downloadbuttonhidden
+		.custombutton
+			a(href='../../tuneup')
+				img(border='2' src='../../Images/PageIMG/myuploadpage.png' alt='../../Images/PageIMG/fail.png' height='50')
+	
 	.artisth1
 		h1#theh1 #{artist_name}
 
@@ -146,6 +151,13 @@ block content
 					div(id=`result${index}`, class='downloadbuttonwithbold')
 					
 	#ulcontain2
+
+
+	.downloadbuttonhidden
+		.custombutton
+			a(href='../../tuneup')
+				img(border='2' src='../../Images/PageIMG/myuploadpage.png' alt='../../Images/PageIMG/fail.png' height='50')
+
 	script.
 		$(document).on("keydown", "form", function(event) { 
 			return event.key != "Enter";
@@ -161,6 +173,7 @@ block content
 
 		$(document).ready(function() {
 			console.log("Doc ready");
+			isArtistCheck();
 			fixLargeText();
 			searchAjaxInit();
 			faveAjaxInit();
@@ -179,6 +192,35 @@ block content
 			console.log("Ajax Complete");
 			//faveAjaxInit();
 		});
+
+		function isArtistCheck(){
+			var artname = document.getElementById('theh1').innerHTML;
+			var usrid = parseInt(document.getElementById('extra').value);
+			
+			$.ajax({
+			url:'/isArtistCheck',
+			type: 'POST',
+			data: {
+				artname: artname,
+				usrid: usrid
+			},
+			success: function(data){
+				if(data.isArtist == 1){
+					//make upload page buttons visible
+					//make track delete buttons visible
+					console.log(`Artist verified: ${data.artname}`);
+					document.querySelectorAll('.downloadbuttonhidden').forEach(item => {
+						item.style.display = "flex";
+					});
+				}else{
+					console.log(`Artist not verified!`);
+				}
+			},
+			error: function(){
+			console.log("Didn't Work");
+			}
+			});//ajax
+		}
 
 		function searchAjaxInit() {
 			console.log("search init");

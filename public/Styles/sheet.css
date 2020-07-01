@@ -1352,6 +1352,16 @@ li.tunetexttotwsmaller{
   color: red;
 }
 
+#userartistname{
+  display: hidden;
+}
+
+#theartistname{
+  display: hidden;
+}
+
+
+
 input[type=range] {
   width: 20em;
   background-color: transparent;

@@ -526,6 +526,7 @@ app.get('/artist/:name', function(req,res){
 
 });
 
+
 //APP GET - SHARE LINK RESPONSE
 app.get('/share/:id', function(req,res){
 
@@ -642,13 +643,16 @@ app.get('/tuneup', (req, res, next) => {
         var art_id = "";
 
         let result = await userquerie.verifyArtistbyUsername(db, theusername);
-        if(result.length > 0){
+        if(result.length > 0 && result[0].artist_id_verify != 0){
           art_id = result[0].artist_id_verify;
           let artresult = await artquerie.getArtistNameByID(db, art_id);
           art_name = artresult[0].artist_name;
+          await conquerie.end(db);
+          res.render('tests3',{ title:'Tune Upload', msg: "", theusername: theusername , theid: art_id, theartname: art_name});
+        }else{
+          await conquerie.end(db);
+          res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: `You do not have access to this artist's page!` });
         }
-        await conquerie.end(db);
-        res.render('tests3',{ title:'Tune Upload', msg: "", theusername: theusername , theid: art_id, theartname: art_name});
       }catch(err){
       console.log(err);
       res.render('error');
@@ -1274,6 +1278,34 @@ app.post('/artistdelete', (req, res, next) => {
 
     }
 
+});
+
+//APP POST - IS ARTIST CHECK
+app.post('/isArtistCheck', function(req,res){
+
+  var { artname, usrid } = req.body;
+
+  async function isArtistResponse(artname, usrid){
+    try{
+      var isArtist = 0;
+      var db = createConnection();
+      await conquerie.connect(db);
+      let userresult = await userquerie.getUserByid(db, usrid)
+      let result = await artquerie.getArtistInfo(db, artname);
+      
+      if(userresult[0].artist_id_verify == result[0].id){
+        isArtist = 1;
+      }
+      await conquerie.end(db);
+      res.send({isArtist: isArtist, artname: artname});
+
+    }catch(err){
+      console.log(err);
+      res.render('error');
+    }
+
+  }
+  isArtistResponse(artname, usrid);
 });
 
 

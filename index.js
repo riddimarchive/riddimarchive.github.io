@@ -725,14 +725,14 @@ app.get('/secrettunes', (req, res, next) => {
           console.log("Tracks Belowwwww");
           console.table(tracks);
           }else{
-            themsg = "No Secret Tracks! You can make by marking Secret when you upload a tune!";
+            themsg = `No Secret Tracks! You can select "Make Track Secret" when uploading a tune!`;
           }
             
           await conquerie.end(db);
           res.render('secrethub',{ title:'Secret Hub', msg: themsg, theusername: theusername , theid: art_id, theartname: art_name, tracks: tracks, links: links});
         }else{
           await conquerie.end(db);
-          res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: `You do not have access to this artist's page!` });
+          res.render('login',{ title:'Riddim Archive Login', theusername: theusername, er: '', message: `You do not have access to this artist's page!` });
         }
       }catch(err){
       console.log(err);
@@ -2347,8 +2347,31 @@ app.post('/tuneup', (req, res, next) => {
     res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: '' });
   }else{
     var theusername = req.user.username;
+    async function getArtistVerify(theusername){
+      try{
+        var db = createConnection();
+        await conquerie.connect(db);
+        var art_name = "";
+        var art_id = "";
 
-    res.render('tests3',{ title:'Tune Upload', msg: "", theusername: theusername , theid: theid, theartname: theartistname});
+        let result = await userquerie.verifyArtistbyUsername(db, theusername);
+        if(result.length > 0 && result[0].artist_id_verify != 0){
+          art_id = result[0].artist_id_verify;
+          let artresult = await artquerie.getArtistNameByID(db, art_id);
+          art_name = artresult[0].artist_name;
+          await conquerie.end(db);
+          res.render('tests3',{ title:'Tune Upload', msg: "", theusername: theusername , theid: art_id, theartname: art_name});
+        }else{
+          await conquerie.end(db);
+          res.render('login',{ title:'Riddim Archive Login', theusername: theusername, er: '', message: `You do not have access to this artist's page!` });
+        }
+      }catch(err){
+      console.log(err);
+      res.render('error');
+      }
+
+    }
+    getArtistVerify(theusername);
   }
 });
 

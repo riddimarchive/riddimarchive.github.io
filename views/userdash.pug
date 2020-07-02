@@ -19,11 +19,9 @@ block content
 				a(href='../')
 					img(src='Images/PageIMG/browsearchive.png' alt='Images/PageIMG/fail.png' height='250' width='250')
 			.fishchild(id='uppagelink')
-				form(method='POST' action='/tuneup')
-					input#theid(type='hidden', name='theid', value=`${art_id}`)
-					input#theartistname(type='hidden', name='theartistname', value=`${art_name}`)
-					input#tuneimg.tuneimgbutton(type='image', src='Images/PageIMG/tuneup.png' height='250' width='250' alt='Submit')
-			.fishchild
+				a(href='tuneup')
+					img(src='Images/PageIMG/tuneup.png' alt='Images/PageIMG/fail.png' height='250' width='250')
+			.fishchild(id='secrettuneslink')
 				a(href='secrettunes')
 					img(src='Images/PageIMG/secret.png' alt='Images/PageIMG/fail.png' height='250' width='250')
 			.fishchild

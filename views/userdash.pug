@@ -23,11 +23,6 @@ block content
 					input#theid(type='hidden', name='theid', value=`${art_id}`)
 					input#theartistname(type='hidden', name='theartistname', value=`${art_name}`)
 					input#tuneimg.tuneimgbutton(type='image', src='Images/PageIMG/tuneup.png' height='250' width='250' alt='Submit')
-			.fishchild(id='secrettuneslink')
-				form(method='POST' action='/secrettunes')
-					input#scrtid(type='hidden', name='scrtid', value=`${art_id}`)
-					input#scrtartistname(type='hidden', name='scrtartistname', value=`${art_name}`)
-					input#secretimg.tuneimgbutton(type='image', src='Images/PageIMG/secret.png' height='250' width='250' alt='Submit')
 			.fishchild
 				a(href='secrettunes')
 					img(src='Images/PageIMG/secret.png' alt='Images/PageIMG/fail.png' height='250' width='250')

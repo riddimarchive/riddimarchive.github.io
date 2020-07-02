@@ -2355,61 +2355,6 @@ app.post('/tuneup', (req, res, next) => {
 //POST REQUEST - GET S3 Page
 app.post('/secrettunes', (req, res, next) => {
 
-  var { theid, theartistname } = req.body;
-
-  if(req.user === undefined){
-    res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: '' });
-  }else{
-    var theusername = req.user.username;
-    async function getArtistVerify(theusername){
-      try{
-        var db = createConnection();
-        await conquerie.connect(db);
-        var art_name = "";
-        var art_id = "";
-        var links = [];
-        var tracks = [];
-        var themsg = "";
-
-        let result = await userquerie.verifyArtistbyUsername(db, theusername);
-        if(result.length > 0 && result[0].artist_id_verify != 0){
-          art_id = result[0].artist_id_verify;
-          let artresult = await artquerie.getArtistNameByID(db, art_id);
-          art_name = artresult[0].artist_name;
-
-          let linkresult = await secretquerie.getArtistsSecretLinks(db, art_name);
-          if(linkresult.length > 0){
-            for (var i = 0; i < result.length; i++) {
-              var row = { 'id': linkresult[i].id, 'track_id': linkresult[i].track_id, 'artist_name': linkresult[i].artist_name, 'url': linkresult[i].url, 'exp_time': linkresult[i].exp_time, 'created_time': linkresult[i].created_time }
-              links.push(row);
-            }
-          }
-
-          let trackresult = await secretquerie.getArtistsSecretTunes(db, art_name);
-          if(trackresult.length > 0){
-            for (var i = 0; i < trackresult.length; i++) {
-              var row = { 'track_name': trackresult[i].track_name, 'artist_name': trackresult[i].artist_name, 'artist_id': trackresult[i].artist_id, 'id': trackresult[i].id, 'short_name': trackresult[i].short_name, 'is_remix': trackresult[i].is_remix, 'is_collab': trackresult[i].is_collab, 'aws_key': trackresult[i].aws_key, 'blank': "" }
-              tracks.push(row);
-            }
-          }else{
-            themsg = "No Secret Tracks! Upload a tune and mark it as Secret if you wish to share it!";
-          }
-            
-          await conquerie.end(db);
-          res.render('secrethub',{ title:'Secret Hub', msg: themsg, theusername: theusername , theid: art_id, theartname: art_name, tracks: tracks, links: links});
-        }else{
-          await conquerie.end(db);
-          res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: `You do not have access to this artist's page!` });
-        }
-      }catch(err){
-      console.log(err);
-      res.render('error');
-      }
-
-    }
-    getArtistVerify(theusername);
-    
-  }
 });
 
 //POST REQUEST - GET S3 Page

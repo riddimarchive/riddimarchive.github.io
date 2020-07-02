@@ -19,6 +19,7 @@ const artquerie = require('./js/artquery');
 const trackquerie = require('./js/trackquery');
 const userquerie = require('./js/userquery');
 const heartquerie = require('./js/heartquery');
+const secretquerie = require('./js/secretquery');
 const has = require('./js/hash');
 const emailer = require('./js/email');
 const s3fcn = require('./js/s3fcn');
@@ -701,7 +702,7 @@ app.get('/secrettunes', (req, res, next) => {
           let artresult = await artquerie.getArtistNameByID(db, art_id);
           art_name = artresult[0].artist_name;
           await conquerie.end(db);
-          res.render('secret',{ title:'Tune Upload', msg: "", theusername: theusername , theid: art_id, theartname: art_name});
+          res.render('secrethub',{ title:'Tune Upload', msg: "", theusername: theusername , theid: art_id, theartname: art_name});
         }else{
           await conquerie.end(db);
           res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: `You do not have access to this artist's page!` });
@@ -2334,7 +2335,7 @@ app.post('/secrettunes', (req, res, next) => {
   }else{
     var theusername = req.user.username;
 
-    res.render('secret',{ title:'Secret Tunes', msg: "", theusername: theusername , theid: theid, theartname: theartistname});
+    res.render('secrethub',{ title:'Secret Tunes', msg: "", theusername: theusername , theid: theid, theartname: theartistname});
   }
 });
 
@@ -2342,7 +2343,74 @@ app.post('/secrettunes', (req, res, next) => {
 app.post('/secretsubmit', (req, res, next) => {
 
   var { password, track_id } = req.body;
-  res.send({password: password, track_id: track_id});
+  if(password == ""){
+    res.send({ msg: "Please Enter Password!", track_id: "", url: "", exp_time: "", created_time: "", tracks: ""});
+  }else{
+
+        async function submitCheck(password, track_id){
+            try{
+              var tracks = [];
+              var verified = 0;
+              var url = "";
+              var exp_time = "";
+              var created_time = "";
+            
+              var db = createConnection();
+              await conquerie.connect(db);
+            
+              let tresult = await trackquerie.getTrackbyID(db, track_id);
+              if (tresult.length > 0){
+                  var row = { 'track_name': tresult[0].track_name, 'artist_name': tresult[0].artist_name, 'artist_id': tresult[0].artist_id, 'id': tresult[0].id, 'is_remix': tresult[0].is_remix, 'is_collab': tresult[0].is_collab, 'is_secret': tresult[0].is_secret, 'secret_pass': tresult[0].secret_pass, 'blank': "" }
+                  tracks.push(row);
+                  if(tracks[0].is_secret == 0){
+                    await conquerie.end(db);
+                    res.send({ msg: "Track not Secret, Check their Artist Page!", track_id: "", url: "", exp_time: "", created_time: "", tracks: ""});
+                  }else{
+                      //check pass
+                      let isMatch = await has.passCheck(password, tracks[0].secret_pass);
+
+                      if(isMatch){
+                          verified = 1;
+                          tracks[0].secret_pass = "";
+
+                          //get signed url from DB
+                          let sresult = await secretquerie.getSecretLink(db, track_id);
+                          if (sresult.length > 0){
+                              url = sresult[0].url;
+                              exp_time = sresult[0].exp_time;
+                              created_time = sresult[0].created_time;
+
+                              if(tracks[0].is_collab == 0 && tracks[0].is_remix == 0){
+                                tracks[0].blank = `${tracks[0].artist_name} - `;
+                              }
+
+                              await conquerie.end(db);
+                              res.send({ msg: "Verified, Access Granted", track_id: track_id, url: url, exp_time: exp_time, created_time: created_time, tracks: tracks});
+                          
+                          }else{
+                            await conquerie.end(db);
+                            res.send({ msg: "Link Expired or Removed", track_id: "", url: "", exp_time: "", created_time: "", tracks: ""});
+                          }
+                      }else{
+                        await conquerie.end(db);
+                        res.send({ msg: "Password Does not Match, Please Try Again!", track_id: "", url: "", exp_time: "", created_time: "", tracks: ""});
+                      }
+                  }//is secret
+              
+              }else{
+                await conquerie.end(db);
+                res.send({ msg: "Track not found, Link is incorrect!", track_id: "", url: "", exp_time: "", created_time: "", tracks: ""});
+              }//track not found else
+            
+            }catch(err){
+              console.log(err);
+              res.render('error');
+            }
+        }//submit check
+
+    submitCheck(password, track_id);
+
+  }//password else
 
 });
 

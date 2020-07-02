@@ -38,7 +38,6 @@ body {
   font-size: x-large;
   margin-top: 0.4em;
   padding: 0;
-  width: 9.8em;
 }
 
 .label3{
@@ -320,6 +319,12 @@ a{
 .middlecontain2{
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.middlecontain3{
   justify-content: space-between;
   flex-wrap: wrap;
   flex-grow: 1;
@@ -1304,6 +1309,10 @@ li.tunetexttotwsmaller{
   display: none;
 }
 
+#currentsecretvalue{
+  display: none;
+}
+
 .labelflexdiv{
   border: black solid 2px;
   margin-bottom: 0.75em;
@@ -1312,6 +1321,7 @@ li.tunetexttotwsmaller{
 #collabfields{
   display: none;
 }
+
 
 #collabfield1{
 }
@@ -1336,6 +1346,10 @@ li.tunetexttotwsmaller{
 }
 
 #remixfield2{
+  display: none;
+}
+
+#secretfields{
   display: none;
 }
 

@@ -16,6 +16,7 @@ block content
 	div(title=`${theartname}`, id='dashartname')
 	div(title='0', id='currentcollabvalue')
 	div(title='0', id='currentremixvalue')
+	div(title='0', id='currentsecretvalue')
 	div(title='0', id='collabcounter')
 	div(title='0', id='collabminus')
 	div(title='0', id='remixcounter')
@@ -31,7 +32,21 @@ block content
 				.labelmid Track Name:
 			input#tra_name(type='text', name='tra_name' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
 			br
-			.middlecontain2
+
+			div(class='middlecontain3' style="padding-left: 1.7em;")
+				.label2 Make Track Secret? (Control and Restrict Access):
+					.labelflexdiv
+						div(class='labelflex', style="margin-left: 8em;") Yes
+							input#is_secret.is_secret(type='radio', name='is_secret', value=1, style="height:35px; width:35px; vertical-align: middle;", onclick="changeSecret(this.value)")
+						div(class='labelflex', style="margin-left: 8.3em;") No
+							input#is_secret.is_secret(type='radio', name='is_secret', checked="checked", value=0, style="height:35px; width:35px; vertical-align: middle;", onclick="changeSecret(this.value)")
+			#secretfields
+				.downloadbutton
+					.label2 Secret Password:
+				.middlecontain2
+					input#secret_pass(type='text', name='secret_pass', value="", style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+
+			div(class='middlecontain2' style="padding-left: 1.7em;")
 				.label2 Is this track a Collab?:
 					.labelflexdiv
 						div(class='labelflex') Yes
@@ -133,6 +148,7 @@ block content
 			console.log("Doc ready");
 			document.getElementById("currentcollabvalue").title = 0;
 			document.getElementById("currentremixvalue").title = 0;
+			document.getElementById("currentsecretvalue").title = 0;
 			previewInit();
 			uploadInit();
 			collabInit();
@@ -152,6 +168,24 @@ block content
 
 			document.getElementById("currentcollabvalue").title = thevalue;
 			var elements = document.getElementsByClassName('is_collab');
+			var top = elements[0];
+			var bottom = elements[1];
+			top.value = 1;
+			bottom.value = 0;
+		}
+
+		function changeSecret(thevalue){
+
+			if(thevalue == 1){
+				console.log("1");
+				secretfields.style.display = "block";
+			}
+			if(thevalue == 0){
+				console.log("0");
+				secretfields.style.display = "none";
+			}
+			document.getElementById("currentsecretvalue").title = thevalue;
+			var elements = document.getElementsByClassName('is_secret');
 			var top = elements[0];
 			var bottom = elements[1];
 			top.value = 1;
@@ -182,6 +216,10 @@ block content
 
 		function getCurrentRemixValue(){
 			return document.getElementById("currentremixvalue").title;
+		}
+
+		function getCurrentSecretValue(){
+			return document.getElementById("currentsecretvalue").title;
 		}
 
 		function collabInit(){
@@ -399,7 +437,6 @@ block content
 				var msg2 = document.getElementById("labelgcenter2");
 				msg2.innerHTML = "Uploading...";
 				var files = $('#thefile')[0].files[0];
-				console.log(`files is: ${files}`);
 				if (!files) {
 					msg.innerHTML = "File not Attached!";
 					msg2.innerHTML = "File not Attached!";
@@ -421,6 +458,7 @@ block content
 
 							var is_collab = getCurrentCollabValue();
 							var is_remix = getCurrentRemixValue();
+							var is_secret = getCurrentSecretValue();
 
 							var col1 = document.getElementById("col1").value;
 							var col2 = document.getElementById("col2").value;
@@ -429,6 +467,8 @@ block content
 
 							var rem1 = document.getElementById("rem1").value;
 							var rem2 = document.getElementById("rem2").value;
+
+							var secret_pass = document.getElementById("secret_pass").value;
 
 							var rightindex = parseInt(document.getElementById("rightprevvalue").title);
 							var leftindex = parseInt(document.getElementById("leftprevvalue").title);
@@ -443,6 +483,8 @@ block content
 							fd.append('short_name', short_name);
 							fd.append('is_collab', is_collab);
 							fd.append('is_remix', is_remix);
+							fd.append('is_secret', is_secret);
+							fd.append('secret_pass', secret_pass);
 
 							fd.append('col1', col1);
 							fd.append('col2', col2);

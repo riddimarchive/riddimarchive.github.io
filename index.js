@@ -2344,7 +2344,7 @@ app.post('/secretsubmit', (req, res, next) => {
 
   var { password, track_id } = req.body;
   if(password == ""){
-    res.send({ msg: "Please Enter Password!", track_id: "", url: "", exp_time: "", created_time: "", tracks: ""});
+    res.send({ msg: "Please Enter Password!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: ""});
   }else{
 
         async function submitCheck(password, track_id){
@@ -2360,11 +2360,11 @@ app.post('/secretsubmit', (req, res, next) => {
             
               let tresult = await trackquerie.getTrackbyID(db, track_id);
               if (tresult.length > 0){
-                  var row = { 'track_name': tresult[0].track_name, 'artist_name': tresult[0].artist_name, 'artist_id': tresult[0].artist_id, 'id': tresult[0].id, 'is_remix': tresult[0].is_remix, 'is_collab': tresult[0].is_collab, 'is_secret': tresult[0].is_secret, 'secret_pass': tresult[0].secret_pass, 'blank': "" }
+                  var row = { 'track_name': tresult[0].track_name, 'artist_name': tresult[0].artist_name, 'artist_id': tresult[0].artist_id, 'id': tresult[0].id, 'is_remix': tresult[0].is_remix, 'is_collab': tresult[0].is_collab, 'is_secret': tresult[0].is_secret, 'secret_pass': tresult[0].secret_pass, 'aws_key': tresult[0].aws_key, 'blank': "" }
                   tracks.push(row);
                   if(tracks[0].is_secret == 0){
                     await conquerie.end(db);
-                    res.send({ msg: "Track not Secret, Check their Artist Page!", track_id: "", url: "", exp_time: "", created_time: "", tracks: ""});
+                    res.send({ msg: "Track not Secret, Check their Artist Page!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: ""});
                   }else{
                       //check pass
                       let isMatch = await has.passCheck(password, tracks[0].secret_pass);
@@ -2379,27 +2379,28 @@ app.post('/secretsubmit', (req, res, next) => {
                               url = sresult[0].url;
                               exp_time = sresult[0].exp_time;
                               created_time = sresult[0].created_time;
+                              artist_name = sresult[0].artist_name;
 
                               if(tracks[0].is_collab == 0 && tracks[0].is_remix == 0){
                                 tracks[0].blank = `${tracks[0].artist_name} - `;
                               }
 
                               await conquerie.end(db);
-                              res.send({ msg: "Verified, Access Granted", track_id: track_id, url: url, exp_time: exp_time, created_time: created_time, tracks: tracks});
+                              res.send({ msg: "Verified, Access Granted", track_id: track_id, url: url, exp_time: exp_time, created_time: created_time, artist_name: artist_name, tracks: tracks});
                           
                           }else{
                             await conquerie.end(db);
-                            res.send({ msg: "Link Expired or Removed", track_id: "", url: "", exp_time: "", created_time: "", tracks: ""});
+                            res.send({ msg: "Link Expired or Removed", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: ""});
                           }
                       }else{
                         await conquerie.end(db);
-                        res.send({ msg: "Password Does not Match, Please Try Again!", track_id: "", url: "", exp_time: "", created_time: "", tracks: ""});
+                        res.send({ msg: "Password Does not Match, Please Try Again!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: ""});
                       }
                   }//is secret
               
               }else{
                 await conquerie.end(db);
-                res.send({ msg: "Track not found, Link is incorrect!", track_id: "", url: "", exp_time: "", created_time: "", tracks: ""});
+                res.send({ msg: "Track not found, Link is incorrect!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: ""});
               }//track not found else
             
             }catch(err){
@@ -2417,8 +2418,8 @@ app.post('/secretsubmit', (req, res, next) => {
 //POST REQUEST - TEST S3 Upload
 app.post('/tests3upload', (req, res, next) => {
 
-  var { artist_name, artist_id, track_name, short_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2 } = req.body;             
-
+  var { artist_name, artist_id, track_name, short_name, is_collab, is_remix, is_secret, secret_pass, col1, col2, col3, col4, rem1, rem2 } = req.body;
+  
   var themsg = "";
   if (!req.files || Object.keys(req.files).length === 0) {
     themsg = "Be sure to Add File and Trackname!";
@@ -2436,50 +2437,66 @@ app.post('/tests3upload', (req, res, next) => {
           themsg = "You marked tune as a Remix, Please add a Remix Artist!";
           res.send({msg: themsg, song: ""});
         }else{
-          //all checks passed - add song to aws s3 and DB
-
-          const song = req.files.file;
-          var artstr = artist_name;
-          var artfirstletter = artstr.charAt(0);
-          var makepublic = 1;
-          var islogo = 0;
-
-          s3fcn.uploadToS3(song, islogo, artist_name, artfirstletter, makepublic);
-          themsg = "File uploaded!";
-          //add tune to db!
-          async function storeFormResults(artist_name, artist_id, track_name, short_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2){
-            try{
-              console.log("in async");
-              var db = createConnection();
-              await conquerie.connect(db);
-              var tune_of_week = 0;
-              //construct drive url
-              var drive_url = "";
-              const regexspace = /[ ]/g;
-              const regexamp = /[&]/g;
-              var artstrtest = artstr.replace(regexspace, "+");
-              var artstrtest2 = encodeURI(artstrtest);
-              var artnamefinalencode = artstrtest2.replace(regexamp, "%26");
-
-              var filenamestrtest = song.name.replace(regexspace, "+");
-              var filenamestrtest2 = encodeURI(filenamestrtest);
-              var filenamefinalencode = filenamestrtest2.replace(regexamp, "%26");
-              drive_url = `https://riddim-archive-tune-store.s3-us-west-1.amazonaws.com/${artnamefinalencode.charAt(0)}/${artnamefinalencode}/${filenamefinalencode}`
-              console.log(drive_url);
-
-
-              let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, short_name, drive_url, col1, col2, col3, col4, is_collab, rem1, rem2, is_remix, tune_of_week);
-
-              await conquerie.end(db);
-              res.send({msg: "File Uploaded! Note: Large files may take a moment!"});
-
-
-            }catch(err){
-              console.log(err);
-              res.render('error');
-            }
-          }//end async
-          storeFormResults(artist_name, artist_id, track_name, short_name, is_collab, is_remix, col1, col2, col3, col4, rem1, rem2);
+          if(is_secret == 1 && secret_pass == ""){
+            themsg = "You marked tune as Secret, Please add Secret Password!";
+            res.send({msg: themsg, song: ""});
+          }else{
+              //all checks passed - add song to aws s3 and DB
+                        
+              const song = req.files.file;
+              var thefilename = song.name;
+              var artstr = artist_name;
+              var artfirstletter = artstr.charAt(0);
+              var makepublic = 1;
+              var islogo = 0;
+              var aws_key = "";
+              var hashedpass = "";
+                        
+              if (is_secret == 1){
+                makepublic = 0;
+              }
+              s3fcn.uploadToS3(song, islogo, artist_name, artfirstletter, makepublic);
+              themsg = "File uploaded!";
+              //add tune to db!
+              async function storeFormResults(artist_name, artist_id, track_name, short_name, is_collab, is_remix, is_secret, secret_pass, col1, col2, col3, col4, rem1, rem2){
+                try{
+                  console.log("in async");
+                  var db = createConnection();
+                  await conquerie.connect(db);
+                  var tune_of_week = 0;
+                  //construct drive url
+                  var drive_url = "";
+                  const regexspace = /[ ]/g;
+                  const regexamp = /[&]/g;
+                  var artstrtest = artstr.replace(regexspace, "+");
+                  var artstrtest2 = encodeURI(artstrtest);
+                  var artnamefinalencode = artstrtest2.replace(regexamp, "%26");
+                
+                  var filenamestrtest = song.name.replace(regexspace, "+");
+                  var filenamestrtest2 = encodeURI(filenamestrtest);
+                  var filenamefinalencode = filenamestrtest2.replace(regexamp, "%26");
+                  drive_url = `https://riddim-archive-tune-store.s3-us-west-1.amazonaws.com/${artnamefinalencode.charAt(0)}/${artnamefinalencode}/${filenamefinalencode}`;
+                  if (is_secret == 1){
+                    drive_url = "";
+                    aws_key = `${artfirstletter}/${artstr}/${song.name}`;
+                    hashedpass = await has.hashPass(secret_pass);
+                  }
+                
+                
+                
+                  let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, short_name, drive_url, col1, col2, col3, col4, is_collab, rem1, rem2, is_remix, is_secret, hashedpass, aws_key, tune_of_week);
+                
+                  await conquerie.end(db);
+                  res.send({msg: "File Uploaded! Note: Large files may take a moment!"});
+                
+                
+                }catch(err){
+                  console.log(err);
+                  res.render('error');
+                }
+              }//end async
+              storeFormResults(artist_name, artist_id, track_name, short_name, is_collab, is_remix, is_secret, secret_pass, col1, col2, col3, col4, rem1, rem2);
+          }
         }
       } 
     }

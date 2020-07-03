@@ -1041,6 +1041,60 @@ li.tunetexttotwsmaller{
   border: solid red 3px;
 }
 
+#allsecrets{
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.fullsecret{
+  border: black solid 3px;
+}
+
+.scrttrackname{
+  font-size: 24px;
+  margin-right: 1.1em;
+  font-weight: bold;
+  margin-top: 0.65em;
+}
+
+.scrtchangepassbutton{
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+.scrtchangepassbutton img:hover{
+  border: solid red 3px;
+}
+
+.scrtgenlinkbutton{
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+.scrtgenlinkbutton img:hover{
+  border: solid red 3px;
+}
+
+#change_pass{
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+#exp_time{
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+
+
+
+
+
+
+
+
 .heartbutton{
   margin-left: 0.7em;
 }

@@ -38,8 +38,25 @@ function uploadToS3(file, islogo, artist_name, artfirstletter, makepublic) {
 	   //console.log(data);
 	  });
 	});
-  }
+}
+
+function getSecretURL(aws_key, link_time){
+	let s3bucket = new aws.S3({
+		accessKeyId: process.env.ACCESS_KEY,
+		secretAccessKey: process.env.SECRET_ACCESS_KEY,
+		Bucket: process.env.BUCKET,
+	});
+	var exp = parseInt(link_time);
+	params = {
+		Bucket: process.env.BUCKET,
+		Key: aws_key,
+		Expires: exp
+	};
+	var url = s3bucket.getSignedUrl('getObject', params);
+	return url;
+}
 
 module.exports = {
-	uploadToS3
+	uploadToS3,
+	getSecretURL
 };

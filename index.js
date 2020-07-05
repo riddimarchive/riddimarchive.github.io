@@ -2401,16 +2401,11 @@ app.post('/tuneup', (req, res, next) => {
 });
 
 //POST REQUEST - GET S3 Page
-app.post('/secrettunes', (req, res, next) => {
-
-});
-
-//POST REQUEST - GET S3 Page
 app.post('/secretsubmit', (req, res, next) => {
 
   var { password, track_id } = req.body;
   if(password == ""){
-    res.send({ msg: "Please Enter Password!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: ""});
+    res.send({ msg: "Please Enter Password!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: "", success: "0" });
   }else{
 
         async function submitCheck(password, track_id){
@@ -2430,7 +2425,7 @@ app.post('/secretsubmit', (req, res, next) => {
                   tracks.push(row);
                   if(tracks[0].is_secret == 0){
                     await conquerie.end(db);
-                    res.send({ msg: "Track not Secret, Check their Artist Page!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: ""});
+                    res.send({ msg: "Track not Secret, Check their Artist Page!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: "", success: "0" });
                   }else{
                       //check pass
                       let isMatch = await has.passCheck(password, tracks[0].secret_pass);
@@ -2452,21 +2447,21 @@ app.post('/secretsubmit', (req, res, next) => {
                               }
 
                               await conquerie.end(db);
-                              res.send({ msg: "Verified, Access Granted", track_id: track_id, url: url, exp_time: exp_time, created_time: created_time, artist_name: artist_name, tracks: tracks});
+                              res.send({ msg: "Verified, Access Granted", track_id: track_id, url: url, exp_time: exp_time, created_time: created_time, artist_name: artist_name, tracks: tracks, success: "1" });
                           
                           }else{
                             await conquerie.end(db);
-                            res.send({ msg: "Link Expired or Removed", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: ""});
+                            res.send({ msg: "Link Expired or Removed", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: "", success: "0" });
                           }
                       }else{
                         await conquerie.end(db);
-                        res.send({ msg: "Password Does not Match, Please Try Again!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: ""});
+                        res.send({ msg: "Password Does not Match, Please Try Again!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: "", success: "0" });
                       }
                   }//is secret
               
               }else{
                 await conquerie.end(db);
-                res.send({ msg: "Track not found, Link is incorrect!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: ""});
+                res.send({ msg: "Track not found, Link is incorrect!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: "", success: "0" });
               }//track not found else
             
             }catch(err){
@@ -2653,7 +2648,34 @@ app.post('/tests3gettrack', (req, res, next) => {
 app.post('/getgenlink', (req, res, next) => {
   var { index, track_id, link_time } = req.body;
 
-  res.send({ msg: "Link Created???", index: index, track_id: track_id, link_time: link_time });
+  async function getGenLink(index, track_id, link_time){
+    try{
+      var db = createConnection();
+      await conquerie.connect(db);
+      var tracks = [];
+
+      let result = await trackquerie.getTrackbyID(db, track_id);
+      var row = { 'track_name': result[0].track_name, 'artist_name': result[0].artist_name, 'is_remix': result[0].is_remix, 'is_collab': result[0].is_collab, 'blank': "", 'aws_key': result[0].aws_key }
+      tracks.push(row);
+
+      if(tracks[0].is_collab == 0 && tracks[0].is_remix == 0){
+        tracks[0].blank = `${tracks[0].artist_name} -`;
+      }
+
+      var theurl = s3fcn.getSecretURL(tracks[0].aws_key, link_time);
+
+      let sresult = await secretquerie.addSecretLink(db, track_id, tracks[0].artist_name, theurl, link_time);
+
+      await conquerie.end(db);
+      res.send({ msg: "Link Copied To Clipboard, User will need link and current secret password to access!", index: index, track_id: track_id, tracks: tracks });
+
+    }catch(err){
+    console.log(err);
+    res.render('error');
+    }
+
+  }
+  getGenLink(index, track_id, link_time);
 
 });
 

@@ -39,7 +39,7 @@ function getTrackbyID(db, id){
 function getTracksOfTheWeek(db){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT * FROM tracks WHERE tune_of_week = "1"`, (error, result, fields) => {
+		db.query(`SELECT * FROM tracks WHERE tune_of_week = "1" AND is_secret = "0"`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -78,7 +78,7 @@ function getAllTracksFromArtist(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE tracks.artist_name = ? 
+		WHERE tracks.artist_name = ? AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -100,7 +100,7 @@ function getAllTracksAthroughD(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE tracks.artist_name = ? AND tracks.track_name >= "0" AND tracks.track_name < "E" 
+		WHERE tracks.artist_name = ? AND tracks.track_name >= "0" AND tracks.track_name < "E" AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -122,7 +122,7 @@ function getAllTracksEthroughI(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE tracks.artist_name = ? AND tracks.track_name >= "E" AND tracks.track_name < "J" 
+		WHERE tracks.artist_name = ? AND tracks.track_name >= "E" AND tracks.track_name < "J" AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -144,7 +144,7 @@ function getAllTracksJthroughO(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE tracks.artist_name = ? AND tracks.track_name >= "J" AND tracks.track_name < "P" 
+		WHERE tracks.artist_name = ? AND tracks.track_name >= "J" AND tracks.track_name < "P" AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -166,7 +166,7 @@ function getAllTracksPthroughT(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE tracks.artist_name = ? AND tracks.track_name >= "P" AND tracks.track_name < "U" 
+		WHERE tracks.artist_name = ? AND tracks.track_name >= "P" AND tracks.track_name < "U" AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -188,7 +188,7 @@ function getAllTracksUthroughZ(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE tracks.artist_name = ? AND tracks.track_name >= "U" 
+		WHERE tracks.artist_name = ? AND tracks.track_name >= "U" AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -210,7 +210,7 @@ function getCollabsIncludingArtist(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ? 
+		WHERE (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) AND tracks.is_secret = "0" 
 		ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -232,7 +232,7 @@ function getCollabsIncludingArtistAthroughD(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE (tracks.track_name >= "0" AND tracks.track_name < "E") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) 
+		WHERE (tracks.track_name >= "0" AND tracks.track_name < "E") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -248,12 +248,13 @@ function getCollabsIncludingArtistAthroughD(db, artist_name){
 
 	return querypromise;
 }
+
 function getCollabsIncludingArtistEthroughI(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE (tracks.track_name >= "E" AND tracks.track_name < "J") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) 
+		WHERE (tracks.track_name >= "E" AND tracks.track_name < "J") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -269,12 +270,13 @@ function getCollabsIncludingArtistEthroughI(db, artist_name){
 
 	return querypromise;
 }
+
 function getCollabsIncludingArtistJthroughO(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE (tracks.track_name >= "J" AND tracks.track_name < "P") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) 
+		WHERE (tracks.track_name >= "J" AND tracks.track_name < "P") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -290,12 +292,13 @@ function getCollabsIncludingArtistJthroughO(db, artist_name){
 
 	return querypromise;
 }
+
 function getCollabsIncludingArtistPthroughT(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE (tracks.track_name >= "P" AND tracks.track_name < "U") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) 
+		WHERE (tracks.track_name >= "P" AND tracks.track_name < "U") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -311,12 +314,13 @@ function getCollabsIncludingArtistPthroughT(db, artist_name){
 
 	return querypromise;
 }
+
 function getCollabsIncludingArtistUthroughZ(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE (tracks.track_name >= "U") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) 
+		WHERE (tracks.track_name >= "U") AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?) AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -340,7 +344,7 @@ function getTracksThatOthersRemixed(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name FROM tracks 
 		INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE tracks.o1 = ? OR tracks.o2 = ? 
+		WHERE (tracks.o1 = ? OR tracks.o2 = ?) AND tracks.is_secret = "0" 
 		ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -362,7 +366,7 @@ function getTracksThatOthersRemixedAthroughD(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
 		FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE (tracks.track_name >= "0" AND tracks.track_name < "E") AND (tracks.o1 = ? OR tracks.o2 = ?) 
+		WHERE (tracks.track_name >= "0" AND tracks.track_name < "E") AND (tracks.o1 = ? OR tracks.o2 = ?) AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -384,7 +388,7 @@ function getTracksThatOthersRemixedEthroughI(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
 		FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE (tracks.track_name >= "E" AND tracks.track_name < "J") AND (tracks.o1 = ? OR tracks.o2 = ?) 
+		WHERE (tracks.track_name >= "E" AND tracks.track_name < "J") AND (tracks.o1 = ? OR tracks.o2 = ?) AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -406,7 +410,7 @@ function getTracksThatOthersRemixedJthroughO(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
 		FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE (tracks.track_name >= "J" AND tracks.track_name < "P") AND (tracks.o1 = ? OR tracks.o2 = ?) 
+		WHERE (tracks.track_name >= "J" AND tracks.track_name < "P") AND (tracks.o1 = ? OR tracks.o2 = ?) AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -428,7 +432,7 @@ function getTracksThatOthersRemixedPthroughT(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
 		FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE (tracks.track_name >= "P" AND tracks.track_name < "U") AND (tracks.o1 = ? OR tracks.o2 = ?) 
+		WHERE (tracks.track_name >= "P" AND tracks.track_name < "U") AND (tracks.o1 = ? OR tracks.o2 = ?) AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -449,7 +453,7 @@ function getTracksThatOthersRemixedUthroughZ(db, artist_name){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, artists.crew, artists.country, artists.artist_name 
 		FROM tracks INNER JOIN artists ON tracks.artist_name = artists.artist_name 
-		WHERE (tracks.track_name >= "U") AND (tracks.o1 = ? OR tracks.o2 = ?) 
+		WHERE (tracks.track_name >= "U") AND (tracks.o1 = ? OR tracks.o2 = ?) AND tracks.is_secret = "0"
 		ORDER BY tracks.track_name`, [artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -469,7 +473,7 @@ function searchTunes(db, search_results, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT track_name, artist_name, drive_url, short_name, is_remix, is_collab, id FROM tracks 
-		WHERE short_name LIKE ? AND artist_name = ? 
+		WHERE short_name LIKE ? AND artist_name = ? AND is_secret = "0"
 		ORDER BY short_name`, [search_results, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -489,8 +493,8 @@ function searchTunesCollabRemix(db, search_results, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT track_name, artist_name, drive_url, short_name, is_remix, is_collab, id FROM tracks 
-		WHERE (short_name LIKE ? AND c1 = ?) OR (short_name LIKE ? AND c2 = ?) OR (short_name LIKE ? AND c3 = ?) 
-		OR (short_name LIKE ? AND c4 = ?) OR (short_name LIKE ? AND o1 = ?) OR (short_name LIKE ? AND o2 = ?) 
+		WHERE ((short_name LIKE ? AND c1 = ?) OR (short_name LIKE ? AND c2 = ?) OR (short_name LIKE ? AND c3 = ?) 
+		OR (short_name LIKE ? AND c4 = ?) OR (short_name LIKE ? AND o1 = ?) OR (short_name LIKE ? AND o2 = ?)) AND is_secret = "0"
 		ORDER BY short_name`, [search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name, search_results, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -511,7 +515,7 @@ function searchFavorites(db, user_id, search_results){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab FROM tracks 
 		INNER JOIN userfavorites ON tracks.id = userfavorites.track_id 
-		WHERE userfavorites.user_id = ? AND tracks.short_name LIKE ? 
+		WHERE userfavorites.user_id = ? AND tracks.short_name LIKE ? AND tracks.is_secret = "0"
 		ORDER BY tracks.short_name`, [user_id, search_results], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -533,7 +537,7 @@ function searchFavoritesByArtist(db, user_id, search_results){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab FROM tracks 
 		INNER JOIN userfavorites ON tracks.id = userfavorites.track_id 
-		WHERE userfavorites.user_id = ? AND tracks.artist_name LIKE ? 
+		WHERE userfavorites.user_id = ? AND tracks.artist_name LIKE ? AND tracks.is_secret = "0"
 		ORDER BY tracks.short_name`, [user_id, search_results], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -555,8 +559,8 @@ function searchFavoritesByArtistCollabRemix(db, user_id, search_results){
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT tracks.id, tracks.artist_name, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab FROM tracks 
 		INNER JOIN userfavorites ON tracks.id = userfavorites.track_id 
-		WHERE (userfavorites.user_id = ? AND c1 LIKE ?) OR (userfavorites.user_id = ? AND c2 LIKE ?) OR (userfavorites.user_id = ? AND c3 LIKE ?) 
-		OR (userfavorites.user_id = ? AND c4 LIKE ?) OR (userfavorites.user_id = ? AND o1 LIKE ?) OR (userfavorites.user_id = ? AND o2 LIKE ?) 
+		WHERE ((userfavorites.user_id = ? AND c1 LIKE ?) OR (userfavorites.user_id = ? AND c2 LIKE ?) OR (userfavorites.user_id = ? AND c3 LIKE ?) 
+		OR (userfavorites.user_id = ? AND c4 LIKE ?) OR (userfavorites.user_id = ? AND o1 LIKE ?) OR (userfavorites.user_id = ? AND o2 LIKE ?)) AND tracks.is_secret = "0"
 		ORDER BY short_name`, [user_id, search_results, user_id, search_results, user_id, search_results, user_id, search_results, user_id, search_results, user_id, search_results], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -576,7 +580,7 @@ function searchFavoritesByArtistCollabRemix(db, user_id, search_results){
 function getRandomTrack(db){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT id, artist_name, track_name, drive_url, is_remix, is_collab FROM tracks ORDER BY RAND() LIMIT 1`, (error, result, fields) => {
+		db.query(`SELECT id, artist_name, track_name, drive_url, is_remix, is_collab FROM tracks WHERE is_secret = "0" ORDER BY RAND() LIMIT 1`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

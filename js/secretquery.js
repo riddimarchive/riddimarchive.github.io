@@ -70,7 +70,7 @@ function addSecretLink(db, track_id, artist_name, url, exp_time){
 function changeSecretPass(db, track_id, new_pass){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`UPDATE tracks SET secret_pass = ? WHERE track_id = ?`, [new_pass, track_id], (error, result, fields) => {
+		db.query(`UPDATE tracks SET secret_pass = ? WHERE id = ?`, [new_pass, track_id], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

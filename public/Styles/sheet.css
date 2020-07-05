@@ -1044,6 +1044,9 @@ li.tunetexttotwsmaller{
 #allsecrets{
   justify-content: space-around;
   flex-wrap: wrap;
+  align-self: center;
+  margin-left: 3em;
+  margin-right: 3em;
 }
 
 .fullsecret{
@@ -1078,22 +1081,28 @@ li.tunetexttotwsmaller{
 #change_pass{
   display: block;
   padding: 1em;
-  margin-bottom: 1em;
 }
 
-#exp_time{
+.exp_time{
   display: block;
   padding: 1em;
-  margin-bottom: 1em;
+  width: 40px;
 }
 
+#exp_time_type{
+  font-size: 24px;
+  padding: 0.3em;
+}
 
+.changepasssubmit{
+  margin-top: 3.3em;
+  margin-bottom: 1.5em;
+}
 
-
-
-
-
-
+.genlinksubmit{
+  margin-top: 3.3em;
+  margin-bottom: 1.5em;
+}
 
 .heartbutton{
   margin-left: 0.7em;

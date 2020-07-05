@@ -1042,6 +1042,35 @@ app.post('/changepass', (req, res, next) => {
 
 });
 
+app.post('/changesecretpass', (req, res, next) => {
+  var { index, track_id, newpass } = req.body;
+
+  if (newpass == ""){
+    res.send({msg: "Please Enter new Password", index: index, track_id: track_id});
+  }else{
+
+    async function changePassResponse(index, track_id, newpass){
+      try{
+        var db = createConnection();
+        var hashpass = "";
+        await conquerie.connect(db);
+
+        hashpass = await has.hashPass(newpass);
+        let result = await secretquerie.changeSecretPass(db, track_id, hashpass);
+
+        await conquerie.end(db);
+        res.send({msg: "Secret Pass Changed, Other people will need new password for tune access!", index: index, track_id: track_id});
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+  }//end async
+
+  changePassResponse(index, track_id, newpass);
+  }
+
+});
+
 app.post('/forward',(req,res)=>{
   var theid = "";
   var thedriveurl = "";

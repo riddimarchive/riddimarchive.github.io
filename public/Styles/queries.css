@@ -199,7 +199,17 @@
         margin-top: 75px;
     }
 
-  
+}
+
+@media only screen and (max-width: 695px) {
+    .changepasssubmit{
+        margin-top: 0.1em;
+    }
+
+    .genlinksubmit{
+        margin-top: 0.1em;
+    }
+
 }
 
 @media only screen and (max-width: 553px) {

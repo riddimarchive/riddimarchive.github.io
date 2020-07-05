@@ -712,8 +712,6 @@ app.get('/secrettunes', (req, res, next) => {
               links.push(row);
             }
           }
-          console.log("Links Belowwwww");
-          console.table(links);
 
           let trackresult = await secretquerie.getArtistsSecretTunes(db, art_name);
           if(trackresult.length > 0){
@@ -722,8 +720,6 @@ app.get('/secrettunes', (req, res, next) => {
               tracks.push(row);
             }
 
-          console.log("Tracks Belowwwww");
-          console.table(tracks);
           }else{
             themsg = `No Secret Tracks! You can select "Make Track Secret" when uploading a tune!`;
           }
@@ -2651,6 +2647,13 @@ app.post('/tests3gettrack', (req, res, next) => {
 
   var themsg = `Function Called - index is: ${index} track_id is: ${track_id} artist_name is: ${artist_name} track_name is: ${track_name}`;
   res.send({ msg: themsg });
+
+});
+
+app.post('/getgenlink', (req, res, next) => {
+  var { index, track_id, link_time } = req.body;
+
+  res.send({ msg: "Link Created???", index: index, track_id: track_id, link_time: link_time });
 
 });
 

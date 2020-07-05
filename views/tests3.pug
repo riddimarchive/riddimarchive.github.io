@@ -330,11 +330,9 @@ block content
 				begin.innerHTML = "";
 
 				var thevalue = leftRangeInput.value;
-				console.log(`THE VALUE BEFORE IS ${thevalue}`);
 				if (thevalue >= parseInt(currright)){
 					thevalue = (parseInt(currright)-1);
 				}
-				console.log(`THE VALUE AFTER IS ${thevalue}`);
 				var leftbound = document.getElementById(`txtsplit/${thevalue}`);
 				leftbound.innerHTML = `<div class="redtext">[[</div>`;
 
@@ -364,11 +362,9 @@ block content
 				prevrightbound.innerHTML = "";
 
 				var thevalue = rightRangeInput.value;
-				console.log(`THE VALUE BEFORE IS ${thevalue}`);
 				if (thevalue <= parseInt(currleft)){
 					thevalue = (parseInt(currleft)+1);
 				}
-				console.log(`THE VALUE AFTER IS ${thevalue}`);
 				var rightbound = document.getElementById(`txtsplit/${thevalue}`);
 				rightbound.innerHTML = `<div class="redtext">]]</div>`;
 

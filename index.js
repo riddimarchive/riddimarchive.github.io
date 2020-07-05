@@ -2442,13 +2442,22 @@ app.post('/secretsubmit', (req, res, next) => {
                               created_time = sresult[0].created_time;
                               artist_name = sresult[0].artist_name;
 
-                              if(tracks[0].is_collab == 0 && tracks[0].is_remix == 0){
-                                tracks[0].blank = `${tracks[0].artist_name} - `;
-                              }
+                              let gettime = await secretquerie.getCurrentTimestamp(db);
+                              var currtime = gettime[0].curr;
+                              let diffinseconds = await secretquerie.returnTimeDiff(db, currtime, created_time);
+                              var finaldiff = diffinseconds[0].diff;
+                              if (finaldiff > exp_time){
+                                await conquerie.end(db);
+                                res.send({ msg: "Link Expired, Check with Artist for New Link!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: "", success: "0" });
 
-                              await conquerie.end(db);
-                              res.send({ msg: "Verified, Access Granted", track_id: track_id, url: url, exp_time: exp_time, created_time: created_time, artist_name: artist_name, tracks: tracks, success: "1" });
-                          
+                              }else{
+                                if(tracks[0].is_collab == 0 && tracks[0].is_remix == 0){
+                                  tracks[0].blank = `${tracks[0].artist_name} - `;
+                                }
+  
+                                await conquerie.end(db);
+                                res.send({ msg: "Verified, Access Granted", track_id: track_id, url: url, exp_time: exp_time, created_time: created_time, artist_name: artist_name, tracks: tracks, success: "1" });
+                              }
                           }else{
                             await conquerie.end(db);
                             res.send({ msg: "Link Expired or Removed", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: "", success: "0" });
@@ -2664,6 +2673,7 @@ app.post('/getgenlink', (req, res, next) => {
 
       var theurl = s3fcn.getSecretURL(tracks[0].aws_key, link_time);
 
+      let del = await secretquerie.deletePreviousLink(db, track_id);
       let sresult = await secretquerie.addSecretLink(db, track_id, tracks[0].artist_name, theurl, link_time);
 
       await conquerie.end(db);

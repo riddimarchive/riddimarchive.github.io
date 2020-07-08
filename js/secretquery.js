@@ -75,7 +75,6 @@ function deletePreviousLink(db, track_id){
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
 	    	}
-
 	    	resolve(result);
 
 		});

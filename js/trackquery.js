@@ -637,6 +637,71 @@ function deleteTrack(db, track_name){
 	return querypromise;
 }
 
+function getRecentTracksFromFollowedArtist(db, user_id){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, tracks.time FROM tracks 
+		INNER JOIN follows ON follows.artist_name = tracks.artist_name 
+		WHERE tracks.is_secret = "0" AND follows.user_id = ? AND tracks.time between date_sub(now(),INTERVAL 1 WEEK) and now()
+		ORDER BY tracks.time DESC`, [user_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+
+	});
+
+	return querypromise;
+}
+
+function getRecentCollabsFromFollowedArtist(db, artist_name){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, tracks.time FROM tracks 
+		WHERE tracks.is_secret = "0" AND tracks.time between date_sub(now(),INTERVAL 1 WEEK) and now()
+		AND (tracks.c1 = ? OR tracks.c2 = ? OR tracks.c3 = ? OR tracks.c4 = ?)
+		ORDER BY tracks.time DESC`, [artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+
+	});
+
+	return querypromise;
+}
+
+function getRecentRemixesFromFollowedArtist(db, artist_name){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT tracks.id, tracks.track_name, tracks.drive_url, tracks.short_name, tracks.is_remix, tracks.is_collab, tracks.time FROM tracks 
+		WHERE tracks.is_secret = "0" AND tracks.time between date_sub(now(),INTERVAL 1 WEEK) and now()
+		AND (tracks.o1 = ? OR tracks.o2 = ?)
+		ORDER BY tracks.time DESC`, [artist_name, artist_name], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
 module.exports = {
 	getTrackInfo,
 	getTrackbyID,
@@ -667,5 +732,8 @@ module.exports = {
 	searchFavoritesByArtistCollabRemix,
 	getRandomTrack,
 	addTrack,
-	deleteTrack
+	deleteTrack,
+	getRecentTracksFromFollowedArtist,
+	getRecentCollabsFromFollowedArtist,
+	getRecentRemixesFromFollowedArtist
 };

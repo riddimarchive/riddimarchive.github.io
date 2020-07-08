@@ -226,6 +226,25 @@ function getUserInfo(db, username){
 	return querypromise;
 }
 
+function getArtistsFollowed(db, user_id){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT artist_name FROM follows 
+		WHERE user_id = ?`, [user_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
 module.exports = {
 	addUser,
 	createAccount,
@@ -238,5 +257,6 @@ module.exports = {
 	checkUserFavorite,
 	addUserFavorite,
 	deleteUserFavorite,
-	getUserInfo
+	getUserInfo,
+	getArtistsFollowed
 };

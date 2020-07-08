@@ -324,6 +324,88 @@ app.get('/usercrud', (req, res) => {
 
 });
 
+//GET REQUEST - LOGIN PAGE
+app.get('/follow', (req, res) => {
+  
+  var test = "Please Login to Access Follow Stream!"
+  if(req.user === undefined){
+    res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: test });
+  }else{
+    var theusername = req.user.username;
+    async function followResponse(theusername){
+      try{
+
+        var user_id = "";
+        var tracks = [];
+        
+        var db = createConnection();
+        await conquerie.connect(db);
+
+        let uresult = await userquerie.getUserInfo(db, theusername);
+        user_id = uresult[0].id;
+
+        let fresult = await trackquerie.getRecentTracksFromFollowedArtist(db, user_id);
+        if (fresult.length > 0){
+          console.log("Tracks Present");
+          for (var i = 0; i < fresult.length; i++) {
+            var row = { 'track_name': fresult[i].track_name, 'drive_url': fresult[i].drive_url, 'id': fresult[i].id, 'short_name': fresult[i].short_name, 'is_remix': fresult[i].is_remix, 'is_collab': fresult[i].is_collab, 'time': fresult[i].time, 'blank': "" }
+            tracks.push(row);
+          }
+        }
+
+
+        let artfollow = await userquerie.getArtistsFollowed(db, user_id);
+        if(artfollow.length > 0){
+          for (var i = 0; i < artfollow.length; i++) {
+            console.log(`checking Collabs from ${artfollow[i].artist_name}`);
+            let cresult = await trackquerie.getRecentCollabsFromFollowedArtist(db, artfollow[i].artist_name);
+            if (cresult.length > 0){
+              console.log(`collabs for ${artfollow[i].artist_name} FOUND`);
+              for (var j = 0; j < cresult.length; j++) {
+                var row = { 'track_name': cresult[j].track_name, 'drive_url': cresult[j].drive_url, 'id': cresult[j].id, 'short_name': cresult[j].short_name, 'is_remix': cresult[j].is_remix, 'is_collab': cresult[j].is_collab, 'time': cresult[j].time, 'blank': "" }
+                tracks.push(row);
+              }
+            }
+
+            console.log(`checking Remixes from ${artfollow[i].artist_name}`);
+            let rresult = await trackquerie.getRecentRemixesFromFollowedArtist(db, artfollow[i].artist_name);
+            if (rresult.length > 0){
+              console.log(`remixes for ${artfollow[i].artist_name} FOUND`);
+              for (var k = 0; k < rresult.length; k++) {
+                var row = { 'track_name': rresult[k].track_name, 'drive_url': rresult[k].drive_url, 'id': rresult[k].id, 'short_name': rresult[k].short_name, 'is_remix': rresult[k].is_remix, 'is_collab': rresult[k].is_collab, 'time': rresult[k].time, 'blank': "" }
+                tracks.push(row);
+              }
+            }
+          }
+        }
+
+        if (tracks == []){
+          await conquerie.end(db);
+          res.render('follow', { tracks: "", user_id: user_id, theusername: theusername, msg: "No New Tunes, Follow Some Artists to See their recent FIRE!" });
+        }else{
+          await conquerie.end(db);
+          for (var i = 0; i < tracks.length; i++) {
+            if(tracks[i].is_collab == 0 && tracks[i].is_remix == 0){
+              tracks[i].blank = `${tracks[i].artist_name} - `;
+            }
+          }
+          tracks.sort((a, b) => (a.time < b.time) ? 1 : -1);
+
+          console.table(tracks);
+          res.render('follow', { tracks: tracks, user_id: user_id, theusername: theusername, msg: `Welcome ${theusername}, Here are the new tunes from your followed artists:` });
+        }
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+
+    }
+
+    followResponse(theusername);
+  }//end else
+
+});
+
 
 //GET REQUEST - FAVORITES PAGE
 app.get('/favorites', (req, res) => {
@@ -2447,6 +2529,7 @@ app.post('/secretsubmit', (req, res, next) => {
                               let diffinseconds = await secretquerie.returnTimeDiff(db, currtime, created_time);
                               var finaldiff = diffinseconds[0].diff;
                               if (finaldiff > exp_time){
+                                let del = await secretquerie.deletePreviousLink(db, track_id);
                                 await conquerie.end(db);
                                 res.send({ msg: "Link Expired, Check with Artist for New Link!", track_id: "", url: "", exp_time: "", created_time: "", artist_name: "", tracks: "", success: "0" });
 
@@ -2677,7 +2760,7 @@ app.post('/getgenlink', (req, res, next) => {
       let sresult = await secretquerie.addSecretLink(db, track_id, tracks[0].artist_name, theurl, link_time);
 
       await conquerie.end(db);
-      res.send({ msg: "Link Copied To Clipboard, User will need link and current secret password to access!", index: index, track_id: track_id, tracks: tracks });
+      res.send({ msg: `https://www.riddimarchive.com/secretshare/${track_id}<br>Link Copied To Clipboard, User will need link and current secret password to access!`, index: index, track_id: track_id, tracks: tracks });
 
     }catch(err){
     console.log(err);

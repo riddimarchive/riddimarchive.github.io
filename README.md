@@ -1,15 +1,38 @@
 # RIDDIM ARCHIVE
 
+https://www.riddimarchive.com
+
 RIDDIM! That wonky, bubbly, liquidy, bonkers form of Dubstep that all the cool kids love.
 
-As genres evolve and relabel themselves, It's important to remember the classic tunes and the pioneers that made it all happen!
-That's why I made this site, to save, archive and share the classics with all fans of Riddim.
-Newcomers Welcome, grab some fire oldies if you've never heard them before.
+This is a hub website for Riddim tunes, old and new, and can serve as an easily viewable/searchable archive of this great genre.
 
-I do not aim to be a platetraderboi. I seek to only post released/free tunes.
-Any artists who don't want to be here, any tunes you want removed, Let me know and I will do so ASAP. 
-I don't seek to be disrespectful, only to share classic and old works for those who love them.
+The site contains only released free works, or paid releases with artist/label permission.
 
 Any questions or contact info will be on the FAQ Page.
+
+Features:
+- Music Streaming/Downloading
+- Comments/Likes
+- Music Share Links
+- User Profile Creation
+- Personalized Favorites Page
+- Personalized Follow Feeds to see most recent releases of chosen artists
+- Easily Searching Tunes by Artist Name or Track Name
+- Easily Searching Artists by Artist Name or Crew
+- Tune Self Upload and Artist Page Management
+- Secret Tunes (Private Stream and Downloads) Accessible only with given Password and link
+- Secret Tune links have set-able Expiration Time
+
+Tools:
+- Node JS/JavaScript
+- Express/Pug
+- MySQL
+- Jquery/Ajax
+- HTML 5/CSS
+
+Hosting:
+- Site Hosting: Heroku/Github
+- Database: ClearDB (Heroku Module)
+- File Server: AWS S3 and Mediafire (Backup)
 
 Thanks Bruvs

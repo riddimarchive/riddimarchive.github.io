@@ -1,9 +1,206 @@
-extends index3
+extends index3nobottom
 
 block content
+	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
+	script.
+		document.addEventListener('play', function(e){
+			var audios = document.getElementsByTagName('audio');
+			var splitty = e.target.id.split("/");
+			var curindex = splitty[1];
+			console.log(`curindex is: ${curindex}`);
+
+			var theplayingul = document.getElementById(`${curindex}/uldiv`);
+			theplayingul.style.backgroundColor = "greenyellow";
+
+			var loadmsg = document.getElementById(`result${curindex}`);
+			loadmsg.innerHTML = "Loading...";
+
+			for(var i = 0, len = audios.length; i < len;i++){
+				if(audios[i] != e.target){
+				audios[i].pause();
+
+				var notplayingul = document.getElementById(`${i}/uldiv`);
+				notplayingul.style.backgroundColor = "dodgerblue";
+
+				var splitty2 = audios[i].id.split("/");
+				var theid = splitty2[1];
+				var loadmsg = document.getElementById(`result${theid}`);
+				loadmsg.innerHTML = "";
+		
+				}
+			}
+		}, true);
 	- var message = msg;
+	- var x = tracks;
+	- var userid = user_id;
 	.artisth1
 		h1 *WORK IN PROGRESS PAGE*
 	.artisth1 
 		h1 #{message}
-	.labelgcenter 
+	.labelgcenter
+
+	#ulcontainshare
+		each track, index in x
+			.uldiv(id=`${index}/uldiv`)
+				ul
+					li.tunetextshare= `${track.blank}${track.track_name}`
+					.regaudioshare
+						audio(id=`shareaudio/${index}`, class='shareaudio', src=track.drive_url, type='audio/mpeg', controls='', preload='preload')
+					.iosspacer
+					.downloadbutton
+						.custombutton
+							a(href=track.drive_url)
+								img(border='2', alt='Download Tune', src='../Images/PageIMG/download2.png', height='50')
+						.custombutton
+							form(id=`form ${index}`, method='POST')
+								input(id=`track_id/${index}`, class='track_id', type='hidden', name='track_id', value=`${track.id}`)
+
+								input(id=`favetrack_name/${index}`, class='favetrack_name', type='hidden', name='favetrack_name', value=`${track.track_name}`)
+								
+								input(id=`user_id/${index}`, class='user_id', type='hidden', name='user_id', value=`${userid}`)
+
+								input(id=`name/${index}`, class='name', type='hidden', name='name', value=`${track.artist_name}`)
+
+								img(id=`${index}`, class='favebuttonclass', border='2', alt='back', src='../Images/PageIMG/addfave.png', height='50')
+						.custombutton
+							input(id=`sharelink${track.id}`, class='sharelink', type='text', name='sharelink', value=`https://www.riddimarchive.com/share/${track.id}`)
+							img(id=`${index}/${track.id}`, class='sharebutton', border='0', alt='back', src=`../Images/PageIMG/share.png`, height='50')
+					.downloadbutton
+						img(id=`${index}/${track.id}/${userid}/${track.userhearted}`, class='heartbutton', border='0', alt='back', src=`../Images/PageIMG/heart${track.userhearted}.png`, height='50', style="margin-left: 0em;")
+						div(id=`${index}/numheart`, class='numheart')= `${track.hearts.length}`
+							
+					div(id=`result${index}`, class='downloadbuttonwithbold', style="font-size: xx-large;")
+
+	script.
+		$(document).on("keydown", "form", function(event) { 
+			return event.key != "Enter";
+		});
+		
+		$(document).ready(function() {
+			faveAjaxInit();
+			shareInit();
+			heartAjaxInit();
+		});
+
+		function faveAjaxInit() {
+			console.log("fave init");
+			document.querySelectorAll('.favebuttonclass').forEach(item => {
+				item.addEventListener('click', event => {
+				var theform = document.getElementById(`form ${item.id}`);
+				var tid = theform.elements["track_id"].value;
+				var t_name = theform.elements["favetrack_name"].value;
+				var uid = theform.elements["user_id"].value;
+				var a_name = theform.elements["name"].value;
+				var index = item.id;
+				$.ajax({
+					url:`/artist/${a_name}`,
+					type: 'POST',
+					data: {
+						track_id: tid,
+						favetrack_name: t_name,
+						user_id: uid,
+						name: a_name,
+						index: index
+					},
+					success: function(data){
+						var themsg = data.msg;
+						var theindex = data.index;
+						document.getElementById(`result${theindex}`).innerHTML = themsg;
+					},
+					error: function(){
+						console.log("Didn't Work");
+					}
+				});//ajax
+				});//click event
+			});//class selector
+		}//fave ajax init
+
+		function shareInit() {
+			console.log("share init");
+			document.querySelectorAll('.sharebutton').forEach(item => {
+				item.addEventListener('click', event => {
+					var thestring = item.id;
+					var splitty = thestring.split("/");
+					var index = splitty[0];
+					var track_id = splitty[1];
+
+					var theinput = document.getElementById(`sharelink${track_id}`);
+					theinput.select();
+					theinput.setSelectionRange(0, 99999);
+					document.execCommand("copy");
+
+					document.getElementById(`result${index}`).innerHTML = "Share Link Copied!";
+				});//click event
+			});//class selector
+		}//shareInit
+
+		function heartAjaxInit() {
+			console.log("heart init");
+			document.querySelectorAll('.heartbutton').forEach(item => {
+				item.addEventListener('click', event => {
+					var thestring = item.id;
+					var splitty = thestring.split("/");
+					var index = splitty[0];
+					var track_id = splitty[1];
+					var user_id = splitty[2];
+					var hearted = splitty[3];
+					if(user_id !== ""){
+						if(hearted == 0){
+							$.ajax({
+								url:'/addheart',
+								type: 'POST',
+								data: {
+									index: index,
+									track_id: track_id,
+									user_id: user_id
+								},
+								success: function(data){
+									//changing img
+									var theindex = data.index;
+									var heartimg = document.getElementById(`${theindex}/${data.track_id}/${data.user_id}/0`);
+									heartimg.setAttribute('src', '../Images/PageIMG/heart1.png');
+									heartimg.setAttribute('id', `${theindex}/${data.track_id}/${data.user_id}/1`);
+									//adding one to number
+									var test = document.getElementById(`${theindex}/numheart`);
+									var str = test.innerHTML.toString();
+									var theint = parseInt(str);
+									test.innerHTML = (theint + 1);
+								},
+								error: function(){
+									console.log("Didn't Work");
+								}
+							});//ajax
+						}else{
+							$.ajax({
+								url:'/removeheart',
+								type: 'POST',
+								data: {
+									index: index,
+									track_id: track_id,
+									user_id: user_id
+								},
+								success: function(data){
+									//changing img
+									var theindex = data.index;
+									var heartimg = document.getElementById(`${theindex}/${data.track_id}/${data.user_id}/1`);
+									heartimg.setAttribute('src', '../Images/PageIMG/heart0.png');
+									heartimg.setAttribute('id', `${theindex}/${data.track_id}/${data.user_id}/0`);
+									//adding one to number
+									var test = document.getElementById(`${theindex}/numheart`);
+									var str = test.innerHTML.toString();
+									var theint = parseInt(str);
+									test.innerHTML = (theint - 1);
+								},
+								error: function(){
+									console.log("Didn't Work");
+								}
+							});//ajax
+						}
+					}else{
+						document.getElementById(`result${index}`).innerHTML = "Please Login to Like Tune!";
+					}
+
+				});//click event
+			});//class selector
+		}//heartinit
+

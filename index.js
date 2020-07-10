@@ -348,7 +348,7 @@ app.get('/follow', (req, res) => {
         if (fresult.length > 0){
           console.log("Tracks Present");
           for (var i = 0; i < fresult.length; i++) {
-            var row = { 'track_name': fresult[i].track_name, 'drive_url': fresult[i].drive_url, 'id': fresult[i].id, 'short_name': fresult[i].short_name, 'is_remix': fresult[i].is_remix, 'is_collab': fresult[i].is_collab, 'time': fresult[i].time, 'blank': "" }
+            var row = { 'track_name': fresult[i].track_name, 'artist_name': fresult[i].artist_name, 'drive_url': fresult[i].drive_url, 'id': fresult[i].id, 'short_name': fresult[i].short_name, 'is_remix': fresult[i].is_remix, 'is_collab': fresult[i].is_collab, 'time': fresult[i].time, 'blank': "", 'hearts': "", 'userhearted': "0" }
             tracks.push(row);
           }
         }
@@ -362,7 +362,7 @@ app.get('/follow', (req, res) => {
             if (cresult.length > 0){
               console.log(`collabs for ${artfollow[i].artist_name} FOUND`);
               for (var j = 0; j < cresult.length; j++) {
-                var row = { 'track_name': cresult[j].track_name, 'drive_url': cresult[j].drive_url, 'id': cresult[j].id, 'short_name': cresult[j].short_name, 'is_remix': cresult[j].is_remix, 'is_collab': cresult[j].is_collab, 'time': cresult[j].time, 'blank': "" }
+                var row = { 'track_name': cresult[j].track_name, 'artist_name': cresult[j].artist_name, 'drive_url': cresult[j].drive_url, 'id': cresult[j].id, 'short_name': cresult[j].short_name, 'is_remix': cresult[j].is_remix, 'is_collab': cresult[j].is_collab, 'time': cresult[j].time, 'blank': "", 'hearts': "", 'userhearted': "0" }
                 tracks.push(row);
               }
             }
@@ -372,26 +372,37 @@ app.get('/follow', (req, res) => {
             if (rresult.length > 0){
               console.log(`remixes for ${artfollow[i].artist_name} FOUND`);
               for (var k = 0; k < rresult.length; k++) {
-                var row = { 'track_name': rresult[k].track_name, 'drive_url': rresult[k].drive_url, 'id': rresult[k].id, 'short_name': rresult[k].short_name, 'is_remix': rresult[k].is_remix, 'is_collab': rresult[k].is_collab, 'time': rresult[k].time, 'blank': "" }
+                var row = { 'track_name': rresult[k].track_name, 'artist_name': rresult[k].artist_name, 'drive_url': rresult[k].drive_url, 'id': rresult[k].id, 'short_name': rresult[k].short_name, 'is_remix': rresult[k].is_remix, 'is_collab': rresult[k].is_collab, 'time': rresult[k].time, 'blank': "", 'hearts': "", 'userhearted': "0" }
                 tracks.push(row);
               }
             }
           }
         }
 
-        if (tracks == []){
+        if (tracks.length == 0){
+          console.log("No tracks found!!!");
           await conquerie.end(db);
           res.render('follow', { tracks: "", user_id: user_id, theusername: theusername, msg: "No New Tunes, Follow Some Artists to See their recent FIRE!" });
         }else{
-          await conquerie.end(db);
+          console.log("Tracks found!!!");
           for (var i = 0; i < tracks.length; i++) {
+            let thehearts = await heartquerie.getAllHeartsOnTrack(db, tracks[i].id);
+            if(thehearts.length > 0){
+              tracks[i].hearts = thehearts;
+              const isincluded = (element) => element.user_id == user_id;
+              var test = -1;
+              test = thehearts.findIndex(isincluded);
+              if (test != -1){
+                tracks[i].userhearted = 1;
+              }
+            }
+
             if(tracks[i].is_collab == 0 && tracks[i].is_remix == 0){
               tracks[i].blank = `${tracks[i].artist_name} - `;
             }
           }
+          await conquerie.end(db);
           tracks.sort((a, b) => (a.time < b.time) ? 1 : -1);
-
-          console.table(tracks);
           res.render('follow', { tracks: tracks, user_id: user_id, theusername: theusername, msg: `Welcome ${theusername}, Here are the new tunes from your followed artists:` });
         }
       }catch(err){

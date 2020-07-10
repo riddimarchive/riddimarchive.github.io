@@ -871,6 +871,11 @@ li.tunetexttotwsmaller{
   margin-bottom: 0.2em;
 }
 
+.shareaudio{
+  width: 85%;
+  margin-bottom: 0.2em;
+}
+
 #sharepagetitle{
   display: none;
 }
@@ -1344,6 +1349,10 @@ li.tunetexttotwsmaller{
 }
 
 #iosspacer{
+  margin-top: 0em;
+}
+
+.iosspacer{
   margin-top: 0em;
 }
 

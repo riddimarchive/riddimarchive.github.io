@@ -45,7 +45,7 @@ block content
 				ul
 					li.tunetextshare= `${track.blank}${track.track_name}`
 					.regaudioshare
-						audio(id=`shareaudio/${index}`, class='shareaudio', src=track.drive_url, type='audio/mpeg', controls='', preload='preload')
+						audio(id=`shareaudio/${index}`, class='shareaudio', src=track.drive_url, type='audio/mpeg', controls='', preload='none')
 					.iosspacer
 					.downloadbutton
 						.custombutton

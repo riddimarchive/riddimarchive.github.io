@@ -65,7 +65,7 @@ block content
 				.downloadbutton
 					.bigboldtext3 Support The Artist!
 				.downloadbutton
-					.links
+					div(class='links',style="margin-bottom: 1.7em;")
 						a(id='thefb', class=`${fb}`, href=`${fb}`)
 							img(id='thefbimg', border='0', alt='fb', src='../../Images/PageIMG/fb.png', height='100', width='100')
 						a(id='thesc',  class=`${sc}`, href=`${sc}`)
@@ -76,8 +76,6 @@ block content
 							img(id='thebeatimg', border='0', alt='beat', src='../../Images/PageIMG/beat.png', height='100', width='100')
 						a(id='theinsta',  class=`${insta}`, href=`${insta}`)
 							img(id='theinstaimg', border='0', alt='insta', src='../../Images/PageIMG/insta.png', height='100', width='100')
-				.downloadbutton
-					.bigboldtext3 Follow this Artist!
 				#followcontain.downloadbutton
 					img(id=`${artist_name}/${userid}/${artid}`, class='followbtn', border='2', alt='Follow Artist', src=`../Images/PageIMG/${following}.png`, height='50')
 				#labelgcenter2black.downloadbutton 
@@ -330,7 +328,7 @@ block content
 									success: function(data){
 										var followcontain = document.getElementById('followcontain');
 										followcontain.innerHTML = `<img class="followbtn" id="${data.art_name}/${data.user_id}/${data.artid}" border="2" alt="Follow Artist" src="https://www.riddimarchive.com/Images/PageIMG/follow1.png" height="50" />`
-										document.getElementById(`labelgcenter2black`).innerHTML = `Followed ${data.art_name}!`;
+										document.getElementById(`labelgcenter2black`).innerHTML = `Followed!`;
 										followInit();
 									},
 									error: function(){
@@ -349,7 +347,7 @@ block content
 									success: function(data){
 										var followcontain = document.getElementById('followcontain');
 										followcontain.innerHTML = `<img class="followbtn" id="${data.art_name}/${data.user_id}/${data.artid}" border="2" alt="Follow Artist" src="https://www.riddimarchive.com/Images/PageIMG/follow0.png" height="50" />`
-										document.getElementById(`labelgcenter2black`).innerHTML = `Unfollowed ${data.art_name}!`;
+										document.getElementById(`labelgcenter2black`).innerHTML = `Unfollowed!`;
 										followInit();
 									},
 									error: function(){

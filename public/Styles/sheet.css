@@ -414,6 +414,13 @@ a{
   margin-right: 15px;
 }
 
+.bigboldtext3{
+  font-size: xx-large;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
 #tuneslink{
   font-size: x-large;
   font-weight: bold;
@@ -644,8 +651,13 @@ li.tunetextsmaller{
   text-transform: uppercase;
   font-size: 24px;
 }
+
 .button{
   font-size: 24px;
+}
+
+.followbtn{
+  margin-bottom: 10px;
 }
 
 .contact form button:hover,.contact form button:focus{

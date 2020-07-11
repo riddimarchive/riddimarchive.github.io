@@ -3,6 +3,10 @@ extends index2
 block content
 	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
 	- var message = msg;
+	- var x = tracks;
+	- var userid = currentuserid;
+	- var test = `${artist_name}`;
+
 	script.
 		document.addEventListener('play', function(e){
 		var audios = document.getElementsByTagName('audio');
@@ -59,7 +63,7 @@ block content
 		#linkscontainart
 			#linksformart
 				.downloadbutton
-					.bigboldtext2 Support The Artist!
+					.bigboldtext3 Support The Artist!
 				.downloadbutton
 					.links
 						a(id='thefb', class=`${fb}`, href=`${fb}`)
@@ -72,6 +76,11 @@ block content
 							img(id='thebeatimg', border='0', alt='beat', src='../../Images/PageIMG/beat.png', height='100', width='100')
 						a(id='theinsta',  class=`${insta}`, href=`${insta}`)
 							img(id='theinstaimg', border='0', alt='insta', src='../../Images/PageIMG/insta.png', height='100', width='100')
+				.downloadbutton
+					.bigboldtext3 Follow this Artist!
+				#followcontain.downloadbutton
+					img(id=`${artist_name}/${userid}/${artid}`, class='followbtn', border='2', alt='Follow Artist', src=`../Images/PageIMG/${following}.png`, height='50')
+				#labelgcenter2black.downloadbutton 
 
 	.artistinfo
 		h3#theh3 #{info}
@@ -88,10 +97,6 @@ block content
 					img(id=`ptot/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/pthrought.png', height='50')
 				.custombutton
 					img(id=`utoz/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/uthroughz.png', height='50')
-
-	- var x = tracks;
-	- var userid = currentuserid;
-	- var test = `${artist_name}`;
 
 	#myModal.modal
 		#modalspacer
@@ -179,6 +184,7 @@ block content
 			faveAjaxInit();
 			heartAjaxInit();
 			shareInit();
+			followInit();
 			pageAjaxInit();
 			commentInit();
 			removeUnusedLinks();
@@ -299,6 +305,65 @@ block content
 				});//click event
 			});//class selector
 		}//fave ajax init
+
+		function followInit(){
+			console.log("follow init");
+			document.querySelectorAll('.followbtn').forEach(item => {
+				item.addEventListener('click', event => {
+					var thestring = item.id;
+					var splitty = thestring.split("/");
+					var art_name = splitty[0];
+					var user_id = splitty[1];
+					var artid = splitty[2];
+
+					if(user_id !== ""){
+						console.log(`item src = ${item.src}`);
+						if(item.src == 'https://www.riddimarchive.com/Images/PageIMG/follow0.png'){
+								$.ajax({
+									url:'/followartist',
+									type: 'POST',
+									data: {
+										art_name: art_name,
+										user_id: user_id,
+										artid: artid
+									},
+									success: function(data){
+										var followcontain = document.getElementById('followcontain');
+										followcontain.innerHTML = `<img class="followbtn" id="${data.art_name}/${data.user_id}/${data.artid}" border="2" alt="Follow Artist" src="https://www.riddimarchive.com/Images/PageIMG/follow1.png" height="50" />`
+										document.getElementById(`labelgcenter2black`).innerHTML = `Followed ${data.art_name}!`;
+										followInit();
+									},
+									error: function(){
+										console.log("Didn't Work");
+									}
+								});
+						}else{
+								$.ajax({
+									url:'/unfollowartist',
+									type: 'POST',
+									data: {
+										art_name: art_name,
+										user_id: user_id,
+										artid: artid
+									},
+									success: function(data){
+										var followcontain = document.getElementById('followcontain');
+										followcontain.innerHTML = `<img class="followbtn" id="${data.art_name}/${data.user_id}/${data.artid}" border="2" alt="Follow Artist" src="https://www.riddimarchive.com/Images/PageIMG/follow0.png" height="50" />`
+										document.getElementById(`labelgcenter2black`).innerHTML = `Unfollowed ${data.art_name}!`;
+										followInit();
+									},
+									error: function(){
+										console.log("Didn't Work");
+									}
+								});
+						}
+
+					}else{
+						document.getElementById(`labelgcenter2black`).innerHTML = "Please Login to Follow Artist";
+					}
+				});//click event
+			});//class selector
+		}
 
 		function heartAjaxInit() {
 			console.log("heart init");

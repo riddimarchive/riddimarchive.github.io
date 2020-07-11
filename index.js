@@ -20,6 +20,7 @@ const trackquerie = require('./js/trackquery');
 const userquerie = require('./js/userquery');
 const heartquerie = require('./js/heartquery');
 const secretquerie = require('./js/secretquery');
+const followquerie = require('./js/followquery');
 const has = require('./js/hash');
 const emailer = require('./js/email');
 const s3fcn = require('./js/s3fcn');
@@ -544,6 +545,7 @@ app.get('/artist/:name', function(req,res){
           var bc = 'none';
           var beat = 'none';
           var insta = 'none';
+          var following = 'follow0';
 
           var msg = "";
 
@@ -552,6 +554,7 @@ app.get('/artist/:name', function(req,res){
 
           let result = await artquerie.getArtistInfo(db, name);
           info = `${result[0].info}`;
+          artid = `${result[0].id}`;
           var img_url = `${result[0].img_url}`;
           if(result[0].fb.length > 1){
             fb = `https://www.facebook.com/${result[0].fb}`;
@@ -605,10 +608,20 @@ app.get('/artist/:name', function(req,res){
             }
           }
           
+          if (user_id != ""){
+            console.log(`${user_id}, ${name}, Checking if Followed`);
+            let follow = await followquerie.isFollowingArtist(db, user_id, name);
+    
+            if(follow.length > 0){
+              console.log("Followingg!!!!!")
+              following = "follow1";
+            }
+          }
+          
           await conquerie.end(db);
           tracks.sort((a, b) => (a.short_name > b.short_name) ? 1 : -1);
 
-          res.render('artist',{ artist_name: name, info: info, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, img_url: img_url, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
+          res.render('artist',{ artist_name: name, artid: artid, info: info, following: following, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, img_url: img_url, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
 
       }catch(err){
         console.log(err);
@@ -2277,6 +2290,54 @@ app.post('/removeheart', (req, res, next) => {
   }
   heartsRemoveResponse(index, track_id, user_id);
   }
+});
+
+//POST REQUEST - Follow Artist
+app.post('/followartist', (req, res, next) => {
+  var { art_name, user_id, artid } = req.body;
+
+  async function followArtistResponse(art_name, user_id, artid){
+      try{
+        var db = createConnection();
+        await conquerie.connect(db);
+
+        let result = await followquerie.followArtist(db, art_name, user_id, artid);
+
+        await conquerie.end(db);
+        res.send({art_name: art_name, user_id: user_id, artid: artid});
+
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+
+  }
+  followArtistResponse(art_name, user_id, artid);
+  
+});
+
+//POST REQUEST - Unfollow Artist
+app.post('/unfollowartist', (req, res, next) => {
+  var { art_name, user_id, artid } = req.body;
+
+  async function unfollowArtistResponse(art_name, user_id, artid){
+      try{
+        var db = createConnection();
+        await conquerie.connect(db);
+
+        let result = await followquerie.unfollowArtist(db, art_name, user_id);
+
+        await conquerie.end(db);
+        res.send({art_name: art_name, user_id: user_id, artid: artid});
+
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+
+  }
+  unfollowArtistResponse(art_name, user_id, artid);
+  
 });
 
 //POST REQUEST - Add Comment

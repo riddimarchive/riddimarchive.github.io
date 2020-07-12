@@ -62,20 +62,21 @@ block content
 					#labelgcenter3 #{message}
 		#linkscontainart
 			#linksformart
-				.downloadbutton
-					.bigboldtext3 Support The Artist!
-				.downloadbutton
-					div(class='links',style="margin-bottom: 1.7em;")
-						a(id='thefb', class=`${fb}`, href=`${fb}`)
-							img(id='thefbimg', border='0', alt='fb', src='../../Images/PageIMG/fb.png', height='100', width='100')
-						a(id='thesc',  class=`${sc}`, href=`${sc}`)
-							img(id='thescimg', border='0', alt='sc', src='../../Images/PageIMG/sound.png', height='100', width='100')
-						a(id='thebc',  class=`${bc}`, href=`${bc}`)
-							img(id='thebcimg', border='0', alt='bc', src='../../Images/PageIMG/band.png', height='100', width='100')
-						a(id='thebeat',  class=`${beat}`, href=`${beat}`)
-							img(id='thebeatimg', border='0', alt='beat', src='../../Images/PageIMG/beat.png', height='100', width='100')
-						a(id='theinsta',  class=`${insta}`, href=`${insta}`)
-							img(id='theinstaimg', border='0', alt='insta', src='../../Images/PageIMG/insta.png', height='100', width='100')
+				#supportseg
+					.downloadbutton
+						.bigboldtext3 Support The Artist!
+					.downloadbutton
+						div(class='links',style="margin-bottom: 1.7em;")
+							a(id='thefb', class=`${fb}`, href=`${fb}`)
+								img(id='thefbimg', border='0', alt='fb', src='../../Images/PageIMG/fb.png', height='100', width='100')
+							a(id='thesc',  class=`${sc}`, href=`${sc}`)
+								img(id='thescimg', border='0', alt='sc', src='../../Images/PageIMG/sound.png', height='100', width='100')
+							a(id='thebc',  class=`${bc}`, href=`${bc}`)
+								img(id='thebcimg', border='0', alt='bc', src='../../Images/PageIMG/band.png', height='100', width='100')
+							a(id='thebeat',  class=`${beat}`, href=`${beat}`)
+								img(id='thebeatimg', border='0', alt='beat', src='../../Images/PageIMG/beat.png', height='100', width='100')
+							a(id='theinsta',  class=`${insta}`, href=`${insta}`)
+								img(id='theinstaimg', border='0', alt='insta', src='../../Images/PageIMG/insta.png', height='100', width='100')
 				#followcontain.downloadbutton
 					img(id=`${artist_name}/${userid}/${artid}`, class='followbtn', border='2', alt='Follow Artist', src=`../Images/PageIMG/${following}.png`, height='50')
 				#labelgcenter2black.downloadbutton 
@@ -794,10 +795,10 @@ block content
 			});
 
 			if(bool1 == 1 && bool2 == 1 && bool3 == 1 && bool4 == 1 && bool5 == 1){
-				var test = document.getElementById('linksformart');
-				var test2 = document.getElementById('linkscontainart');
+				var test = document.getElementById('supportseg');
 				test.setAttribute('class', 'linksformclear');
-				test2.setAttribute('class', 'linksformclear');
+				var testbox = document.getElementById('linksformart');
+				testbox.style.borderStyle = "none";
 			}
 		}
 

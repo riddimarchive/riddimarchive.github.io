@@ -88,30 +88,36 @@ block content
 							var pass2 = document.getElementById("pass2").value;
 							var artist_name = document.getElementById("art_name").value;
 
-							fd.append('prooffile', prooffile);
-							fd.append('artistlogo', artistlogo);
-							fd.append('username', username);
-							fd.append('pass1', pass1);
-							fd.append('pass2', pass2);
-							fd.append('artist_name', artist_name);
+							if(pass1.length > 32 || pass2.length > 32){
+								msg.innerHTML = "Passwords Too Long!";
+								msg2.innerHTML = "Passwords Too Long!";
+							}else{
+								fd.append('prooffile', prooffile);
+								fd.append('artistlogo', artistlogo);
+								fd.append('username', username);
+								fd.append('pass1', pass1);
+								fd.append('pass2', pass2);
+								fd.append('artist_name', artist_name);
 
-							$.ajax({
-								url:'/newartistacctcreate',
-								type: 'POST',
-								data: fd,
-								processData: false,
-								contentType: false,
-								success: function(data){
-									var msg = document.getElementById("labelgcenter");
-									var msg2 = document.getElementById("labelgcenter2");
-									msg.innerHTML = data.msg;
-									msg2.innerHTML = data.msg;
-								},
-								error: function(){
-									console.log("Didn't Work");
-								}
-							});//end ajax
-						}//all checks good -> run upload
+								$.ajax({
+									url:'/newartistacctcreate',
+									type: 'POST',
+									data: fd,
+									processData: false,
+									contentType: false,
+									success: function(data){
+										var msg = document.getElementById("labelgcenter");
+										var msg2 = document.getElementById("labelgcenter2");
+										msg.innerHTML = data.msg;
+										msg2.innerHTML = data.msg;
+									},
+									error: function(){
+										console.log("Didn't Work");
+									}
+								});//end ajax
+
+							}//all checks good -> run upload
+						}
 					}//file size check
 				}//file exist check
 			});

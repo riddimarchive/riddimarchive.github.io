@@ -609,7 +609,6 @@ app.get('/artist/:name', function(req,res){
           }
           
           if (user_id != ""){
-            console.log(`${user_id}, ${name}, Checking if Followed`);
             let follow = await followquerie.isFollowingArtist(db, user_id, name);
     
             if(follow.length > 0){
@@ -1073,36 +1072,42 @@ app.post('/create', (req, res, next) => {
   if(!username || !password || !password2){
     res.render('create',{ title:'Create Account', msg: "Fill in all Fields!" , theusername: theusername});
   }else{
-    if(password !== password2){
-      res.render('create',{ title:'Create Account', msg: "Passwords Don't Match, Please Re-Enter", theusername: theusername });
-    }else{
-      //perform hash and add query
-      async function createPageResponse(username, password, theusername){
-        try{
-          var db = createConnection();
-          var hashpass = "";
-          await conquerie.connect(db);
 
-          let uresult = await userquerie.getUserInfo(db, username);
-          if(uresult.length > 0){
-            res.render('create',{ title:'Create Account', msg: "Username Taken! Please Try a Different Name", theusername: theusername });
+      if(password.length > 32 || password2.length > 32){
+        res.render('create',{ title:'Create Account', msg: "Passwords too Long!", theusername: theusername });
+      }else{
+
+          if(password !== password2){
+            res.render('create',{ title:'Create Account', msg: "Passwords Don't Match, Please Re-Enter", theusername: theusername });
           }else{
-              hashpass = await has.hashPass(password);
-              let result = await userquerie.createAccount(db, username, hashpass);
+            //perform hash and add query
+            async function createPageResponse(username, password, theusername){
+              try{
+                var db = createConnection();
+                var hashpass = "";
+                await conquerie.connect(db);
 
-              await conquerie.end(db);
-              res.render('create',{ title:'Create Account', msg: "Account Created! Feel Free to Login at the link above!", theusername: theusername });
-          }//end else
-        }catch(err){
-          console.log(err);
-          res.render('error');
-        }
-    }//end async
+                let uresult = await userquerie.getUserInfo(db, username);
+                if(uresult.length > 0){
+                  res.render('create',{ title:'Create Account', msg: "Username Taken! Please Try a Different Name", theusername: theusername });
+                }else{
+                    hashpass = await has.hashPass(password);
+                    let result = await userquerie.createAccount(db, username, hashpass);
 
-    createPageResponse(username, password, theusername);
+                    await conquerie.end(db);
+                    res.render('create',{ title:'Create Account', msg: "Account Created! Feel Free to Login at the link above!", theusername: theusername });
+                }//end else
+              }catch(err){
+                console.log(err);
+                res.render('error');
+              }
+          }//end async
 
-    }//end inner else
-  }//end outer else
+          createPageResponse(username, password, theusername);
+
+      }//end else
+    }//end else
+  }//end else
 
 
 });
@@ -1512,6 +1517,46 @@ app.post('/isArtistCheck', function(req,res){
 
   }
   isArtistResponse(artname, usrid);
+});
+
+//APP POST - Artist Delete Track
+app.post('/artistpagedeletetrack', function(req,res){
+
+  var { index, track_id, art_name } = req.body;
+  var verified = 0;
+
+  if(req.user === undefined){
+    res.send({msg: "Access Denied", verified: verified, index: "", track_id: "", art_name: ""});
+  }else{
+    var theusername = req.user.username;
+
+    async function isArtistResponse(theusername, index, track_id, art_name){
+      try{
+        var isArtist = 0;
+        var db = createConnection();
+        await conquerie.connect(db);
+        let userresult = await userquerie.getUserByName(db, theusername)
+        let result = await artquerie.getArtistInfo(db, art_name);
+
+        if(userresult[0].artist_id_verify == result[0].id){
+          verified = 1;
+          let del = await trackquerie.deleteTrackByID(db, track_id);
+          await conquerie.end(db);
+          res.send({msg: "Track Deleted", verified: verified, index: index, track_id: track_id, art_name: art_name});
+
+        }else{
+          await conquerie.end(db);
+          res.send({msg: "Access Denied", verified: verified, index: "", track_id: "", art_name: ""});
+        }
+
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+    }
+    
+    isArtistResponse(theusername, index, track_id, art_name);
+  }
 });
 
 

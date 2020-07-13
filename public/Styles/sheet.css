@@ -134,6 +134,14 @@ body {
   justify-content: center;
 }
 
+#delmessage{
+  font-weight: bold;
+  font-size: x-large;
+  color: greenyellow;
+  display: none;
+  justify-content: center;
+}
+
 .header{
 	display: flex;
 	justify-content: center;

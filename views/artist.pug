@@ -114,6 +114,7 @@ block content
 								img(border='2', alt='back', src='../../Images/PageIMG/addcmt.png', height='50')
 				.downloadbutton
 					div(id=`cmtmessage`, class='downloadbuttonwithbold')
+	#delmessage
 			
 			br
 			div(id='allcomments')
@@ -151,6 +152,8 @@ block content
 
 						input(id=`sharelink${track.id}`, class='sharelink', readonly="readonly", type='text', name='sharelink', value=`https://www.riddimarchive.com/share/${track.id}`)
 						img(id=`${index}/${track.id}`, class='sharebutton', border='0', alt='back', src=`../Images/PageIMG/share.png`, height='50')
+					.downloadbuttonhidden
+						img(id=`delete/${index}/${track.id}/${artist_name}`, class='deletebutton', border='2', alt='back', src='../Images/PageIMG/trackdelete.png', height='50', style="margin-top: 0.5em;")
 						
 					div(id=`result${index}`, class='downloadbuttonwithbold')
 					
@@ -213,11 +216,11 @@ block content
 				},
 				success: function(data){
 					if(data.isArtist == 1){
-						//make upload page buttons visible
-						//make track delete buttons visible
 						document.querySelectorAll('.downloadbuttonhidden').forEach(item => {
 							item.style.display = "flex";
 						});
+
+						deleteInit();
 					}
 				},
 				error: function(){
@@ -225,6 +228,48 @@ block content
 				}
 				});//ajax
 			}
+		}
+
+		function deleteInit(){
+
+			console.log("delete init");
+			document.querySelectorAll('.deletebutton').forEach(item => {
+				item.addEventListener('click', event => {
+				var thestring = item.id;
+				var splitty = thestring.split("/");
+				var index = splitty[1];
+				var track_id = splitty[2];
+				var art_name = splitty[3];
+
+				$.ajax({
+					url:`/artistpagedeletetrack`,
+					type: 'POST',
+					data: {
+						index: index,
+						track_id: track_id,
+						art_name: art_name
+					},
+					success: function(data){
+							console.log("Deleted?");
+							if(data.verified == 0){
+								console.log("Access Denied");
+							}else{
+								var thetrack = document.getElementById(`${data.index}/uldiv`);
+								thetrack.innerHTML = "";
+								thetrack.style.display = "none";
+								var delmsg = document.getElementById(`delmessage`);
+								delmsg.innerHTML = "Track Deleted!"
+								delmsg.style.display = "flex";
+							}
+					},
+					error: function(){
+						console.log("Didn't Work");
+					}
+				});//ajax
+
+				});//click event
+			});//class selector
+
 		}
 
 		function searchAjaxInit() {

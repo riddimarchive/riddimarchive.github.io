@@ -616,11 +616,17 @@ app.get('/artist/:name', function(req,res){
               following = "follow1";
             }
           }
+
+          let randresult = await trackquerie.getRandomTrackByArtistName(db, name);
+          var randdriveurl = randresult[0].drive_url;
+          var randartistname = randresult[0].artist_name;
+          var randtrackname = randresult[0].track_name;
+          var randtrackid = randresult[0].id;
           
           await conquerie.end(db);
           tracks.sort((a, b) => (a.short_name > b.short_name) ? 1 : -1);
 
-          res.render('artist',{ artist_name: name, artid: artid, info: info, following: following, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, img_url: img_url, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
+          res.render('artist',{ artist_name: name, artid: artid, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: randtrackname, info: info, following: following, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, img_url: img_url, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
 
       }catch(err){
         console.log(err);
@@ -1210,6 +1216,39 @@ app.post('/forward',(req,res)=>{
   }//end async
 
 forwardResponse();
+});
+
+app.post('/forwardart',(req,res)=>{
+
+  var { artist_name } = req.body;
+
+  var theid = "";
+  var thedriveurl = "";
+  var theartistname = "";
+  var thetrackname = "";
+
+  async function forwardResponse(artist_name){
+    try{
+      var db = createConnection();
+      await conquerie.connect(db);
+      
+      let result = await trackquerie.getRandomTrackByArtistName(db, artist_name);
+      theid = result[0].id;
+      thedriveurl = result[0].drive_url;
+      theartistname = result[0].artist_name;
+      thetrackname = result[0].track_name;
+      var shuffletext = `${thetrackname}`;
+
+      await conquerie.end(db);
+      res.send({source: thedriveurl, id: theid, artist_name: theartistname, track_name: thetrackname, shuftext: shuffletext});
+    
+    }catch(err){
+      console.log(err);
+      res.render('error');
+    }
+  }//end async
+
+forwardResponse(artist_name);
 });
 
 

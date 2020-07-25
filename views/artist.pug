@@ -7,6 +7,12 @@ block content
 	- var userid = currentuserid;
 	- var test = `${artist_name}`;
 
+	- var shuffleart = randartistname;
+	- var shuffletrack = randtrackname;
+	- var shuffleurl = randdriveurl;
+	- var shuffleid = randtrackid;
+	- var shuf = shuftext;
+
 	script.
 		document.addEventListener('play', function(e){
 			var audios = document.getElementsByTagName('audio');
@@ -93,22 +99,22 @@ block content
 			.downloadbutton
 				div(class='bigboldtext', style="margin-top: 0px;") Shuffle Player
 			#shuftext
-				text.boldtext= `test`
+				text.boldtext= `${shuf}`
 			.downloadbutton
 				audio(id=`shufaudio`, type='audio/mpeg', controls='', preload='none')
-					source(id='shufaudiosrc')
+					source(id='shufaudiosrc' src=`${shuffleurl}`)
 			#iosspaceralwayson
 			.downloadbutton
 				.custombutton
-					a(id='shufdownloadbutton', href='testshuffleurl')
+					a(id='shufdownloadbutton', href=`${shuffleurl}`)
 						img(border='2', alt='Download Tune', src='../../Images/PageIMG/download2.png', height='50')
 				.custombutton
 					form(id='shuffaveform', method='POST')
-						input#shuftrack_id.form-control(type='hidden', name='track_id', value=`testshuffleid`)
-						input#shuffavetrack_name.form-control(type='hidden', name='favetrack_name', value=`testshuffletrack`)
-						input#user_id.form-control(type='hidden', name='user_id', value=`testuserid`)
-						input#shufname.form-control(type='hidden', name='name', value=`testshuffleart`)
-						img(id='shuffave', class='favebuttonclass', border='2', alt='back', src='../../Images/PageIMG/addfave.png', height='50')
+						input#shuftrack_id.form-control(type='hidden', name='track_id', value=`${shuffleid}`)
+						input#shuffavetrack_name.form-control(type='hidden', name='favetrack_name', value=`${shuffletrack}`)
+						input#user_id.form-control(type='hidden', name='user_id', value=`${userid}`)
+						input#shufname.form-control(type='hidden', name='name', value=`${shuffleart}`)
+						img(id='shuffave', class='shuffavebuttonclass', border='2', alt='back', src='../../Images/PageIMG/addfave.png', height='50')
 			.downloadbutton
 				.custombutton
 					#shuffleforward
@@ -151,7 +157,7 @@ block content
 				.downloadbutton
 					div(id=`cmtmessage`, class='downloadbuttonwithbold')
 			br
-			div(id='allcomments') TESTFISH
+			div(id='allcomments') 
 			div(id='commentnextindex') 0
 			div(id='inpagecommentposted')
 	#delmessage
@@ -216,9 +222,11 @@ block content
 		$(document).ready(function() {
 			console.log("Doc ready");
 			isArtistCheck();
+			forwardAjaxInit();
 			fixLargeText();
 			searchAjaxInit();
 			faveAjaxInit();
+			shufflefaveAjaxInit();
 			heartAjaxInit();
 			shareInit();
 			followInit();
@@ -307,6 +315,63 @@ block content
 
 		}
 
+		function forwardAjaxInit() {
+			console.log("Forward Ajax Init");
+			document.getElementById('shuffleforward').addEventListener('click', makeNextRequest);
+			function makeNextRequest(e){
+				document.getElementById('loadtext').innerHTML= "Loading...";
+				var theform = document.getElementById('shuffaveform');
+				a_name = theform.elements["shufname"].value;
+
+				$.ajax({
+				url:'/forwardart',
+				type : 'POST',
+				data: {
+					artist_name: a_name,
+				},
+				success: function(data){
+					var thetext = document.createElement('text');
+					thetext.setAttribute('class', 'boldtext');
+					thetext.innerHTML = `${data.shuftext}`;
+					var shuffy = document.getElementById('shuftext');
+					shuffy.innerHTML= "";
+					shuffy.appendChild(thetext);
+
+					var idfield = document.getElementById('shuftrack_id');
+					var tracknamefield = document.getElementById('shuffavetrack_name');
+					var artistnamefield = document.getElementById('shufname');
+					idfield.setAttribute('value', `${data.id}`);
+					tracknamefield.setAttribute('value', `${data.track_name}`);
+					artistnamefield.setAttribute('value', `${data.artist_name}`);
+
+
+					var downbutton = document.getElementById('shufdownloadbutton');
+					downbutton.setAttribute('href', `${data.source}`);
+					document.getElementById('shufaudiosrc').src = `${data.source}`;
+
+					var audiop = document.getElementById('shufaudio');
+					audiop.load();
+					var playPromise = audiop.play();
+					if (playPromise !== undefined) {
+						playPromise.then(_ => {
+					})
+					.catch(error => {
+					});
+					}
+					audioFinishedCheck();
+				},
+				error: function(){
+				console.log("Didn't Work");
+				}
+				});
+			}
+		}
+
+		function audioFinishedCheck() {
+			var audiop = document.getElementById('shufaudio');
+			audiop.addEventListener('playing',function() { document.getElementById('loadtext').innerHTML= ""; });
+		}
+
 		function searchAjaxInit() {
 			console.log("search init");
 			var theform = $('#searchy3');
@@ -383,6 +448,53 @@ block content
 
 				});//click event
 			});//class selector
+		}//fave ajax init
+
+		function shufflefaveAjaxInit() {
+			console.log("shuffle fave Ajax Init");
+			document.querySelectorAll('.shuffavebuttonclass').forEach(item => {
+			item.addEventListener('click', event => {
+				console.log("shufclicked");
+			var tid = "";
+			var t_name = "";
+			var a_name = "";
+
+			var theform = document.getElementById('shuffaveform');
+			tid = theform.elements["shuftrack_id"].value;
+			t_name = theform.elements["shuffavetrack_name"].value;
+			a_name = theform.elements["shufname"].value;
+
+			var uid = theform.elements["user_id"].value;
+			var index = item.id;
+
+			console.log(`${tid}, ${t_name}, ${a_name}, ${uid}, ${index}`);
+
+			$.ajax({
+			url:'/homepagefave',
+			type: 'POST',
+			data: {
+				track_id: tid,
+				favetrack_name: t_name,
+				user_id: uid,
+				name: a_name,
+				index: index
+			},
+			success: function(data){
+				var themsg = data.msg;
+				var theindex = data.index;
+				if (theindex == 'shuffave'){
+				document.getElementById('loadtext').innerHTML= themsg;
+				}else{
+				document.getElementById(`result${theindex}`).innerHTML = themsg;
+				}
+			},
+			error: function(){
+				console.log("Didn't Work");
+			}
+			});//ajax
+
+			});//click event
+		});//class selector
 		}//fave ajax init
 
 		function followInit(){

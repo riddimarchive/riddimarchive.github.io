@@ -596,10 +596,10 @@ function getRandomTrack(db){
 	return querypromise;
 }
 
-function getRandomTrackByArtistName(db){
+function getRandomTrackByArtistName(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT id, artist_name, track_name, drive_url, is_remix, is_collab FROM tracks WHERE is_secret = "0" AND artist_name = ? ORDER BY RAND() LIMIT 1`, [artist_name], (error, result, fields) => {
+		db.query(`SELECT id, artist_name, track_name, drive_url, is_remix, is_collab FROM tracks WHERE is_secret = "0" AND (artist_name = ? OR c1 = ? OR c2 = ? OR c3 = ? OR c4 = ? OR o1 = ? OR o2 = ?) ORDER BY RAND() LIMIT 1`, [artist_name, artist_name, artist_name, artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

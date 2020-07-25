@@ -2259,10 +2259,9 @@ app.post('/comments', (req, res, next) => {
             }
           }else{
             nocomments = 1;
-            console.log("no comments found?");
+            console.log("no comments found");
             msg = "No Comments on this Tune!"
           }
-          console.table(comments);
 
         await conquerie.end(db);
         if(comments.length > 1){

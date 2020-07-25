@@ -9,30 +9,37 @@ block content
 
 	script.
 		document.addEventListener('play', function(e){
-		var audios = document.getElementsByTagName('audio');
-		var curindex = e.target.id;
-		console.log(`curindex is: ${curindex}`);
+			var audios = document.getElementsByTagName('audio');
+			var curindex = e.target.id;
 
-		var theplayingul = document.getElementById(`${curindex-10000}/uldiv`);
-		theplayingul.style.backgroundColor = "greenyellow";
+			if (curindex == "shufaudio"){
+				document.getElementById('loadtext').innerHTML= "Loading...";
+			}else{
+				var theplayingul = document.getElementById(`${curindex-10000}/uldiv`);
+				theplayingul.style.backgroundColor = "greenyellow";
 
-		var loadmsg = document.getElementById(`result${curindex-10000}`);
-		loadmsg.innerHTML = "Loading...";
+				var loadmsg = document.getElementById(`result${curindex-10000}`);
+				loadmsg.innerHTML = "Loading...";
+			}
 
-		for(var i = 0, len = audios.length; i < len;i++){
-		if(audios[i] != e.target){
-		audios[i].pause();
+			for(var i = 0, len = (audios.length); i < len;i++){
+				if(audios[i] != e.target){
+					audios[i].pause();
+					if (audios[i].src == "" || audios[i].id == "shufaudio"){
+						//skip
+					}else{
+						var notplayingul = "";
+						notplayingul = document.getElementById(`${i-1}/uldiv`);
+						notplayingul.style.backgroundColor = "dodgerblue";
 
-		var notplayingul = document.getElementById(`${i}/uldiv`);
-		notplayingul.style.backgroundColor = "dodgerblue";
-		
-		var theid = (audios[i].id-10000);
-		var loadmsg = document.getElementById(`result${theid}`);
-		loadmsg.innerHTML = "";
-		
-		}
-		}
+						var theid = (audios[i].id-10000);
+						var loadmsg = document.getElementById(`result${theid}`);
+						loadmsg.innerHTML = "";
+					}
+				}
+			}
 		}, true);
+
 	.downloadbuttonhidden
 		.custombutton
 			a(href='../../tuneup')
@@ -42,8 +49,6 @@ block content
 		h1#theh1 #{artist_name}
 
 	.middlecontain
-		.artistpage
-			img(src=`${img_url}`, alt="ADD ARTIST IMG HERE", height='275', width='275')
 		.searchcontainart
 			.searchformart
 				.downloadbutton
@@ -60,6 +65,8 @@ block content
 							a(id='reload', href=`https://www.riddimarchive.com/artist/${artist_name}`)
 								img(border='2', alt='Reload', src='../../Images/PageIMG/reloadt.png', height='50')
 					#labelgcenter3 #{message}
+		.artistpage
+			img(src=`${img_url}`, alt="ADD ARTIST IMG HERE", height='275', width='275')
 		#linkscontainart
 			#linksformart
 				#supportseg
@@ -80,6 +87,33 @@ block content
 				#followcontain.downloadbutton
 					img(id=`${artist_name}/${userid}/${artid}`, class='followbtn', border='2', alt='Follow Artist', src=`../Images/PageIMG/${following}.png`, height='50')
 				#labelgcenter2black.downloadbutton
+		.shufflecontainartpage
+			.downloadbutton
+				.bigboldtext #{artist_name}
+			.downloadbutton
+				div(class='bigboldtext', style="margin-top: 0px;") Shuffle Player
+			#shuftext
+				text.boldtext= `test`
+			.downloadbutton
+				audio(id=`shufaudio`, type='audio/mpeg', controls='', preload='none')
+					source(id='shufaudiosrc')
+			#iosspaceralwayson
+			.downloadbutton
+				.custombutton
+					a(id='shufdownloadbutton', href='testshuffleurl')
+						img(border='2', alt='Download Tune', src='../../Images/PageIMG/download2.png', height='50')
+				.custombutton
+					form(id='shuffaveform', method='POST')
+						input#shuftrack_id.form-control(type='hidden', name='track_id', value=`testshuffleid`)
+						input#shuffavetrack_name.form-control(type='hidden', name='favetrack_name', value=`testshuffletrack`)
+						input#user_id.form-control(type='hidden', name='user_id', value=`testuserid`)
+						input#shufname.form-control(type='hidden', name='name', value=`testshuffleart`)
+						img(id='shuffave', class='favebuttonclass', border='2', alt='back', src='../../Images/PageIMG/addfave.png', height='50')
+			.downloadbutton
+				.custombutton
+					#shuffleforward
+						img(border='2', alt='back', src='../../Images/PageIMG/forward2.png', height='50')
+			#loadtext.boldtext
 
 
 

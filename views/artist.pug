@@ -79,7 +79,9 @@ block content
 								img(id='theinstaimg', border='0', alt='insta', src='../../Images/PageIMG/insta.png', height='100', width='100')
 				#followcontain.downloadbutton
 					img(id=`${artist_name}/${userid}/${artid}`, class='followbtn', border='2', alt='Follow Artist', src=`../Images/PageIMG/${following}.png`, height='50')
-				#labelgcenter2black.downloadbutton 
+				#labelgcenter2black.downloadbutton
+
+
 
 	.artistinfo
 		h3#theh3 #{info}
@@ -114,12 +116,11 @@ block content
 								img(border='2', alt='back', src='../../Images/PageIMG/addcmt.png', height='50')
 				.downloadbutton
 					div(id=`cmtmessage`, class='downloadbuttonwithbold')
-	#delmessage
-			
 			br
-			div(id='allcomments')
+			div(id='allcomments') TESTFISH
 			div(id='commentnextindex') 0
 			div(id='inpagecommentposted')
+	#delmessage
 
 	#ulcontain
 		each track, index in x
@@ -760,6 +761,7 @@ block content
 						track_id: track_id
 					},
 					success: function(data){
+							console.table(data.comments);
 							var container = document.getElementById("allcomments");
 							container.innerHTML = "";
 							console.log("loading form");

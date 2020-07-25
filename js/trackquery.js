@@ -596,6 +596,25 @@ function getRandomTrack(db){
 	return querypromise;
 }
 
+function getRandomTrackByArtistName(db){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT id, artist_name, track_name, drive_url, is_remix, is_collab FROM tracks WHERE is_secret = "0" AND artist_name = ? ORDER BY RAND() LIMIT 1`, [artist_name], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+
+	});
+
+	return querypromise;
+}
+
 
 
 function addTrack(db, artist_id, artist_name, track_name, short_name, drive_url, collab1, collab2, collab3, collab4, is_collab, og1, og2, is_remix, is_secret, secret_pass, aws_key, tune_of_week){
@@ -749,6 +768,7 @@ module.exports = {
 	searchFavoritesByArtist,
 	searchFavoritesByArtistCollabRemix,
 	getRandomTrack,
+	getRandomTrackByArtistName,
 	addTrack,
 	deleteTrack,
 	deleteTrackByID,

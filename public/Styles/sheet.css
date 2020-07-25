@@ -1026,6 +1026,7 @@ li.tunetexttotwsmaller{
 #allcomments{
   justify-content: space-around;
   flex-wrap: wrap;
+  display: block;
 }
 
 .fullcomment{

@@ -323,47 +323,54 @@ block content
 				var theform = document.getElementById('shuffaveform');
 				a_name = theform.elements["shufname"].value;
 
-				$.ajax({
-				url:'/forwardart',
-				type : 'POST',
-				data: {
-					artist_name: a_name,
-				},
-				success: function(data){
-					var thetext = document.createElement('text');
-					thetext.setAttribute('class', 'boldtext');
-					thetext.innerHTML = `${data.shuftext}`;
-					var shuffy = document.getElementById('shuftext');
-					shuffy.innerHTML= "";
-					shuffy.appendChild(thetext);
+				if (a_name != ""){
 
-					var idfield = document.getElementById('shuftrack_id');
-					var tracknamefield = document.getElementById('shuffavetrack_name');
-					var artistnamefield = document.getElementById('shufname');
-					idfield.setAttribute('value', `${data.id}`);
-					tracknamefield.setAttribute('value', `${data.track_name}`);
-					artistnamefield.setAttribute('value', `${data.artist_name}`);
+					$.ajax({
+					url:'/forwardart',
+					type : 'POST',
+					data: {
+						artist_name: a_name,
+					},
+					success: function(data){
+						var thetext = document.createElement('text');
+						thetext.setAttribute('class', 'boldtext');
+						thetext.innerHTML = `${data.shuftext}`;
+						var shuffy = document.getElementById('shuftext');
+						shuffy.innerHTML= "";
+						shuffy.appendChild(thetext);
+
+						var idfield = document.getElementById('shuftrack_id');
+						var tracknamefield = document.getElementById('shuffavetrack_name');
+						var artistnamefield = document.getElementById('shufname');
+						idfield.setAttribute('value', `${data.id}`);
+						tracknamefield.setAttribute('value', `${data.track_name}`);
+						artistnamefield.setAttribute('value', `${data.artist_name}`);
 
 
-					var downbutton = document.getElementById('shufdownloadbutton');
-					downbutton.setAttribute('href', `${data.source}`);
-					document.getElementById('shufaudiosrc').src = `${data.source}`;
+						var downbutton = document.getElementById('shufdownloadbutton');
+						downbutton.setAttribute('href', `${data.source}`);
+						document.getElementById('shufaudiosrc').src = `${data.source}`;
 
-					var audiop = document.getElementById('shufaudio');
-					audiop.load();
-					var playPromise = audiop.play();
-					if (playPromise !== undefined) {
-						playPromise.then(_ => {
-					})
-					.catch(error => {
-					});
+						var audiop = document.getElementById('shufaudio');
+						audiop.load();
+						var playPromise = audiop.play();
+						if (playPromise !== undefined) {
+							playPromise.then(_ => {
+						})
+						.catch(error => {
+						});
+						}
+						audioFinishedCheck();
+					},
+					error: function(){
+					console.log("Didn't Work");
 					}
-					audioFinishedCheck();
-				},
-				error: function(){
-				console.log("Didn't Work");
+					});
+
+				}else{
+					document.getElementById('loadtext').innerHTML= "No tracks!";
 				}
-				});
+
 			}
 		}
 
@@ -461,37 +468,41 @@ block content
 
 			var theform = document.getElementById('shuffaveform');
 			tid = theform.elements["shuftrack_id"].value;
-			t_name = theform.elements["shuffavetrack_name"].value;
-			a_name = theform.elements["shufname"].value;
 
-			var uid = theform.elements["user_id"].value;
-			var index = item.id;
+			if (tid != ""){
+				t_name = theform.elements["shuffavetrack_name"].value;
+				a_name = theform.elements["shufname"].value;
 
-			console.log(`${tid}, ${t_name}, ${a_name}, ${uid}, ${index}`);
+				var uid = theform.elements["user_id"].value;
+				var index = item.id;
 
-			$.ajax({
-			url:'/homepagefave',
-			type: 'POST',
-			data: {
-				track_id: tid,
-				favetrack_name: t_name,
-				user_id: uid,
-				name: a_name,
-				index: index
-			},
-			success: function(data){
-				var themsg = data.msg;
-				var theindex = data.index;
-				if (theindex == 'shuffave'){
-				document.getElementById('loadtext').innerHTML= themsg;
-				}else{
-				document.getElementById(`result${theindex}`).innerHTML = themsg;
+				console.log(`${tid}, ${t_name}, ${a_name}, ${uid}, ${index}`);
+
+				$.ajax({
+				url:'/homepagefave',
+				type: 'POST',
+				data: {
+					track_id: tid,
+					favetrack_name: t_name,
+					user_id: uid,
+					name: a_name,
+					index: index
+				},
+				success: function(data){
+					var themsg = data.msg;
+					var theindex = data.index;
+					if (theindex == 'shuffave'){
+					document.getElementById('loadtext').innerHTML= themsg;
+					}else{
+					document.getElementById(`result${theindex}`).innerHTML = themsg;
+					}
+				},
+				error: function(){
+					console.log("Didn't Work");
 				}
-			},
-			error: function(){
-				console.log("Didn't Work");
+				});//ajax
+
 			}
-			});//ajax
 
 			});//click event
 		});//class selector

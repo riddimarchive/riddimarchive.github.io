@@ -617,11 +617,18 @@ app.get('/artist/:name', function(req,res){
             }
           }
 
+          var randdriveurl = "";
+          var randartistname = "";
+          var randtrackname = "";
+          var randtrackid = "";
+
           let randresult = await trackquerie.getRandomTrackByArtistName(db, name);
-          var randdriveurl = randresult[0].drive_url;
-          var randartistname = randresult[0].artist_name;
-          var randtrackname = randresult[0].track_name;
-          var randtrackid = randresult[0].id;
+          if (randresult.length > 0){
+            randdriveurl = randresult[0].drive_url;
+            randartistname = randresult[0].artist_name;
+            randtrackname = randresult[0].track_name;
+            randtrackid = randresult[0].id;
+          }
           
           await conquerie.end(db);
           tracks.sort((a, b) => (a.short_name > b.short_name) ? 1 : -1);
@@ -1022,21 +1029,32 @@ app.post('/homepagefave', (req, res, next) => {
         
             var db = createConnection();
             await conquerie.connect(db);
-        
-            //confirm favorite isn't already there
-            let ckresult = await userquerie.checkUserFavorite(db, user_id, track_id);
-            if(ckresult.length > 0){
-                msg = `${favetrack_name} is already added!`;
-                await conquerie.end(db);
 
-                res.send({msg: msg, index: index});
-                //below means user is present and this is a new favorite
+
+            //confirm id is valid
+            let tkresult = await trackquerie.getTrackbyID(db, track_id);
+            if(tkresult.length > 0){
+
+                  //confirm favorite isnt already there
+                  let ckresult = await userquerie.checkUserFavorite(db, user_id, track_id);
+                  if(ckresult.length > 0){
+                      msg = `${favetrack_name} is already added!`;
+                      await conquerie.end(db);
+
+                      res.send({msg: msg, index: index});
+                      //below means user is present and this is a new favorite
+                  }else{
+                  
+                      //store into favorites here, need user ID and track ID
+                      let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
+                      await conquerie.end(db);
+                      res.send({msg: msg, index: index});
+                  }
             }else{
-            
-                //store into favorites here, need user ID and track ID
-                let ufresult = await userquerie.addUserFavorite(db, user_id, track_id);
-                await conquerie.end(db);
-                res.send({msg: msg, index: index});
+              msg = `Invalid Track ID!`;
+              await conquerie.end(db);
+
+              res.send({msg: msg, index: index});
             }
         }catch(err){
           console.log(err);

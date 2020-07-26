@@ -160,6 +160,7 @@ block content
 			div(id='allcomments') 
 			div(id='commentnextindex') 0
 			div(id='inpagecommentposted')
+			div(id='artnamediv' title=`${shuffleart}`)
 	#delmessage
 
 	#ulcontain
@@ -321,7 +322,7 @@ block content
 			function makeNextRequest(e){
 				document.getElementById('loadtext').innerHTML= "Loading...";
 				var theform = document.getElementById('shuffaveform');
-				a_name = theform.elements["shufname"].value;
+				a_name = document.getElementById("artnamediv").title;
 
 				if (a_name != ""){
 

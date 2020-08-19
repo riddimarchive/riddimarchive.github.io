@@ -17,8 +17,11 @@ function connect(db){
 function end(db){
 
 	let endpromise = new Promise(function(resolve, reject){
-		db.destroy();
-		console.log('disconnected from the DB!!!');
+		db.end(function(err) {
+			console.log("conn ended")
+		});
+		//db.destroy();
+		//console.log('conn destroyed');
 		resolve();
 	});
 	return endpromise;

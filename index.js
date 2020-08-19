@@ -9,6 +9,7 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
+const mysql = require('mysql');
 flash = require('connect-flash');
 
 //file reqs: database connect, query functions, hash functions
@@ -70,7 +71,6 @@ app.use(passport.session());
 //GET REQUEST - INIT
 //render homepage, handle page errors
 app.get('/', (req, res) => {
-
   app.use((req, res, next) => {
     return next(createError(404, 'File Not Found'));
   });
@@ -94,7 +94,6 @@ app.get('/', (req, res) => {
         var randdriveurl = "";
         var randartistname = "";
         var randtrackname = "";
-
         //set userid if logged in
         if(req.user !== undefined){
           user_id = req.user.id;
@@ -103,7 +102,6 @@ app.get('/', (req, res) => {
 
         var db = createConnection();
         await conquerie.connect(db);
-
         let result = await trackquerie.getTracksOfTheWeek(db);
 
         for (var i = 0; i < result.length; i++) {
@@ -130,12 +128,15 @@ app.get('/', (req, res) => {
         randtrackname = randresult[0].track_name;
         randtrackid = randresult[0].id;
 
+        console.log(randtrackname);
+
         var shuffletext = `${randtrackname}`;
         if(randresult[0].is_collab == 0 && randresult[0].is_remix == 0){
           shuffletext = `${randartistname} - ${randtrackname}`;
         }
-
+        console.log("hello4");
         await conquerie.end(db);
+        console.log("hello5");
 
         res.render('homepage',{ title:'Riddim Archive Index', msg: "", artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw, theusername: theusername });
 
@@ -146,6 +147,34 @@ app.get('/', (req, res) => {
   }
 
   homeResponse();
+
+});
+
+app.get('/testdb', (req, res) => {
+  async function homeResponse(){
+    try{
+      var db = createConnection();
+      await conquerie.connect(db);
+
+      let randresult = await trackquerie.getRandomTrack(db);
+      randdriveurl = randresult[0].drive_url;
+      randartistname = randresult[0].artist_name;
+      randtrackname = randresult[0].track_name;
+      randtrackid = randresult[0].id;
+
+      console.log(randtrackname);
+
+      db.destroy();
+      res.send("hello");
+  }catch(err){
+    console.log(err);
+    res.render('error');
+  }
+  }
+
+homeResponse();
+
+
 
 });
 

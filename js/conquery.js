@@ -1,3 +1,4 @@
+const mysql = require('mysql');
 function connect(db){
 
 	let connectpromise = new Promise(function(resolve, reject){
@@ -16,14 +17,9 @@ function connect(db){
 function end(db){
 
 	let endpromise = new Promise(function(resolve, reject){
-		db.end((err) =>{
-	  		if(err){
-	    		console.log('cant end connecty');
-	    		reject(err);
-	  		}
-	  		console.log('DB Connection ended!!!');
-	  		resolve();
-  		});
+		db.destroy();
+		console.log('disconnected from the DB!!!');
+		resolve();
 	});
 	return endpromise;
 

@@ -1503,6 +1503,16 @@ li.tunetexttotwsmaller{
   display: none;
 }
 
+.tinybutton{
+  margin-top: 0.3em;
+  margin-left: 0.2em;
+  margin-right: 0.4em;
+}
+
+.tinybutton:hover{
+  z-index: 1;
+  border-color: greenyellow;
+}
 
 
 input[type=range] {

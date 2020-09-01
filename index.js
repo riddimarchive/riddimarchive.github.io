@@ -128,16 +128,13 @@ app.get('/', (req, res) => {
         randtrackname = randresult[0].track_name;
         randtrackid = randresult[0].id;
 
-        console.log(randtrackname);
-
         var shuffletext = `${randtrackname}`;
         if(randresult[0].is_collab == 0 && randresult[0].is_remix == 0){
           shuffletext = `${randartistname} - ${randtrackname}`;
         }
-        console.log("hello4");
+        
         await conquerie.end(db);
-        console.log("hello5");
-
+        
         res.render('homepage',{ title:'Riddim Archive Index', msg: "", artists: artists, currentuserid: user_id, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: shuffletext, totw: totw, theusername: theusername });
 
         }catch(err){

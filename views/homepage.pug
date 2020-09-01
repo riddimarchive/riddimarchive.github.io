@@ -339,10 +339,22 @@ block content
       document.getElementById('loopbutton').addEventListener('click', changeValue);
       function changeValue(e){
           var curvalue = document.getElementById('loopvalue').title;
+          var contvalue = document.getElementById('contvalue').title;
           if (curvalue == 0){
-            document.getElementById('loopvalue').title = 1;
-            var img = document.getElementById('loopbutton');
-            img.src = 'Images/PageIMG/loop1.png';
+            if (contvalue == 0){
+              document.getElementById('loopvalue').title = 1;
+              var img = document.getElementById('loopbutton');
+              img.src = 'Images/PageIMG/loop1.png';
+            }else{
+              //remove cont
+              document.getElementById('contvalue').title = 0;
+              var theimg = document.getElementById('contbutton');
+              theimg.src = 'Images/PageIMG/continuetest.png';
+
+              document.getElementById('loopvalue').title = 1;
+              var img = document.getElementById('loopbutton');
+              img.src = 'Images/PageIMG/loop1.png';
+            }
           }
           else{
             document.getElementById('loopvalue').title = 0;
@@ -355,10 +367,22 @@ block content
       document.getElementById('contbutton').addEventListener('click', contchangeValue);
         function contchangeValue(e){
             var curvalue = document.getElementById('contvalue').title;
+            var loopvalue = document.getElementById('loopvalue').title;
             if (curvalue == 0){
-              document.getElementById('contvalue').title = 1;
-              var img = document.getElementById('contbutton');
-              img.src = 'Images/PageIMG/continuetest1.png';
+              if(loopvalue == 0){
+                document.getElementById('contvalue').title = 1;
+                var img = document.getElementById('contbutton');
+                img.src = 'Images/PageIMG/continuetest1.png';
+              }else{
+                //remove loop
+                document.getElementById('loopvalue').title = 0;
+                var loopimg = document.getElementById('loopbutton');
+                loopimg.src = 'Images/PageIMG/loop.png';
+
+                document.getElementById('contvalue').title = 1;
+                var img = document.getElementById('contbutton');
+                img.src = 'Images/PageIMG/continuetest1.png';
+              }
             }
             else{
               document.getElementById('contvalue').title = 0;

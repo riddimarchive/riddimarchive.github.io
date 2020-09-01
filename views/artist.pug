@@ -12,6 +12,8 @@ block content
 	- var shuffleurl = randdriveurl;
 	- var shuffleid = randtrackid;
 	- var shuf = shuftext;
+	div(title='0', id='loopvalue')
+	div(title='0', id='contvalue')
 
 	script.
 		document.addEventListener('play', function(e){
@@ -103,6 +105,8 @@ block content
 			.downloadbutton
 				audio(id=`shufaudio`, type='audio/mpeg', controls='', preload='none')
 					source(id='shufaudiosrc' src=`${shuffleurl}`)
+				img(border='2', class='tinybutton', id='loopbutton', alt='loop', src='../Images/PageIMG/loop.png', height='40', width='40')
+				img(border='2', class='tinybutton', id='contbutton', alt='continue', src='../Images/PageIMG/continuetest.png', height='40')
 			#iosspaceralwayson
 			.downloadbutton
 				.custombutton
@@ -223,6 +227,7 @@ block content
 		$(document).ready(function() {
 			console.log("Doc ready");
 			isArtistCheck();
+			shufloopandcontinueInit();
 			forwardAjaxInit();
 			fixLargeText();
 			searchAjaxInit();
@@ -272,6 +277,147 @@ block content
 				}
 				});//ajax
 			}
+		}
+
+		function shufloopandcontinueInit(){
+			var shuffy = document.getElementById('shufaudio');
+			shuffy.onended = function() {
+				var curloopvalue = document.getElementById('loopvalue').title;
+				var curcontvalue = document.getElementById('contvalue').title;
+				if (curloopvalue == 0){
+				//do nothing
+				}else{
+				if(curcontvalue == 0){
+					shuffy.pause();
+					shuffy.currentTime = 0;
+					shuffy.play();
+				}
+				}
+
+				if(curcontvalue != 0){
+				//- document.getElementById('loadtext').innerHTML= "Loading...";
+
+				//- 	$.ajax({
+				//- 	url:'/forward',
+				//- 	type : 'POST',
+				//- 	success: function(data){
+				//- 		var thetext = document.createElement('text');
+				//- 		thetext.setAttribute('class', 'boldtext');
+				//- 		thetext.innerHTML = `${data.shuftext}`;
+				//- 		var shuffy = document.getElementById('shuftext');
+				//- 		shuffy.innerHTML= "";
+				//- 		shuffy.appendChild(thetext);
+
+				//- 		var idfield = document.getElementById('shuftrack_id');
+				//- 		var tracknamefield = document.getElementById('shuffavetrack_name');
+				//- 		var artistnamefield = document.getElementById('shufname');
+				//- 		idfield.setAttribute('value', `${data.id}`);
+				//- 		tracknamefield.setAttribute('value', `${data.track_name}`);
+				//- 		artistnamefield.setAttribute('value', `${data.artist_name}`);
+
+
+				//- 		var downbutton = document.getElementById('shufdownloadbutton');
+				//- 		downbutton.setAttribute('href', `${data.source}`);
+				//- 		document.getElementById('shufaudiosrc').src = `${data.source}`;
+
+				//- 		var audiop = document.getElementById('shufaudio');
+				//- 		audiop.load();
+				//- 		var playPromise = audiop.play();
+				//- 		if (playPromise !== undefined) {
+				//- 		playPromise.then(_ => {
+				//- 		})
+				//- 		.catch(error => {
+				//- 		});
+				//- 		}
+				//- 	audioFinishedCheck();
+				//- 	},
+				//- 	error: function(){
+				//- 	console.log("Didn't Work");
+				//- 	}
+				//- 	});
+
+				document.getElementById('loadtext').innerHTML= "Loading...";
+				var theform = document.getElementById('shuffaveform');
+				a_name = document.getElementById("artnamediv").title;
+
+				if (a_name != ""){
+
+					$.ajax({
+					url:'/forwardart',
+					type : 'POST',
+					data: {
+						artist_name: a_name,
+					},
+					success: function(data){
+						var thetext = document.createElement('text');
+						thetext.setAttribute('class', 'boldtext');
+						thetext.innerHTML = `${data.shuftext}`;
+						var shuffy = document.getElementById('shuftext');
+						shuffy.innerHTML= "";
+						shuffy.appendChild(thetext);
+
+						var idfield = document.getElementById('shuftrack_id');
+						var tracknamefield = document.getElementById('shuffavetrack_name');
+						var artistnamefield = document.getElementById('shufname');
+						idfield.setAttribute('value', `${data.id}`);
+						tracknamefield.setAttribute('value', `${data.track_name}`);
+						artistnamefield.setAttribute('value', `${data.artist_name}`);
+
+
+						var downbutton = document.getElementById('shufdownloadbutton');
+						downbutton.setAttribute('href', `${data.source}`);
+						document.getElementById('shufaudiosrc').src = `${data.source}`;
+
+						var audiop = document.getElementById('shufaudio');
+						audiop.load();
+						var playPromise = audiop.play();
+						if (playPromise !== undefined) {
+							playPromise.then(_ => {
+						})
+						.catch(error => {
+						});
+						}
+						audioFinishedCheck();
+					},
+					error: function(){
+					console.log("Didn't Work");
+					}
+					});
+
+				}
+				}
+			};
+
+			document.getElementById('loopbutton').addEventListener('click', changeValue);
+			function changeValue(e){
+				var curvalue = document.getElementById('loopvalue').title;
+				if (curvalue == 0){
+					document.getElementById('loopvalue').title = 1;
+					var img = document.getElementById('loopbutton');
+					img.src = '../Images/PageIMG/loop1.png';
+				}
+				else{
+					document.getElementById('loopvalue').title = 0;
+					var theimg = document.getElementById('loopbutton');
+					theimg.src = '../Images/PageIMG/loop.png';
+				}
+			}
+
+			document.getElementById('contbutton').addEventListener('click', contchangeValue);
+			function contchangeValue(e){
+				var curvalue = document.getElementById('contvalue').title;
+				if (curvalue == 0){
+				document.getElementById('contvalue').title = 1;
+				var img = document.getElementById('contbutton');
+				img.src = '../Images/PageIMG/continuetest1.png';
+				}
+				else{
+				document.getElementById('contvalue').title = 0;
+				var theimg = document.getElementById('contbutton');
+				theimg.src = '../Images/PageIMG/continuetest.png';
+				}
+			}
+
 		}
 
 		function deleteInit(){

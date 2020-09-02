@@ -147,35 +147,6 @@ app.get('/', (req, res) => {
 
 });
 
-app.get('/testdb', (req, res) => {
-  async function homeResponse(){
-    try{
-      var db = createConnection();
-      await conquerie.connect(db);
-
-      let randresult = await trackquerie.getRandomTrack(db);
-      randdriveurl = randresult[0].drive_url;
-      randartistname = randresult[0].artist_name;
-      randtrackname = randresult[0].track_name;
-      randtrackid = randresult[0].id;
-
-      console.log(randtrackname);
-
-      db.destroy();
-      res.send("hello");
-  }catch(err){
-    console.log(err);
-    res.render('error');
-  }
-  }
-
-homeResponse();
-
-
-
-});
-
-
 //GET REQUEST - FAQ PAGE
 app.get('/faq', (req, res) => {
   var theusername = "";
@@ -580,7 +551,8 @@ app.get('/artist/:name', function(req,res){
 
           let result = await artquerie.getArtistInfo(db, name);
           info = `${result[0].info}`;
-          artid = `${result[0].id}`;
+          var artid = `${result[0].id}`;
+          var is_label = `${result[0].is_label}`;
           var img_url = `${result[0].img_url}`;
           if(result[0].fb.length > 1){
             fb = `https://www.facebook.com/${result[0].fb}`;
@@ -659,7 +631,7 @@ app.get('/artist/:name', function(req,res){
           await conquerie.end(db);
           tracks.sort((a, b) => (a.short_name > b.short_name) ? 1 : -1);
 
-          res.render('artist',{ artist_name: name, artid: artid, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: randtrackname, info: info, following: following, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, img_url: img_url, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
+          res.render('artist',{ artist_name: name, artid: artid, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: randtrackname, info: info, following: following, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, is_label: is_label, img_url: img_url, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
 
       }catch(err){
         console.log(err);
@@ -1319,7 +1291,7 @@ app.post('/trackcreate', (req, res, next) => {
 
             //store artist query result
             artist_id = result[0].id;
-            let tresult = await trackquerie.addTrack(db, artist_id, artist_name, track_name, short_name, drive_url, collab1, collab2, collab3, collab4, is_collab, og1, og2, is_remix, tune_of_week);
+            let tresult = await trackquerie.addTrackfromADM(db, artist_id, artist_name, track_name, short_name, drive_url, collab1, collab2, collab3, collab4, is_collab, og1, og2, is_remix, tune_of_week);
 
             await conquerie.end(db);
 
@@ -1485,7 +1457,7 @@ app.post('/userdelete', (req, res, next) => {
 //check for field entry, make query to add artist
 app.post('/artistcreate', (req, res, next) => {
 
-  var { artist_name, crew, country, info, face, sound, band, beat, insta } = req.body;
+  var { artist_name, crew, country, info, face, sound, band, beat, insta, img } = req.body;
   var theusername = "";
   if(req.user !== undefined){
     theusername = req.user.username;
@@ -1509,7 +1481,7 @@ app.post('/artistcreate', (req, res, next) => {
                         res.render('artcrud', { msg: "Artist ALREADY EXISTY", msg2: "", theusername: theusername });
                     }else{
 
-                        let tresult = await artquerie.addArtist(db, artist_name, crew, country, info, face, sound, band, beat, insta);
+                        let tresult = await artquerie.addArtist(db, artist_name, crew, country, info, face, sound, band, beat, insta, img);
                         res.render('artcrud', { msg: "Artist Added!", msg2: "", theusername: theusername });
 
                     }

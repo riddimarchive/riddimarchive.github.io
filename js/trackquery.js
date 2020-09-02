@@ -637,6 +637,26 @@ function addTrack(db, artist_id, artist_name, track_name, short_name, drive_url,
 	return querypromise;
 }
 
+function addTrackfromADM(db, artist_id, artist_name, track_name, short_name, drive_url, collab1, collab2, collab3, collab4, is_collab, og1, og2, is_remix, tune_of_week){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`INSERT INTO tracks(artist_id, artist_name, track_name, short_name, drive_url, c1, c2, c3, c4, is_collab, o1, o2, is_remix, is_secret, secret_pass, aws_key, tune_of_week) 
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, "", "", ?)`, [artist_id, artist_name, track_name, short_name, drive_url, collab1, collab2, collab3, collab4, is_collab, og1, og2, is_remix, tune_of_week], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+
+	});
+
+	return querypromise;
+}
+
 
 function deleteTrack(db, track_name){
 
@@ -770,6 +790,7 @@ module.exports = {
 	getRandomTrack,
 	getRandomTrackByArtistName,
 	addTrack,
+	addTrackfromADM,
 	deleteTrack,
 	deleteTrackByID,
 	getRecentTracksFromFollowedArtist,

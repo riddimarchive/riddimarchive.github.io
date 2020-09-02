@@ -81,9 +81,7 @@
         margin-bottom: 1.1em;
     }
 
-    .tinybutton{
-        margin-top: 1.4em;
-    }
+    
 
     @supports (-webkit-touch-callout: none) {
         audio{

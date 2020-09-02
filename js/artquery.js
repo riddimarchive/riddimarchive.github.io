@@ -1,7 +1,7 @@
 function getArtistInfo(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT id, info, fb, sc, bc, beat, insta, img_url FROM artists WHERE artist_name = ?`, [artist_name], (error, result, fields) => {
+		db.query(`SELECT id, info, fb, sc, bc, beat, insta, img_url, is_label FROM artists WHERE artist_name = ?`, [artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -200,11 +200,11 @@ function searchArtistsByCrew(db, search_results){
 
 }
 
-function addArtist(db, artist_name, crew, country, info, face, sound, band, beat, insta){
+function addArtist(db, artist_name, crew, country, info, face, sound, band, beat, insta, img){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`INSERT INTO artists (artist_name, crew, country, info, fb, sc, bc, beat, insta) 
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, [artist_name, crew, country, info, face, sound, band, beat, insta], (error, result, fields) => {
+		db.query(`INSERT INTO artists (artist_name, crew, country, info, fb, sc, bc, beat, insta, img_url) 
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [artist_name, crew, country, info, face, sound, band, beat, insta, img], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

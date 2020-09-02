@@ -52,7 +52,7 @@ app.use(bodyParser.json());
 app.use(session({
   secret: 'secret fish',
   resave: true,
-  cookie: {secure: true, sameSite: true},
+  cookie: {secure: true, sameSite: 'strict'},
   saveUninitialized: true
 }));
 

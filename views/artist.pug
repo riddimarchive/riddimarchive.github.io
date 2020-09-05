@@ -17,6 +17,7 @@ block content
 	div(title='0', id='loopvalue')
 	div(title='0', id='contvalue')
 	div(title=`${islabel}`, id='labelvalue')
+	div(title=`${artist_name}`, id='arty')
 
 	script.
 		document.addEventListener('play', function(e){
@@ -466,7 +467,7 @@ block content
 			function makeNextRequest(e){
 				document.getElementById('loadtext').innerHTML= "Loading...";
 				var theform = document.getElementById('shuffaveform');
-				a_name = document.getElementById("artnamediv").title;
+				a_name = document.getElementById('arty').title;
 
 				if (a_name != ""){
 

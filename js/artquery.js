@@ -1,7 +1,7 @@
 function getArtistInfo(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT id, info, fb, sc, bc, beat, insta, img_url, is_label FROM artists WHERE artist_name = ?`, [artist_name], (error, result, fields) => {
+		db.query(`SELECT id, crew, country, info, fb, sc, bc, beat, insta, img_url, is_label FROM artists WHERE artist_name = ?`, [artist_name], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -238,6 +238,186 @@ function deleteArtist(db, artist_name){
 	return querypromise;
 }
 
+function editImg(db, artist_id, img_url){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`UPDATE artists SET img_url = ? WHERE id = ?`, [img_url, artist_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
+function editArtistName(db, artist_id, artist_name){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`UPDATE artists SET artist_name = ? WHERE id = ?`, [artist_name, artist_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
+function editCrew(db, artist_id, crew){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`UPDATE artists SET crew = ? WHERE id = ?`, [crew, artist_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
+function editCountry(db, artist_id, country){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`UPDATE artists SET country = ? WHERE id = ?`, [country, artist_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
+function editInfo(db, artist_id, info){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`UPDATE artists SET info = ? WHERE id = ?`, [info, artist_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
+function editFB(db, artist_id, fb){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`UPDATE artists SET fb = ? WHERE id = ?`, [fb, artist_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
+function editSC(db, artist_id, sc){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`UPDATE artists SET sc = ? WHERE id = ?`, [sc, artist_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
+function editBC(db, artist_id, bc){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`UPDATE artists SET bc = ? WHERE id = ?`, [bc, artist_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
+function editBeat(db, artist_id, beat){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`UPDATE artists SET beat = ? WHERE id = ?`, [beat, artist_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
+function editInsta(db, artist_id, insta){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`UPDATE artists SET insta = ? WHERE id = ?`, [insta, artist_id], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+	});
+
+	return querypromise;
+}
+
 module.exports = {
 	getArtistInfo,
 	getAllArtists,
@@ -250,5 +430,16 @@ module.exports = {
 	searchArtists,
 	searchArtistsByCrew,
 	addArtist,
-	deleteArtist
+	deleteArtist,
+	editImg,
+	editArtistName,
+	editCrew,
+	editCountry,
+	editInfo,
+	editFB,
+	editSC,
+	editBC,
+	editBeat,
+	editInsta
+
 };

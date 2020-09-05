@@ -55,6 +55,13 @@ body {
   width: 8em;
 }
 
+.labelmidnowidth{
+  font-weight: bold;
+  font-size: x-large;
+  margin-left: 0.75em;
+  padding: 0;
+}
+
 .labelmid2{
   font-weight: bold;
   font-size: x-large;
@@ -1411,6 +1418,10 @@ li.tunetexttotwsmaller{
 }
 
 #secrettuneslink{
+  display: none;
+}
+
+#artisteditlink{
   display: none;
 }
 

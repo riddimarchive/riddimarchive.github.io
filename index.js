@@ -859,6 +859,81 @@ app.get('/secrettunes', (req, res, next) => {
 
 });
 
+//GET REQUEST - Artist Edit Page
+app.get('/artistedit', (req, res, next) => {
+
+  if(req.user === undefined){
+    res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: '' });
+  }else{
+    var theusername = req.user.username;
+
+    async function getArtistVerify(theusername){
+      try{
+        var db = createConnection();
+        await conquerie.connect(db);
+        var art_name = "";
+        var art_id = "";
+
+        let result = await userquerie.verifyArtistbyUsername(db, theusername);
+        if(result.length > 0 && result[0].artist_id_verify != 0){
+          art_id = result[0].artist_id_verify;
+          let artresult = await artquerie.getArtistNameByID(db, art_id);
+          art_name = artresult[0].artist_name;
+
+          //get all artist info
+          var crew = "";
+          var country = "";
+          var info = "";
+          var fb = "";
+          var sc = "";
+          var bc = "";
+          var beat = "";
+          var insta = "";
+          var imgurl = "";
+
+          let theinfo = await artquerie.getArtistInfo(db, art_name);
+          crew = theinfo[0].crew;
+          country = theinfo[0].country;
+          info = theinfo[0].info;
+          fb = theinfo[0].fb;
+          sc = theinfo[0].sc;
+          bc = theinfo[0].bc;
+          beat = theinfo[0].beat;
+          insta = theinfo[0].insta;
+          imgurl = theinfo[0].img_url;
+
+          if(fb != ""){
+            fb = `https://www.facebook.com/${fb}`;
+          }
+          if(sc != ""){
+            sc = `https://www.soundcloud.com/${sc}`;
+          }
+          if(beat != ""){
+            beat = `https://www.beatport.com/${beat}`;
+          }
+          if(insta != ""){
+            insta = `https://www.instagram.com/${insta}`;
+          }
+
+
+          await conquerie.end(db);
+          res.render('artistedit',{ title:'Artist Edit', msg: "", theusername: theusername , theid: art_id, theartname: art_name, crew: crew, country: country, info: info, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, imgurl: imgurl });
+        }else{
+          await conquerie.end(db);
+          res.render('login',{ title:'Riddim Archive Login', theusername: '', er: '', message: `You do not have access to this artist's page!` });
+        }
+      }catch(err){
+      console.log(err);
+      res.render('error');
+      }
+
+    }
+    getArtistVerify(theusername);
+
+  }//end else
+
+});
+
 //POST REQUESTS
 //***********************
 
@@ -2831,7 +2906,138 @@ app.post('/tests3upload', (req, res, next) => {
 
 });
 
-//POST REQUEST - TEST S3 Upload
+//POST REQUEST - Artist Self-Edit
+app.post('/artistedit', (req, res, next) => {
+
+  var { artist_name, artist_id, crew, country, info, fb, sc, bc, beat, insta } = req.body;
+
+  var themsg = "";
+  if (!req.files || Object.keys(req.files).length === 0) {
+    console.log("File NOT Included");
+    async function storeFormResultsNoFile(artist_name, artist_id, crew, country, info, fb, sc, bc, beat, insta){
+      try{
+        console.log("in async");
+        var db = createConnection();
+        await conquerie.connect(db);
+
+        if(artist_name != ""){
+          let artnamechange = await artquerie.editArtistName(db, artist_id, artist_name);
+        }
+        if(crew != ""){
+          let crewchange = await artquerie.editCrew(db, artist_id, crew);
+        }
+        if(country != ""){
+          let countrychange = await artquerie.editCountry(db, artist_id, country);
+        }
+        if(info != ""){
+          let infochange = await artquerie.editInfo(db, artist_id, info);
+        }
+        if(fb != ""){
+          let fbchange = await artquerie.editFB(db, artist_id, fb);
+        }
+        if(sc != ""){
+          let scchange = await artquerie.editSC(db, artist_id, sc);
+        }
+        if(bc != ""){
+          let bcchange = await artquerie.editBC(db, artist_id, bc);
+        }
+        if(beat != ""){
+          let beatchange = await artquerie.editBeat(db, artist_id, beat);
+        }
+        if(insta != ""){
+          let instachange = await artquerie.editInsta(db, artist_id, insta);
+        }
+        
+        await conquerie.end(db);
+        res.send({msg: "Info Changed! View your artist page to see changes!"});
+                
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+    }//end async
+    storeFormResultsNoFile(artist_name, artist_id, crew, country, info, fb, sc, bc, beat, insta);
+
+  }else{
+    console.log("File Included");
+
+    const logo = req.files.file;
+    var thefilename = logo.name;
+    var artstr = artist_name;
+    var artfirstletter = artstr.charAt(0);
+    var makepublic = 1;
+    var islogo = 1;
+
+    s3fcn.uploadToS3(logo, islogo, artist_name, artfirstletter, makepublic);
+
+    var img_url = "";
+    const regexspace = /[ ]/g;
+    const regexamp = /[&]/g;
+    var artstrtest = artstr.replace(regexspace, "+");
+    var artstrtest2 = encodeURI(artstrtest);
+    var artnamefinalencode = artstrtest2.replace(regexamp, "%26");
+
+    var filenamestrtest = thefilename.replace(regexspace, "+");
+    var filenamestrtest2 = encodeURI(filenamestrtest);
+    var filenamefinalencode = filenamestrtest2.replace(regexamp, "%26");
+    img_url = `https://riddim-archive-tune-store.s3-us-west-1.amazonaws.com/Images/${artnamefinalencode.charAt(0)}/${artnamefinalencode}/${filenamefinalencode}`;
+
+    console.log(`img url is:`);
+    console.log(`${img_url}`);
+    console.log(`${thefilename}    /${artist_name}${crew}${country}${info}${fb}${sc}${bc}${beat}${insta}`);
+
+    async function storeFormResults(artist_name, artist_id, img_url, crew, country, info, fb, sc, bc, beat, insta){
+      try{
+        console.log("in async");
+        var db = createConnection();
+        await conquerie.connect(db);
+
+        let img_change = await artquerie.editImg(db, artist_id, img_url);
+
+        if(artist_name != ""){
+          let artnamechange = await artquerie.editArtistName(db, artist_id, artist_name);
+        }
+        if(crew != ""){
+          let crewchange = await artquerie.editCrew(db, artist_id, crew);
+        }
+        if(country != ""){
+          let countrychange = await artquerie.editCountry(db, artist_id, country);
+        }
+        if(info != ""){
+          let infochange = await artquerie.editInfo(db, artist_id, info);
+        }
+        if(fb != ""){
+          let fbchange = await artquerie.editFB(db, artist_id, fb);
+        }
+        if(sc != ""){
+          let scchange = await artquerie.editSC(db, artist_id, sc);
+        }
+        if(bc != ""){
+          let bcchange = await artquerie.editBC(db, artist_id, bc);
+        }
+        if(beat != ""){
+          let beatchange = await artquerie.editBeat(db, artist_id, beat);
+        }
+        if(insta != ""){
+          let instachange = await artquerie.editInsta(db, artist_id, insta);
+        }
+        
+        await conquerie.end(db);
+        res.send({msg: "Info Changed! View your artist page to see changes!"});
+                
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+    }//end async
+    storeFormResults(artist_name, artist_id, img_url, crew, country, info, fb, sc, bc, beat, insta);
+
+  }//file added else
+
+
+});
+
+//POST REQUEST - New Artist Acct Create
 app.post('/newartistacctcreate', (req, res, next) => {
 
   var { username, pass1, pass2, artist_name } = req.body;
@@ -2879,7 +3085,7 @@ app.post('/newartistacctcreate', (req, res, next) => {
                 var filenamestrtest = logo.name.replace(regexspace, "+");
                 var filenamestrtest2 = encodeURI(filenamestrtest);
                 var filenamefinalencode = filenamestrtest2.replace(regexamp, "%26");
-                img_url = `https://riddim-archive-tune-store.s3-us-west-1.amazonaws.com/Images/${artnamefinalencode.charAt(0)}/${artnamefinalencode}/${filenamefinalencode}`
+                img_url = `https://riddim-archive-tune-store.s3-us-west-1.amazonaws.com/Images/${artnamefinalencode.charAt(0)}/${artnamefinalencode}/${filenamefinalencode}`;
                 console.log("urlbelow");
                 console.log(img_url);
 

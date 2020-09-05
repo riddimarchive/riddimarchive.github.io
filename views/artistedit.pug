@@ -1,0 +1,219 @@
+extends index
+
+block content
+	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
+	txt
+	.downloadbutton
+		.custombutton
+			a(href=`../artist/${theartname}`)
+				img(border='2' src='Images/PageIMG/myartistpage.png' alt='Images/PageIMG/fail.png' height='50')
+	br
+	.artisth1 
+		h1 Edit Artist Info:
+		br
+		h1 Note: Leave Fields Blank if you don't want to edit them!
+	#labelgcenter
+
+	div(title=`${theid}`, id='dashartid')
+	div(title=`${theartname}`, id='dashartname')
+
+	br
+	.faqform
+		form#fileuploadform(method='POST', enctype='multipart/form-data')
+			.downloadbutton
+				.labelmidnowidth Artist Name:
+			input#art_name(type='text', name='art_name', value=`${theartname}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 93.5%;")
+			br
+
+			.downloadbutton
+				.labelmidnowidth Crew:
+			input#crew(type='text', name='crew', value=`${crew}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 93.5%;")
+			br
+
+			.downloadbutton
+				.labelmidnowidth Country:
+			input#country(type='text', name='country', value=`${country}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 93.5%;")
+			br
+
+			.downloadbutton
+				.labelmidnowidth Info:
+			input#info(type='textarea', name='info', value=`${info}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 93.5%;")
+			br
+			div.form-group(style="min-width: 100%; border: solid 2px; padding: 1em; margin-bottom: 0.75em;")
+				.label3 Socials (Please paste in entire link):
+				.downloadbutton
+					.labelmidnowidth Facebook:
+				input#fb(type='text', name='fb', value=`${fb}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 90%;")
+				br
+
+				.downloadbutton
+					.labelmidnowidth Soundcloud:
+				input#sc(type='text', name='sc', value=`${sc}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 90%;")
+				br
+
+				.downloadbutton
+					.labelmidnowidth Bandcamp:
+				input#bc(type='text', name='bc', value=`${bc}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 90%;")
+				br
+
+				.downloadbutton
+					.labelmidnowidth Beatport:
+				input#beat(type='text', name='beat', value=`${beat}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 90%;")
+				br
+
+				.downloadbutton
+					.labelmidnowidth Insta:
+				input#insta(type='text', name='insta', value=`${insta}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 90%;")
+
+			div.form-group(style="min-width: 100%; border: solid 2px; padding: 1em; margin-bottom: 0.75em;")
+				.label3 Change Artist Photo:
+				br
+				.artistpage
+					img(src=`${imgurl}`, alt="ADD ARTIST IMG HERE", height='275', width='275')
+				input#thefile(type='file', name='thefile')
+			.downloadbutton
+				#labelgcenter2black
+			br
+	.downloadbutton
+			.custombutton
+				div(id='thesubmit', class='thesubmit')
+					img(border='2', alt='back', src='Images/PageIMG/artsubmit.png', height='50', style="margin-top: 2.5em;height: 75px;")
+	.downloadbutton
+		.custombutton
+			a(href=`../artist/${theartname}`)
+				img(border='2' src='Images/PageIMG/myartistpage.png' alt='Images/PageIMG/fail.png' height='50')
+						
+	script.
+		$(document).on("keydown", "form", function(event) { 
+			return event.key != "Enter";
+		});
+
+		$(document).bind("keydown keypress", function(e){
+			if( e.which == 8 ){ // 8 == backspace
+				if(e.target.readOnly ){
+					e.preventDefault();
+				}
+			}
+		});
+
+		$(document).ready(function() {
+			console.log("Doc ready");
+			var artist_id = document.getElementById("dashartid").title;
+			uploadInit(artist_id);
+		});
+
+		function uploadInit(artist_id){
+			var theform = $('#fileuploadform');
+			var thebutton = $('#thesubmit');
+			thebutton.click(function (ev) {
+				console.log("clicked button");
+				ev.preventDefault();
+				var msg = document.getElementById("labelgcenter");
+				msg.innerHTML = "Submitting...";
+				var msg2 = document.getElementById("labelgcenter2black");
+				msg2.innerHTML = "Submitting...";
+				var files = $('#thefile')[0].files[0];
+				if (files) {
+					if(files.type != "image/jpeg" && files.type != "image/png"){
+						msg.innerHTML = "WRONG FORMAT: Please Upload JPG/PNG!";
+						msg2.innerHTML = "WRONG FORMAT: Please Upload JPG/PNG!";
+					}else{
+						if(files.size > 10241374){
+							msg.innerHTML = "FILE TOO BIG: 10 MB is the Max!";
+							msg2.innerHTML = "FILE TOO BIG: 10 MB is the Max!";
+						}else{
+							var fd = new FormData();
+							var artist_name = document.getElementById("art_name").value;
+
+							console.log(`NMew Artist name is: ${artist_name}`);
+
+							var thecrew = document.getElementById("crew").value;
+							var thecountry = document.getElementById("country").value;
+							var theinfo = document.getElementById("info").value;
+							var thefb = document.getElementById("fb").value;
+							var thesc = document.getElementById("sc").value;
+							var thebc = document.getElementById("bc").value;
+							var thebeat = document.getElementById("beat").value;
+							var theinsta = document.getElementById("insta").value;
+
+							fd.append('file', files);
+							fd.append('artist_name', artist_name);
+							fd.append('artist_id', artist_id);
+							fd.append('crew', thecrew);
+							fd.append('country', thecountry);
+							fd.append('info', theinfo);
+							fd.append('fb', thefb);
+							fd.append('sc', thesc);
+							fd.append('bc', thebc);
+							fd.append('beat', thebeat);
+							fd.append('insta', theinsta);
+
+							$.ajax({
+								url:'/artistedit',
+								type: 'POST',
+								data: fd,
+								processData: false,
+								contentType: false,
+								success: function(data){
+									var msg = document.getElementById("labelgcenter");
+									var msg2 = document.getElementById("labelgcenter2black");
+									msg.innerHTML = data.msg;
+									msg2.innerHTML = data.msg;
+								},
+								error: function(){
+									console.log("Didn't Work");
+								}
+							});//end ajax
+
+						}//file is less than 100 MB
+					}//file is correct type
+				//below, file not attached
+				}else{
+
+					var fd = new FormData();
+					var artist_name = document.getElementById("art_name").value;
+
+					console.log(`NMew Artist name is: ${artist_name}`);
+
+					var thecrew = document.getElementById("crew").value;
+					var thecountry = document.getElementById("country").value;
+					var theinfo = document.getElementById("info").value;
+					var thefb = document.getElementById("fb").value;
+					var thesc = document.getElementById("sc").value;
+					var thebc = document.getElementById("bc").value;
+					var thebeat = document.getElementById("beat").value;
+					var theinsta = document.getElementById("insta").value;
+
+					fd.append('file', "");
+					fd.append('artist_name', artist_name);
+					fd.append('artist_id', artist_id);
+					fd.append('crew', thecrew);
+					fd.append('country', thecountry);
+					fd.append('info', theinfo);
+					fd.append('fb', thefb);
+					fd.append('sc', thesc);
+					fd.append('bc', thebc);
+					fd.append('beat', thebeat);
+					fd.append('insta', theinsta);
+
+					$.ajax({
+						url:'/artistedit',
+						type: 'POST',
+						data: fd,
+						processData: false,
+						contentType: false,
+						success: function(data){
+							var msg = document.getElementById("labelgcenter");
+							var msg2 = document.getElementById("labelgcenter2black");
+							msg.innerHTML = data.msg;
+							msg2.innerHTML = data.msg;
+						},
+						error: function(){
+							console.log("Didn't Work");
+						}
+					});//end ajax
+					
+				}//first else - file attached
+							
+			});
+		}

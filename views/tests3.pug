@@ -149,8 +149,10 @@ block content
 			document.getElementById("currentcollabvalue").title = 0;
 			document.getElementById("currentremixvalue").title = 0;
 			document.getElementById("currentsecretvalue").title = 0;
+			var artist_name = document.getElementById("dashartname").title;
+			var artist_id = document.getElementById("dashartid").title;
 			previewInit();
-			uploadInit();
+			uploadInit(artist_name, artist_id);
 			collabInit();
 			remixInit();
 		});
@@ -422,7 +424,7 @@ block content
 			});
 		}
 
-		function uploadInit(){
+		function uploadInit(artist_name, artist_id){
 			var theform = $('#fileuploadform');
 			var thebutton = $('#thesubmit');
 			thebutton.click(function (ev) {

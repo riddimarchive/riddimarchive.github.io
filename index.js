@@ -556,19 +556,19 @@ app.get('/artist/:name', function(req,res){
           var is_label = `${result[0].is_label}`;
           var img_url = `${result[0].img_url}`;
           if(result[0].fb.length > 1){
-            fb = `https://www.facebook.com/${result[0].fb}`;
+            fb = `${result[0].fb}`;
           }
           if(result[0].sc.length > 1){
-            sc = `https://soundcloud.com/${result[0].sc}`;
+            sc = `${result[0].sc}`;
           }
           if(result[0].bc.length > 1){
             bc = result[0].bc;
           }
           if(result[0].beat.length > 1){
-            beat = `https://www.beatport.com/${result[0].beat}`;
+            beat = `${result[0].beat}`;
           }
           if(result[0].insta.length > 1){
-            insta = `https://www.instagram.com/${result[0].insta}`;
+            insta = `${result[0].insta}`;
           }
 
           let tresult = await trackquerie.getAllTracksFromArtist(db, name);
@@ -901,20 +901,6 @@ app.get('/artistedit', (req, res, next) => {
           beat = theinfo[0].beat;
           insta = theinfo[0].insta;
           imgurl = theinfo[0].img_url;
-
-          if(fb != ""){
-            fb = `https://www.facebook.com/${fb}`;
-          }
-          if(sc != ""){
-            sc = `https://www.soundcloud.com/${sc}`;
-          }
-          if(beat != ""){
-            beat = `https://www.beatport.com/${beat}`;
-          }
-          if(insta != ""){
-            insta = `https://www.instagram.com/${insta}`;
-          }
-
 
           await conquerie.end(db);
           res.render('artistedit',{ title:'Artist Edit', msg: "", theusername: theusername , theid: art_id, theartname: art_name, crew: crew, country: country, info: info, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, imgurl: imgurl });

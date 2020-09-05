@@ -123,10 +123,8 @@ block content
 							msg2.innerHTML = "FILE TOO BIG: 10 MB is the Max!";
 						}else{
 							var fd = new FormData();
+
 							var artist_name = document.getElementById("art_name").value;
-
-							console.log(`NMew Artist name is: ${artist_name}`);
-
 							var thecrew = document.getElementById("crew").value;
 							var thecountry = document.getElementById("country").value;
 							var theinfo = document.getElementById("info").value;
@@ -169,12 +167,9 @@ block content
 					}//file is correct type
 				//below, file not attached
 				}else{
-
 					var fd = new FormData();
+
 					var artist_name = document.getElementById("art_name").value;
-
-					console.log(`NMew Artist name is: ${artist_name}`);
-
 					var thecrew = document.getElementById("crew").value;
 					var thecountry = document.getElementById("country").value;
 					var theinfo = document.getElementById("info").value;

@@ -18,6 +18,7 @@ block content
 	div(title='0', id='contvalue')
 	div(title=`${islabel}`, id='labelvalue')
 	div(title=`${artist_name}`, id='arty')
+	div(title=`${notracks}`, id='tracky')
 
 	script.
 		document.addEventListener('play', function(e){
@@ -147,6 +148,12 @@ block content
 					img(id=`ptot/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/pthrought.png', height='50')
 				.custombutton
 					img(id=`utoz/${artist_name}`, class='pageclass', border='2', alt='back', src='../Images/PageIMG/uthroughz.png', height='50')
+			div(id='fulldown', class='downloadbuttonhidden')
+				form#fileuploadform(method='POST' action=`/fulldownload/${artist_name}`)
+					input#artist_name(type='hidden', name='artist_name', value=`${artist_name}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 93.5%;")
+					br
+					.downloadbutton
+						button.smallmidbutton2(type='submit', style="font-size: 28px; padding: 0.2em; margin-bottom: 1em; border: solid; font-weight: bold; margin-left: 0;") Full Artist Download
 
 	#myModal.modal
 		#modalspacer
@@ -231,7 +238,9 @@ block content
 
 		$(document).ready(function() {
 			console.log("Doc ready");
+			var trck = document.getElementById('tracky').title;
 			isArtistCheck();
+			hasTracksCheck(trck);
 			labelCheck();
 			shufloopandcontinueInit();
 			forwardAjaxInit();
@@ -282,6 +291,13 @@ block content
 				console.log("Didn't Work");
 				}
 				});//ajax
+			}
+		}
+
+		function hasTracksCheck(trck){
+			if(trck == 0){
+				var fulldownbtn = document.getElementById('fulldown');
+				fulldownbtn.setAttribute('class', 'downloadbutton');
 			}
 		}
 

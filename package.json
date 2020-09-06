@@ -21,7 +21,6 @@
   "homepage": "https://github.com/riddimarchive/riddimarchive.github.io#readme",
   "dependencies": {
     "aws-sdk": "^2.692.0",
-    "batch-dl": "^0.3.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
@@ -39,7 +38,8 @@
     "pug": "^2.0.4",
     "request": "^2.88.2",
     "serve-favicon": "^2.5.0",
-    "sqlstring": "^2.3.1"
+    "sqlstring": "^2.3.1",
+    "zip-stream": "^4.0.2"
   },
   "devDependencies": {}
 }

@@ -11,6 +11,9 @@ const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 const mysql = require('mysql');
 flash = require('connect-flash');
+const { fork } = require('child_process');
+const request = require('request');
+const ZipStream = require('zip-stream');
 
 //file reqs: database connect, query functions, hash functions
 const createConnection = require('./js/dbconnect');
@@ -25,6 +28,8 @@ const followquerie = require('./js/followquery');
 const has = require('./js/hash');
 const emailer = require('./js/email');
 const s3fcn = require('./js/s3fcn');
+const { fstat, fstatSync } = require('fs');
+const fs2 = require('fs');
 
 // create new express app and save it as "app"
 const app = express();
@@ -537,6 +542,7 @@ app.get('/artist/:name', function(req,res){
 
           var name = aname;
           var tracks = [];
+          var notracks = 0;
           var info = "";
           var fb = 'none';
           var sc = 'none';
@@ -606,6 +612,9 @@ app.get('/artist/:name', function(req,res){
               }
             }
           }
+          if(tracks.length == 0){
+            notracks = 1;
+          }
           
           if (user_id != ""){
             let follow = await followquerie.isFollowingArtist(db, user_id, name);
@@ -632,7 +641,7 @@ app.get('/artist/:name', function(req,res){
           await conquerie.end(db);
           tracks.sort((a, b) => (a.short_name > b.short_name) ? 1 : -1);
 
-          res.render('artist',{ artist_name: name, artid: artid, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: randtrackname, info: info, following: following, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, is_label: is_label, img_url: img_url, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg });
+          res.render('artist',{ artist_name: name, artid: artid, randdriveurl: randdriveurl, randartistname: randartistname, randtrackname: randtrackname, randtrackid: randtrackid, shuftext: randtrackname, info: info, following: following, fb: fb, sc: sc, bc: bc, beat: beat, insta: insta, is_label: is_label, img_url: img_url, tracks: tracks, currentuserid: user_id, theusername: theusername, msg: msg, notracks: notracks });
 
       }catch(err){
         console.log(err);
@@ -2889,6 +2898,63 @@ app.post('/tests3upload', (req, res, next) => {
       } 
     }
   }
+
+});
+
+//POST REQUEST - TEST S3 Upload
+app.post('/fulldownload/:name', (req, res, next) => {
+
+  var { artist_name } = req.body;
+  async function doThings(artist_name){
+    try{
+      console.log("in async");
+      var db = createConnection();
+      await conquerie.connect(db);
+      var urls = [];
+      var finalresult = "";
+
+      //get all tracks from that artist
+      let urlresult = await trackquerie.getAllURLsfromArtist(db, artist_name);
+      if(urlresult.length > 0){
+        for (var i = 0; i < urlresult.length; i++) {
+          var row = { 'track_name': urlresult[i].track_name, 'drive_url': urlresult[i].drive_url, 'filetype': urlresult[i].filetype }
+          urls.push(row);
+        }
+      }
+
+      await conquerie.end(db);
+
+      var zip = new ZipStream();
+      zip.pipe(res);
+
+      function addNextFile() {
+          var elem = urls.shift();
+          var stream = request(elem.drive_url);
+          zip.entry(stream, { name: `${elem.track_name}.${elem.filetype}` }, err => {
+              if(err){
+                throw err;
+              }
+              if(urls.length > 0){
+                console.log("Adding next File...")
+                addNextFile();
+              }else{
+                zip.finalize();
+                console.log("Finalized!");
+              }
+          });
+      }
+      if(urls != []){
+        addNextFile();
+      }else{
+        res.send({msg: "No Files Available!"});
+      }
+
+    }catch(err){
+      console.log(err);
+      res.render('error');
+    }
+  }//end async
+  doThings(artist_name);
 
 });
 

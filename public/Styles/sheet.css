@@ -745,6 +745,22 @@ li.tunetextsmaller{
   margin: 0;
 }
 
+.smallmidbutton2{
+  background: #c9e6ff;
+  font-size: 28px;
+  padding: 0.2em;
+  margin-bottom: 1em;
+  border: solid;
+  font-weight: bold;
+  text-transform: none;
+  margin-left: 0;
+}
+
+.smallmidbutton2:hover{
+  z-index: 1;
+  border-color: greenyellow;
+}
+
 .loginform{
   display: flex;
   justify-content: center;

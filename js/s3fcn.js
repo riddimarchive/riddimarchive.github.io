@@ -1,4 +1,6 @@
 const aws = require('aws-sdk');
+const request = require('request');
+const ZipStream = require('zip-stream');
 
 function uploadToS3(file, islogo, artist_name, artfirstletter, makepublic) {
 	let s3bucket = new aws.S3({
@@ -55,6 +57,7 @@ function getSecretURL(aws_key, link_time){
 	var url = s3bucket.getSignedUrl('getObject', params);
 	return url;
 }
+
 
 module.exports = {
 	uploadToS3,

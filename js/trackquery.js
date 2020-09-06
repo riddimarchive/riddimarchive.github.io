@@ -205,6 +205,30 @@ function getAllTracksUthroughZ(db, artist_name){
 	return querypromise;
 }
 //////////////////////////////////////
+
+function getAllURLsfromArtist(db, artist_name){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`SELECT track_name, drive_url, filetype FROM tracks 
+		WHERE (artist_name = ? OR c1 = ? OR c2 = ? OR c3 = ? OR c4 = ? OR o1 = ? OR o2 = ?) 
+		AND is_secret = "0"`, [artist_name, artist_name, artist_name, artist_name, artist_name, artist_name, artist_name], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+
+	});
+
+	return querypromise;
+}
+
+//////////////////////////////////////
+
 function getCollabsIncludingArtist(db, artist_name){
 
 	let querypromise = new Promise(function(resolve, reject){
@@ -770,6 +794,7 @@ module.exports = {
 	getAllTracksJthroughO,
 	getAllTracksPthroughT,
 	getAllTracksUthroughZ,
+	getAllURLsfromArtist,
 	getCollabsIncludingArtist,
 	getCollabsIncludingArtistAthroughD,
 	getCollabsIncludingArtistEthroughI,

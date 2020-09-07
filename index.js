@@ -2935,11 +2935,10 @@ app.post('/fulldownload/:name', (req, res, next) => {
                 throw err;
               }
               if(urls.length > 0){
-                console.log("Adding next File...")
                 addNextFile();
               }else{
                 zip.finalize();
-                console.log("Finalized!");
+                console.log("Full Download Finalized!");
               }
           });
       }
@@ -3201,6 +3200,65 @@ app.post('/getgenlink', (req, res, next) => {
 
   }
   getGenLink(index, track_id, link_time);
+
+});
+
+app.post('/delartfield', (req, res, next) => {
+  var { delete_field, art_id } = req.body;
+
+  async function deleteResponse(delete_field, art_id){
+    try{
+      var db = createConnection();
+      await conquerie.connect(db);
+      var field = "";
+
+      switch(delete_field) {
+        case "delcrew":
+          field = "crew";
+          let crewresult = await artquerie.deleteCrew(db, art_id);
+          break;
+        case "delcont":
+          field = "country";
+          let contresult = await artquerie.deleteCountry(db, art_id);
+          break;
+        case "delinfo":
+          field = "info";
+          let inforesult = await artquerie.deleteInfo(db, art_id);
+          break;
+        case "delfb":
+          field = "fb";
+          let fbresult = await artquerie.deleteFB(db, art_id);
+          break;
+        case "delsc":
+          field = "sc";
+          let scresult = await artquerie.deleteSC(db, art_id);
+          break;
+        case "delbc":
+          field = "bc";
+          let bcresult = await artquerie.deleteBC(db, art_id);
+          break;
+        case "delbeat":
+          field = "beat";
+          let beatresult = await artquerie.deleteBeat(db, art_id);
+          break;
+        case "delinsta":
+          field = "insta";
+          let instaresult = await artquerie.deleteInsta(db, art_id);
+          break;
+        default:
+          break;
+      }//end switch
+
+      await conquerie.end(db);
+      res.send({ msg: `${field} deleted`, field: field });
+
+    }catch(err){
+    console.log(err);
+    res.render('error');
+    }
+
+  }
+  deleteResponse(delete_field, art_id);
 
 });
 

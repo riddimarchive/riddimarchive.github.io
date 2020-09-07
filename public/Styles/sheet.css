@@ -745,6 +745,18 @@ li.tunetextsmaller{
   margin: 0;
 }
 
+.delbtn{
+  margin-left: 0.8em;
+  margin-top: 0.8em;
+}
+
+.delmsg{
+  font-weight: bold;
+  font-size: large;
+  margin-left: 0.75em;
+  padding: 0;
+}
+
 .smallmidbutton2{
   background: #c9e6ff;
   font-size: 28px;

@@ -27,43 +27,69 @@ block content
 
 			.downloadbutton
 				.labelmidnowidth Crew:
-			input#crew(type='text', name='crew', value=`${crew}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 93.5%;")
-			br
+			.downloadbutton
+				input#crew(type='text', name='crew', value=`${crew}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 72%;")
+				img(id='delcrew', class='delbtn', border='2', alt='back', src='Images/PageIMG/delete.png', height='35')
+			.downloadbutton
+				#crewmsg.delmsg
 
 			.downloadbutton
 				.labelmidnowidth Country:
-			input#country(type='text', name='country', value=`${country}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 93.5%;")
-			br
+			.downloadbutton
+				input#country(type='text', name='country', value=`${country}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 72%;")
+				img(id='delcont', class='delbtn', border='2', alt='back', src='Images/PageIMG/delete.png', height='35')
+			.downloadbutton
+				#contmsg.delmsg
 
 			.downloadbutton
 				.labelmidnowidth Info:
-			input#info(type='textarea', name='info', value=`${info}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 93.5%;")
-			br
+			.downloadbutton
+				input#info(type='textarea', name='info', value=`${info}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 72%;")
+				img(id='delinfo', class='delbtn', border='2', alt='back', src='Images/PageIMG/delete.png', height='35')
+			.downloadbutton
+				#infomsg.delmsg
+
 			div.form-group(style="min-width: 100%; border: solid 2px; padding: 1em; margin-bottom: 0.75em;")
 				.label3 Socials (Please paste in entire link):
 				.downloadbutton
 					.labelmidnowidth Facebook:
-				input#fb(type='text', name='fb', value=`${fb}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 90%;")
-				br
+				.downloadbutton
+					input#fb(type='text', name='fb', value=`${fb}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 71%;")
+					img(id='delfb', class='delbtn', border='2', alt='back', src='Images/PageIMG/delete.png', height='35')
+				.downloadbutton
+					#fbmsg.delmsg
 
 				.downloadbutton
 					.labelmidnowidth Soundcloud:
-				input#sc(type='text', name='sc', value=`${sc}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 90%;")
-				br
+				.downloadbutton
+					input#sc(type='text', name='sc', value=`${sc}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 71%;")
+					img(id='delsc', class='delbtn', border='2', alt='back', src='Images/PageIMG/delete.png', height='35')
+				.downloadbutton
+					#scmsg.delmsg
 
 				.downloadbutton
 					.labelmidnowidth Bandcamp:
-				input#bc(type='text', name='bc', value=`${bc}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 90%;")
-				br
+				.downloadbutton
+					input#bc(type='text', name='bc', value=`${bc}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 71%;")
+					img(id='delbc', class='delbtn', border='2', alt='back', src='Images/PageIMG/delete.png', height='35')
+				.downloadbutton
+					#bcmsg.delmsg
 
 				.downloadbutton
 					.labelmidnowidth Beatport:
-				input#beat(type='text', name='beat', value=`${beat}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 90%;")
-				br
+				.downloadbutton
+					input#beat(type='text', name='beat', value=`${beat}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 71%;")
+					img(id='delbeat', class='delbtn', border='2', alt='back', src='Images/PageIMG/delete.png', height='35')
+				.downloadbutton
+					#beatmsg.delmsg
 
 				.downloadbutton
 					.labelmidnowidth Insta:
-				input#insta(type='text', name='insta', value=`${insta}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 90%;")
+				.downloadbutton
+					input#insta(type='text', name='insta', value=`${insta}`, style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 71%;")
+					img(id='delinsta', class='delbtn', border='2', alt='back', src='Images/PageIMG/delete.png', height='35')
+				.downloadbutton
+					#instamsg.delmsg
 
 			div.form-group(style="min-width: 100%; border: solid 2px; padding: 1em; margin-bottom: 0.75em;")
 				.label3 Change Artist Photo:
@@ -100,6 +126,7 @@ block content
 			console.log("Doc ready");
 			var artist_id = document.getElementById("dashartid").title;
 			uploadInit(artist_id);
+			deleteInit(artist_id);
 		});
 
 		function uploadInit(artist_id){
@@ -211,4 +238,77 @@ block content
 				}//first else - file attached
 							
 			});
+		}
+
+		function deleteInit(artist_id){
+			document.querySelectorAll('.delbtn').forEach(item => {
+				item.addEventListener('click', event => {
+					var del_field = item.id;
+
+					$.ajax({
+					url:'/delartfield',
+					type: 'POST',
+					data: {
+					delete_field: del_field,
+					art_id: artist_id
+					},
+					success: function(data){
+						console.log(data.msg);
+
+						switch(data.field) {
+							case "crew":
+								var crfield = document.getElementById('crew');
+								crfield.setAttribute('value', "");
+								document.getElementById('crewmsg').innerHTML = "Crew Deleted";
+								break;
+							case "country":
+								var cofield = document.getElementById('country');
+								cofield.setAttribute('value', "");
+								document.getElementById('contmsg').innerHTML = "Country Deleted";
+								break;
+							case "info":
+								var infofield = document.getElementById('info');
+								infofield.setAttribute('value', "");
+								document.getElementById('infomsg').innerHTML = "Info Deleted";
+								break;
+							case "fb":
+								var fbfield = document.getElementById('fb');
+								fbfield.setAttribute('value', "");
+								document.getElementById('fbmsg').innerHTML = "Facebook Deleted";
+								break;
+							case "sc":
+								var scfield = document.getElementById('sc');
+								scfield.setAttribute('value', "");
+								document.getElementById('scmsg').innerHTML = "Soundcloud Deleted";
+								break;
+							case "bc":
+								var bcfield = document.getElementById('bc');
+								bcfield.setAttribute('value', "");
+								document.getElementById('bcmsg').innerHTML = "Bandcamp Deleted";
+								break;
+							case "beat":
+								var beatfield = document.getElementById('beat');
+								beatfield.setAttribute('value', "");
+								document.getElementById('beatmsg').innerHTML = "Beatport Deleted";
+								break;
+							case "insta":
+								var instafield = document.getElementById('insta');
+								instafield.setAttribute('value', "");
+								document.getElementById('instamsg').innerHTML = "Instagram Deleted";
+								break;
+							default:
+								break;
+						}//end switch
+					},
+					error: function(){
+						console.log("Didn't Work");
+					}
+					});
+					
+
+
+				});//click event
+			});//class selector
+
+
 		}

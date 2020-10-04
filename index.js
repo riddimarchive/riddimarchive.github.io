@@ -2923,21 +2923,23 @@ app.post('/fulldownload/:name', (req, res, next) => {
       }
 
       await conquerie.end(db);
+      res.setHeader("Content-Type", "application/zip");
+      res.set('Content-Disposition', 'attachment; filename=' + req.params.name + '.zip');
 
-      var zip = new ZipStream();
-      zip.pipe(res);
+      var thezip = new ZipStream();
+      thezip.pipe(res);
 
       function addNextFile() {
           var elem = urls.shift();
           var stream = request(elem.drive_url);
-          zip.entry(stream, { name: `${elem.track_name}.${elem.filetype}` }, err => {
+          thezip.entry(stream, { name: `${elem.track_name}.${elem.filetype}` }, err => {
               if(err){
                 throw err;
               }
               if(urls.length > 0){
                 addNextFile();
               }else{
-                zip.finalize();
+                thezip.finalize();
                 console.log("Full Download Finalized!");
               }
           });

@@ -2250,7 +2250,7 @@ app.post('/req/submission', (req, res, next) => {
 //POST REQUEST - Artist Removal
 app.post('/req/removal', (req, res, next) => {
   
-  var { info } = req.body;
+  var { info, contact } = req.body;
   var theusername = "";
   if(req.user !== undefined){
     theusername = req.user.username;
@@ -2261,6 +2261,9 @@ app.post('/req/removal', (req, res, next) => {
   if (!info){
     res.render('removal',{ msg: "Please include what you would like removed!", theusername: theusername });
   }else{
+        info = info + `
+        
+        Contact email: ${contact}`;
         async function makeEmail(reason, info){
             try{
               await emailer.standardEmail(reason, info);
@@ -2598,7 +2601,7 @@ app.post('/removecmt', (req, res, next) => {
 //POST REQUEST - Tune Broken Report
 app.post('/req/tunereport', (req, res, next) => {
   
-  var { info } = req.body;
+  var { info, contact } = req.body;
   var theusername = "";
   if(req.user !== undefined){
     theusername = req.user.username;
@@ -2609,6 +2612,10 @@ app.post('/req/tunereport', (req, res, next) => {
   if (!info){
     res.render('tunereport',{ msg: "Please include the tune that is missing!", theusername: theusername });
   }else{
+        info = info + `
+        
+        Contact email: ${contact}`;
+        
         async function makeEmail(reason, info){
             try{
               await emailer.standardEmail(reason, info);
@@ -2663,7 +2670,7 @@ app.post('/req/tracksubmission', (req, res, next) => {
 //POST REQUEST - Question
 app.post('/req/question', (req, res, next) => {
   
-  var { info } = req.body;
+  var { info, contact } = req.body;
   var theusername = "";
   if(req.user !== undefined){
     theusername = req.user.username;
@@ -2674,6 +2681,9 @@ app.post('/req/question', (req, res, next) => {
   if (!info){
     res.render('question',{ msg: "Please include your question/comment!", theusername: theusername });
   }else{
+        info = info + `
+        
+        Contact email: ${contact}`;
         async function makeEmail(reason, info){
             try{
               await emailer.standardEmail(reason, info);

@@ -48,6 +48,8 @@ block content
 					data: theform.serialize(),
 					success: function(data){
 						console.log(data.msg);
+						var msg = document.getElementById("themessage");
+						msg.innerHTML = data.msg;
 					},
 					error: function(){
 						console.log("Didn't Work");

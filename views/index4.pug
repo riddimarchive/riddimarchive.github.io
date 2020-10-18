@@ -1,0 +1,87 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  link(rel='stylesheet' type='text/css' href='../../Styles/sheet.css')
+  link(rel='icon', href='/favicon.ico')
+  link(href='https://fonts.googleapis.com/css?family=Roboto', rel='stylesheet')
+  link(rel='stylesheet' type='text/css' href='../../Styles/queries.css')
+  title Riddim Archive
+
+body
+  - var username = `${theusername}`;
+  script(src='https://code.jquery.com/jquery-3.5.0.min.js')
+  a.btn.btn-link(id='navbarhomebtn', href='../../')
+  ul#topuserrect
+    li#topusertext
+      a(id='userspot', class=`${username}`)
+  ul.navbar
+    #toplicontain(style.marginRight="0em")
+      li(id='spacerli')
+      li
+        a(href='../../selectacct') Create Account
+      li
+        a(id='logtext', href='../../dashboard') Login
+      li
+        a(href='../../faq') FAQ
+      li
+        a(id='logouttext', href='../../logout') Log Out
+      li
+        a(href='../../') Go Back
+    
+  .header
+    #topspacer
+  block content
+  br
+  hr
+  footer 
+    p Site is Copyright and Created by: Justin Romprey aka Ernie Shmitz!
+  ul.navbarbottom
+    a.btn.btn-link(id='navbarhomebtnbottom', href='../../')
+    #bottomlicontain
+      li
+        a(href='../../selectacct') Create Account
+      li
+        a(id='logtext2', href='../../dashboard') Login
+      li
+        a(href='../../faq') FAQ
+      li
+        a(id='logouttext2', href='../../logout') Log Out
+      li
+        a(href='../../') Go Back
+  script.
+    $(document).ready(function() {
+      console.log("Doc ready");
+      addUsername();
+    });
+    
+    function addUsername(){
+      var topspot = document.getElementById('userspot');
+      var topbuttons = document.getElementById('toplicontain');
+
+      if(topspot.className !== undefined){
+        if(topspot.className != ""){
+          topspot.innerHTML = `User: ${topspot.className}`;
+
+          var log = document.getElementById('logtext');
+          var logout = document.getElementById('logouttext');
+          var log2 = document.getElementById('logtext2');
+          var logout2 = document.getElementById('logouttext2');
+          
+          var rect = document.getElementById('topuserrect');
+          var recttext = document.getElementById('topusertext');
+          var bottombuttons = document.getElementById('bottomlicontain');
+
+          log.innerHTML = 'Your Dashboard';
+          logout.style.display = 'block';
+          log2.innerHTML = 'Your Dashboard';
+          logout2.style.display = 'block';
+
+          rect.style.background = '#0C0E36';
+
+          recttext.style.display = 'block';
+        }else{
+        }
+      }else{
+        topspot.style.display = 'none';
+      }
+    }

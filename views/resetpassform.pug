@@ -1,0 +1,57 @@
+extends index4
+
+block content
+	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
+	.artisth1 
+		h1 Reset Password
+	- var message = msg;
+	- var user = theusername;
+	- var theem = em;
+	br
+	br
+	#themessage.labelgcenter #{message}
+	#contactlink.labelgcenter
+	br
+
+	.changepassform
+		form#passresetsubmit(method='POST')
+			.downloadbutton
+				label.boldtext(for='newpass') Enter New Password
+			.downloadbutton
+				input#newpass(type='text', name='newpass' placeholder="Enter New Password...")
+			br
+			.downloadbutton
+				label.boldtext(for='newpass2') Confirm New Password
+			.downloadbutton
+				input#newpass2(type='text', name='newpass2' placeholder="Enter New Password...")
+			br
+			input#usern(type='hidden', name='usern', value=`${user}`)
+			input#hashem(type='hidden', name='hashem', value=`${em}`)
+			.downloadbutton
+				.custombutton
+					img(id='test', border='2', alt='back', src='../../Images/PageIMG/submitnewpass.png', height='50')
+			#labelgcenter #{message}
+	
+	script.
+		$(document).ready(function() {
+			passResetFormInit();
+		});
+
+		function passResetFormInit(){
+			var theform = $('#passresetsubmit');
+			var thebutton = $('#test');
+			thebutton.click(function (ev) {
+				ev.preventDefault();
+				$.ajax({
+					url:'/resetpassconfirm',
+					type: 'POST',
+					data: theform.serialize(),
+					success: function(data){
+						console.log(data.msg);
+					},
+					error: function(){
+						console.log("Didn't Work");
+					}
+				});//ajax
+			});//click
+		}

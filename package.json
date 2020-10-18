@@ -40,6 +40,7 @@
     "request": "^2.88.2",
     "serve-favicon": "^2.5.0",
     "sqlstring": "^2.3.1",
+    "urlencode": "^1.1.0",
     "zip-stream": "^4.0.2"
   },
   "devDependencies": {}

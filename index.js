@@ -24,12 +24,14 @@ const trackquerie = require('./js/trackquery');
 const userquerie = require('./js/userquery');
 const heartquerie = require('./js/heartquery');
 const secretquerie = require('./js/secretquery');
+const passresetquerie = require('./js/passresetquery');
 const followquerie = require('./js/followquery');
 const has = require('./js/hash');
 const emailer = require('./js/email');
 const s3fcn = require('./js/s3fcn');
 const { fstat, fstatSync } = require('fs');
 const fs2 = require('fs');
+const urlencode = require('urlencode');
 
 // create new express app and save it as "app"
 const app = express();
@@ -281,6 +283,18 @@ app.get('/changepass', (req, res, next) => {
     var theusername = req.user.username;
 
     res.render('changepass',{ title:'Change Password', msg: "", theusername: theusername });
+  }
+
+});
+
+//GET REQUEST - CHANGE PASSWORD PAGE
+app.get('/resetpass', (req, res, next) => {
+
+  if(req.user === undefined){
+    res.render('resetpass',{ title:'Password Reset', msg: "", theusername: "" });
+  }else{
+    var theusername = req.user.username;
+    res.render('resetpass',{ title:'Password Reset', msg: "", theusername: theusername });
   }
 
 });
@@ -769,6 +783,71 @@ app.get('/req/:page', function(req,res){
     }//end switch
 });
 
+//APP GET - SHARE LINK RESPONSE
+app.get('/passreset/:username/:hash', function(req,res){
+
+  var usern = req.params.username;
+  var hashedemail = req.params.hash;
+
+  //res.send(`Username is ${usern}, Email is ${hashedemail}`);
+
+  async function resetLinkResponse(usern, hashedemail){
+      try{
+        var exp_time = "";
+        var created_time = "";
+        var db = createConnection();
+        await conquerie.connect(db);
+
+        let result = await userquerie.getUserByName(db, usern);
+        if (result.length > 0){
+          if(result[0].email != hashedemail){
+            //link email doesnt match, render login
+            await conquerie.end(db);
+            res.render('loginaltindex',{ title:'Riddim Archive Login', theusername: '', er: '', message: "Link is incorrect or Expired, Please Try Again!" });
+          }else{
+              let passlink = await passresetquerie.getPassReset(db, usern);
+              if (passlink.length > 0){
+                exp_time = passlink[0].exp_time;
+                created_time = passlink[0].created_time;
+                let gettime = await passresetquerie.getCurrentTimestamp(db);
+
+                var currtime = gettime[0].curr;
+                let diffinseconds = await passresetquerie.returnTimeDiff(db, currtime, created_time);
+                var finaldiff = diffinseconds[0].diff;
+                if (finaldiff > exp_time){
+                  //link expired
+                  let linkdelete = await passresetquerie.deletePreviousLink(db, usern);
+                  await conquerie.end(db);
+                  res.render('loginaltindex',{ title:'Riddim Archive Login', theusername: '', er: '', message: "Link is incorrect or Expired, Please Try Again!" });
+                }else{
+                  //link is correct and not expired
+                  let linkdelete = await passresetquerie.deletePreviousLink(db, usern);
+                  await conquerie.end(db);
+                  res.render('resetpassform',{ title:'Riddim Archive Login', theusername: usern, em: result[0].email, er: '', message: "LINK SUCCESSFUL!" });
+                }
+
+              }else{
+                //link not found
+                await conquerie.end(db);
+                res.render('loginaltindex',{ title:'Riddim Archive Login', theusername: '', er: '', message: "Link is incorrect or Expired, Please Try Again!" });
+              }
+
+          }
+        }else{
+          //user not found
+          await conquerie.end(db);
+          res.render('loginaltindex',{ title:'Riddim Archive Login', theusername: '', er: '', message: "Link is incorrect or Expired, Please Try Again!" });
+        }
+
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+  }
+  resetLinkResponse(usern, hashedemail);
+
+});
+
 //GET REQUEST - GET S3 Page
 app.get('/tuneup', (req, res, next) => {
 
@@ -1240,6 +1319,122 @@ app.post('/changepass', (req, res, next) => {
     }//end inner else
   }//end outer else
 
+});
+
+app.post('/resetpass', (req, res, next) => {
+  var { usern, email } = req.body;
+
+  if (usern == '' || email == ''){
+    res.render('resetpass',{ title:'Reset Password', msg: "Correct Username and Email Required. If you don't remember, Contact me at the link below: ", theusername: usern });
+  }else{
+    async function resetPassResponse(usern, email){
+      try{
+        var db = createConnection();
+        await conquerie.connect(db);
+        let result = await userquerie.getUserByName(db, usern);
+        if (result.length > 0){
+          let isMatch = await has.passCheck(email, result[0].email);
+  
+          if(isMatch){
+            verified = 1;
+            //create and store timestamp
+            //send email with link
+            let passcreate = await passresetquerie.addPassReset(db, 600, usern);
+            await conquerie.end(db);
+
+            var clearedhash = urlencode(result[0].email);
+            var reason = "Riddim Archive Password Reset";
+            var info = `
+            Hello ${usern},
+
+            Please click the below 1-use link to reset your Riddim Archive password!
+            *Link Expires 10 Minutes after creation*
+            
+            https://www.riddimarchive.com/passreset/${usern}/${clearedhash}`;
+  
+            await emailer.userPassEmail(email, reason, info);
+            res.render('resetpass',{ title:'Reset Password', msg: "Email Sent! Password Reset Link will Expire in 10 Minutes!", theusername: usern });
+  
+          }else{
+            await conquerie.end(db);
+            res.render('resetpass',{ title:'Reset Password', msg: "Correct Username and Email Required. If you don't remember, Contact me at the link below: ", theusername: usern });
+          }
+  
+        }else{
+          await conquerie.end(db);
+          //res.send("Username does not exist");
+          res.render('resetpass',{ title:'Reset Password', msg: "Correct Username and Email Required. If you don't remember, Contact me at the link below: ", theusername: usern });
+        }
+  
+      }catch(err){
+        console.log(err);
+        res.render('error');
+      }
+    }//end async
+  
+    resetPassResponse(usern, email);
+
+  }
+
+});
+
+app.post('/resetpassconfirm', (req, res, next) => {
+  var { newpass, newpass2, usern, hashem } = req.body;
+  var msg = '';
+
+  var theusername = usern;
+  //confirm all fields are full
+  //confirm password1 and 2 match
+  //encrypt and replace password
+  if(!newpass || !newpass2){
+    msg = "Fill in Both Fields!";
+    res.send({msg: msg});
+  }else{
+    if(newpass !== newpass2){
+      msg = "Passwords Don't Match";
+      res.send({msg: msg});
+    }else{
+
+      //perform hash and add query
+      async function changePassResponse(theusername, newpass, hashem){
+        try{
+          var db = createConnection();
+          var hashpass = "";
+          await conquerie.connect(db);
+
+          //check user first
+          let result = await userquerie.getUserByName(db, usern);
+            if (result.length > 0){
+              if(result[0].email == hashem){
+                //email is good
+                hashpass = await has.hashPass(newpass);
+                let changeresult = await userquerie.changePass(db, theusername, hashpass);
+                await conquerie.end(db);
+
+                msg = "Password Reset!";
+                res.send({msg: msg});
+              }else{
+                await conquerie.end(db);
+
+                msg = "Link is not Correct";
+                res.send({msg: msg});
+              }
+            }else{
+              await conquerie.end(db);
+
+              msg = "User Not Found";
+              res.send({msg: msg});
+            }
+        }catch(err){
+          console.log(err);
+          res.render('error');
+        }
+    }//end async
+
+    changePassResponse(theusername, newpass, hashem);
+
+    }//end inner else
+  }//end outer else
 });
 
 app.post('/changesecretpass', (req, res, next) => {

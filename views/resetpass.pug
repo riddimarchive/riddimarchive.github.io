@@ -1,0 +1,41 @@
+extends index2
+
+block content
+	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
+	.artisth1 
+		h1 Reset Password
+	- var message = msg;
+	- var user = theusername;
+	br
+	br
+	#themessage.labelgcenter #{message}
+	#contactlink.labelgcenter
+	br
+
+	.changepassform
+		form(method='POST' action='/resetpass')
+			.label Username:
+			br
+			div.form-group
+				input#usern.form-control(type='text', name='usern')
+			br
+			.label Email:
+			br
+			div.form-group
+				input#email.form-control(type='text', name='email')
+			br
+			div
+				button.btn.btn-primary.btn-block(type='submit', style=" width: 93%; margin-left: 0.6em; padding: 0.2em; text-transform: initial; ") Send Password Reset Link
+	
+	script.
+		$(document).ready(function() {
+			addContactLink();
+		});
+
+		function addContactLink(){
+			var mes = document.getElementById('themessage');
+			if(mes.innerHTML == "Correct Username and Email Required. If you don't remember, Contact me at the link below: "){
+				var contact = document.getElementById('contactlink');
+				contact.innerHTML = `<a href="https://www.riddimarchive.com/req/question" style="text-decoration: underline">Contact Link</a>`;
+			}
+		}

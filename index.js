@@ -1325,7 +1325,7 @@ app.post('/resetpass', (req, res, next) => {
   var { usern, email } = req.body;
 
   if (usern == '' || email == ''){
-    res.render('resetpass',{ title:'Reset Password', msg: "Correct Username and Email Required. If you don't remember, Contact me at the link below: ", theusername: usern });
+    res.render('resetpass',{ title:'Reset Password', msg: "Correct Username and Email Required. If you don't remember, Contact me at the link below: ", theusername: '' });
   }else{
     async function resetPassResponse(usern, email){
       try{
@@ -1353,17 +1353,17 @@ app.post('/resetpass', (req, res, next) => {
             https://www.riddimarchive.com/passreset/${usern}/${clearedhash}`;
   
             await emailer.userPassEmail(email, reason, info);
-            res.render('resetpass',{ title:'Reset Password', msg: "Email Sent! Password Reset Link will Expire in 10 Minutes!", theusername: usern });
+            res.render('resetpass',{ title:'Reset Password', msg: "Email Sent! Password Reset Link will Expire in 10 Minutes!", theusername: '' });
   
           }else{
             await conquerie.end(db);
-            res.render('resetpass',{ title:'Reset Password', msg: "Correct Username and Email Required. If you don't remember, Contact me at the link below: ", theusername: usern });
+            res.render('resetpass',{ title:'Reset Password', msg: "Correct Username and Email Required. If you don't remember, Contact me at the link below: ", theusername: '' });
           }
   
         }else{
           await conquerie.end(db);
           //res.send("Username does not exist");
-          res.render('resetpass',{ title:'Reset Password', msg: "Correct Username and Email Required. If you don't remember, Contact me at the link below: ", theusername: usern });
+          res.render('resetpass',{ title:'Reset Password', msg: "Correct Username and Email Required. If you don't remember, Contact me at the link below: ", theusername: '' });
         }
   
       }catch(err){
@@ -1411,7 +1411,7 @@ app.post('/resetpassconfirm', (req, res, next) => {
                 let changeresult = await userquerie.changePass(db, theusername, hashpass);
                 await conquerie.end(db);
 
-                msg = "Password Reset!";
+                msg = "Password Reset! Feel Free to login!";
                 res.send({msg: msg});
               }else{
                 await conquerie.end(db);

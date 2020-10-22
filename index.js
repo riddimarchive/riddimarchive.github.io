@@ -1235,13 +1235,13 @@ app.post('/login', (req, res, next) => {
 //check for field entry, add to database
 app.post('/create', (req, res, next) => {
 
-  var { username, password, password2 } = req.body;
+  var { username, email, password, password2 } = req.body;
   var theusername = "";
   if(req.user !== undefined){
     theusername = req.user.username;
   }
   
-  if(!username || !password || !password2){
+  if(!username || !password || !password2 || !email){
     res.render('create',{ title:'Create Account', msg: "Fill in all Fields!" , theusername: theusername});
   }else{
 
@@ -1253,7 +1253,7 @@ app.post('/create', (req, res, next) => {
             res.render('create',{ title:'Create Account', msg: "Passwords Don't Match, Please Re-Enter", theusername: theusername });
           }else{
             //perform hash and add query
-            async function createPageResponse(username, password, theusername){
+            async function createPageResponse(username, email, password, theusername){
               try{
                 var db = createConnection();
                 var hashpass = "";
@@ -1264,7 +1264,8 @@ app.post('/create', (req, res, next) => {
                   res.render('create',{ title:'Create Account', msg: "Username Taken! Please Try a Different Name", theusername: theusername });
                 }else{
                     hashpass = await has.hashPass(password);
-                    let result = await userquerie.createAccount(db, username, hashpass);
+                    hashemail = await has.hashPass(email);
+                    let result = await userquerie.createAccount(db, username, hashpass, hashemail);
 
                     await conquerie.end(db);
                     res.render('create',{ title:'Create Account', msg: "Account Created! Feel Free to Login at the link above!", theusername: theusername });
@@ -1275,7 +1276,7 @@ app.post('/create', (req, res, next) => {
               }
           }//end async
 
-          createPageResponse(username, password, theusername);
+          createPageResponse(username, email, password, theusername);
 
       }//end else
     }//end else
@@ -3321,7 +3322,9 @@ app.post('/newartistacctcreate', (req, res, next) => {
               res.send({msg: "Username Taken! Please Try a Different Name"});
             }else{
                 hashpass = await has.hashPass(pass1);
-                let result = await userquerie.createAccount(db, username, hashpass);
+                var email = "";
+                //change above to hashed email
+                let result = await userquerie.createAccount(db, username, hashpass, email);
                 await conquerie.end(db);
 
                 const proof = req.files.prooffile;

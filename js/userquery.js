@@ -17,11 +17,11 @@ function addUser(db, username, password, access_level){
 	return querypromise;
 }
 
-function createAccount(db, username, password){
+function createAccount(db, username, password, email){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`INSERT INTO users(username, password, access_level) 
-		VALUES (?, ?, 1)`, [username, password], (error, result, fields) => {
+		db.query(`INSERT INTO users(username, password, email, access_level) 
+		VALUES (?, ?, ?, 1)`, [username, password, email], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);

@@ -1,10 +1,14 @@
 extends index3
 
 block content
+	script(src='https://code.jquery.com/jquery-3.5.0.min.js')
 	.artisth1 
 		h1 Login
+	br
 	- var msg = message;
-	.labelgcenter #{msg}
+	#themessage.labelgcenter #{msg}
+	#contactlink.labelgcenter
+	br
 
 	.loginform
 		form(method='POST' action='/login')
@@ -22,4 +26,17 @@ block content
 			div
 				button.btn.btn-primary.btn-block(type='submit') Login
 	br
+
+	script.
+		$(document).ready(function() {
+			addResetLink();
+		});
+
+		function addResetLink(){
+			var mes = document.getElementById('themessage');
+			if(mes.innerHTML == "Username or Password is incorrect"){
+				var contact = document.getElementById('contactlink');
+				contact.innerHTML = `<a href="https://www.riddimarchive.com/resetpass" style="text-decoration: underline">Forgot Password? Click Here!</a>`;
+			}
+		}
 

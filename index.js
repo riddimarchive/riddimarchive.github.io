@@ -3299,19 +3299,19 @@ app.post('/artistedit', (req, res, next) => {
 //POST REQUEST - New Artist Acct Create
 app.post('/newartistacctcreate', (req, res, next) => {
 
-  var { username, pass1, pass2, artist_name } = req.body;
+  var { username, email, pass1, pass2, artist_name } = req.body;
 
   if (!req.files || Object.keys(req.files).length === 0) {
     res.send({msg: "Be sure to Attach Both Files!"});
   }else{
-    if(!username || !pass1 || !pass2){
-      res.send({msg: "Be sure to include Username and Password Twice!"});
+    if(!username || !pass1 || !pass2 || !email){
+      res.send({msg: "Username, Email, and Password + Confirmation Required"});
     }else{
       if(pass1 !== pass2){
         res.send({msg: "Passwords do not match, Please Re-enter"});
       }else{
         //perform hash and add query
-        async function createArtResponse(username, pass1, artist_name){
+        async function createArtResponse(username, email, pass1, artist_name){
           try{
             var db = createConnection();
             var hashpass = "";
@@ -3322,9 +3322,9 @@ app.post('/newartistacctcreate', (req, res, next) => {
               res.send({msg: "Username Taken! Please Try a Different Name"});
             }else{
                 hashpass = await has.hashPass(pass1);
-                var email = "";
+                var hashemail = await has.hashPass(email);
                 //change above to hashed email
-                let result = await userquerie.createAccount(db, username, hashpass, email);
+                let result = await userquerie.createAccount(db, username, hashpass, hashemail);
                 await conquerie.end(db);
 
                 const proof = req.files.prooffile;
@@ -3352,6 +3352,7 @@ app.post('/newartistacctcreate', (req, res, next) => {
 
                 await emailer.storeArtistVerifyImage(proof, artist_name);
                 await emailer.emailArtistVerify(username, artist_name, img_url);
+                emailer.deleteArtistVerifyImage(artist_name);
                 res.send({msg: "Artist Account Submitted.<br>Once Info is verified, you can upload tunes to your Artist Page!"});
             }//else 4, username is free
           }catch(err){
@@ -3360,7 +3361,7 @@ app.post('/newartistacctcreate', (req, res, next) => {
           }
         }//end async
   
-      createArtResponse(username, pass1, artist_name);
+      createArtResponse(username, email, pass1, artist_name);
   
       }//else 3, passwords match
     }//else 2, username + passwords entered

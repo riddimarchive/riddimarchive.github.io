@@ -36,6 +36,26 @@ function storeArtistVerifyImage(proof_img, artist_name){
 	return filepromise;
 }
 
+function deleteArtistVerifyImage(artist_name){
+
+	let filepromise = new Promise(function(resolve, reject){
+        fs.stat(`public/Images/Logos/${artist_name}proof.jpg`, function (err, stats) {
+            console.log(stats);//here we got all information of file in stats variable
+         
+            if (err) {
+                return console.error(err);
+            }
+         
+            fs.unlink(`public/Images/Logos/${artist_name}proof.jpg`,function(err){
+                 if(err) return console.log(err);
+                 console.log('file deleted successfully');
+            });  
+         });
+	});
+
+	return filepromise;
+}
+
 function emailArtistForm(artist_name, crew, country, info, link, artist_img){
 
 	let filepromise = new Promise(function(resolve, reject){
@@ -115,12 +135,12 @@ function emailArtistVerify(username, artist_name, img_url){
         };
 
         console.log("sending email");
-        transporter.sendMail(mailOptions, (error, info) => {
+        transporter.sendMail(mailOptions, (error, output) => {
             if (error){
                 console.error('Email could not be sent');
                 reject(error);
             }
-            console.log("Email sent: %s", info.messageId);
+            console.log("Email sent!");
             resolve("Email Sent!");
           });        
 	});
@@ -203,6 +223,7 @@ function userPassEmail(theemail, reason, info){
 module.exports = {
     storeArtistImage,
     storeArtistVerifyImage,
+    deleteArtistVerifyImage,
     emailArtistForm,
     emailArtistVerify,
     standardEmail,

@@ -3,6 +3,8 @@ extends index3
 block content
 	.artisth1 
 		h1 Create Artist Account
+	.artisth1
+		h3 Please note, You only need one account! Artist accounts double as a user account.
 	#labelgcenter
 
 	.faqform
@@ -10,6 +12,10 @@ block content
 			.downloadbutton
 				.labelmid2 User Name:
 			input#username(type='text', name='username' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+			br
+			.downloadbutton
+				.labelmid2 Email:
+			input#email(type='text', name='email' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
 			br
 			.downloadbutton
 				.labelmid2 Password:
@@ -95,6 +101,7 @@ block content
 								fd.append('prooffile', prooffile);
 								fd.append('artistlogo', artistlogo);
 								fd.append('username', username);
+								fd.append('email', email);
 								fd.append('pass1', pass1);
 								fd.append('pass2', pass2);
 								fd.append('artist_name', artist_name);

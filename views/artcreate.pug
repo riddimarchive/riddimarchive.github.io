@@ -6,6 +6,7 @@ block content
 	.artisth1
 		h3 Please note, You only need one account! Artist accounts double as a user account.
 	#labelgcenter
+	div(title='0', id='infovisible')
 
 	.faqform
 		form#fileuploadform(method='POST', enctype='multipart/form-data')
@@ -26,10 +27,46 @@ block content
 				.labelmid2 Confirm Password:
 			input#pass2(type='password', name='pass2' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
 			br
+
 			.downloadbutton
 				.labelmid2 Artist Name:
 			input#art_name(type='text', name='art_name' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
 			br
+			.downloadbutton
+				.custombutton
+					div(id='infobutton')
+						img(id='infoimg', border='2', alt='back', src='Images/PageIMG/infobtn.png', height='50', style="height: 75px;")
+			#allinfo(style="display:none;")
+				.downloadbutton
+					.labelmid2 Info Sentence:
+				input#art_info(type='text', name='art_info' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+				br
+				.downloadbutton
+					.labelmid2 Crew:
+				input#crew(type='text', name='crew' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+				br
+				.downloadbutton
+					.labelmid2 Soundcloud Link (Please include full link):
+				input#sc(type='text', name='sc', placeholder='https://soundcloud.com/artistname', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+				br
+				.downloadbutton
+					.labelmid2 Facebook Link (Please include full link):
+				input#fb(type='text', name='fb', placeholder='https://www.facebook.com/artistname', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+				br
+				.downloadbutton
+					.labelmid2 Bandcamp Link (Please include full link):
+				input#bc(type='text', name='bc', placeholder='https://artistname.bandcamp.com', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+				br
+				.downloadbutton
+					.labelmid2 Beatport Link (Please include full link):			
+				input#bp(type='text', name='bp', placeholder='https://www.beatport.com/artist/artistname/number', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+				br
+				.downloadbutton
+					.labelmid2 Instagram Link (Please include full link):
+				input#insta(type='text', name='insta', placeholder='https://www.instagram.com/artistname', style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+			br
+			br
+
 			.label3nowidth Please upload Image Proof that you are this artist!
 			.label3nowidth Admins will verify before assigning to you/creating page:
 			input#prooffile(type='file', name='prooffile', style="min-width: 100%; border: solid 2px; padding: 1em; margin-bottom: 0.75em;")
@@ -61,6 +98,7 @@ block content
 		$(document).ready(function() {
 			console.log("Doc ready");
 			uploadInit();
+			prepareInfo();
 		});
 
 		function uploadInit(){
@@ -90,9 +128,17 @@ block content
 						}else{
 							var fd = new FormData();
 							var username = document.getElementById("username").value;
+							var email = document.getElementById("email").value;
 							var pass1 = document.getElementById("pass1").value;
 							var pass2 = document.getElementById("pass2").value;
 							var artist_name = document.getElementById("art_name").value;
+							var art_info = document.getElementById("art_info").value;
+							var crew = document.getElementById("crew").value;
+							var sc = document.getElementById("sc").value;
+							var fb = document.getElementById("fb").value;
+							var bc = document.getElementById("bc").value;
+							var bp = document.getElementById("bp").value;
+							var insta = document.getElementById("insta").value;
 
 							if(pass1.length > 32 || pass2.length > 32){
 								msg.innerHTML = "Passwords Too Long!";
@@ -105,6 +151,13 @@ block content
 								fd.append('pass1', pass1);
 								fd.append('pass2', pass2);
 								fd.append('artist_name', artist_name);
+								fd.append('art_info', art_info);
+								fd.append('crew', crew);
+								fd.append('sc', sc);
+								fd.append('fb', fb);
+								fd.append('bc', bc);
+								fd.append('bp', bp);
+								fd.append('insta', insta);
 
 								$.ajax({
 									url:'/newartistacctcreate',
@@ -128,4 +181,26 @@ block content
 					}//file size check
 				}//file exist check
 			});
+		}
+
+		function prepareInfo(){
+			document.getElementById('infobutton').addEventListener('click', doStuff);
+			function doStuff(e){
+				var curvalue = document.getElementById('infovisible').title;
+				if (curvalue == 0){
+					document.getElementById('infovisible').title = 1;
+					var img = document.getElementById('infoimg');
+					img.setAttribute('src', 'Images/PageIMG/hideinfobtn.png');
+
+					var allinfo = document.getElementById('allinfo');
+					allinfo.style.display = "block";
+				}else{
+					document.getElementById('infovisible').title = 0;
+					var img = document.getElementById('infoimg');
+					img.setAttribute('src', 'Images/PageIMG/infobtn.png');
+
+					var allinfo = document.getElementById('allinfo');
+					allinfo.style.display = "none";
+				}
+			}
 		}

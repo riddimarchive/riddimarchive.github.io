@@ -20,7 +20,7 @@ function getArtistInfo(db, artist_name){
 function getAllArtists(db){
 
 	let querypromise = new Promise(function(resolve, reject){
-		db.query(`SELECT artist_name, img_url FROM artists`, (error, result, fields) => {
+		db.query(`SELECT artist_name, img_url FROM artists WHERE is_visible = "1"`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -59,7 +59,7 @@ function getAllArtistsAthroughD(db){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT artist_name, img_url FROM artists 
-		WHERE artist_name >= "0" and artist_name < "E" 
+		WHERE artist_name >= "0" AND artist_name < "E" AND is_visible = "1"
 		ORDER BY artist_name`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -80,7 +80,7 @@ function getAllArtistsEthroughI(db){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT artist_name, img_url FROM artists 
-		WHERE artist_name >= "E" and artist_name < "J" 
+		WHERE artist_name >= "E" AND artist_name < "J" AND is_visible = "1"
 		ORDER BY artist_name`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -101,7 +101,7 @@ function getAllArtistsJthroughO(db){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT artist_name, img_url FROM artists 
-		WHERE artist_name >= "J" and artist_name < "P" 
+		WHERE artist_name >= "J" AND artist_name < "P" AND is_visible = "1"
 		ORDER BY artist_name`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -122,7 +122,7 @@ function getAllArtistsPthroughT(db){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT artist_name, img_url FROM artists 
-		WHERE artist_name >= "P" and artist_name < "U" 
+		WHERE artist_name >= "P" AND artist_name < "U" AND is_visible = "1"
 		ORDER BY artist_name`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -143,7 +143,7 @@ function getAllArtistsUthroughZ(db){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT artist_name, img_url FROM artists 
-		WHERE artist_name >= "U" 
+		WHERE artist_name >= "U" AND is_visible = "1"
 		ORDER BY artist_name`, (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
@@ -164,7 +164,7 @@ function searchArtists(db, search_results){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT artist_name, img_url FROM artists 
-		WHERE artist_name LIKE ?`, [search_results], (error, result, fields) => {
+		WHERE artist_name LIKE ? AND is_visible = "1"`, [search_results], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -184,7 +184,7 @@ function searchArtistsByCrew(db, search_results){
 
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`SELECT artist_name, img_url FROM artists 
-		WHERE crew LIKE ?`, [search_results], (error, result, fields) => {
+		WHERE crew LIKE ? AND is_visible = "1"`, [search_results], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -205,6 +205,26 @@ function addArtist(db, artist_name, crew, country, info, face, sound, band, beat
 	let querypromise = new Promise(function(resolve, reject){
 		db.query(`INSERT INTO artists (artist_name, crew, country, info, fb, sc, bc, beat, insta, img_url) 
 		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [artist_name, crew, country, info, face, sound, band, beat, insta, img], (error, result, fields) => {
+	    	if (error) {
+	      		console.error('An error occurred while executing the query');
+	      		reject(error);
+	    	}
+
+	    	resolve(result);
+
+		});
+
+
+	});
+
+	return querypromise;
+}
+
+function storePreliminaryArtist(db, artist_name, art_info, crew, sc, fb, bc, bp, insta){
+
+	let querypromise = new Promise(function(resolve, reject){
+		db.query(`INSERT INTO artists (artist_name, info, crew, sc, fb, bc, beat, insta, is_visible) 
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)`, [artist_name, art_info, crew, sc, fb, bc, bp, insta], (error, result, fields) => {
 	    	if (error) {
 	      		console.error('An error occurred while executing the query');
 	      		reject(error);
@@ -578,6 +598,7 @@ module.exports = {
 	searchArtists,
 	searchArtistsByCrew,
 	addArtist,
+	storePreliminaryArtist,
 	deleteArtist,
 	editImg,
 	editArtistName,

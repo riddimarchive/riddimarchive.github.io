@@ -220,6 +220,48 @@ function userPassEmail(theemail, reason, info){
     return emailpromise;
 }
 
+function userAccountCreateEmail(theemail, username){
+    let emailpromise = new Promise(function(resolve, reject){
+        const output = 
+            `RIDDIM ARCHIVE ARTIST ACCOUNT CREATION!
+
+            Hello ${username}!
+            Thanks for creating an Artist Account.
+            Our admins will verify the artist proof you sent us.
+            Once verified, Your artist will be visible and editable on the RIDDIM ARCHIVE!
+            In the meantime, feel free to log in with your Username and Password!
+            
+            THANKS FOR USING RIDDIM ARCHIVE. WE HOPE U ENJOY IT!`;
+
+            let transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: process.env.EMAIL, 
+                  pass: process.env.EMAIL_PASSWORD
+                }
+            });
+
+            let mailOptions = {
+                from: process.env.EMAIL,
+                to: theemail,
+                subject: 'Riddim Archive Artist Account Creation',
+                text: output,
+            };
+
+            console.log("sending email");
+            transporter.sendMail(mailOptions, (error, info) => {
+            if (error){
+                console.error('Email could not be sent');
+                reject(error);
+            }
+            console.log("Email sent: %s", info.messageId);
+            resolve("Email Sent!");
+          }); 
+    });
+
+    return emailpromise;
+}
+
 module.exports = {
     storeArtistImage,
     storeArtistVerifyImage,
@@ -227,5 +269,6 @@ module.exports = {
     emailArtistForm,
     emailArtistVerify,
     standardEmail,
-    userPassEmail
+    userPassEmail,
+    userAccountCreateEmail
 };

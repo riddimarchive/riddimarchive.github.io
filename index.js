@@ -1249,36 +1249,39 @@ app.post('/create', (req, res, next) => {
       if(password.length > 32 || password2.length > 32){
         res.render('create',{ title:'Create Account', msg: "Passwords too Long!", theusername: theusername });
       }else{
-
           if(password !== password2){
             res.render('create',{ title:'Create Account', msg: "Passwords Don't Match, Please Re-Enter", theusername: theusername });
           }else{
-            //perform hash and add query
-            async function createPageResponse(username, email, password, theusername){
-              try{
-                var db = createConnection();
-                var hashpass = "";
-                await conquerie.connect(db);
+            if(validator.validate(email)){
+                  //perform hash and add query
+                  async function createPageResponse(username, email, password, theusername){
+                    try{
+                      var db = createConnection();
+                      var hashpass = "";
+                      await conquerie.connect(db);
 
-                let uresult = await userquerie.getUserInfo(db, username);
-                if(uresult.length > 0){
-                  res.render('create',{ title:'Create Account', msg: "Username Taken! Please Try a Different Name", theusername: theusername });
-                }else{
-                    hashpass = await has.hashPass(password);
-                    hashemail = await has.hashPass(email);
-                    let result = await userquerie.createAccount(db, username, hashpass, hashemail);
+                      let uresult = await userquerie.getUserInfo(db, username);
+                      if(uresult.length > 0){
+                        res.render('create',{ title:'Create Account', msg: "Username Taken! Please Try a Different Name", theusername: theusername });
+                      }else{
+                          hashpass = await has.hashPass(password);
+                          hashemail = await has.hashPass(email);
+                          let result = await userquerie.createAccount(db, username, hashpass, hashemail);
 
-                    await conquerie.end(db);
-                    res.render('create',{ title:'Create Account', msg: "Account Created! Feel Free to Login at the link above!", theusername: theusername });
-                }//end else
-              }catch(err){
-                console.log(err);
-                res.render('error');
-              }
-          }//end async
+                          await conquerie.end(db);
+                          res.render('create',{ title:'Create Account', msg: "Account Created! Feel Free to Login at the link above!", theusername: theusername });
+                      }//end else
+                    }catch(err){
+                      console.log(err);
+                      res.render('error');
+                    }
+                }//end async
 
-          createPageResponse(username, email, password, theusername);
+                createPageResponse(username, email, password, theusername);
 
+            }else{
+              res.render('create',{ title:'Create Account', msg: "Please use a valid Email!", theusername: theusername });
+            }
       }//end else
     }//end else
   }//end else
@@ -1329,52 +1332,56 @@ app.post('/resetpass', (req, res, next) => {
   if (usern == '' || email == ''){
     res.render('resetpass',{ title:'Reset Password', msg: "Correct Username and Email Required. If you don't remember, Contact me at the link below: ", theusername: '' });
   }else{
-    async function resetPassResponse(usern, email){
-      try{
-        var db = createConnection();
-        await conquerie.connect(db);
-        let result = await userquerie.getUserByName(db, usern);
-        if (result.length > 0){
-          let isMatch = await has.passCheck(email, result[0].email);
+    if(validator.validate(email)){
+      async function resetPassResponse(usern, email){
+        try{
+          var db = createConnection();
+          await conquerie.connect(db);
+          let result = await userquerie.getUserByName(db, usern);
+          if (result.length > 0){
+            let isMatch = await has.passCheck(email, result[0].email);
+    
+            if(isMatch){
+              verified = 1;
+              //create and store timestamp
+              //send email with link
+              let passcreate = await passresetquerie.addPassReset(db, 600, usern);
+              await conquerie.end(db);
   
-          if(isMatch){
-            verified = 1;
-            //create and store timestamp
-            //send email with link
-            let passcreate = await passresetquerie.addPassReset(db, 600, usern);
-            await conquerie.end(db);
-
-            var clearedhash = urlencode(result[0].email);
-            var reason = "Riddim Archive Password Reset";
-            var info = `
-            Hello ${usern},
-
-            Please click the below 1-use link to reset your Riddim Archive password!
-            *Link Expires 10 Minutes after creation*
-            
-            https://www.riddimarchive.com/passreset/${usern}/${clearedhash}`;
+              var clearedhash = urlencode(result[0].email);
+              var reason = "Riddim Archive Password Reset";
+              var info = `
+              Hello ${usern},
   
-            await emailer.userPassEmail(email, reason, info);
-            res.render('resetpass',{ title:'Reset Password', msg: "Email Sent! Password Reset Link will Expire in 10 Minutes!", theusername: '' });
-  
+              Please click the below 1-use link to reset your Riddim Archive password!
+              *Link Expires 10 Minutes after creation*
+              
+              https://www.riddimarchive.com/passreset/${usern}/${clearedhash}`;
+    
+              await emailer.userPassEmail(email, reason, info);
+              res.render('resetpass',{ title:'Reset Password', msg: "Email Sent! Password Reset Link will Expire in 10 Minutes!", theusername: '' });
+    
+            }else{
+              await conquerie.end(db);
+              res.render('resetpass',{ title:'Reset Password', msg: "Correct Username and Email Required. If you don't remember, Contact me at the link below: ", theusername: '' });
+            }
+    
           }else{
             await conquerie.end(db);
+            //res.send("Username does not exist");
             res.render('resetpass',{ title:'Reset Password', msg: "Correct Username and Email Required. If you don't remember, Contact me at the link below: ", theusername: '' });
           }
-  
-        }else{
-          await conquerie.end(db);
-          //res.send("Username does not exist");
-          res.render('resetpass',{ title:'Reset Password', msg: "Correct Username and Email Required. If you don't remember, Contact me at the link below: ", theusername: '' });
+    
+        }catch(err){
+          console.log(err);
+          res.render('error');
         }
-  
-      }catch(err){
-        console.log(err);
-        res.render('error');
-      }
-    }//end async
-  
-    resetPassResponse(usern, email);
+      }//end async
+    
+      resetPassResponse(usern, email);
+    }else{
+      res.render('resetpass',{ title:'Reset Password', msg: "Email is not Valid. Please Contact me at the link below for password reset: ", theusername: '' });
+    }
 
   }
 

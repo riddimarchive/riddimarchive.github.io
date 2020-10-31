@@ -34,7 +34,7 @@ block content
 
 		function addContactLink(){
 			var mes = document.getElementById('themessage');
-			if(mes.innerHTML == "Correct Username and Email Required. If you don't remember, Contact me at the link below: "){
+			if(mes.innerHTML == "Correct Username and Email Required. If you don't remember, Contact me at the link below: " || mes.innerHTML == "Email is not Valid. Please Contact me at the link below for password reset: "){
 				var contact = document.getElementById('contactlink');
 				contact.innerHTML = `<a href="https://www.riddimarchive.com/req/question" style="text-decoration: underline">Contact Link</a>`;
 			}

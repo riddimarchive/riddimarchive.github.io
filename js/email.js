@@ -254,7 +254,7 @@ function userAccountCreateEmail(theemail, username){
                 console.error('Email could not be sent');
                 reject(error);
             }
-            console.log("Email sent: %s", info.messageId);
+            console.log("Email sent");
             resolve("Email Sent!");
           }); 
     });

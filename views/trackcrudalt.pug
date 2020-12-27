@@ -1,0 +1,82 @@
+extends index3
+
+block content
+	.artisth1 
+		h1 Add Track
+	#labelgcenter
+	
+	.faqform
+		form#fileuploadform(method='POST', enctype='multipart/form-data')
+			.downloadbutton
+				.labelmid2 URL:
+			input#url(type='text', name='url' style="padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.5em; padding-left: 1em; padding-right: 1em; min-width: 100%;")
+			br
+			.label3nowidth Add Track Here
+			input#filey(type='file', name='filey', style="min-width: 100%; border: solid 2px; padding: 1em; margin-bottom: 0.75em;")
+			br
+	.downloadbutton
+		.custombutton
+			div(id='thesubmit', class='thesubmit')
+				img(border='2', alt='back', src='Images/PageIMG/artsubmit.png', height='50', style="height: 75px;")
+	.downloadbutton
+		#labelgcenter2
+
+	script.
+		$(document).on("keydown", "form", function(event) { 
+			return event.key != "Enter";
+		});
+
+		$(document).bind("keydown keypress", function(e){
+			if( e.which == 8 ){ // 8 == backspace
+				if(e.target.readOnly ){
+					e.preventDefault();
+				}
+			}
+		});
+
+		$(document).ready(function() {
+			console.log("Doc ready");
+			uploadInit();
+		});
+
+		function uploadInit(){
+			var theform = $('#fileuploadform');
+			var thebutton = $('#thesubmit');
+			thebutton.click(function (ev) {
+				console.log("clicked button");
+				ev.preventDefault();
+				var msg = document.getElementById("labelgcenter");
+				msg.innerHTML = "Submitting...";
+				var msg2 = document.getElementById("labelgcenter2");
+				msg2.innerHTML = "Submitting...";
+				var thefiley = $('#filey')[0].files[0];
+
+				if (!thefiley) {
+					msg.innerHTML = "File not Attached!";
+					msg2.innerHTML = "File not Attached!";
+				}else{
+					var fd = new FormData();
+					var theurl = document.getElementById("url").value;
+					fd.append('theurl', theurl);
+					fd.append('thefiley', thefiley);
+
+					$.ajax({
+						url:'/trackcrudalt',
+						type: 'POST',
+						data: fd,
+						processData: false,
+						contentType: false,
+						success: function(data){
+							var msg = document.getElementById("labelgcenter");
+							var msg2 = document.getElementById("labelgcenter2");
+							msg.innerHTML = data.msg;
+							msg2.innerHTML = data.msg;
+						},
+						error: function(){
+							console.log("Didn't Work");
+						}
+					});//end ajax
+
+				}//all checks good -> run upload
+			});
+		}

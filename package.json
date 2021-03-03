@@ -37,7 +37,7 @@
     "nodemailer": "^6.4.6",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "request": "^2.88.2",
     "serve-favicon": "^2.5.0",
     "sqlstring": "^2.3.1",
